@@ -6,7 +6,19 @@ module.exports = {
         search: false,
         nav: [
             { text: 'Documentation', link: '/docs/my-first-function/' },
-            { text: 'GitHub', link: 'https://github.com/apache/incubator-teaclave' }
+            { text: 'GitHub', link: 'https://github.com/apache/incubator-teaclave' },
+            {
+                text: 'Apache Software Foundation',
+                ariaLabel: 'Apache Software Foundation',
+                items: [
+                    { text: 'Apache Homepage', link: 'https://www.apache.org/' },
+                    { text: 'License', link: 'https://www.apache.org/licenses/' },
+                    { text: 'Sponsorship', link: 'https://www.apache.org/licenses/' },
+                    { text: 'Security', link: 'https://www.apache.org/security/' },
+                    { text: 'Thanks', link: 'https://www.apache.org/foundation/thanks.html' },
+                    { text: 'Current Event', link: 'https://www.apache.org/events/current-event.html' },
+                ]
+            }
         ],
         sidebar: [
             {

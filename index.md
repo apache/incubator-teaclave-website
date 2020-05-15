@@ -2,6 +2,8 @@
 home: true
 heroText: Apache Teaclave (incubating)
 tagline:  an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple
+actionText: Get Started →
+actionLink: /docs/my-first-function/
 ---
 
 ## Highlights
