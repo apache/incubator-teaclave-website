@@ -2,10 +2,7 @@
 home: true
 heroText: Apache Teaclave (incubating)
 tagline:  an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple
-footer: "Apache Teaclave is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the Apache Incubator. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF. Copyright © 2020 The Apache Software Foundation. Apache Teaclave, Apache, the Apache feather, and the Apache Teaclave project logo are either trademarks or registered trademarks of the Apache Software Foundation. See also other useful ASF links: Apache Homepage, License Sponsorship, Security Thanks, Current Event"
 ---
-
-Teaclave is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.
 
 ## Highlights
 
