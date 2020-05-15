@@ -5,7 +5,7 @@ module.exports = {
     themeConfig: {
         search: false,
         nav: [
-            { text: 'Documentation', link: '/docs/' },
+            { text: 'Documentation', link: '/docs/my-first-function/' },
             { text: 'GitHub', link: 'https://github.com/apache/incubator-teaclave' }
         ],
         sidebar: [
