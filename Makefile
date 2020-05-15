@@ -1,7 +1,4 @@
-build:
-	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
-	vuepress build -d dist
-	cp .asf.yaml dist
+all: staging site
 
 staging: build
 	ghp-import dist -b asf-staging
@@ -9,4 +6,7 @@ staging: build
 site: build
 	ghp-import dist -b asf-site
 
-all: staging site
+build:
+	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
+	vuepress build -d dist
+	cp .asf.yaml dist
