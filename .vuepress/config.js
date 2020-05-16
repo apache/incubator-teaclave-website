@@ -1,17 +1,19 @@
 module.exports = {
-    title: 'Apache Teaclave (incubating)',
+    title: 'Apache Teaclave (Incubating)',
     description: 'Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.',
     base: '/',
     themeConfig: {
         search: false,
         nav: [
+            { text: 'Community', link: '/community/' },
+            { text: 'Contributors', link: '/contributors/' },
             { text: 'Documentation', link: '/docs/my-first-function/' },
             { text: 'GitHub', link: 'https://github.com/apache/incubator-teaclave' },
             {
                 text: 'Apache Software Foundation',
                 ariaLabel: 'Apache Software Foundation',
                 items: [
-                    { text: 'Apache Homepage', link: 'https://www.apache.org/' },
+                    { text: 'ASF Homepage', link: 'https://www.apache.org/' },
                     { text: 'License', link: 'https://www.apache.org/licenses/' },
                     { text: 'Sponsorship', link: 'https://www.apache.org/foundation/sponsorship.html' },
                     { text: 'Security', link: 'https://www.apache.org/security/' },
