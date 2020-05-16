@@ -13,7 +13,7 @@ module.exports = {
                 items: [
                     { text: 'Apache Homepage', link: 'https://www.apache.org/' },
                     { text: 'License', link: 'https://www.apache.org/licenses/' },
-                    { text: 'Sponsorship', link: 'https://www.apache.org/licenses/' },
+                    { text: 'Sponsorship', link: 'https://www.apache.org/foundation/sponsorship.html' },
                     { text: 'Security', link: 'https://www.apache.org/security/' },
                     { text: 'Thanks', link: 'https://www.apache.org/foundation/thanks.html' },
                     { text: 'Current Event', link: 'https://www.apache.org/events/current-event.html' },
