@@ -4,6 +4,7 @@ module.exports = {
     base: '/',
     themeConfig: {
         search: false,
+        smoothScroll: true,
         nav: [
             { text: 'Community', link: '/community/' },
             { text: 'Contributors', link: '/contributors/' },
@@ -50,6 +51,5 @@ module.exports = {
     },
     plugins: [
         '@vuepress/plugin-back-to-top',
-        'vuepress-plugin-smooth-scroll',
     ],
 }
