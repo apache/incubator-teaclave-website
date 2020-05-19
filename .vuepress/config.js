@@ -6,6 +6,7 @@ module.exports = {
         search: false,
         smoothScroll: true,
         nav: [
+            { text: 'About', link: '/' },
             { text: 'Community', link: '/community/' },
             { text: 'Contributors', link: '/contributors/' },
             { text: 'Documentation', link: '/docs/my-first-function/' },

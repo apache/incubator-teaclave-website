@@ -14,3 +14,6 @@ build:
 	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
 	vuepress build -d dist
 	cp .asf.yaml dist
+
+clean:
+	rm -rf dist teaclave
