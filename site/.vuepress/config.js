@@ -42,6 +42,7 @@ module.exports = {
                 collapsable: false,
                 children: [
                     '/teaclave/services/',
+                    '/teaclave/executor/',
                     '/teaclave/config/',
                     '/teaclave/dcap/',
                     '/teaclave/keys/',
