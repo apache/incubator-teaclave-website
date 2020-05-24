@@ -17,8 +17,7 @@
 
     <Sidebar
       :items="sidebarItems"
-      @toggle-sidebar="toggleSidebar"
-    >
+      @toggle-sidebar="toggleSidebar">
       <template #top>
         <slot name="sidebar-top" />
       </template>
@@ -27,19 +26,26 @@
       </template>
     </Sidebar>
 
-    <Home v-if="$page.frontmatter.home" />
+  <main class="page">
+    <slot name="top" />
+    <div id="base-list-layout" class="theme-default-content">
+      <h1>Blog</h1>
+      <article
+        v-for="page in pages"
+        :key="page.key"
+        class="ui-post"
+        itemprop="blogPost"
+        itemscope
+        itemtype="https://schema.org/BlogPosting"
+      >
+        <h3><NavLink :link="page.path">{{ page.title }}</NavLink> · {{ resolvePostDate(page.frontmatter.date) }}</h3>
+      </article>
+    </div>
+    <slot name="bottom" />
+  </main>
 
-    <Page
-      v-else
-      :sidebar-items="sidebarItems"
-    >
-      <template #top>
-        <slot name="page-top" />
-      </template>
-      <template #bottom>
-        <slot name="page-bottom" />
-      </template>
-    </Page>
+  </div>
+
   </div>
 </template>
 
@@ -48,7 +54,13 @@ import Home from '@theme/components/Home.vue'
 import Navbar from '@theme/components/Navbar.vue'
 import Page from '@theme/components/Page.vue'
 import Sidebar from '@theme/components/Sidebar.vue'
-import { resolveSidebarItems } from '../util'
+import Vue from 'vue'
+import dayjs from 'dayjs'
+import { NavigationIcon, ClockIcon, TagIcon } from 'vue-feather-icons'
+import {
+  Pagination,
+  SimplePagination,
+} from '@vuepress/plugin-blog/lib/client/components'
 
 export default {
   name: 'Layout',
@@ -62,11 +74,15 @@ export default {
 
   data () {
     return {
-      isSidebarOpen: false
+      isSidebarOpen: false,
+      paginationComponent: null,
     }
   },
 
   computed: {
+    pages() {
+      return this.$pagination.pages
+    },
     shouldShowNavbar () {
       const { themeConfig } = this.$site
       const { frontmatter } = this.$page
@@ -83,23 +99,8 @@ export default {
         || this.$themeLocaleConfig.nav
       )
     },
-
-    shouldShowSidebar () {
-      const { frontmatter } = this.$page
-      return (
-        !frontmatter.home
-        && frontmatter.sidebar !== false
-        && this.sidebarItems.length
-      )
-    },
-
     sidebarItems () {
-      return resolveSidebarItems(
-        this.$page,
-        this.$page.regularPath,
-        this.$site,
-        this.$localePath
-      )
+      return []
     },
 
     pageClasses () {
@@ -108,11 +109,14 @@ export default {
         {
           'no-navbar': !this.shouldShowNavbar,
           'sidebar-open': this.isSidebarOpen,
-          'no-sidebar': !this.shouldShowSidebar
+          'no-sidebar': true,
         },
         userPageClass
       ]
     }
+  },
+  created() {
+    this.paginationComponent = this.getPaginationComponent()
   },
 
   mounted () {
@@ -145,7 +149,19 @@ export default {
           this.toggleSidebar(false)
         }
       }
-    }
+    },
+    getPaginationComponent() {
+      return Pagination
+    },
+    resolvePostDate(date) {
+      return dayjs(date).format(
+        this.$themeConfig.dateFormat || 'MMM DD YYYY'
+      )
+    },
+    resolvePostTags(tags) {
+      if (!tags || Array.isArray(tags)) return tags
+      return [tags]
+    },
   }
 }
 </script>

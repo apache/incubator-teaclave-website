@@ -10,9 +10,10 @@ module.exports = {
             { text: 'Community', link: '/community/' },
             { text: 'Contributors', link: '/contributors/' },
             { text: 'Documentation', link: '/docs/my-first-function/' },
+            { text: 'Blog', link: '/blog/' },
             { text: 'GitHub', link: 'https://github.com/apache/incubator-teaclave' },
             {
-                text: 'Apache Software Foundation',
+                text: 'ASF',
                 ariaLabel: 'Apache Software Foundation',
                 items: [
                     { text: 'ASF Homepage', link: 'https://www.apache.org/' },
@@ -55,5 +56,19 @@ module.exports = {
     },
     plugins: [
         '@vuepress/plugin-back-to-top',
+        [
+        '@vuepress/blog',
+            {
+                directories: [
+                    {
+                        id: 'blog',
+                        dirname: 'blog',
+                        path: '/blog/',
+                        layout: 'IndexPost',
+                        itemPermalink: '/blog/:year/:month/:day/:slug',
+                    },
+                ],
+            },
+        ],
     ],
 }
