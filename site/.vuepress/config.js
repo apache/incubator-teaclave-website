@@ -47,6 +47,7 @@ module.exports = {
                     '/teaclave/worker/',
                     '/teaclave/executor/',
                     '/teaclave/config/',
+                    '/teaclave/cli/',
                     '/teaclave/dcap/',
                     '/teaclave/keys/',
                     '/teaclave/docker/',
