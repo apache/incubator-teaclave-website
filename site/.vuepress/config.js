@@ -46,11 +46,14 @@ module.exports = {
                     '/teaclave/services/',
                     '/teaclave/worker/',
                     '/teaclave/executor/',
+                    '/teaclave/function/',
                     '/teaclave/config/',
-                    '/teaclave/cli/',
                     '/teaclave/dcap/',
+                    '/teaclave/cli/',
                     '/teaclave/keys/',
                     '/teaclave/docker/',
+                    '/teaclave/tests/',
+                    '/teaclave/third_party/',
                 ],
             },
         ]
@@ -58,7 +61,7 @@ module.exports = {
     plugins: [
         '@vuepress/plugin-back-to-top',
         [
-        '@vuepress/blog',
+            '@vuepress/blog',
             {
                 directories: [
                     {
