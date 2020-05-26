@@ -11,7 +11,14 @@ module.exports = {
             { text: 'Contributors', link: '/contributors/' },
             { text: 'Documentation', link: '/docs/my-first-function/' },
             { text: 'Blog', link: '/blog/' },
-            { text: 'GitHub', link: 'https://github.com/apache/incubator-teaclave' },
+            {
+                text: 'Repository',
+                items: [
+                    { text: 'Teaclave', link: 'https://github.com/apache/incubator-teaclave'},
+                    { text: 'Teaclave SGX SDK', link: 'https://github.com/apache/incubator-teaclave-sgx-sdk'},
+                    { text: 'Teaclave Website', link: 'https://github.com/apache/incubator-teaclave-website'},
+                ]
+            },
             {
                 text: 'ASF',
                 ariaLabel: 'Apache Software Foundation',
@@ -72,6 +79,14 @@ module.exports = {
                         itemPermalink: '/blog/:year/:month/:day/:slug',
                     },
                 ],
+            },
+        ],
+        [
+            'vuepress-plugin-clean-urls',
+            {
+                normalSuffix: '/',
+                indexSuffix: '/',
+                notFoundPath: '/404.html',
             },
         ],
     ],
