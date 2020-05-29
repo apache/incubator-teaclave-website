@@ -43,6 +43,7 @@ module.exports = {
                     '/teaclave/docs/rust-guideline',
                     '/teaclave/docs/mutual-attestation',
                     '/teaclave/docs/access-control',
+                    '/teaclave/docs/build-system',
                 ],
             },
             {
