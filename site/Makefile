@@ -1,19 +1,29 @@
 all: staging site
 
 staging: build
-	ghp-import dist -b asf-staging
+	ghp-import .vuepress/dist -b asf-staging
 
 site: build
-	ghp-import dist -b asf-site
+	ghp-import .vuepress/dist -b asf-site
+
+sgx-sdk-docs: teaclave-docs
+	cd ../sgx-sdk-docs && cargo doc
+	cp -r ../sgx-sdk-docs/target/doc .vuepress/dist/docs/sgx-sdk
+	@echo "<meta http-equiv=refresh content=0;url=`echo sgx_tstd | cut -d '/' -f 2`/index.html>" > .vuepress/dist/docs/sgx-sdk/index.html
+
+teaclave-docs:
+	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
+	vuepress build
 
 dev:
 	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
 	vuepress dev
 
-build:
-	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
-	vuepress build -d dist
-	cp ../.asf.yaml dist
+preview:
+	cd .vuepress/dist && python3 -m http.server
+
+build: teaclave-docs sgx-sdk-docs
+	cp ../.asf.yaml .vuepress/dist
 
 clean:
-	rm -rf dist teaclave
+	rm -rf .vuepress/dist teaclave

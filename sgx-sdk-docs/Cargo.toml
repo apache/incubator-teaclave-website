@@ -1,0 +1,13 @@
+[package]
+name = "teaclave-sgx-sdk-docs"
+version = "0.1.0"
+authors = ["Teaclave Contributors <dev@teaclave.apache.org>"]
+edition = "2018"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+sgx_tstd = { git = "https://github.com/apache/incubator-teaclave-sgx-sdk.git", tag = "v1.1.2" }
+sgx_trts = { git = "https://github.com/apache/incubator-teaclave-sgx-sdk.git", tag = "v1.1.2" }
+sgx_tse = { git = "https://github.com/apache/incubator-teaclave-sgx-sdk.git", tag = "v1.1.2" }

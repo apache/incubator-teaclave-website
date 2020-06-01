@@ -1,3 +1,5 @@
 dist
 teaclave
 node_modules
+target
+sgx-sdk-docs/Cargo.lock
