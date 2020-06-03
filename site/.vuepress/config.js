@@ -36,11 +36,16 @@ module.exports = {
         ],
         sidebar: [
             {
-                title: 'Documentation',
-                path: '/docs/my-first-function/',
+                title: 'Try Teaclave',
                 collapsable: false,
                 children: [
                     '/teaclave/docs/my-first-function',
+                ],
+            },
+            {
+                title: 'Design',
+                collapsable: false,
+                children: [
                     '/teaclave/docs/threat-model',
                     '/teaclave/docs/rust-guideline',
                     '/teaclave/docs/mutual-attestation',
@@ -50,7 +55,6 @@ module.exports = {
             },
             {
                 title: 'Codebase',
-                path: '/services/',
                 collapsable: false,
                 children: [
                     '/teaclave/attestation/',
