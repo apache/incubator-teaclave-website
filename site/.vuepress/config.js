@@ -3,8 +3,9 @@ module.exports = {
     description: 'Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.',
     base: '/',
     themeConfig: {
-        search: false,
+        search: true,
         smoothScroll: true,
+        lastUpdated: 'Last Updated',
         nav: [
             { text: 'About', link: '/' },
             { text: 'Community', link: '/community/' },
