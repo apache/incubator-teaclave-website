@@ -6,6 +6,8 @@ module.exports = {
         search: true,
         smoothScroll: true,
         lastUpdated: 'Last Updated',
+        twitter: '@ApacheTeaclave',
+        domain: 'https://teaclave.apache.org',
         nav: [
             { text: 'About', link: '/' },
             { text: 'Community', link: '/community/' },
@@ -78,7 +80,6 @@ module.exports = {
     },
     plugins: [
         '@vuepress/plugin-back-to-top',
-        'seo',
         [
             '@vuepress/blog',
             {
@@ -100,6 +101,24 @@ module.exports = {
                 indexSuffix: '/',
                 notFoundPath: '/404.html',
             },
+        ],
+        [
+            'seo',
+            {
+                customMeta: (add, context) => {
+
+                    const {
+                        $site, // Site configs provided by Vuepress
+                        $page, // Page configs provided by Vuepress
+
+                        // All the computed options from above:
+                        siteTitle, title, description, author, tags,
+                        twitterCard, type, url, image, publishedAt, modifiedAt,
+                    } = context;
+
+                    add('twitter:site', $site.themeConfig.twitter);
+                },
+            }
         ],
     ],
 }

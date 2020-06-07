@@ -1,5 +1,7 @@
 ---
+title: Apache Teaclave (Incubating)
 home: true
+description: Apache Teaclave (Incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.
 heroText: Apache Teaclave (Incubating)
 tagline:  an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple
 actionText: Get Started →
