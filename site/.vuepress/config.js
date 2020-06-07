@@ -13,7 +13,7 @@ module.exports = {
             { text: 'Community', link: '/community/' },
             { text: 'Contributors', link: '/contributors/' },
             { text: 'Documentation', link: '/docs/my-first-function/' },
-            { text: 'SGX SDK', link: 'https://teaclave.apache.org/docs/sgx-sdk/' },
+            { text: 'SGX SDK', link: 'https://teaclave.apache.org/docs/sgx-sdk/', target: '_self', rel: '' },
             { text: 'Blog', link: '/blog/' },
             {
                 text: 'Repository',
