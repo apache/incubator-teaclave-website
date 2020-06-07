@@ -78,6 +78,7 @@ module.exports = {
     },
     plugins: [
         '@vuepress/plugin-back-to-top',
+        'seo',
         [
             '@vuepress/blog',
             {
