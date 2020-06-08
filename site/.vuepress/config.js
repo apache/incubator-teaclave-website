@@ -70,6 +70,8 @@ module.exports = {
                     '/teaclave/function/',
                     '/teaclave/keys/',
                     '/teaclave/rpc/',
+                    '/teaclave/runtime/',
+                    '/teaclave/sdk/',
                     '/teaclave/services/',
                     '/teaclave/tests/',
                     '/teaclave/third_party/',
