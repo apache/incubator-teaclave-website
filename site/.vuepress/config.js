@@ -13,8 +13,14 @@ module.exports = {
             { text: 'Community', link: '/community/' },
             { text: 'Contributors', link: '/contributors/' },
             { text: 'Documentation', link: '/docs/my-first-function/' },
-            { text: 'SGX SDK', link: 'https://teaclave.apache.org/docs/sgx-sdk/', target: '_self', rel: '' },
             { text: 'Blog', link: '/blog/' },
+            {
+                text: 'SDK',
+                items: [
+                    { text: 'Teaclave Client SDK (Python)', link: 'https://teaclave.apache.org/docs/client-sdk-python/', target: '_self', rel: '' },
+                    { text: 'Teaclave SGX SDK', link: 'https://teaclave.apache.org/docs/sgx-sdk/', target: '_self', rel: '' },
+                ]
+            },
             {
                 text: 'Repository',
                 items: [
