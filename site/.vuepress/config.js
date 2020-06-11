@@ -48,6 +48,7 @@ module.exports = {
                 collapsable: false,
                 children: [
                     '/teaclave/docs/my-first-function',
+                    '/teaclave/docs/builtin-functions',
                 ],
             },
             {
