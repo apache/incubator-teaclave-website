@@ -44,8 +44,9 @@ module.exports = {
         ],
         sidebar: [
             {
-                title: 'Try Teaclave',
+                title: 'Try',
                 collapsable: false,
+                sidebarDepth: 0,
                 children: [
                     '/teaclave/docs/my-first-function',
                     '/teaclave/docs/builtin-functions',
@@ -54,17 +55,27 @@ module.exports = {
             {
                 title: 'Design',
                 collapsable: false,
+                sidebarDepth: 0,
                 children: [
                     '/teaclave/docs/threat-model',
-                    '/teaclave/docs/rust-guideline',
                     '/teaclave/docs/mutual-attestation',
                     '/teaclave/docs/access-control',
                     '/teaclave/docs/build-system',
                 ],
             },
             {
+                title: 'Contribute',
+                collapsable: false,
+                sidebarDepth: 0,
+                children: [
+                    '/teaclave/docs/development-tips',
+                    '/teaclave/docs/rust-guideline',
+                ],
+            },
+            {
                 title: 'Codebase',
                 collapsable: false,
+                sidebarDepth: 0,
                 children: [
                     '/teaclave/attestation/',
                     '/teaclave/cli/',
