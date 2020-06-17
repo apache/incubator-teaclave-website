@@ -15,10 +15,12 @@ module.exports = {
             { text: 'Documentation', link: '/docs/my-first-function/' },
             { text: 'Blog', link: '/blog/' },
             {
-                text: 'SDK',
+                text: 'API Docs',
                 items: [
                     { text: 'Teaclave Client SDK (Python)', link: 'https://teaclave.apache.org/docs/client-sdk-python/', target: '_self', rel: '' },
                     { text: 'Teaclave SGX SDK', link: 'https://teaclave.apache.org/docs/sgx-sdk/', target: '_self', rel: '' },
+                    { text: 'Crates in Teaclave (Enclave)', link: 'https://teaclave.apache.org/docs/crates-enclave/', target: '_self', rel: '' },
+                    { text: 'Crates in Teaclave (App)', link: 'https://teaclave.apache.org/docs/crates-app/', target: '_self', rel: '' },
                 ]
             },
             {

@@ -15,6 +15,10 @@ client-sdk-python-docs: teaclave-docs
 	pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/docs/client-sdk-python --html
 	@echo "<meta http-equiv=refresh content=0;url=teaclave.html>" > .vuepress/dist/docs/client-sdk-python/index.html
 
+crate-docs:
+	cp ${TEACLAVE_TARGET_DIR}/trusted/doc .vuepress/dist/docs/crates-enclave -r
+	cp ${TEACLAVE_TARGET_DIR}/untrusted/doc .vuepress/dist/docs/crates-app -r
+
 teaclave-docs:
 	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
 	vuepress build
@@ -26,7 +30,7 @@ dev:
 preview:
 	cd .vuepress/dist && python3 -m http.server
 
-build: teaclave-docs sgx-sdk-docs client-sdk-python-docs
+build: teaclave-docs sgx-sdk-docs client-sdk-python-docs crate-docs
 	cp ../.asf.yaml .vuepress/dist
 
 clean:
