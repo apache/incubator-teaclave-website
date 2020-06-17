@@ -12,7 +12,7 @@ module.exports = {
             { text: 'About', link: '/' },
             { text: 'Community', link: '/community/' },
             { text: 'Contributors', link: '/contributors/' },
-            { text: 'Documentation', link: '/docs/my-first-function/' },
+            { text: 'Documentation', link: '/docs/' },
             { text: 'Blog', link: '/blog/' },
             {
                 text: 'API Docs',
