@@ -51,6 +51,7 @@ module.exports = {
                 sidebarDepth: 0,
                 children: [
                     '/teaclave/docs/my-first-function',
+                    '/teaclave/docs/functions-in-python',
                     '/teaclave/docs/builtin-functions',
                 ],
             },
@@ -80,8 +81,11 @@ module.exports = {
                 sidebarDepth: 0,
                 children: [
                     '/teaclave/attestation/',
+                    '/teaclave/binder/',
                     '/teaclave/cli/',
+                    '/teaclave/common/',
                     '/teaclave/config/',
+                    '/teaclave/crypto/',
                     '/teaclave/dcap/',
                     '/teaclave/docker/',
                     '/teaclave/examples/',
@@ -95,6 +99,7 @@ module.exports = {
                     '/teaclave/services/',
                     '/teaclave/tests/',
                     '/teaclave/third_party/',
+                    '/teaclave/types/',
                     '/teaclave/worker/',
                 ],
             },
