@@ -99,6 +99,7 @@ module.exports = {
                     '/teaclave/services/',
                     '/teaclave/tests/',
                     '/teaclave/third_party/',
+                    '/teaclave/tool/',
                     '/teaclave/types/',
                     '/teaclave/worker/',
                 ],
