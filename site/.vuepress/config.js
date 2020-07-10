@@ -64,6 +64,7 @@ module.exports = {
                     '/teaclave/docs/mutual-attestation',
                     '/teaclave/docs/access-control',
                     '/teaclave/docs/build-system',
+                    '/teaclave/docs/service-internals',
                 ],
             },
             {
