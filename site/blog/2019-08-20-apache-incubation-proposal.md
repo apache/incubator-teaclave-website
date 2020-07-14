@@ -1,7 +1,7 @@
 ---
 title: Aapache Incubation Proposal
 date: 2019-08-20
-author: The Teacalve PPMC
+author: The Teaclave PPMC
 ---
 
 ```
