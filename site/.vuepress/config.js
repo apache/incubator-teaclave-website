@@ -65,6 +65,7 @@ module.exports = {
                     '/teaclave/docs/access-control',
                     '/teaclave/docs/build-system',
                     '/teaclave/docs/service-internals',
+                    '/teaclave/docs/papers-talks',
                 ],
             },
             {
