@@ -148,9 +148,10 @@ export default {
       color lighten($textColor, 25%)
   .footer
     font-size 0.7rem
-    padding 2.5rem
+    padding 2.5rem 0 2.5rem 0
+    margin-top 2.5rem
     border-top 1px solid $borderColor
-    text-align center
+    text-align left
     color lighten($textColor, 25%)
 
 @media (max-width: $MQMobile)
