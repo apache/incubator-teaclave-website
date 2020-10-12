@@ -8,7 +8,7 @@ These source archives are generated from tagged releases.
 
 | Version | Release Date | Source Code               | PGP  | SHA     |
 |---------|--------------|---------------------------|------|---------|
-| 0.1.0   | 2020-10-09   | [apache-teaclave-0.1.0-incubating.tar.gz](https://dist.apache.org/repos/dist/release/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz) | [.asc](https://dist.apache.org/repos/dist/release/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.asc) | [.sha512](https://dist.apache.org/repos/dist/release/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.sha512) |
+| 0.1.0   | 2020-10-09   | [apache-teaclave-0.1.0-incubating.tar.gz](https://downloads.apache.org/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz) | [.asc](https://downloads.apache.org/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.asc) | [.sha512](https://downloads.apache.org/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.sha512) |
 
 ## Verify Releases
 
