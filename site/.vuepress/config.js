@@ -11,6 +11,7 @@ module.exports = {
         nav: [
             { text: 'About', link: '/' },
             { text: 'Community', link: '/community/' },
+            { text: 'Download', link: '/download/' },
             { text: 'Contributors', link: '/contributors/' },
             { text: 'Documentation', link: '/docs/' },
             { text: 'Blog', link: '/blog/' },
