@@ -181,5 +181,13 @@ export default {
 </script>
 
 <style lang="stylus">
-@require '../styles/footer.styl'
+.page
+  .footer
+    max-width $contentWidth
+    margin: 2.5rem auto 0 auto
+    font-size 0.7rem
+    padding 2.5rem 0 2.5rem 0
+    border-top 1px solid $borderColor
+    text-align left
+    color lighten($textColor, 25%)
 </style>
