@@ -7,7 +7,7 @@
       class="dropdown-title"
       type="button"
       :aria-label="dropdownAriaLabel"
-      @click="setOpen(!open)"
+      @click="buttonOnClick(item.link)"
     >
       <span class="title">{{ item.text }}</span>
       <span
@@ -65,6 +65,7 @@
 import NavLink from '@theme/components/NavLink.vue'
 import DropdownTransition from '@theme/components/DropdownTransition.vue'
 import last from 'lodash/last'
+import { isExternal, isMailto, isTel, ensureExt } from '../util'
 
 export default {
   name: 'DropdownLink',
@@ -105,6 +106,14 @@ export default {
 
     isLastItemOfArray (item, array) {
       return last(array) === item
+    },
+
+    buttonOnClick (link) {
+      if (isExternal(link)) {
+        window.location.href = link
+      } else {
+        this.$router.push(link)
+      }
     }
   }
 }

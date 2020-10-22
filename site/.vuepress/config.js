@@ -13,7 +13,14 @@ module.exports = {
             { text: 'Community', link: '/community/' },
             { text: 'Download', link: '/download/' },
             { text: 'Contributors', link: '/contributors/' },
-            { text: 'Documentation', link: '/docs/' },
+            {
+                text: 'Documentation',
+                link: '/docs/',
+                items: [
+                    { text: 'Teaclave', link: '/docs/' },
+                    { text: 'Teaclave SGX SDK', link: '/sgx-sdk-docs/' },
+                ]
+            },
             { text: 'Blog', link: '/blog/' },
             {
                 text: 'API Docs',
@@ -26,6 +33,7 @@ module.exports = {
             },
             {
                 text: 'Repository',
+                link: 'https://github.com/apache/incubator-teaclave',
                 items: [
                     { text: 'Teaclave', link: 'https://github.com/apache/incubator-teaclave'},
                     { text: 'Teaclave SGX SDK', link: 'https://github.com/apache/incubator-teaclave-sgx-sdk'},
@@ -45,69 +53,82 @@ module.exports = {
                 ]
             }
         ],
-        sidebar: [
-            {
-                title: 'Try',
-                collapsable: false,
-                sidebarDepth: 0,
-                children: [
-                    '/teaclave/docs/my-first-function',
-                    '/teaclave/docs/functions-in-python',
-                    '/teaclave/docs/builtin-functions',
-                ],
-            },
-            {
-                title: 'Design',
-                collapsable: false,
-                sidebarDepth: 0,
-                children: [
-                    '/teaclave/docs/threat-model',
-                    '/teaclave/docs/mutual-attestation',
-                    '/teaclave/docs/access-control',
-                    '/teaclave/docs/build-system',
-                    '/teaclave/docs/service-internals',
-                    '/teaclave/docs/papers-talks',
-                ],
-            },
-            {
-                title: 'Contribute',
-                collapsable: false,
-                sidebarDepth: 0,
-                children: [
-                    '/teaclave/docs/development-tips',
-                    '/teaclave/docs/rust-guideline',
-                ],
-            },
-            {
-                title: 'Codebase',
-                collapsable: false,
-                sidebarDepth: 0,
-                children: [
-                    '/teaclave/attestation/',
-                    '/teaclave/binder/',
-                    '/teaclave/cli/',
-                    '/teaclave/common/',
-                    '/teaclave/config/',
-                    '/teaclave/crypto/',
-                    '/teaclave/dcap/',
-                    '/teaclave/docker/',
-                    '/teaclave/examples/',
-                    '/teaclave/executor/',
-                    '/teaclave/file_agent/',
-                    '/teaclave/function/',
-                    '/teaclave/keys/',
-                    '/teaclave/rpc/',
-                    '/teaclave/runtime/',
-                    '/teaclave/sdk/',
-                    '/teaclave/services/',
-                    '/teaclave/tests/',
-                    '/teaclave/third_party/',
-                    '/teaclave/tool/',
-                    '/teaclave/types/',
-                    '/teaclave/worker/',
-                ],
-            },
-        ]
+        sidebar: {
+          '/teaclave/docs/':
+          [
+              {
+                  title: 'Try',
+                  collapsable: false,
+                  sidebarDepth: 0,
+                  children: [
+                      '/teaclave/docs/my-first-function',
+                      '/teaclave/docs/functions-in-python',
+                      '/teaclave/docs/builtin-functions',
+                  ],
+              },
+              {
+                  title: 'Design',
+                  collapsable: false,
+                  sidebarDepth: 0,
+                  children: [
+                      '/teaclave/docs/threat-model',
+                      '/teaclave/docs/mutual-attestation',
+                      '/teaclave/docs/access-control',
+                      '/teaclave/docs/build-system',
+                      '/teaclave/docs/service-internals',
+                      '/teaclave/docs/papers-talks',
+                  ],
+              },
+              {
+                  title: 'Contribute',
+                  collapsable: false,
+                  sidebarDepth: 0,
+                  children: [
+                      '/teaclave/docs/development-tips',
+                      '/teaclave/docs/rust-guideline',
+                  ],
+              },
+              {
+                  title: 'Codebase',
+                  collapsable: false,
+                  sidebarDepth: 0,
+                  children: [
+                      '/teaclave/attestation/',
+                      '/teaclave/binder/',
+                      '/teaclave/cli/',
+                      '/teaclave/common/',
+                      '/teaclave/config/',
+                      '/teaclave/crypto/',
+                      '/teaclave/dcap/',
+                      '/teaclave/docker/',
+                      '/teaclave/examples/',
+                      '/teaclave/executor/',
+                      '/teaclave/file_agent/',
+                      '/teaclave/function/',
+                      '/teaclave/keys/',
+                      '/teaclave/rpc/',
+                      '/teaclave/runtime/',
+                      '/teaclave/sdk/',
+                      '/teaclave/services/',
+                      '/teaclave/tests/',
+                      '/teaclave/third_party/',
+                      '/teaclave/tool/',
+                      '/teaclave/types/',
+                      '/teaclave/worker/',
+                  ],
+              },
+          ],
+          '/sgx-sdk-docs/': [
+              {
+                  title: 'Security',
+                  collapsable: false,
+                  sidebarDepth: 0,
+                  children: [
+                      '/sgx-sdk-docs/everything-about-cve-2020-5499',
+                  ],
+              },
+          ]
+        }
     },
     plugins: [
         '@vuepress/plugin-back-to-top',
