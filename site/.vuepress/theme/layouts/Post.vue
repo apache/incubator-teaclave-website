@@ -192,6 +192,10 @@ export default {
     margin: 2.5rem auto 0 auto
     font-size 0.7rem
     padding 2.5rem 0 2.5rem 0
+    @media (max-width: $MQMobile)
+      padding 2.5rem 1rem 2.5rem 1rem
+    @media (max-width: $MQMobileNarrow)
+      padding 2.5rem 1rem 2.5rem 1rem
     border-top 1px solid $borderColor
     text-align left
     color lighten($textColor, 25%)

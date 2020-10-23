@@ -161,6 +161,8 @@ export default {
     .feature
       max-width 100%
       padding 0 2.5rem
+    .footer
+      padding 2.5rem 1rem 2.5rem 1rem
 
 @media (max-width: $MQMobileNarrow)
   .home
@@ -182,4 +184,6 @@ export default {
     .feature
       h2
         font-size 1.25rem
+    .footer
+      padding 2.5rem 1rem 2.5rem 1rem
 </style>
