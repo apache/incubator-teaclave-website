@@ -141,7 +141,7 @@ module.exports = {
                         dirname: 'blog',
                         path: '/blog/',
                         layout: 'IndexPost',
-                        itemPermalink: '/blog/:year/:month/:day/:slug',
+                        itemPermalink: '/blog/:year-:month-:day-:slug',
                     },
                 ],
             },
