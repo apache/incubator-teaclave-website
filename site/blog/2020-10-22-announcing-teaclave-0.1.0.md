@@ -9,7 +9,7 @@ Incubator release of Teaclave, 0.1.0. Teaclave is a universal secure computing
 platform, making computation on privacy-sensitive data safe and simple.
 
 The 0.1.0 release marks an important milestone for the Teaclave community. This
-is the first public release of the Teaclave platform, moreover, this is the
+is the first public release of the Teaclave platform. Moreover, this is the
 first official release since we entered Apache Incubator on August 19, 2019.
 
 ## Project highlights
@@ -20,8 +20,8 @@ of the Teaclave project.
 Apache Teaclave (incubating) has following highlights:
 
 - **Security**: Teaclave adopts multiple security technologies to enable secure
-  computing, in particular, Teaclave uses Intel SGX to serve the most
-  security-sensitive tasks with *hardware-based isolation*, *memory encryption*
+  computing. In particular, Teaclave uses Intel SGX to serve the most
+  security-sensitive tasks with *hardware-based isolation*, *memory encryption*,
   and *attestation*. Also, Teaclave is written in Rust to prevent
   *memory-safety* issues.
 - **Functionality**: Teaclave is provided as a *function-as-a-service platform*.
@@ -29,12 +29,12 @@ Apache Teaclave (incubating) has following highlights:
   set intersection, crypto computation, etc. In addition, developers can also
   deploy and execute Python scripts in Teaclave. More importantly, unlike
   traditional FaaS, Teaclave supports both general secure computing tasks and
-  *flexible single- and multi-party secure computation*.
+  *flexible single- and multi-party computation*.
 - **Usability**: Teaclave builds its components in containers, therefore, it
   supports deployment both locally and within cloud infrastructures. Teaclave
-  also provides convenient endpoint APIs, client SDKs and command line tools.
-- **Modularity**: Components in Teaclave are designed in modular, and some like
-  remote attestation can be easily embedded in other projects. In addition,
+  also provides convenient endpoint APIs, client SDKs, and command-line tools.
+- **Modularity**: Components in Teaclave are designed in modular, and some components 
+  like remote attestation can be easily embedded in other projects. In addition,
   Teaclave SGX SDK can also be used separately to write standalone SGX enclaves
   for other purposes.
 
@@ -65,9 +65,9 @@ and improving the project in many perspectives. These include:
     - errors can be propagated through RPC
     - better error triage
 * Testsuite cleanup/refactoring.
-* Implementing more built-in functions: we have 9 built-in functions including
+* Implementing more built-in functions: we have nine built-in functions, including
   echo, face detection, gbdt predict/train, logistic regression predict/train,
-  online decrypt, ordered set intersect, private join and comput, and RSA sign.
+  online decrypt, ordered set intersect, private join and compute, and RSA sign.
 * Supporting more flexible attestation mechanisms (DCAP): providing a reference
   implementation of DCAP attestation service and supporting DCAP in our
   attestation library and build system as well.
@@ -75,14 +75,14 @@ and improving the project in many perspectives. These include:
     - multi-language client
 * Many other changes.
 
-These changes include 876 files changed, 78,237 insertions and 54,846 deletions.
+These changes include 876 files changed, 78,237 insertions, and 54,846 deletions.
 We have also closed 102 issues on GitHub to answer questions from the community
 and implementing feature requests.
 
 ## Download
 
 Teaclave 0.1.0 can be downloaded at [the download page](/download/). Note that 
-it is essential that you verify the integrity of the downloaded file using the
+it is essential to verify the integrity of the downloaded file using the
 PGP signature (.asc file) or a hash (.md5 or .sha* file).
 
 ## Documentation
@@ -160,10 +160,10 @@ who send pull requests to fix bugs
 and implementing features. In addition, I'd like to thank people who tries
 Teaclave themselves, files bugs or feature requests. This also helps us to
 understand the project and figure out where we can improve.
-Finally, I'd like to thank companies who use Teaclave and contributing back to
+Finally, I'd like to thank companies who use Teaclave and contribute back to
 the community.
 
-At last, 0.1.0 is just the start of Teaclave, we will continue working hard with
+At last, 0.1.0 is just the start of Teaclave. We will continue working hard with
 the community implementing new features, writing documents, and expanding the
 community.
 
