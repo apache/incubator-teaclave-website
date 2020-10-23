@@ -25,10 +25,10 @@ module.exports = {
             {
                 text: 'API Docs',
                 items: [
-                    { text: 'Teaclave Client SDK (Python)', link: 'https://teaclave.apache.org/docs/client-sdk-python/', target: '_self', rel: '' },
-                    { text: 'Teaclave SGX SDK', link: 'https://teaclave.apache.org/docs/sgx-sdk/', target: '_self', rel: '' },
-                    { text: 'Crates in Teaclave (Enclave)', link: 'https://teaclave.apache.org/docs/crates-enclave/', target: '_self', rel: '' },
-                    { text: 'Crates in Teaclave (App)', link: 'https://teaclave.apache.org/docs/crates-app/', target: '_self', rel: '' },
+                    { text: 'Teaclave Client SDK (Python)', link: 'https://teaclave.apache.org/api-docs/client-sdk-python/', target: '_self', rel: '' },
+                    { text: 'Teaclave SGX SDK', link: 'https://teaclave.apache.org/api-docs/sgx-sdk/', target: '_self', rel: '' },
+                    { text: 'Crates in Teaclave (Enclave)', link: 'https://teaclave.apache.org/api-docs/crates-enclave/', target: '_self', rel: '' },
+                    { text: 'Crates in Teaclave (App)', link: 'https://teaclave.apache.org/api-docs/crates-app/', target: '_self', rel: '' },
                 ]
             },
             {
@@ -118,13 +118,13 @@ module.exports = {
                   ],
               },
           ],
-          '/sgx-sdk-docs/': [
+          '/teaclave-sgx-sdk/documents/': [
               {
                   title: 'Security',
                   collapsable: false,
                   sidebarDepth: 0,
                   children: [
-                      '/sgx-sdk-docs/everything-about-cve-2020-5499',
+                      '/teaclave-sgx-sdk/documents/everything-about-cve-2020-5499',
                   ],
               },
           ]

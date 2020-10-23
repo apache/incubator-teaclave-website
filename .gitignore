@@ -1,5 +1,6 @@
 dist
 teaclave
+teaclave-sgx-sdk
 node_modules
 target
 sgx-sdk-docs/Cargo.lock
