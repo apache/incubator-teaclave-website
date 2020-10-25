@@ -8,6 +8,7 @@ module.exports = {
         lastUpdated: 'Last Updated',
         twitter: '@ApacheTeaclave',
         domain: 'https://teaclave.apache.org',
+        dateFormat: 'MMMM D, YYYY',
         nav: [
             { text: 'About', link: '/' },
             { text: 'Community', link: '/community/' },
