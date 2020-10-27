@@ -55,7 +55,7 @@ module.exports = {
             }
         ],
         sidebar: {
-          '/teaclave/docs/':
+          '/teaclave/':
           [
               {
                   title: 'Try',
@@ -119,7 +119,7 @@ module.exports = {
                   ],
               },
           ],
-          '/teaclave-sgx-sdk/documents/': [
+          '/teaclave-sgx-sdk/': [
               {
                   title: 'Security',
                   collapsable: false,
