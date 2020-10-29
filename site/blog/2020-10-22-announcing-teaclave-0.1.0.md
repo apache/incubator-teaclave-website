@@ -4,6 +4,8 @@ date: 2020-10-22
 author: Mingshen Sun
 ---
 
+[English](/blog/2020-10-21-announcing-teaclave-0-1-0/) | [中文](/blog/2020-10-28-announcing-teaclave-0-1-0-cn/)
+
 On behalf of the Teaclave community, I am happy to announce the *first* Apache
 Incubator release of Teaclave, 0.1.0. Teaclave is a universal secure computing
 platform, making computation on privacy-sensitive data safe and simple.
@@ -38,6 +40,7 @@ Apache Teaclave (incubating) has following highlights:
   Teaclave SGX SDK can also be used separately to write standalone SGX enclaves
   for other purposes.
 
+![Teaclave Architecture](./img/teaclave-architecture.png)
 
 ## Changes since entering Apache Incubator
 

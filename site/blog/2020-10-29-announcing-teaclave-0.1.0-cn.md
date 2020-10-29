@@ -4,6 +4,8 @@ date: 2020-10-29
 author: Mingshen Sun
 ---
 
+[English](/blog/2020-10-21-announcing-teaclave-0-1-0/) | [中文](/blog/2020-10-28-announcing-teaclave-0-1-0-cn/)
+
 Apache Teaclave (incubating) 作为全球首个开源通用安全计算平台，在 2020 年 10 月
 21 日社区投票正式通过 0.1.0 的版本发布。0.1.0 版是 Teaclave 社区发展重要的里程碑，
 它是暨 Teaclave 进入 Apache 孵化器后发布的第一个正式版本，这意味着 Teaclave 通向
