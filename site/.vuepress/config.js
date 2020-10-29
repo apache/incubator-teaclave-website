@@ -121,6 +121,15 @@ module.exports = {
           ],
           '/teaclave-sgx-sdk/': [
               {
+                  title: 'Development',
+                  collapsable: false,
+                  sidebarDepth: 0,
+                  children: [
+                      '/teaclave-sgx-sdk/documents/developing-with-vscode',
+                      '/teaclave-sgx-sdk/documents/is_x86_feature_detected-in-sgx-sdk',
+                  ],
+              },
+              {
                   title: 'Security',
                   collapsable: false,
                   sidebarDepth: 0,
@@ -132,6 +141,7 @@ module.exports = {
         }
     },
     plugins: [
+        '@vuepress/medium-zoom',
         '@vuepress/plugin-back-to-top',
         [
             '@vuepress/blog',
