@@ -43,15 +43,15 @@ Teaclave 同时支持多方参与的联合计算，打破企业和组织中的�
 发布一共修改了 876 个源文件，新增了 78,237 行代码，删除了 54,846 行代码，并且在
 GitHub issue 上解决了来自社区的 102 个问题。
 
-Teaclave 0.1.0 版本可以在[官网下载页面](https://teaclave.apache.org/download/)
+Teaclave 0.1.0 版本可以在[官网下载页面](/download/)
  找到（注意验证 PGP 签名和 hash）。
 
 在新版本中我们提供了非常全面和详细的文档，如果是第一次了解和接触 Teaclave，我们
-提供了一个简单易上手的[新手入门文档](https://teaclave.apache.org/docs/my-first-function/)，你可以在这个文档中
+提供了一个简单易上手的[新手入门文档](/docs/my-first-function/)，你可以在这个文档中
 学习如何在 Teaclave 中编译和运行一个简单的函数。当然，如果你想深入的了解
 Teaclave 的内部设计和实现，我们还有更多设计文档、API 文档、代码库文档等你发现。
 
-感谢一直以来关注、使用、提问、为项目贡献代码的人们，Teaclave 项目的发展离不开[社区](https://teaclave.apache.org/community/) 的支持与帮助。在此，我们非常高
+感谢一直以来关注、使用、提问、为项目贡献代码的人们，Teaclave 项目的发展离不开[社区](/community/) 的支持与帮助。在此，我们非常高
 兴的宣布，已有四家公司或组织在产品中使用 Teaclave，并且有超过九个开源项目使用了
 Teaclave 平台和 Teaclave SGX SDK。这些都给项目的发展提供源源不断的动力。
 
@@ -60,12 +60,12 @@ Teaclave 的开源是 [The Apache Way](https://www.apache.org/theapacheway/) 的
 你想关注 Teaclave，亦或想加入我们的讨论，可以在 [Github issues](https://lists.apache.org/list.html?dev@teaclave.apache.org)，邮件列
 表回复我们、发起新的话题。也可以关注我们的 Twitter 账号
 [@ApacheTeaclave](https://twitter.com/ApacheTeaclave) 了解最新动态。除此之外，
-我们在[官网](https://teaclave.apache.org/docs/papers-talks/) 中提供了
+我们在[官网](/docs/papers-talks/) 中提供了
 Teaclave 相关的演讲、论文和文章，包括今年在 ApacheCon 的演讲 slides 和视频。
 
-在此，感谢我们所有[贡献者](https://teaclave.apache.org/contributors/) 对于项
-目的贡献，感谢 Apache 社区[导师们](https://teaclave.apache.org/contributors/#mentors) 的指导，感谢所有帮助
-扩大社区、宣传社区、讨论路线图、组织社区活动的 [PPMC 和 committer 成员](https://teaclave.apache.org/contributors/#committers)，
+在此，感谢我们所有[贡献者](/contributors/) 对于项
+目的贡献，感谢 Apache 社区[导师们](/contributors/#mentors) 的指导，感谢所有帮助
+扩大社区、宣传社区、讨论路线图、组织社区活动的 [PPMC 和 committer 成员](/contributors/#committers)，
 还要感谢正在了解
 和尝试使用 Teaclave 的人们，以及回馈 Teaclave 社区的公司。你们都为 Teaclave 开源
 社区的发展做了巨大的贡献。
