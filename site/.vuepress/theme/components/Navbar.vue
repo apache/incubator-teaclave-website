@@ -17,7 +17,7 @@
         ref="siteName"
         class="site-name"
         :class="{ 'can-hide': $site.themeConfig.logo }"
-      >{{ $siteTitle }}</span>
+      >Teaclave</span>
     </RouterLink>
 
     <div
