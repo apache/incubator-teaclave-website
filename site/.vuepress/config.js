@@ -10,7 +10,6 @@ module.exports = {
         domain: 'https://teaclave.apache.org',
         dateFormat: 'MMMM D, YYYY',
         nav: [
-            { text: 'About', link: '/' },
             { text: 'Community', link: '/community/' },
             { text: 'Download', link: '/download/' },
             { text: 'Contributors', link: '/contributors/' },
