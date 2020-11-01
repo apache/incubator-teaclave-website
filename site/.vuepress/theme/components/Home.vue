@@ -118,7 +118,7 @@ export default {
       font-size 1.2rem
       color #fff
       background-color $accentColor
-      padding 0.8rem 1.6rem
+      padding 0.5rem 1.6rem
       border-radius 4px
       transition background-color .1s ease
       box-sizing border-box
@@ -160,9 +160,9 @@ export default {
       flex-direction column
     .feature
       max-width 100%
-      padding 0 2.5rem
+      padding 0 1rem
     .footer
-      padding 2.5rem 1rem 2.5rem 1rem
+      padding 1.5rem 1rem 1.5rem 1rem
 
 @media (max-width: $MQMobileNarrow)
   .home
@@ -180,7 +180,7 @@ export default {
         font-size 1.2rem
       .action-button
         font-size 1rem
-        padding 0.6rem 1.2rem
+        padding 0.3rem 1.2rem
     .feature
       h2
         font-size 1.25rem
