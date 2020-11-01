@@ -1,15 +1,16 @@
 module.exports = {
-    title: 'Apache Teaclave (Incubating)',
+    title: 'Apache Teaclave (incubating)',
     description: 'Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.',
     base: '/',
     themeConfig: {
-        search: true,
+        search: false,
         smoothScroll: true,
         lastUpdated: 'Last Updated',
         twitter: '@ApacheTeaclave',
         domain: 'https://teaclave.apache.org',
         dateFormat: 'MMMM D, YYYY',
         nav: [
+            { text: 'About', link: '/' },
             { text: 'Community', link: '/community/' },
             { text: 'Download', link: '/download/' },
             { text: 'Contributors', link: '/contributors/' },
@@ -183,4 +184,35 @@ module.exports = {
             }
         ],
     ],
+    markdown: {
+        extendMarkdown(md) {
+            md.use(require('markdown-it-toc-done-right'))
+            md.use(require('markdown-it-footnote'))
+        }
+    },
+    chainMarkdown(config) {
+        const { PLUGINS } = require('@vuepress/markdown')
+        const originalLinkPlugin = require('@vuepress/markdown/lib/link.js');
+
+        config
+            .plugins
+            .delete(PLUGINS.CONVERT_ROUTER_LINK)
+
+        const linkPlugin = function (md) {
+            const result = originalLinkPlugin.apply(this, arguments);
+            const close = md.renderer.rules.link_close;
+            md.renderer.rules.link_close = function() {
+                return close.apply(this, arguments).replace('<OutboundLink/>', '');
+            }
+            return result;
+        };
+
+        config
+            .plugin(PLUGINS.CONVERT_ROUTER_LINK)
+            .use(linkPlugin, [{
+                // The config.markdown.externalLinks options https://vuepress.vuejs.org/config/#markdown-externallinks
+                target: '_blank',
+                rel: 'noopener noreferrer'
+            }])
+    },
 }
