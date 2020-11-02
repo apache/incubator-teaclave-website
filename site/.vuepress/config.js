@@ -68,6 +68,7 @@ module.exports = {
                       '/teaclave/docs/my-first-function',
                       '/teaclave/docs/functions-in-python',
                       '/teaclave/docs/builtin-functions',
+                      '/teaclave/docs/azure-confidential-computing',
                   ],
               },
               {
