@@ -148,6 +148,18 @@ module.exports = {
         '@vuepress/medium-zoom',
         '@vuepress/plugin-back-to-top',
         [
+            'feed',
+            {
+                canonical_base: 'https://teaclave.apache.org',
+            }
+        ],
+        [
+            'sitemap',
+            {
+                hostname: 'https://teaclave.apache.org'
+            }
+        ],
+        [
             '@vuepress/blog',
             {
                 directories: [
