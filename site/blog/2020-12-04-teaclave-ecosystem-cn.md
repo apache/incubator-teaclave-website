@@ -4,6 +4,8 @@ date: 2020-12-04
 author: Mingshen Sun
 ---
 
+[English](/blog/2020-12-09-teaclave-ecosystem/) | [中文](/blog/2020-12-04-teaclave-ecosystem-cn/)
+
 Apache Teaclave (incubating) ([https://teaclave.apache.org/](https://teaclave.apache.org/))是全球首个通用安全计算平台，为隐私数据计算赋能，让安全计算更简单。Teaclave 基于硬件安全能力（Intel SGX），确保敏感数据在可信域外和离岸场景下安全可控的流通和处理，无需担心隐私数据泄露和滥用。同时，Teaclave 还支持多方参与的联合计算，打破企业和组织中的数据孤岛。Teaclave 于 2019 年 8 月进入 Apache 基金会孵化器，2020 年 10 月，Teaclave 社区正式通过并发布了 0.1.0 版。
 
 ## Teaclave 的四大亮点
