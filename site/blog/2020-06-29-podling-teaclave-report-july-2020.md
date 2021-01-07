@@ -1,7 +1,7 @@
 ---
 title: Podling Teaclave Report - July 2020
 date: 2020-06-29
-author: The Teaclave PPMC
+author: Mingshen Sun
 ---
 
 ## Teaclave
