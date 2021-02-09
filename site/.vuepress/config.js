@@ -29,6 +29,7 @@ module.exports = {
             {
                 text: 'API Docs',
                 items: [
+                    { text: 'Teaclave Client SDK (Rust)', link: 'https://teaclave.apache.org/api-docs/client-sdk-rust/', target: '_self', rel: '' },
                     { text: 'Teaclave Client SDK (Python)', link: 'https://teaclave.apache.org/api-docs/client-sdk-python/', target: '_self', rel: '' },
                     { text: 'Teaclave SGX SDK', link: 'https://teaclave.apache.org/api-docs/sgx-sdk/', target: '_self', rel: '' },
                     { text: 'Crates in Teaclave (Enclave)', link: 'https://teaclave.apache.org/api-docs/crates-enclave/', target: '_self', rel: '' },

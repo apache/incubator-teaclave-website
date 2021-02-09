@@ -15,6 +15,11 @@ client-sdk-python-docs: teaclave-docs
 	pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python --html
 	@echo "<meta http-equiv=refresh content=0;url=teaclave.html>" > .vuepress/dist/api-docs/client-sdk-python/index.html
 
+client-sdk-rust-docs: teaclave-docs
+	cargo doc --no-deps --manifest-path teaclave/sdk/rust/Cargo.toml
+	cp -r teaclave/sdk/rust/target/doc .vuepress/dist/api-docs/client-sdk-rust
+	@echo "<meta http-equiv=refresh content=0;url=`echo teaclave_client_sdk | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/client-sdk-rust/index.html
+
 crate-docs:
 	cp ${TEACLAVE_TARGET_DIR}/trusted/doc .vuepress/dist/api-docs/crates-enclave -r
 	cp ${TEACLAVE_TARGET_DIR}/untrusted/doc .vuepress/dist/api-docs/crates-app -r
@@ -32,7 +37,7 @@ dev:
 preview:
 	cd .vuepress/dist && python3 -m http.server
 
-build: teaclave-docs sgx-sdk-api-docs client-sdk-python-docs crate-docs
+build: teaclave-docs sgx-sdk-api-docs client-sdk-python-docs client-sdk-rust-docs crate-docs
 	cp ../.asf.yaml .vuepress/dist
 
 clean:
