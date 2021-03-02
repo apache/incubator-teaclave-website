@@ -8,6 +8,7 @@ These source archives are generated from tagged releases.
 
 | Version | Release Date | Source Code               | PGP  | SHA     |
 |---------|--------------|---------------------------|------|---------|
+| 0.2.0   | 2021-03-02   | [apache-teaclave-0.2.0-incubating.tar.gz](https://www.apache.org/dyn/closer.cgi/incubator/teaclave/0.2.0/apache-teaclave-0.2.0-incubating.tar.gz) | [.asc](https://www.apache.org/dist/incubator/teaclave/0.2.0/apache-teaclave-0.2.0-incubating.tar.gz.asc) | [.sha512](https://www.apache.org/dist/incubator/teaclave/0.2.0/apache-teaclave-0.2.0-incubating.tar.gz.sha512) |
 | 0.1.0   | 2020-10-09   | [apache-teaclave-0.1.0-incubating.tar.gz](https://www.apache.org/dyn/closer.cgi/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz) | [.asc](https://www.apache.org/dist/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.asc) | [.sha512](https://www.apache.org/dist/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.sha512) |
 
 ## Verify the Integrity of the Files
@@ -56,6 +57,6 @@ Windows 7 and later systems should all now have `certUtil`:
 $ certUtil -hashfile pathToFileToCheck
 ```
 
-HashAlgorithm choices: MD2 MD4 MD5 SHA1 SHA256 SHA384 SHA512
+HashAlgorithm choices: `MD2`, `MD4`, `MD5`, `SHA1`, `SHA256`, `SHA384`, `SHA512`
 
 Unix-like systems (and macOS) will have a utility called `md5`, `md5sum` or `shasum`
