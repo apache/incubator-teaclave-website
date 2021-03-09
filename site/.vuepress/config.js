@@ -42,6 +42,7 @@ module.exports = {
                 items: [
                     { text: 'Teaclave', link: 'https://github.com/apache/incubator-teaclave'},
                     { text: 'Teaclave SGX SDK', link: 'https://github.com/apache/incubator-teaclave-sgx-sdk'},
+                    { text: 'Teaclave TrustZone SDK', link: 'https://github.com/apache/incubator-teaclave-trustzone-sdk'},
                     { text: 'Teaclave Website', link: 'https://github.com/apache/incubator-teaclave-website'},
                 ]
             },
