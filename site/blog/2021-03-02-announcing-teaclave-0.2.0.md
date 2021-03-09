@@ -4,6 +4,8 @@ date: 2021-03-02
 author: Mingshen Sun
 ---
 
+[English](/blog/2021-03-01-announcing-teaclave-0-2-0/) | [中文](/blog/2021-03-01-announcing-teaclave-0-2-0-cn/)
+
 On behalf of the Teaclave community, I am happy to announce the *second* Apache
 Incubator release of Teaclave, 0.2.0. Teaclave is a universal secure computing
 platform, making computation on privacy-sensitive data safe and simple.
