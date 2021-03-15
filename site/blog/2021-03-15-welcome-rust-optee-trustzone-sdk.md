@@ -10,7 +10,7 @@ TrustZone is a security feature by ARM SoC to provide a trusted execution
 environment to protect areas like mobile computing, edge computing, and
 emerging confidential computing, supporting scenarios like payments, key
 management, model protection, etc. However, one major security threat in
-TrustZone applications is from the memory safety issue. For instance, a
+TrustZone applications is the memory safety issue. For instance, a
 vulnerability of Qualcomm's QSEE is caused by the memory safety issue [1].
 Attackers can even get the full-disk encryption key by exploiting such kind of
 vulnerability [2].
@@ -27,12 +27,12 @@ TrustZone's foundation, Baidu has donated Rust OP-TEE TrustZone SDK to Apache So
 Foundation as a subproject of Teaclave, and renamed it as Teaclave TrustZone SDK.
 The location of new repository is 
 [https://github.com/apache/incubator-teaclave-trustzone-sdk](https://github.com/apache/incubator-teaclave-trustzone-sdk).
-Similar with Teaclave SGX SDK, Teaclave TrustZone SDK will be the foundation of
+Similar to Teaclave SGX SDK, Teaclave TrustZone SDK will be the foundation of
 Teaclave FaaS platform to support multiple trusted execution environments.
 
 ## Design and Implementation of Teaclave TrustZone SDK
 
-Based on the GlobalPlatform's C APIs, Teaclave TrustZone SDK provides a safer Rust interfaces.
+Based on the GlobalPlatform's C APIs, Teaclave TrustZone SDK provides safer Rust interfaces.
 With the SDK, TrustZone apps will not be affected by any memory safety issues
 caused by the Rust's strong type system.
 
@@ -52,16 +52,16 @@ Rust APIs have clearer semantics and more strict type checking.
 
 ![Teaclave TrustZone SDK APIs](./img/teaclave-trustzone-sdk-apis.png)
 
-The project also has 13 samples including encryption/decryption, secure storage, HOTP, etc.
-Also, we also provide a message passing sample code by using `serde` for
+The project also has 13 samples, including encryption/decryption, secure storage, HOTP, etc.
+Also, we provide a message passing sample code by using `serde` for
 serialization and de-serialization between different worlds to avoid any
-security issues caused by in-proper design in boundaries.
+security issues caused by improper design in boundaries.
 
 ## Getting Started and Documentations
 
 All APIs in Teaclave TrustZone SDK are well documented. In the project's Wiki
 page, we have [a quick-start document](https://github.com/apache/incubator-teaclave-trustzone-sdk/wiki/Getting-started-with-OPTEE-for-QEMU-ARMv8)
-to guide you compiling and running a TrustZone app in QEMU emulator.
+to guide you compiling and running a TrustZone app in QEMU emulators.
 You can find more design and performance evaluation in our paper published in ACSAC 2020.
 
 ![Teaclave TrustZone Paper](./img/teaclave-trustzone-sdk-paper.png)
