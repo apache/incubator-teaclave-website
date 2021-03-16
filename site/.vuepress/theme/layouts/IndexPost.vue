@@ -30,6 +30,7 @@
     <slot name="top" />
     <div id="base-list-layout" class="theme-default-content">
       <h1>Blog</h1>
+      <p>
       <article
         v-for="page in pages"
         :key="page.key"
@@ -40,6 +41,7 @@
       >
         <h3><NavLink :link="page.path">{{ page.title }}</NavLink><small> · {{ resolvePostDate(page.frontmatter.date) }}</small></h3>
       </article>
+      </p>
     </div>
     <slot name="bottom" />
     <div class="footer">
