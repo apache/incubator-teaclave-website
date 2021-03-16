@@ -3,8 +3,8 @@ title: Apache Teaclave (incubating)
 home: true
 description: Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.
 heroText: Apache Teaclave (incubating)
-tagline:  an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple
-actionText: Get Started →
+tagline:  Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.
+actionText: GET STARTED →
 actionLink: /docs/my-first-function/
 ---
 
@@ -40,11 +40,11 @@ client SDKs and command line tools. </p>
 </div>
 
 <div class="feature">
-<h3>Flexibility</h3>
+<h3>Flexible</h3>
 <p> Components in Teaclave are designed in
-modular, and some like remote attestation can be easily embedded in other
-projects. In addition, Teaclave SGX SDK can also be used separately to write
-standalone SGX enclaves for other purposes. </p>
+modular, and features like remote attestation can be easily embedded in other
+projects. In addition, Teaclave SGX SDK and Teaclave TrustZone SDK can also be
+used separately to write TEE apps for other purposes. </p>
 </div>
 
 </div>
