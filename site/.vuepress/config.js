@@ -23,6 +23,7 @@ module.exports = {
                 items: [
                     { text: 'Teaclave', link: '/docs/' },
                     { text: 'Teaclave SGX SDK', link: '/sgx-sdk-docs/' },
+                    { text: 'Teaclave TrustZone SDK', link: '/trustzone-sdk-docs/' },
                 ]
             },
             { text: 'Blog', link: '/blog/' },
@@ -141,6 +142,16 @@ module.exports = {
                   sidebarDepth: 0,
                   children: [
                       '/teaclave-sgx-sdk/documents/everything-about-cve-2020-5499',
+                  ],
+              },
+          ],
+          '/teaclave-trustzone-sdk/': [
+              {
+                  title: 'Development',
+                  collapsable: false,
+                  sidebarDepth: 0,
+                  children: [
+                      '/teaclave-trustzone-sdk/docs/getting-started-with-optee-for-qemu-armv8',
                   ],
               },
           ]
