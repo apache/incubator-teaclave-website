@@ -38,7 +38,7 @@
         itemscope
         itemtype="https://schema.org/BlogPosting"
       >
-        <h3><NavLink :link="page.path">{{ page.title }}</NavLink> · <small>{{ resolvePostDate(page.frontmatter.date) }}</small></h3>
+        <h3><NavLink :link="page.path">{{ page.title }}</NavLink><small> · {{ resolvePostDate(page.frontmatter.date) }}</small></h3>
       </article>
     </div>
     <slot name="bottom" />
