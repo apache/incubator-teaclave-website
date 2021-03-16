@@ -170,6 +170,9 @@ module.exports = {
                         dirname: 'blog',
                         path: '/blog/',
                         layout: 'IndexPost',
+                        pagination: {
+                            lengthPerPage: 100,
+                        },
                         itemPermalink: '/blog/:year-:month-:day-:slug',
                     },
                 ],
