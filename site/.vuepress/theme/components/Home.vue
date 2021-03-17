@@ -107,7 +107,7 @@ export default {
     h1
       font-size 2.5rem
       font-weight 900
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
     h1, .description, .action
       margin 1.8rem auto
     .description
@@ -119,13 +119,13 @@ export default {
     .action-button
       display inline-block
       font-size 1rem
+      font-weight 700
       color #fff
       background-color $accentColor
-      padding 0.5rem 1.6rem
+      padding 0.3rem 1.4rem
       border-radius 4px
       transition background-color .1s ease
       box-sizing border-box
-      border-bottom 1px solid darken($accentColor, 10%)
       &:hover
         background-color lighten($accentColor, 10%)
   .features

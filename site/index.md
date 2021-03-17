@@ -11,7 +11,7 @@ actionLink: /docs/my-first-function/
 <div class="features">
 
 <div class="feature">
-<h3>Secure and Attestable</h3>
+<h3><i class="fas fa-shield-alt"></i>&nbsp; Secure and Attestable</h3>
 <p>
 Teaclave adopts multiple security technologies to enable secure computing,
 in particular, Teaclave uses Intel SGX to serve the most security-sensitive
@@ -21,7 +21,7 @@ Also, Teaclave is written in Rust to prevent memory-safety issues.
 </div>
 
 <div class="feature">
-<h3>Function-as-a-Service</h3>
+<h3><i class="fas fa-server"></i>&nbsp; Function-as-a-Service</h3>
 <p> Teaclave is a
 function-as-a-service platform supporting tasks like privacy-preserving machine
 learning, private set intersection, and crypto computation. In addition,
@@ -32,7 +32,7 @@ general secure computing tasks and flexible multi-party secure computation.
 </div>
 
 <div class="feature">
-<h3>Ease of Use</h3>
+<h3><i class="fas fa-grin"></i>&nbsp; Ease of Use</h3>
 <p> Teaclave builds its
 components in containers, therefore, it supports deployment both locally and
 within cloud infrastructures. Teaclave also provides convenient endpoint APIs,
@@ -40,7 +40,7 @@ client SDKs and command line tools. </p>
 </div>
 
 <div class="feature">
-<h3>Flexible</h3>
+<h3><i class="fas fa-shapes"></i>&nbsp; Flexible</h3>
 <p> Components in Teaclave are designed in
 modular, and features like remote attestation can be easily embedded in other
 projects. In addition, Teaclave SGX SDK and Teaclave TrustZone SDK can also be
