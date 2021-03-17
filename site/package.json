@@ -2,6 +2,7 @@
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.7.1",
     "@vuepress/plugin-blog": "^1.9.3",
+    "@vuepress/plugin-google-analytics": "^1.8.2",
     "@vuepress/plugin-medium-zoom": "^1.7.1",
     "markdown-it-footnote": "^3.0.2",
     "markdown-it-toc-done-right": "^4.2.0",

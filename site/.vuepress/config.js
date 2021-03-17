@@ -216,6 +216,12 @@ module.exports = {
                 },
             }
         ],
+        [
+            '@vuepress/google-analytics',
+            {
+                'ga': 'UA-192555999-1'
+            }
+        ]
     ],
     markdown: {
         extendMarkdown(md) {
