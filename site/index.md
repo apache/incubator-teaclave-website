@@ -23,7 +23,7 @@ Also, Teaclave is written in Rust to prevent memory-safety issues.
 <div class="feature">
 <h3>Function-as-a-Service</h3>
 <p> Teaclave is a
-function-as-a-service platform supports tasks like privacy-preserving machine
+function-as-a-service platform supporting tasks like privacy-preserving machine
 learning, private set intersection, and crypto computation. In addition,
 developers can also write and execute Python function.
 Teaclave supports both
