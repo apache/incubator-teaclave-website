@@ -101,6 +101,7 @@ $navbar-horizontal-padding = 1.5rem
   line-height $navbarHeight - 1.4rem
   a, span, img
     display inline-block
+    font-weight 700
   .logo
     height $navbarHeight - 1.4rem
     min-width $navbarHeight - 1.4rem
@@ -116,7 +117,9 @@ $navbar-horizontal-padding = 1.5rem
     box-sizing border-box
     background-color white
     white-space nowrap
-    font-size 0.9rem
+    font-size 0.8rem
+    font-weight 700
+    letter-spacing 0.04em
     position absolute
     right $navbar-horizontal-padding
     top $navbar-vertical-padding

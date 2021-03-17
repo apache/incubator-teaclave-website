@@ -14,12 +14,12 @@ module.exports = {
         domain: 'https://teaclave.apache.org',
         dateFormat: 'MMMM D, YYYY',
         nav: [
-            { text: 'About', link: '/' },
-            { text: 'Community', link: '/community/' },
-            { text: 'Download', link: '/download/' },
-            { text: 'Contributors', link: '/contributors/' },
+            { text: 'ABOUT', link: '/' },
+            { text: 'COMMUNITY', link: '/community/' },
+            { text: 'DOWNLOAD', link: '/download/' },
+            { text: 'CONTRIBUTORS', link: '/contributors/' },
             {
-                text: 'Documentation',
+                text: 'DOCS',
                 link: '/docs/',
                 items: [
                     { text: 'Teaclave', link: '/docs/' },
@@ -27,9 +27,9 @@ module.exports = {
                     { text: 'Teaclave TrustZone SDK', link: '/trustzone-sdk-docs/' },
                 ]
             },
-            { text: 'Blog', link: '/blog/' },
+            { text: 'BLOG', link: '/blog/' },
             {
-                text: 'API Docs',
+                text: 'APIS',
                 items: [
                     { text: 'Teaclave Client SDK (Rust)', link: 'https://teaclave.apache.org/api-docs/client-sdk-rust/', target: '_self', rel: '' },
                     { text: 'Teaclave Client SDK (Python)', link: 'https://teaclave.apache.org/api-docs/client-sdk-python/', target: '_self', rel: '' },
@@ -39,7 +39,7 @@ module.exports = {
                 ]
             },
             {
-                text: 'Repository',
+                text: 'REPOS',
                 link: 'https://github.com/apache/incubator-teaclave',
                 items: [
                     { text: 'Teaclave', link: 'https://github.com/apache/incubator-teaclave'},

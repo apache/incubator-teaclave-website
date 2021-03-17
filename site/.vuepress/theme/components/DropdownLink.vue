@@ -124,14 +124,14 @@ export default {
   cursor pointer
   .dropdown-title
     display block
-    font-size 0.9rem
+    font-size 0.8rem
     font-family inherit
     cursor inherit
     padding inherit
     line-height 1.4rem
     background transparent
     border none
-    font-weight 500
+    font-weight 700
     color $textColor
     &:hover
       border-color transparent
