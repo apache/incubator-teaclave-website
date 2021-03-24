@@ -26,19 +26,19 @@ module.exports = {
                     { text: 'Teaclave', link: '/docs/' },
                     { text: 'Teaclave SGX SDK', link: '/sgx-sdk-docs/' },
                     { text: 'Teaclave TrustZone SDK', link: '/trustzone-sdk-docs/' },
+                    {
+                        text: 'APIS',
+                        items: [
+                            { text: 'Teaclave Client SDK (Rust)', link: 'https://teaclave.apache.org/api-docs/client-sdk-rust/', target: '_self', rel: '' },
+                            { text: 'Teaclave Client SDK (Python)', link: 'https://teaclave.apache.org/api-docs/client-sdk-python/', target: '_self', rel: '' },
+                            { text: 'Teaclave SGX SDK', link: 'https://teaclave.apache.org/api-docs/sgx-sdk/', target: '_self', rel: '' },
+                            { text: 'Crates in Teaclave (Enclave)', link: 'https://teaclave.apache.org/api-docs/crates-enclave/', target: '_self', rel: '' },
+                            { text: 'Crates in Teaclave (App)', link: 'https://teaclave.apache.org/api-docs/crates-app/', target: '_self', rel: '' },
+                        ]
+                    },
                 ]
             },
             { text: 'BLOG', link: '/blog/' },
-            {
-                text: 'APIS',
-                items: [
-                    { text: 'Teaclave Client SDK (Rust)', link: 'https://teaclave.apache.org/api-docs/client-sdk-rust/', target: '_self', rel: '' },
-                    { text: 'Teaclave Client SDK (Python)', link: 'https://teaclave.apache.org/api-docs/client-sdk-python/', target: '_self', rel: '' },
-                    { text: 'Teaclave SGX SDK', link: 'https://teaclave.apache.org/api-docs/sgx-sdk/', target: '_self', rel: '' },
-                    { text: 'Crates in Teaclave (Enclave)', link: 'https://teaclave.apache.org/api-docs/crates-enclave/', target: '_self', rel: '' },
-                    { text: 'Crates in Teaclave (App)', link: 'https://teaclave.apache.org/api-docs/crates-app/', target: '_self', rel: '' },
-                ]
-            },
             {
                 text: 'REPOS',
                 link: 'https://github.com/apache/incubator-teaclave',
