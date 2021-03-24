@@ -15,6 +15,7 @@ module.exports = {
         dateFormat: 'MMMM D, YYYY',
         nav: [
             { text: 'ABOUT', link: '/' },
+            { text: 'POWERED BY', link: '/powered-by/' },
             { text: 'COMMUNITY', link: '/community/' },
             { text: 'DOWNLOAD', link: '/download/' },
             { text: 'CONTRIBUTORS', link: '/contributors/' },
