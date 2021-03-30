@@ -25,7 +25,9 @@ and projects using and contributing to Teaclave in alphabetical order.
     general-purpose compute/storage infrastructure for Dapps.
   - [Anonify](https://github.com/LayerXcom/anonify): A blockchain-agnostic
     execution environment with privacy and auditability based on TEE.
-  - [Crust Network](https://github.com/crustio/crust-sworker-teaclave): A decentralized storage blockchain of Web3.0 ecosystem based on TEE and Substrate.
+  - [Crust Network](https://github.com/crustio/crust-sworker-teaclave): A
+    decentralized storage blockchain of Web3.0 ecosystem based on TEE and
+    Substrate.
   - [Enigma Core](https://github.com/enigmampc/enigma-core): Enigma Core
     library. The domain: Trusted and Untrusted App in Rust.
   - [Crypto.com Chain](https://github.com/crypto-com/chain): Alpha version
