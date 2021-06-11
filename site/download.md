@@ -27,7 +27,7 @@ download by following these
 
 | Version | Date | Source Code               | PGP/SHA | Notes |
 |:-------:|:------------:|:-------------------------:|:----:|:-------:|
-| - | - | - | - | - |
+| 0.1.0   | 2021-06-10   | [apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz](https://www.apache.org/dyn/closer.cgi/incubator/teaclave/trustzone-sdk-0.1.0/apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz)| [asc](https://www.apache.org/dist/incubator/teaclave/trustzone-sdk-0.1.0/apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz.asc), [sha512](https://www.apache.org/dist/incubator/teaclave/trustzone-sdk-0.1.0/apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz.sha512) | [link](https://github.com/apache/incubator-teaclave-trustzone-sdk/releases/tag/v0.1.0) |
 
 ## Verify the Integrity of the Files
 
