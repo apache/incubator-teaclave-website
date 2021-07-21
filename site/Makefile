@@ -12,12 +12,14 @@ sgx-sdk-api-docs: teaclave-docs
 	@echo "<meta http-equiv=refresh content=0;url=`echo sgx_tstd | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/sgx-sdk/index.html
 
 client-sdk-python-docs: teaclave-docs
-	pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python --html
+	pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python
 	@echo "<meta http-equiv=refresh content=0;url=teaclave.html>" > .vuepress/dist/api-docs/client-sdk-python/index.html
 
 client-sdk-rust-docs: teaclave-docs
+	(cd teaclave && git submodule update --init third_party/rust-sgx-sdk)
 	cargo doc --no-deps --manifest-path teaclave/sdk/rust/Cargo.toml
 	cp -r teaclave/sdk/rust/target/doc .vuepress/dist/api-docs/client-sdk-rust
+	@rm -rf teaclave/third_party/rust-sgx-sdk
 	@echo "<meta http-equiv=refresh content=0;url=`echo teaclave_client_sdk | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/client-sdk-rust/index.html
 
 crate-docs:
