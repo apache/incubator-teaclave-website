@@ -74,6 +74,7 @@ module.exports = {
                       '/teaclave/docs/functions-in-python',
                       '/teaclave/docs/builtin-functions',
                       '/teaclave/docs/azure-confidential-computing',
+                      '/teaclave/docs/executing-wasm',
                   ],
               },
               {
