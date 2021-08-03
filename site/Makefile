@@ -13,7 +13,7 @@ sgx-sdk-api-docs: teaclave-docs
 
 client-sdk-python-docs: teaclave-docs
 	pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python
-	@echo "<meta http-equiv=refresh content=0;url=teaclave.html>" > .vuepress/dist/api-docs/client-sdk-python/index.html
+	@echo "<meta http-equiv=refresh content=0;url=python/teaclave.html>" > .vuepress/dist/api-docs/client-sdk-python/index.html
 
 client-sdk-rust-docs: teaclave-docs
 	(cd teaclave && git submodule update --init third_party/rust-sgx-sdk)
