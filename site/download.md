@@ -12,22 +12,22 @@ download by following these
 
 ### Teaclave
 
-| Version | Date | Source Code               | PGP/SHA | Notes |
+| Version | Date | Source Code               | PGP/SHA | Link |
 |:-------:|:------------:|:-------------------------:|:-------:|:-------------:|
-| 0.2.0   | 2021-03-02   | [apache-teaclave-0.2.0-incubating.tar.gz](https://www.apache.org/dyn/closer.cgi/incubator/teaclave/0.2.0/apache-teaclave-0.2.0-incubating.tar.gz)| [asc](https://www.apache.org/dist/incubator/teaclave/0.2.0/apache-teaclave-0.2.0-incubating.tar.gz.asc), [sha512](https://www.apache.org/dist/incubator/teaclave/0.2.0/apache-teaclave-0.2.0-incubating.tar.gz.sha512) | [link](https://github.com/apache/incubator-teaclave/releases/tag/v0.2.0) |
-| 0.1.0   | 2020-10-09   | [apache-teaclave-0.1.0-incubating.tar.gz](https://www.apache.org/dyn/closer.cgi/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz)| [asc](https://www.apache.org/dist/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.asc), [sha512](https://www.apache.org/dist/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.sha512) | [link](https://github.com/apache/incubator-teaclave/releases/tag/v0.1.0) |
+| 0.2.0   | 2021-03-02   | [apache-teaclave-0.2.0-incubating.tar.gz](https://www.apache.org/dyn/closer.cgi/incubator/teaclave/0.2.0/apache-teaclave-0.2.0-incubating.tar.gz)| [asc](https://www.apache.org/dist/incubator/teaclave/0.2.0/apache-teaclave-0.2.0-incubating.tar.gz.asc), [sha512](https://www.apache.org/dist/incubator/teaclave/0.2.0/apache-teaclave-0.2.0-incubating.tar.gz.sha512) | [notes](https://github.com/apache/incubator-teaclave/releases/tag/v0.2.0) |
+| 0.1.0   | 2020-10-09   | [apache-teaclave-0.1.0-incubating.tar.gz](https://www.apache.org/dyn/closer.cgi/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz)| [asc](https://www.apache.org/dist/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.asc), [sha512](https://www.apache.org/dist/incubator/teaclave/0.1.0/apache-teaclave-0.1.0-incubating.tar.gz.sha512) | [notes](https://github.com/apache/incubator-teaclave/releases/tag/v0.1.0) |
 
 ### Teaclave SGX SDK
 
-| Version | Date | Source Code               | PGP/SHA | Notes |
+| Version | Date | Source Code               | PGP/SHA | Link |
 |:-------:|:------------:|:-------------------------:|:----:|:-------:|
 | - | - | - | - | - |
 
 ### Teaclave TrustZone SDK
 
-| Version | Date | Source Code               | PGP/SHA | Notes |
+| Version | Date | Source Code               | PGP/SHA | Link |
 |:-------:|:------------:|:-------------------------:|:----:|:-------:|
-| 0.1.0   | 2021-06-10   | [apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz](https://www.apache.org/dyn/closer.cgi/incubator/teaclave/trustzone-sdk-0.1.0/apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz)| [asc](https://www.apache.org/dist/incubator/teaclave/trustzone-sdk-0.1.0/apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz.asc), [sha512](https://www.apache.org/dist/incubator/teaclave/trustzone-sdk-0.1.0/apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz.sha512) | [link](https://github.com/apache/incubator-teaclave-trustzone-sdk/releases/tag/v0.1.0) |
+| 0.1.0   | 2021-06-10   | [apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz](https://www.apache.org/dyn/closer.cgi/incubator/teaclave/trustzone-sdk-0.1.0/apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz)| [asc](https://www.apache.org/dist/incubator/teaclave/trustzone-sdk-0.1.0/apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz.asc), [sha512](https://www.apache.org/dist/incubator/teaclave/trustzone-sdk-0.1.0/apache-teaclave-trustzone-sdk-0.1.0-incubating.tar.gz.sha512) | [notes](https://github.com/apache/incubator-teaclave-trustzone-sdk/releases/tag/v0.1.0) |
 
 ## Verify the Integrity of the Files
 
