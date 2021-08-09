@@ -25,6 +25,9 @@ and projects using and contributing to Teaclave in alphabetical order.
     general-purpose compute/storage infrastructure for Dapps.
   - [Anonify](https://github.com/LayerXcom/anonify): A blockchain-agnostic
     execution environment with privacy and auditability based on TEE.
+  - [Eigen Network](https://github.com/ieigen/ieigen): Eigen is an end-to-end
+    privacy computation network for a better digital economy based on hybrid
+    privacy computation protocols and AI federated machine learning.
   - [Enigma Core](https://github.com/enigmampc/enigma-core): Enigma Core
     library. The domain: Trusted and Untrusted App in Rust.
   - [Crust Network](https://github.com/crustio/crust-sworker-teaclave): A
