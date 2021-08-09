@@ -11,20 +11,14 @@ Welcome to the Teaclave community. Here are several ways that you can get involv
 
 We have a few mailing lists hosted by Apache:
 
-- **Developer mailing list**: A list for discussion on Teaclave development. To
-  subscribe, send an email to
-  [dev-subscribe@teaclave.apache.org](mailto:dev-subscribe@teaclave.apache.org).
-  Once subscribed, you can have discussion on Teaclave development by mailing to
-  [dev@teaclave.apache.org](mailto:dev@teaclave.apache.org). Archives are
-  available [here](https://lists.apache.org/list.html?dev@teaclave.apache.org).
-- **Commit mailing list**: A list to track Teaclave commits. To subscribe, send
-  an email to
-  [commits-subscribe@teaclave.apache.org](mailto:commits-subscribe@teaclave.apache.org).
-  Archives are available
-  [here](https://lists.apache.org/list.html?commits@teaclave.apache.org).
+- `dev@teaclave.apache.org`: A list for discussion on Teaclave development including design proposal, release
+announcements, meetup schedules, and commnity voting, etc.
+ [[Subscribe](mailto:dev-subscribe@teaclave.apache.org?subject=Subscribe) | [Unsubscribe](mailto:dev-unsubscribe@teaclave.apache.org?subject=Unsubscribe) | [Archive](https://lists.apache.org/list.html?commits@teaclave.apache.org)]
+- `commits@teaclave.apache.org`: Commit activities for all projects.
+ [[Subscribe](mailto:commits-subscribe@teaclave.apache.org?subject=Subscribe) | [Unsubscribe](mailto:commits-unsubscribe@teaclave.apache.org?subject=Unsubscribe) | [Archive](https://lists.apache.org/list.html?commits@teaclave.apache.org)]
 
-To unsubscribe from any of these, just change the word "subscribe" to
-"unsubscribe" in the email addresses above.
+To subscribe or unsubscribe a mailing list, just send a blank email to one of
+above address with the `-subscribe` or `-unsubscribe` suffix.
 
 ## GitHub Issues
 
