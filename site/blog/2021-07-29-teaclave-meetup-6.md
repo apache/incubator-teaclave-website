@@ -1,20 +1,23 @@
 ---
-title: "[Scheduled] Teaclave Meetup #6"
+title: "Teaclave Meetup #6"
 date: 2021-07-29
 author: Mingshen Sun
 ---
 
-We are going to have the monthly Teaclave (virtual) meetup. The
-meetup in this month is scheduled on July 29, 2021 (PT):
+In July 29, we gathered on Zoom for the sixth Teaclave meetup. In the meetup, we
+announced our new mentor Gordon and invited Gordon to introduce the latest effort
+on integrating Graphene into Teaclave.
 
-- 19:00-20:00 on Thursday, July 29, 2021 (PT)
+![Teaclave Meetup #6](./img/teaclave-meetup-6-zoom.png)
 
-You can find the corresponding date time in your TZ here:
-https://time.is/compare/1900_29_July_2021_in_PT
+## Schedule
 
-As usual, Mingshen will give an update of Teaclave first. Then, if there's no
-specific topic this time, we will have an open discussion session on recent
-news/projects around confidential computing.
+- Recent update of Teaclave, Mingshen (5m)
+- Introduction to Graphene, Gordon
 
-At last, same as the previous meetup, please RSVP (in the Teaclave dev mailing
-list) for the Zoom link. Thanks!
+## Notes
+
+- [Proposal on Teaclave/Graphene integration](https://github.com/apache/incubator-teaclave/issues/525)
+- [Graphene v1.0: Toward A Reliable, Open-Source Library OS for SGX](https://grapheneproject.io/wp-content/uploads/2020/01/Intel_SGX_Day_19_Graphene_Talk.pdf)
+- [Library OS is the New Container](https://osseu18.sched.com/event/FxXc/library-os-is-the-new-container-why-is-library-os-a-better-option-for-compatibility-and-sandboxing-chia-che-tsai-uc-berkeley)
+- [Intel® TDX Architectural Extensions to Advance Confidential Computing in Public Clouds](https://static.sched.com/hosted_files/lsseu2020/46/Oct%2029_Architectural%20Extensions%20for%20VM%20Isolation%20to%20Advance%20Confidential%20Computing_Ravi%20Sahita_Jun%20Nakajima_v4b.pdf)
