@@ -33,8 +33,8 @@ Teaclave blog.
   - Teaclave Meetup #6: <https://teaclave.apache.org/blog/2021-07-29-teaclave-meetup-6/>
 
 We also have two new members:
-  - 2020-07-09, Hongbo Chen (ya0guang), Commiter
-  - 2020-07-25, Gordon King (garyw), Mentor
+  - 2021-07-09, Hongbo Chen (ya0guang), Commiter
+  - 2021-07-25, Gordon King (garyw), Mentor
 
 ### How has the project developed since the last report?
 
