@@ -75,6 +75,7 @@ module.exports = {
                       '/teaclave/docs/builtin-functions',
                       '/teaclave/docs/azure-confidential-computing',
                       '/teaclave/docs/executing-wasm',
+                      '/teaclave/docs/inference-with-tvm',
                   ],
               },
               {
