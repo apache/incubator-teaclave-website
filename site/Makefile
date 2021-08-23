@@ -1,10 +1,10 @@
 all: staging site
 
 staging: build
-	ghp-import .vuepress/dist -b asf-staging
+	ghp-import --no-history --force .vuepress/dist -b asf-staging
 
 site: build
-	ghp-import .vuepress/dist -b asf-site
+	ghp-import --no-history --force .vuepress/dist -b asf-site
 
 sgx-sdk-api-docs: teaclave-docs
 	cd ../sgx-sdk-api-docs && cargo doc
