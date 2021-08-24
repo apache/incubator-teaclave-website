@@ -9,7 +9,7 @@ author: Wenwen Ruan
 
 ## Teaclave SGX SDK应用开发环境简介以及搭建
 
-Intel SGX (软件防护扩展，Software Guard Extension) 提供了在一个安全的 enclave（飞地）中执行代码的能力，enclave 可以提供一个隔离的可信执行环境，在操作系统、BIOS 和虚拟机监控器等系统软件均不可信的情况下，仍然对 enclave 内部的代码和数据提供保护，保障用户的关键数据和代码的机密性和完整性。
+Intel SGX (Software Guard Extension, 软件防护扩展) 因为其较为出色的性能和安全性，是目前最为学术界和工业界关注的 TEE (Trusted Execution Environment, 可信执行环境)。Intel SGX 在内存中划分了名为 enclave（飞地）的隔离区域，用来存放敏感数据和代码。通过提供该隔离的可信执行环境，enclave 在操作系统、BIOS 和虚拟机监控器等系统软件均不可信的情况下，仍然对 enclave 内部的代码和数据提供保护，保障用户的关键数据和代码的机密性和完整性。
 
 但如果 Intel SGX 程序仍然使用 C/C++ 这类内存不安全的语言开发的话，就会和传统软件一样面临着传统的内存破坏漏洞。对于 enclave 来说，受到的危害会更为严重，因为 enclave 中保存的多是机密数据和代码。Teaclave SGX 的主要目标就是通过使用高效的内存安全语言 —— Rust 来支持 enclave 应用程序的开发，从而在保证 Intel SGX enclave 内存安全的同时不会带来显著的性能开销。
 
@@ -19,7 +19,7 @@ Teaclave SGX SDK 内部结构分为三层：
 + 中间层是 Rust 对 C/C++ 的 FFI (Foreign function Interfaces, 外部函数接口)。
 + 最高层是 Teaclave SGX SDK。
 
-![Teaclave SGX SDK 概要图](./img/2021-08-13-overview-of-teaclave-sgx-sdk.png)
+![Teaclave SGX SDK 概要图](./img/2021-08-13-overview-of-teaclave-sgx-sdk-cn.png)
 
 Teaclave SGX SDK 应用程序开发者在进行开发时就只需要基于最上层的 Teaclave SGX SDK 来进行开发，底层的实现对于开发者来说是透明的。本文将从开发者的角度介绍基于 Teaclave SGX SDK 开发自己的应用程序的过程。
 
@@ -39,7 +39,7 @@ Teaclave SGX SDK 应用程序开发者在进行开发时就只需要基于最上
 
 当确定 CPU 支持 Intel SGX 之后，还需要开启 BIOS 中的 SGX 选项。CPU 上的 SGX 选项可能有 `enabled` 或者 `software controlled`。具有 `enabled` 选项的主机直接在 BIOS 上选择 `enabled` 即可，而`software controlled` 表示 SGX 的开启需要由软件触发，还需通过 Intel 官方提供的 [sgx-software-enable](https://github.com/intel/sgx-software-enable) 开启。下载好 `sgx-software-enable` 之后，运行 `Makefile` 编译生成可执行代码 `sgx_enable` ，执行 `sudo ./sgx_enable` 顺利运行后重启主机，即可顺利开启 Intel SGX。 
 
-硬件条件准备完毕之后，还需要安装 [Linux SGX 驱动](https://download.01.org/intel-sgx/sgx-linux/2.10/distro/ubuntu16.04-server/sgx_linux_x64_driver_2.6.0_602374c.bin) ，安装完毕之后需要确认 `/dev/isgx` 的存在。
+硬件条件准备完毕之后，还需要安装 [Linux SGX 驱动](https://download.01.org/intel-sgx/sgx-linux/2.10/distro/ubuntu16.04-server/sgx_linux_x64_driver_2.6.0_602374c.bin)（本实验环境的操作系统版本为 ubuntu16.04 ，安装时需要根据自己的操作系统版本号在 [官网](https://download.01.org/intel-sgx/) 下载对应的 Intel SGX 驱动） ，安装完毕之后需要确认 `/dev/isgx` 的存在。
 
 下载 Teaclave SGX SDK 以及支持编译 SGX 设备的 docker image。
 
@@ -188,7 +188,7 @@ pub extern "C" fn say_something(some_string: *const u8, some_len: usize) -> sgx_
     sgx_status_t::SGX_SUCCESS
 }
 ```
-该函数实现了一个简单的将 `u8` 数组转化为字符串输出的函数，注意在函数的最后调用的 `println!` 函数是一个 `OCALL`。 `println!` 的具体实现中加入了内置的 `OCALL`，并定义了内置的 `EDL` ，import到了 `Enclave.edl` 中。 
+该函数实现了一个简单的将 `&[u8]` 数组转化为字符串输出的函数，注意在函数的最后调用的 `println!` 函数是一个 `OCALL`。 `println!` 的具体实现中加入了内置的 `OCALL`，并定义了内置的 `edl` ，import到了 `Enclave.edl` 中。 
 ```edl
 enclave {
     from "sgx_tstd.edl" import *;
@@ -238,7 +238,7 @@ enclave {
 └── Makefile 
 ```
 helloworld 编译的基本流程类似于 Intel SGX:
-+ `EDL` 编译器 `edger8r` 将输入的 `EDL` 在 `app/` 目录下生成不可信代码 `Enclave_u.h` 和 `Enclave_u.c`；
++ `edger8r` 将输入的 `EDL` 在 `app/` 目录下生成不可信代码 `Enclave_u.h` 和 `Enclave_u.c`；
 + 编译不可信部分生成 `bin/app`；
 + `edger8r` 在 `enclave/` 目录下生成可信代码 `Enclave_t.h` 和 `Enclave_t.c`；
 + 编译并签名生成可信动态链接库 `enclave.signed.so`。  
@@ -247,7 +247,7 @@ helloworld 编译的基本流程类似于 Intel SGX:
 同样类似于开发 Intel SGX Application，用户可以通过改写 Teaclave SGX SDK 所提供的 `samplecode`，在这里，我以一个简单的例子抛砖引玉。
 
 ### 添加自定义的函数
-假设用户希望在 Teaclave SGX SDK 中实现一个简单的求两个数组的交集的函数，只需要直接在 `src/lib.rs` 中添加实现的函数。下面的实例代码 `intersection` 函数是希望添加的求交集函数。传入的两个参数是需要求交集的 `i32` 数组，最后返回的是两个数组的交集。其具体的实现是通过一个额外的散列集，记录 `num1` 出现的元素，再对 `num2` 进行遍历，如果 `num2` 出现了散列集中的元素，则将该值 `push` 到交集数组中，并将散列表中的对应元素移除。当 `num2` 遍历完毕之后，返回交集数组。
+假设用户希望在 Teaclave SGX SDK 中实现一个简单的求两个数组的交集的函数，只需要直接在 `src/lib.rs` 中添加实现的函数。下面的示例代码 `intersection` 函数是希望添加的求交集函数，注意这里求到的交集结果是无重复元素的。传入的两个参数是需要求交集的 `i32` 向量，最后返回的是两个向量的交集。其具体的实现是通过一个额外的散列集，记录 `num1` 出现的元素，再对 `num2` 进行遍历，如果 `num2` 出现了散列集中的元素，则将该值 `push` 到交集数组中，并将散列表中的对应元素移除。当 `num2` 遍历完毕之后，返回交集数组。
 
 ```rust
 pub fn intersection(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
@@ -269,32 +269,90 @@ pub fn intersection(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
     }
 ```
 
-需要调用该函数时，在 `say_something` 中添加：
-```rust
-    println!("\nTry intersection for our own");
-    let nums1: Vec<i32> = vec![1, 2, 3, 4, 5];
-    let nums2: Vec<i32> = vec![4, 5, 6, 7, 8];
-    let vec: Vec<i32> = intersection(nums1, nums2);
-    println!("intersection set is {:?}", vec);
-
+考虑一个比较现实的场景，两个用户分别将自己的向量作为参数传入 enclave 中进行计算，这时候数据需要从不可信代码区域复制到可信代码区域。
+首先，需要在 `Enclave.edl` 文件中修改 `say_something` 函数的定义，输入参数为两个用户的向量指针以及对应的大小。
+```edl
+public sgx_status_t say_something([in, size=len1] size_t* num1, size_t len1,
+                                  [in, size=len2] size_t* num2, size_t len2);
 ```
 
-`say_something` 是 `ECALL` 的入口，或许你也发现了，这里我将 `say_something` 当成了 Enclave 的 `"main"` 函数来使用XD。
+接着，在 `app.c` 文件中声明需要求交集的数组以及大小并仿照示例调用 `say_something`。 
+
+```c
+    size_t nums1[10] = {0,1,2,3,4,5,6,7,8,9};
+    size_t nums2[10] = {5,6,7,8,9,10,11,12,13,14};
+    size_t len1 = sizeof(nums1);
+    size_t len2 = sizeof(nums2);
+
+    sgx_ret = say_something(global_eid, 
+                            &enclave_ret,
+                            nums1,
+                            len1,
+                            nums2,
+                            len2);
+```
+
+回到 `enclave/src/lib.rs`，`say_something` 传进来的是两个向量的起始地址以及大小。
+```rust
+pub extern "C" fn say_something(nums1: *mut usize, len1: usize, nums2: *mut usize, len2: usize) -> sgx_status_t 
+```
+由于数据是从非安全区复制到安全区的，还需要对 `intersection` 函数进行部分改写。传进来的参数是向量指针，以指针地址为起始地址，根据大小参数限制迭代范围并获得一个用于循环的序号变量 `i`，在 `for` 循环中使用 `offset` 偏移指针，解引用它，读出 `nums1` 和 `nums2` 的元素值。
+
+```rust
+pub fn intersection(nums1: *mut usize, len1: usize, nums2: *mut usize, len2: usize) -> Vec<usize> {
+    use std::collections::HashSet;
+    let mut set: HashSet<usize> = HashSet::new();
+    let mut vec: Vec<usize> = Vec::new();
+
+    for i in 0..len1/mem::size_of::<usize>() {
+        let mut val_nums1 = 0;
+        unsafe {
+            val_nums1 = *nums1.offset(i as isize);
+        }
+        set.insert(val_nums1); 
+    }
+    
+    for i in 0..len2/mem::size_of::<usize>() {
+        let mut val_nums2 = 0;
+        unsafe {
+            val_nums2 = *nums2.offset(i as isize);
+        }
+        if set.contains(&val_nums2) {
+            vec.push(val_nums2);
+            set.remove(&val_nums2);
+        }
+    }
+    return vec;
+}
+```
+
+完整的 `say_something` 函数如下所示。
+
+```rust
+#[no_mangle]
+pub extern "C" fn say_something(nums1: *mut usize, len1: usize, nums2: *mut usize, len2: usize) -> sgx_status_t {
+    let vec: Vec<usize> = intersection(nums1, len1, nums2, len2); 
+    println!("intersection set is {:?}", vec);
+    sgx_status_t::SGX_SUCCESS
+}
+```
 
 重新编译并运行，得到运行结果：
 ```bash
-Try intersection for our own
-intersection set is [4, 5]
+[+] global_eid: 2
+intersection set is [5, 6, 7, 8, 9]
+[+] say_something success ...
 ```
 我们基于 Teaclave SGX SDK 的 helloworld 实现了自己的求交集函数。
 
 ### 调用 Teaclave SGX SDK 提供的 `crate`
 
-Teaclave SGX SDK 重写了很多 SGX 的库，当我们需要用某个库时，可以先在仓库中查看是否有相应的 `crate` 实现以及对应的 [doc](https://teaclave.apache.org/api-docs/crates-enclave/)。比如在上述的编程环境下，假如我们进一步希望两个数组 `nums1` 和 `nums2` 的内容不是固定的，而是随机生成的。在 `C++` 或者 `Rust` 环境下，会自然而然地想到使用 `rand` 库。自然而然地，Teaclave SGX SDK 也用 Rust 重写了 [`sgx_rand`](https://github.com/apache/incubator-teaclave-sgx-sdk/tree/master/sgx_rand) 库。 
+Teaclave SGX SDK 重写了很多 SGX 的库，当我们需要用某个库时，可以先在仓库中查看是否有相应的 `crate` 实现以及对应的 [doc](https://teaclave.apache.org/api-docs/crates-enclave/)。比如当我们希望生成一个随机数时，在 `C++` 或者 `Rust` 环境下，会想到使用 `rand` 库。自然而然地，Teaclave SGX SDK 也用 Rust 重写了 [`sgx_rand`](https://github.com/apache/incubator-teaclave-sgx-sdk/tree/master/sgx_rand) 库。 
 
 首先在 `enclave/Cargo.toml` 中的 `[target.'cfg(not(target_env = "sgx"))'.dependencies]` 部分添加 `sgx_rand` 库的地址，这里的地址也可以换成本机上的 `sgx_rand` 文件夹所在位置。
 
 ```toml
+[target.'cfg(not(target_env = "sgx"))'.dependencies]
 sgx_rand = {git = "https://github.com/apache/teaclave-sgx-sdk.git" }
 ```
 
@@ -306,23 +364,16 @@ use sgx_rand::Rng;
 use sgx_rand::os::SgxRng;
 ```
 
-修改 `say_something` 函数中数组生成语句，调用 `gen_range` 函数每次随机生成两个 0-10 之间的整数，分别写入 `num1` 和 `num2` 数组，最后调用 `intersection` 函数求解两个数组的交集。
+调用 `gen_range` 函数生成 0-10 之间的随机数。
 
-```rust
-    let mut nums1: Vec<i32> = Vec::new();
-    let mut nums2: Vec<i32> = Vec::new();
-    let mut rng = SgxRng::new().unwrap();
-    for i in 0..10 {
-        nums1.push(rng.gen_range(0, 10));
-        nums2.push(rng.gen_range(0, 10));
-    }
-    let vec: Vec<i32> = intersection(nums1, nums2);
+```rust 
+let random = rng.gen_range(0, 10);
 ```
 
-一个简单的 Teaclave SGX SDK 应用程序成功实现了。
+这样就可以在 Teaclave SGX SDK 中的 enclave 中通过调用官方 `crate` 随机生成一个随机数。
 
 ## 总结
-本文首先介绍了 Teaclave SGX SDK 项目的基本结构，然后以 `helloworld` 为例子，介绍了一个简单的 Teaclave SGX SDK 的示例的组织结构和编译过程，最后，以在 `helloworld` 中添加 `intersect` 函数为例，介绍了如何基于提供的 SampleCode 进行 Teaclave SGX SDK 应用程序的开发。
+本文首先介绍了 Teaclave SGX SDK 项目的基本结构，然后以 `helloworld` 为例子，介绍了一个简单的 Teaclave SGX SDK 的示例的组织结构和编译过程，最后，以在 `helloworld` 中实现 `intersection` 函数为例，介绍了如何基于提供的 SampleCode 进行 Teaclave SGX SDK 应用程序的开发。
 
 
 ## 延伸阅读
