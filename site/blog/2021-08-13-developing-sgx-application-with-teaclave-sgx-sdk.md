@@ -376,6 +376,6 @@ let random = rng.gen_range(0, 10);
 
 
 ## 延伸阅读
-+ [一份主观的 SGX 导读：运行第一个 SGX 程序](https://github.com/dingeliTsh/SGXfail/blob/master/01.md)
++ [一份主观的 SGX 导读：运行第一个 SGX 程序](https://github.com/dingelish/SGXfail/blob/master/01.md)
 + [Teaclave 官网](http://teaclave.apache.org)
 + [Teaclave SGX SDK 项目论文：《Towards Memory Safe Enclave Programming with Rust-SGX》](https://dl.acm.org/citation.cfm?id=3354241)
