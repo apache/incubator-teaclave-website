@@ -11,7 +11,7 @@ author: Wenwen Ruan
 
 Intel SGX (Software Guard Extension, 软件防护扩展) 因为其较为出色的性能和安全性，是目前最为学术界和工业界关注的 TEE (Trusted Execution Environment, 可信执行环境)。Intel SGX 在内存中划分了名为 enclave（飞地）的隔离区域，用来存放敏感数据和代码。通过提供该隔离的可信执行环境，enclave 在操作系统、BIOS 和虚拟机监控器等系统软件均不可信的情况下，仍然对 enclave 内部的代码和数据提供保护，保障用户的关键数据和代码的机密性和完整性。
 
-但如果 Intel SGX 程序仍然使用 C/C++ 这类内存不安全的语言开发的话，就会和传统软件一样面临着传统的内存破坏漏洞。对于 enclave 来说，受到的危害会更为严重，因为 enclave 中保存的多是机密数据和代码。Teaclave SGX 的主要目标就是通过使用高效的内存安全语言 —— Rust 来支持 enclave 应用程序的开发，从而在保证 Intel SGX enclave 内存安全的同时不会带来显著的性能开销。
+但如果 Intel SGX 程序仍然使用 C/C++ 这类内存不安全的语言开发的话，就会和传统软件一样面临着内存破坏漏洞的问题。对于 enclave 来说，受到的危害会更为严重，因为 enclave 中保存的多是机密数据和代码。Teaclave SGX 的主要目标就是通过使用高效的内存安全语言 —— Rust 来支持 enclave 应用程序的开发，从而在保证 Intel SGX enclave 内存安全的同时不会带来显著的性能开销。
 
 Teaclave SGX SDK 内部结构分为三层：
 
@@ -126,7 +126,6 @@ enclave {
 
     trusted {
         /* define ECALLs here. */
-
         public sgx_status_t say_something([in, size=len] const uint8_t* some_string, size_t len);
     };
 
@@ -270,7 +269,7 @@ pub fn intersection(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
 ```
 
 考虑一个比较现实的场景，两个用户分别将自己的向量作为参数传入 enclave 中进行计算，这时候数据需要从不可信代码区域复制到可信代码区域。
-首先，需要在 `Enclave.edl` 文件中修改 `say_something` 函数的定义，输入参数为两个用户的向量指针以及对应的大小。
+首先，需要在 `Enclave.edl` 文件中修改 `say_something` 函数的定义，输入参数为两个用户的向量指针以及对应的向量大小。
 ```edl
 public sgx_status_t say_something([in, size=len1] size_t* num1, size_t len1,
                                   [in, size=len2] size_t* num2, size_t len2);
@@ -296,7 +295,7 @@ public sgx_status_t say_something([in, size=len1] size_t* num1, size_t len1,
 ```rust
 pub extern "C" fn say_something(nums1: *mut usize, len1: usize, nums2: *mut usize, len2: usize) -> sgx_status_t 
 ```
-由于数据是从非安全区复制到安全区的，还需要对 `intersection` 函数进行部分改写。传进来的参数是向量指针，以指针地址为起始地址，根据大小参数限制迭代范围并获得一个用于循环的序号变量 `i`，在 `for` 循环中使用 `offset` 偏移指针，解引用它，读出 `nums1` 和 `nums2` 的元素值。
+由于数据是从非安全区复制到安全区的，还需要对 `intersection` 函数进行部分改写。传进来的参数是数组指针，以指针地址为起始地址，根据大小参数限制迭代范围并获得一个用于循环的序号变量 `i`，在 `for` 循环中使用 `offset` 偏移指针，解引用它，读出 `nums1` 和 `nums2` 的元素值。
 
 ```rust
 pub fn intersection(nums1: *mut usize, len1: usize, nums2: *mut usize, len2: usize) -> Vec<usize> {
@@ -349,7 +348,7 @@ intersection set is [5, 6, 7, 8, 9]
 
 Teaclave SGX SDK 重写了很多 SGX 的库，当我们需要用某个库时，可以先在仓库中查看是否有相应的 `crate` 实现以及对应的 [doc](https://teaclave.apache.org/api-docs/crates-enclave/)。比如当我们希望生成一个随机数时，在 `C++` 或者 `Rust` 环境下，会想到使用 `rand` 库。自然而然地，Teaclave SGX SDK 也用 Rust 重写了 [`sgx_rand`](https://github.com/apache/incubator-teaclave-sgx-sdk/tree/master/sgx_rand) 库。 
 
-首先在 `enclave/Cargo.toml` 中的 `[target.'cfg(not(target_env = "sgx"))'.dependencies]` 部分添加 `sgx_rand` 库的地址，这里的地址也可以换成本机上的 `sgx_rand` 文件夹所在位置。
+首先在 `enclave/Cargo.toml` 中的 `[target.'cfg(not(target_env = "sgx"))'.dependencies]` 部分添加 `sgx_rand` 库的地址。
 
 ```toml
 [target.'cfg(not(target_env = "sgx"))'.dependencies]
