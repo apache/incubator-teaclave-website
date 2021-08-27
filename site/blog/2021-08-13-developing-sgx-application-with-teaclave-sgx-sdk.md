@@ -81,7 +81,7 @@ This is a Rust string!
 
 ### helloworld 目录结构
 
-```tree
+```
 helloworld/ 
 ├── app 
 │   ├── app.c 
@@ -117,7 +117,7 @@ helloworld 的目录结构和 Intel SGX 的 [SampleEnclave](https://github.com/i
 + **`Enclave.edl`** \
 该文件规定了 Enclave 边界 `ECALL/OCALL` 的定义。
 
-```edl
+```
 enclave {
     from "sgx_tstd.edl" import *;
     from "sgx_stdio.edl" import *;
@@ -188,7 +188,7 @@ pub extern "C" fn say_something(some_string: *const u8, some_len: usize) -> sgx_
 }
 ```
 该函数实现了一个简单的将 `&[u8]` 数组转化为字符串输出的函数，注意在函数的最后调用的 `println!` 函数是一个 `OCALL`。 `println!` 的具体实现中加入了内置的 `OCALL`，并定义了内置的 `edl` ，import到了 `Enclave.edl` 中。 
-```edl
+```
 enclave {
     from "sgx_tstd.edl" import *;
     from "sgx_stdio.edl" import *;
@@ -199,7 +199,7 @@ enclave {
 
 ### 编译后的代码目录 
 经过编译之后的代码目录如下所示，这里省略了 `release` 文件夹下的内容。
-```tree
+```
 ├── app 
 │   ├── app.c 
 │   ├── app.h 
@@ -270,7 +270,7 @@ pub fn intersection(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
 
 考虑一个比较现实的场景，两个用户分别将自己的向量作为参数传入 enclave 中进行计算，这时候数据需要从不可信代码区域复制到可信代码区域。
 首先，需要在 `Enclave.edl` 文件中修改 `say_something` 函数的定义，输入参数为两个用户的向量指针以及对应的向量大小。
-```edl
+```
 public sgx_status_t say_something([in, size=len1] size_t* num1, size_t len1,
                                   [in, size=len2] size_t* num2, size_t len2);
 ```
