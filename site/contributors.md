@@ -49,6 +49,7 @@ contributions it receives.
 
 List of external contributors of Teaclave, Teaclave SGX SDK, and Teaclave
 TrustZone SDK (in alphabetical order):
+
   - [Akhil Velagapudi](https://github.com/akhilles)
   - [Bing Duan](https://github.com/duanbing)
   - [BruceFan](https://github.com/fanrong1992)
@@ -67,13 +68,16 @@ TrustZone SDK (in alphabetical order):
   - [Meng Yang](https://github.com/m3ngyang)
   - [Mengyuan-L](https://github.com/Mengyuan-L)
   - [Nick Hynes](https://github.com/nhynes)
+  - [Pi Delport](https://github.com/PiDelport)
   - [Qinkun Bao](https://github.com/qinkunbao)
+  - [RMheng](https://github.com/RMheng)
   - [Raullen Chai](https://github.com/raullenchai)
   - [Sammy](https://github.com/sammyne)
   - [Shi Wenbin](https://github.com/bradyjoestar)
   - [SimonWan](https://github.com/SimonWan)
   - [Sythanos](https://github.com/sythanos)
   - [T0day](https://github.com/hi-T0day)
+  - [ThomasPluck](https://github.com/ThomasPluck)
   - [Tianjia Zhang](https://github.com/uudiin)
   - [Yuan Zhuang](https://github.com/DemesneGH)
   - [Zha0Chan](https://github.com/Zha0Chan)
@@ -86,6 +90,7 @@ TrustZone SDK (in alphabetical order):
   - [garbageslam](https://github.com/garbageslam)
   - [h4x3rotab](https://github.com/h4x3rotab)
   - [jknight](https://github.com/jknight)
+  - [kun](https://github.com/zikunfan)
   - [lhf](https://github.com/EighteenZi)
   - [luoyanhua2011](https://github.com/luoyanhua2011)
   - [lyj](https://github.com/lengyijun)
