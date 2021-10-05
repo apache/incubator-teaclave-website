@@ -20,6 +20,10 @@ announcements, meetup schedules, and commnity voting, etc.
 To subscribe or unsubscribe a mailing list, just send a blank email to one of
 above address with the `-subscribe` or `-unsubscribe` suffix.
 
+## Discord
+
+Connect directly with Teaclave community members in Discord. [[Join](https://discord.gg/ynECXsxm5P)]
+
 ## GitHub Issues
 
 You can also ask questions, propose features, and report bugs in Teaclave's
