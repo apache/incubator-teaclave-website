@@ -7,40 +7,55 @@ sidebar: false
 
 Teaclave adopts [The Apache Way](https://www.apache.org/theapacheway/).
 Everyone is more than welcome to contribute and make the project better.
+We add tag along with committer name to show areas that they are familiar with.
+We do encourage everyone to work anything they are interested in.
+
+Please contact the community if you'd like to become a member of regular
+committers or PPMC of Teaclave.
 
 ## Mentors
 
 Teaclave is now part of the Apache Incubator. We are fortunate to have the
 following mentors.
 
-- Felix Cheung
-- Furkan Kamaci
-- [Gordon King](https://github.com/bigdata-memory)
-- Jianyong Dai
-- Luciano Resende (Retired)
-- Matt Sicker
-- Zhijie Shen
+| Name          | Apache ID   | GitHub ID                                           |
+|:--------------|:------------|:----------------------------------------------------|
+| Daniel Dai    | daijy       | -                                                   |
+| Felix Cheung  | felixcheung | felixcheung                                         |
+| Furkan Kamaci | kamaci      | kamaci                                              |
+| Gordon King   | garyw       | [bigdata-memory](https://github.com/bigdata-memory) |
+| Matt Sicker   | mattsicker  | jvz                                                 |
+| Zhijie Shen   | zjshen      | zjshen14                                            |
+
+## Podling Project Management Committee
+
+The role of
+[Podling Project Management Committee](https://incubator.apache.org/guides/ppmc.html)
+(PPMC) is to help to govern the project and is directly responsible for the
+oversight of Teaclave.
+
+| Name          | Apache ID     | GitHub ID                                         | Tag   |
+|:--------------|:--------------|:--------------------------------------------------|:------|
+| Mingshen Sun  | mssun         | [mssun](https://github.com/mssun)                 | `all` |
+| Pei Wang      | uraj          | [uraj](https://github.com/uraj)                   | -     |
+| Rundong Zhou  | rdzhou        | [rdzhou](https://github.com/rdzhou)               | -     |
+| Tao Wei       | lenxwei       | -                                                 | -     |
+| Tongxin Li    | litongxin1991 | [litongxin1991](https://github.com/litongxin1991) | -     |
+| Yiming Jing   | yjing         | -                                                 | -     |
+| Yu Ding       | dingelish     | [dingelish](https://github.com/dingelish)         | -     |
+| Yulong Zhang  | yulongzhang   | [yulongzhang](https://github.com/yulongzhang)     | -     |
+| Zhaofeng Chen | zfc           | [m4sterchain](https://github.com/m4sterchain)     | -     |
+
 
 ## Committers
 
 Committers are people who have made substantial contribution to the project and
-being active. In committers, the role of
-[Podling Project Management Committee](https://incubator.apache.org/guides/ppmc.html)
-(PPMC) is to help to govern the project and is directly responsible for the
-oversight of Teaclave. Please contact the community if you'd like to become a
-member of regular committers or PPMC of Teaclave.
+being active.
 
-- [Mingshen Sun](https://github.com/mssun) (PPMC)
-- [Pei Wang](https://github.com/uraj) (PPMC)
-- [Rundong Zhou](https://github.com/rdzhou) (PPMC)
-- [Tao Wei](https://github.com/LenxWei) (PPMC)
-- [Tongxin Li](https://github.com/litongxin1991) (PPMC)
-- [Yiming Jing](https://github.com/kevinis) (PPMC)
-- [Yu Ding](https://github.com/dingelish) (PPMC)
-- [Yulong Zhang](https://github.com/yulongzhang) (PPMC)
-- [Zhaofeng Chen](https://github.com/m4sterchain) (PPMC)
-- [Hongbo Chen](https://github.com/ya0guang)
-- [Ran Duan](https://github.com/volcano0dr/)
+| Name        | Apache ID | GitHub ID                                   | Tag                       |
+|:------------|:----------|:--------------------------------------------|:--------------------------|
+| Hongbo Chen | ya0guang  | [ya0guang](https://github.com/ya0guang)     | `webassembly`, `executor` |
+| Ran Duan    | rduan     | [volcano0dr](https://github.com/volcano0dr) | `sgx-sdk`                 |
 
 ## Contributors
 
