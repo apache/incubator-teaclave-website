@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
     title: 'Apache Teaclave (incubating)',
     description: 'Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.',
@@ -6,6 +8,13 @@ module.exports = {
         ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Cutive+Mono|Roboto:100,300,400,500,700,900|Roboto+Condensed:300,400|Noto+Sans+SC:400,500,700,900' }],
         ['script', { src: 'https://use.fontawesome.com/releases/v5.15.0/js/all.js' } ],
     ],
+    configureWebpack: {
+        resolve: {
+            alias: {
+                '@assets': path.resolve(__dirname, '../assets')
+            }
+        }
+    },
     themeConfig: {
         search: false,
         smoothScroll: true,
