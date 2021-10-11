@@ -10,8 +10,6 @@ being used and actively contributed by developers from many organizations and
 other open source projects. This is a community maintained list of organizations
 and projects using and contributing to Teaclave.
 
-<br/>
-
 ![Powered by Logos](~@assets/powered-by-logos.png)
 
 ## Organizations
