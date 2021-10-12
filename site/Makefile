@@ -14,9 +14,12 @@ sgx-sdk-api-docs: teaclave-docs
 trustzone-sdk-api-docs: teaclave-docs
 	cd teaclave-trustzone-sdk && ./setup.sh
 	bash -c "cd teaclave-trustzone-sdk && source environment && cd optee-utee && xargo doc --target aarch64-unknown-optee-trustzone"
+	bash -c "cd teaclave-trustzone-sdk && source environment && cd optee-teec && cargo doc --target aarch64-unknown-linux-gnu"
 	mkdir -p .vuepress/dist/api-docs/trustzone-sdk
 	cp -r teaclave-trustzone-sdk/optee-utee/target/aarch64-unknown-optee-trustzone/doc .vuepress/dist/api-docs/trustzone-sdk/optee-utee
+	cp -r teaclave-trustzone-sdk/optee-teec/target/aarch64-unknown-linux-gnu/doc .vuepress/dist/api-docs/trustzone-sdk/optee-teec
 	@echo "<meta http-equiv=refresh content=0;url=`echo optee_utee | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/trustzone-sdk/optee-utee/index.html
+	@echo "<meta http-equiv=refresh content=0;url=`echo optee_teec | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/trustzone-sdk/optee-teec/index.html
 
 client-sdk-python-docs: teaclave-docs
 	pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python
