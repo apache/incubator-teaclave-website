@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
     title: 'Apache Teaclave (incubating)',
     description: 'Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.',
@@ -6,6 +8,13 @@ module.exports = {
         ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Cutive+Mono|Roboto:100,300,400,500,700,900|Roboto+Condensed:300,400|Noto+Sans+SC:400,500,700,900' }],
         ['script', { src: 'https://use.fontawesome.com/releases/v5.15.0/js/all.js' } ],
     ],
+    configureWebpack: {
+        resolve: {
+            alias: {
+                '@assets': path.resolve(__dirname, '../assets')
+            }
+        }
+    },
     themeConfig: {
         search: false,
         smoothScroll: true,
@@ -32,6 +41,8 @@ module.exports = {
                             { text: 'Teaclave Client SDK (Rust)', link: 'https://teaclave.apache.org/api-docs/client-sdk-rust/', target: '_self', rel: '' },
                             { text: 'Teaclave Client SDK (Python)', link: 'https://teaclave.apache.org/api-docs/client-sdk-python/', target: '_self', rel: '' },
                             { text: 'Teaclave SGX SDK', link: 'https://teaclave.apache.org/api-docs/sgx-sdk/', target: '_self', rel: '' },
+                            { text: 'Teaclave TrustZone SDK (Host)', link: 'https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec', target: '_self', rel: '' },
+                            { text: 'Teaclave TrustZone SDK (TA)', link: 'https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee', target: '_self', rel: '' },
                             { text: 'Crates in Teaclave (Enclave)', link: 'https://teaclave.apache.org/api-docs/crates-enclave/', target: '_self', rel: '' },
                             { text: 'Crates in Teaclave (App)', link: 'https://teaclave.apache.org/api-docs/crates-app/', target: '_self', rel: '' },
                         ]
@@ -75,6 +86,7 @@ module.exports = {
                       '/teaclave/docs/builtin-functions',
                       '/teaclave/docs/azure-confidential-computing',
                       '/teaclave/docs/executing-wasm',
+                      '/teaclave/docs/inference-with-tvm',
                   ],
               },
               {
@@ -156,6 +168,7 @@ module.exports = {
                   sidebarDepth: 0,
                   children: [
                       '/teaclave-trustzone-sdk/docs/getting-started-with-optee-for-qemu-armv8',
+                      '/teaclave-trustzone-sdk/docs/overview-of-optee-rust-examples',
                   ],
               },
           ]

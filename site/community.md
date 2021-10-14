@@ -20,6 +20,10 @@ announcements, meetup schedules, and commnity voting, etc.
 To subscribe or unsubscribe a mailing list, just send a blank email to one of
 above address with the `-subscribe` or `-unsubscribe` suffix.
 
+## Discord
+
+Connect directly with Teaclave community members in Discord. [[Join](https://discord.gg/ynECXsxm5P)]
+
 ## GitHub Issues
 
 You can also ask questions, propose features, and report bugs in Teaclave's
@@ -36,6 +40,12 @@ Teaclave is open source in [The Apache Way](https://www.apache.org/theapacheway/
 we aim to create a project that is maintained and owned by the community. All
 kinds of contributions are welcome. Read this [document](CONTRIBUTING.md) to
 learn more about how to contribute. Huge thanks to our [contributors](CONTRIBUTORS.md).
+
+## Calendar
+
+The Teaclave community organizes a number of public events, including monthly
+general online meetups. You can subscribe to the
+[public events calendar](https://calendar.google.com/calendar/u/0/embed?src=l1q5osem2br8i4bj7dgik5sae4@group.calendar.google.com).
 
 ## Reporting a Vulnerability
 

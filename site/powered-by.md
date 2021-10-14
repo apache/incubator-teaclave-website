@@ -8,7 +8,9 @@ sidebar: false
 Apache Teaclave (including the FaaS platform, SGX SDK, and TrustZone SDK) is
 being used and actively contributed by developers from many organizations and
 other open source projects. This is a community maintained list of organizations
-and projects using and contributing to Teaclave in alphabetical order.
+and projects using and contributing to Teaclave.
+
+![Powered by Logos](~@assets/powered-by-logos.png)
 
 ## Organizations
 
@@ -35,6 +37,9 @@ and projects using and contributing to Teaclave in alphabetical order.
     Substrate.
   - [Crypto.com Chain](https://github.com/crypto-com/chain): Alpha version
     prototype of Crypto.com Chain.
+  - [Inclavare Containers](https://github.com/alibaba/inclavare-containers):A
+    novel container runtime, aka confidential container, for cloud-native
+    confidential computing and enclave runtime ecosystem.
   - [Occlum](https://github.com/occlum/occlum): Occlum is a memory-safe,
     multi-process library OS for Intel SGX.
   - [Phala Network](https://github.com/Phala-Network/phala-blockchain):
