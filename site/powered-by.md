@@ -37,8 +37,8 @@ and projects using and contributing to Teaclave.
     Substrate.
   - [Crypto.com Chain](https://github.com/crypto-com/chain): Alpha version
     prototype of Crypto.com Chain.
-  - [Inclavare Containers](https://github.com/alibaba/inclavare-containers):A
-    novel container runtime, aka confidential container, for cloud-native
+  - [Inclavare Containers](https://github.com/alibaba/inclavare-containers):
+    A novel container runtime, aka confidential container, for cloud-native
     confidential computing and enclave runtime ecosystem.
   - [Occlum](https://github.com/occlum/occlum): Occlum is a memory-safe,
     multi-process library OS for Intel SGX.
