@@ -251,7 +251,7 @@ session.invoke_command(Command::IncValue as u32, &mut operation)?;
 
 + `ta/src/main.rs`
 
-`ta/src/main.rs` 中的 `invoke_command` 函数参数与 host 中调用的 `invoke_command` 略有不同，第二个参数是 `Paramters` 类型。当数据从 CA 传递到 TA 时，实际上执行的是按 bit 的复制操作，所以 `params` 中的数据就是从 `operation` 中复制过来的数据.
+`ta/src/main.rs` 中的 `invoke_command` 函数参数与 host 中调用的 `invoke_command` 略有不同，第二个参数是 `Paramters` 类型。当数据从 CA 传递到 TA 时，实际上执行的是按 bit 的复制操作，所以 `params` 中的数据就是从 `operation` 中传递过来的数据.
 ```rust
 fn invoke_command(cmd_id: u32, params: &mut Parameters) -> Result<()> {
 ```
@@ -372,9 +372,7 @@ impl From<u32> for Command {
 data_compute(&mut session)?;
 ```
 
-在 `data_compute` 中，首先声明要进行数据处理的两个 `u8` 数组 `nums1` 和 `nums2`，以及用于存储数据处理结果的 `resu`。在示例代码 `hello_world` 中的变量声明使用的是 `ParamValue`，但这里我们需要访问数组，一段连续的内存变量而非变量。通过阅读 Teaclave TrustZone SDK client 端的 Rust 仓库 [Crate optee_teec](https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec/optee_teec/index.html)，可知 `ParamTmpRef` 用于定义临时内存访问。
-
-于是将这三个数组地址作为参数新建 `ParamTmpRef` 类型，并将 `ParamTmpRef` 类型变量传递到 `operation` 中，用于传递给 TA 交互信息。
+在 `data_compute` 中，首先声明要进行数据处理的两个 `u8` 数组 `nums1` 和 `nums2`，以及用于存储数据处理结果的 `resu`。在示例代码 `hello_world` 中的变量声明使用的是 `ParamValue`，但这里我们需要访问数组，一段连续的内存变量而非变量。通过阅读 Teaclave TrustZone SDK client 端的 Rust 仓库 [Crate optee_teec](https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec/optee_teec/index.html)，可知 `ParamTmpRef` 用于定义临时内存访问。于是将这三个数组地址作为参数新建 `ParamTmpRef` 类型，并将 `ParamTmpRef` 类型变量传递到 `operation` 中，用于传递给 TA 交互信息。
 
 在准备好与 TA 交互的信息后，调用 `invoke_command` 通知对应的 TA 执行 `Command::Intersection` 指定的操作。
 
