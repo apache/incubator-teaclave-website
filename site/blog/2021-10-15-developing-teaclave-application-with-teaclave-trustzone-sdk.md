@@ -219,22 +219,22 @@ D/LD:  ldelf:168 ELF (133af0ca-bdab-11eb-9130-43bf7873bf67) at 0x40014000
 ### `hello_world-rs` 重要代码文件解析
 
 + `host/src/main.rs`
-  + 进入 `main` 函数，首先调用 `Context::new` 函数建立起 `hello_world-rs` CA 和 TA 的联系，`ctx` 指向类型为 `Context` 的变量的地址，用于 CA 和 TA 的连接和通信；
-  + 调用 `open_session` 在 CA 和对应的 TA 中打开一个 `session`，并将 `hello_world-rs` 的 UUID 作为参数传入，用于指引 CA 连接对应 UUID 值的 TA；
-  + 将 `&mut session` 作为参数传入 `hello_world` 函数中；
 
+进入 `main` 函数，首先调用 `Context::new` 函数建立起 `hello_world-rs` CA 和 TA 的逻辑联系，`ctx` 指向类型为 `Context` 的变量的地址，用于 CA 和 TA 的连接和通信。
 ```rust
-fn main() -> optee_teec::Result<()> {
-    let mut ctx = Context::new()?;
-    let uuid = Uuid::parse_str(UUID).unwrap();
-    let mut session = ctx.open_session(uuid)?;
-
-    hello_world(&mut session)?;
-
-    println!("Success");
-    Ok(())
-}
+let mut ctx = Context::new()?;
 ```
+调用 `open_session` 在 CA 和对应的 TA 中打开一个 `session`，并将 `hello_world-rs` 的 UUID 作为参数传入，用于指引 CA 连接对应 UUID 值的 TA。
+```rust
+let uuid = Uuid::parse_str(UUID).unwrap();
+let mut session = ctx.open_session(uuid)?;
+```
+
+将 `&mut session` 作为参数传入 `hello_world` 函数中。
+```rust
+hello_world(&mut session)?;
+```
+
 进入到 `hello_world` 函数中，首先将要进行运算的 `u32` 操作数用 `ParamValue` 类型包装为操作数 `p0`，设置其值为29，类型为 `ValueInout`，表示同时作为输入参数和返回值。
 ```rust
 let p0 = ParamValue::new(29, 0, ParamType::ValueInout);
@@ -372,7 +372,9 @@ impl From<u32> for Command {
 data_compute(&mut session)?;
 ```
 
-在 `data_compute` 中，首先声明要进行数据处理的两个 `u8` 数组 `nums1` 和 `nums2`，以及用于存储数据处理结果的 `resu`。接着，将这三个数组地址作为参数新建 `ParamTmpRef` 类型，并将 `ParamTmpRef` 类型变量传递到 `operation` 中，用于传递给 TA 交互信息。
+在 `data_compute` 中，首先声明要进行数据处理的两个 `u8` 数组 `nums1` 和 `nums2`，以及用于存储数据处理结果的 `resu`。在示例代码 `hello_world` 中的变量声明使用的是 `ParamValue`，但这里我们需要访问数组，一段连续的内存变量而非变量。通过阅读 Teaclave TrustZone SDK client 端的 Rust 仓库 [Crate optee_teec](https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec/optee_teec/index.html)，可知 `ParamTmpRef` 用于定义临时内存访问。
+
+于是将这三个数组地址作为参数新建 `ParamTmpRef` 类型，并将 `ParamTmpRef` 类型变量传递到 `operation` 中，用于传递给 TA 交互信息。
 
 在准备好与 TA 交互的信息后，调用 `invoke_command` 通知对应的 TA 执行 `Command::Intersection` 指定的操作。
 
@@ -392,7 +394,8 @@ fn data_compute(session: &mut Session) -> optee_teec::Result<()> {
     session.invoke_command(Command::Intersection as u32, &mut operation)?;
 }
 ```
-`invoke_command` 函数的具体实现在 `ta/sec/main.rs` 文件中的 `invoke_command` ，共享的参数通过 `params` 从 CA 传递到 TA 中，需要根据 `Paramters` 类型的 [实现](https://github.com/apache/incubator-teaclave-trustzone-sdk/blob/8520a2018705edcebfb7e729bd2ced12414fc052/optee-utee/src/parameter.rs#L25)，抽丝剥茧般地提取出来 `ParamMemref` 类型的 `nums1`, `nums2` 和 `vec_resu`。
+`invoke_command` 函数的具体实现在 `ta/sec/main.rs` 文件中的 `invoke_command`。共享的参数通过 `params` 从 CA 传递到 TA 中，
+同样，可以根据 TA 端的 Rust 仓库 [optee_utee](https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee/optee_utee/index.html) 提供的接口函数抽丝剥茧般地提取出来 `ParamMemref` 类型的 `nums1`, `nums2` 和 `vec_resu`。
 
 ```rust
     let nums1 = unsafe { params.0.as_memref().unwrap().raw() };
@@ -404,6 +407,7 @@ fn data_compute(session: &mut Session) -> optee_teec::Result<()> {
 ```
 
 现在，进入 `match` 表达式中，将 `Command::from` 的枚举修改为 `Command::Intersection` 和 `Command::Union`。要实现的函数就填充到对应的分支括号中。
+
 ```rust
   match Command::from(cmd_id) {
     Command::Intersection => {
@@ -479,6 +483,12 @@ fn data_compute(session: &mut Session) -> optee_teec::Result<()> {
     println!("Intersection resu = {:?}", &resu[..updated_size]);
 ```
 
+这样，我们就基于 Teaclave TrustZone SDK 提供的示例代码实现了自己的求交集和并集函数。
+
 ## 总结
 
 本文首先介绍 Teaclave TrustZone SDK 项目的环境配置过程，然后介绍了简单示例 `hello_world-rs` 的组织结构和编译过程 ，最后，通过修改 `hello_world-rs` 实现 `intersection` 和 `union` 函数为例，介绍如何基于提供的 SampleCode 进行 Teaclave TrustZone SDK 应用程序的开发。 
+
+## 延伸阅读
++ [Teaclave TrustZone SDK 文档](https://teaclave.apache.org/trustzone-sdk-docs/)
++ [Teaclave TrustZone SDK 项目论文：《RusTEE: Developing Memory-Safe ARM TrustZone Applications》](https://dl.acm.org/doi/10.1145/3427228.3427262)
