@@ -169,6 +169,7 @@ module.exports = {
                   children: [
                       '/teaclave-trustzone-sdk/docs/getting-started-with-optee-for-qemu-armv8',
                       '/teaclave-trustzone-sdk/docs/overview-of-optee-rust-examples',
+                      '/teaclave-trustzone-sdk/docs/debugging-optee-ta',
                   ],
               },
           ]
