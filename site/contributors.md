@@ -52,10 +52,12 @@ oversight of Teaclave.
 Committers are people who have made substantial contribution to the project and
 being active.
 
-| Name        | Apache ID | GitHub ID                                   | Tag                       |
-|:------------|:----------|:--------------------------------------------|:--------------------------|
-| Hongbo Chen | ya0guang  | [ya0guang](https://github.com/ya0guang)     | `webassembly`, `executor` |
-| Ran Duan    | rduan     | [volcano0dr](https://github.com/volcano0dr) | `sgx-sdk`                 |
+| Name          | Apache ID   | GitHub ID                                     | Tag                         |
+| :------------ | :---------- | :-------------------------------------------- | :-------------------------- |
+| Hongbo Chen   | ya0guang    | [ya0guang](https://github.com/ya0guang)       | `webassembly`, `executor`   |
+| Ran Duan      | rduan       | [volcano0dr](https://github.com/volcano0dr)   | `sgx-sdk`                   |
+| Yuan Zhuang   | yuanz       | -                                             | `trustzone-sgx-sdk`         |
+| Rong Fan      | fanrong     | -                                             | `trustzone-sgx-sdk`         |
 
 ## Contributors
 
