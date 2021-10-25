@@ -148,8 +148,20 @@ module.exports = {
                   collapsable: false,
                   sidebarDepth: 0,
                   children: [
-                      '/teaclave-sgx-sdk/documents/developing-with-vscode',
+                      '/teaclave-sgx-sdk/documents/environment-setup',
                       '/teaclave-sgx-sdk/documents/is_x86_feature_detected-in-sgx-sdk',
+                      '/teaclave-sgx-sdk/documents/developing-with-vscode',
+                      '/teaclave-sgx-sdk/documents/debugging-a-local-rust-sgx-enclave-in-docker-with-sgx-gdb',
+                      '/teaclave-sgx-sdk/documents/public-cloud-for-rust-sgx-development',
+                  ],
+              },
+              {
+                  title: 'Tutorial',
+                  collapsable: false,
+                  sidebarDepth: 0,
+                  children: [
+                      '/teaclave-sgx-sdk/documents/sgxtime',
+                      '/teaclave-sgx-sdk/documents/performance-optimization-tips',
                   ],
               },
               {
@@ -158,6 +170,7 @@ module.exports = {
                   sidebarDepth: 0,
                   children: [
                       '/teaclave-sgx-sdk/documents/everything-about-cve-2020-5499',
+                      '/teaclave-sgx-sdk/documents/mitigation-of-intel-sa-00219-in-rust-sgx',
                   ],
               },
           ],
