@@ -10,8 +10,6 @@ being used and actively contributed by developers from many organizations and
 other open source projects. This is a community maintained list of organizations
 and projects using and contributing to Teaclave.
 
-![Powered by Logos](~@assets/powered-by-logos.png)
-
 ## Organizations
 
   - [Alibaba](https://www.alibabagroup.com/)
@@ -19,6 +17,7 @@ and projects using and contributing to Teaclave.
   - [Baidu](https://www.baidu.com/)
   - [ByteDance](https://www.bytedance.com/)
   - [Enigma](https://www.enigma.co/)
+  - [Intel](https://www.intel.com/content/www/us/en/developer/tools/software-guard-extensions/overview.html)
   - [LayerX](https://layerx.co.jp/)
 
 ## Projects
@@ -40,6 +39,8 @@ and projects using and contributing to Teaclave.
   - [Inclavare Containers](https://github.com/alibaba/inclavare-containers):
     A novel container runtime, aka confidential container, for cloud-native
     confidential computing and enclave runtime ecosystem.
+  - [Integritee Worker](https://github.com/integritee-network/worker):
+    Integritee worker for Integritee node or parachain.
   - [Occlum](https://github.com/occlum/occlum): Occlum is a memory-safe,
     multi-process library OS for Intel SGX.
   - [Phala Network](https://github.com/Phala-Network/phala-blockchain):
