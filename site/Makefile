@@ -40,13 +40,15 @@ crate-docs:
 teaclave-docs:
 	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
 	git clone https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk || cd teaclave-sgx-sdk && git pull
-	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk || cd teaclave-trustzone-sdk && git pull
+	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk
+	cd teaclave-trustzone-sdk && git checkout 352ff919eabf18941deb79eb30a98a02a7785d2c
 	vuepress build
 
 dev:
 	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
 	git clone https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk || cd teaclave-sgx-sdk && git pull
-	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk || cd teaclave-trustzone-sdk && git pull
+	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk
+	cd teaclave-trustzone-sdk && git checkout 352ff919eabf18941deb79eb30a98a02a7785d2c
 	vuepress dev
 
 preview:
