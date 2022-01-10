@@ -13,7 +13,7 @@ We have a few mailing lists hosted by Apache:
 
 - `dev@teaclave.apache.org`: A list for discussion on Teaclave development including design proposal, release
 announcements, meetup schedules, and commnity voting, etc.
- [[Subscribe](mailto:dev-subscribe@teaclave.apache.org?subject=Subscribe) | [Unsubscribe](mailto:dev-unsubscribe@teaclave.apache.org?subject=Unsubscribe) | [Archive](https://lists.apache.org/list.html?commits@teaclave.apache.org)]
+ [[Subscribe](mailto:dev-subscribe@teaclave.apache.org?subject=Subscribe) | [Unsubscribe](mailto:dev-unsubscribe@teaclave.apache.org?subject=Unsubscribe) | [Archive](https://lists.apache.org/list.html?dev@teaclave.apache.org)]
 - `commits@teaclave.apache.org`: Commit activities for all projects.
  [[Subscribe](mailto:commits-subscribe@teaclave.apache.org?subject=Subscribe) | [Unsubscribe](mailto:commits-unsubscribe@teaclave.apache.org?subject=Unsubscribe) | [Archive](https://lists.apache.org/list.html?commits@teaclave.apache.org)]
 
