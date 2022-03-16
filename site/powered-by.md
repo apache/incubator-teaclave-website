@@ -46,6 +46,9 @@ and projects using and contributing to Teaclave.
   - [Phala Network](https://github.com/Phala-Network/phala-blockchain):
     A TEE-Blockchain hybrid architecture implementing Confidential Contract on
     Polkadot.
+  - [P4Cleanroom](https://p4cleanroom.com/): P4Cleanroom is a confidential cloud
+    service for hosting computational biology algorithms as SaaS services on the
+    cloud.
   - [SafeTrace](https://github.com/enigmampc/SafeTrace): Privacy preserving
     voluntary COVID-19 self-reporting platform for contact tracing.
   - [Secret Network](https://github.com/enigmampc/SecretNetwork): A
