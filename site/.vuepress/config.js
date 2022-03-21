@@ -108,6 +108,7 @@ module.exports = {
                   collapsable: false,
                   sidebarDepth: 0,
                   children: [
+                      '/teaclave/docs/release-guide',
                       '/teaclave/docs/development-tips',
                       '/teaclave/docs/rust-guideline',
                   ],
