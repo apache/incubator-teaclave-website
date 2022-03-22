@@ -41,6 +41,9 @@ and projects using and contributing to Teaclave.
     confidential computing and enclave runtime ecosystem.
   - [Integritee Worker](https://github.com/integritee-network/worker):
     Integritee worker for Integritee node or parachain.
+  - [Mithril Security - BlindAI](https://github.com/mithril-security/blindai):
+    BlindAI is a fast, easy to use and confidential inference server, allowing
+    you to deploy your model on sensitive data.
   - [Occlum](https://github.com/occlum/occlum): Occlum is a memory-safe,
     multi-process library OS for Intel SGX.
   - [Phala Network](https://github.com/Phala-Network/phala-blockchain):
