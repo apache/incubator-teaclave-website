@@ -4,6 +4,18 @@ module.exports = {
     title: 'Apache Teaclave (incubating)',
     description: 'Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.',
     base: '/',
+    patterns: [
+        '*.md',
+        'api-docs/*.md',
+        'blog/*.md',
+        'teaclave/**/*.md',
+        'teaclave-sgx-sdk/documents/*.md',
+        'teaclave-trustzone-sdk/docs',
+        '!teaclave/sdk/rust/target/**',
+        '!node_modules/**',
+        '!teaclave-trustzone-sdk/optee-utee/target/**',
+        '!teaclave-trustzone-sdk/optee-teec/target/**',
+    ],
     head: [
         ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Cutive+Mono|Roboto:100,300,400,500,700,900|Roboto+Condensed:300,400|Noto+Sans+SC:400,500,700,900' }],
         ['script', { src: 'https://use.fontawesome.com/releases/v5.15.0/js/all.js' } ],
