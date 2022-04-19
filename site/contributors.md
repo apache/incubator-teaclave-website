@@ -101,6 +101,7 @@ TrustZone SDK (in alphabetical order):
   - [akoskinas](https://github.com/akoskinas)
   - [algon](https://github.com/algon-320)
   - [clauverjat](https://github.com/clauverjat)
+  - [Christopher Schramm](https://github.com/cschramm)
   - [czzmmc](https://github.com/czzmmc)
   - [devashishdxt](https://github.com/devashishdxt)
   - [dtorfs](https://github.com/dtorfs)
