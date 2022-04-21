@@ -56,7 +56,7 @@ being active.
 | :------------ | :---------- | :-------------------------------------------- | :-------------------------- |
 | Hongbo Chen   | ya0guang    | [ya0guang](https://github.com/ya0guang)       | `webassembly`, `executor`   |
 | Ran Duan      | rduan       | [volcano0dr](https://github.com/volcano0dr)   | `sgx-sdk`                   |
-| Yuan Zhuang   | yuanz       | -                                             | `trustzone-sgx-sdk`         |
+| Yuan Zhuang   | yuanz       | [DemesneGH](https://github.com/DemesneGH)     | `trustzone-sgx-sdk`         |
 | Rong Fan      | fanrong     | -                                             | `trustzone-sgx-sdk`         |
 
 ## Contributors
