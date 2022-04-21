@@ -17,8 +17,11 @@ announcements, meetup schedules, and commnity voting, etc.
 - `commits@teaclave.apache.org`: Commit activities for all projects.
  [[Subscribe](mailto:commits-subscribe@teaclave.apache.org?subject=Subscribe) | [Unsubscribe](mailto:commits-unsubscribe@teaclave.apache.org?subject=Unsubscribe) | [Archive](https://lists.apache.org/list.html?commits@teaclave.apache.org)]
 
-To subscribe or unsubscribe a mailing list, just send a blank email to one of
-above address with the `-subscribe` or `-unsubscribe` suffix.
+To subscribe or unsubscribe a mailing list, just send a blank email with any subject to one of
+above address with the `-subscribe` or `-unsubscribe` suffix. For example, send
+an email to `dev-subscribe@teaclave.apache.org` (or
+`dev-unsubscribe@teaclave.apache.org`) to subscribe (or unsubscribe) the dev
+mailing list.
 
 ## Discord
 
@@ -32,7 +35,7 @@ project on GitHub to receive latest updates.
 
 ## Twitter
 
-Follow [@ApacheTeaclave](https://twitter.com/ApacheTeaclave).
+Follow [@ApacheTeaclave](https://twitter.com/ApacheTeaclave) for latest news.
 
 ## Contributing
 
@@ -41,7 +44,7 @@ we aim to create a project that is maintained and owned by the community. All
 kinds of contributions are welcome. Read this [document](CONTRIBUTING.md) to
 learn more about how to contribute. Huge thanks to our [contributors](CONTRIBUTORS.md).
 
-## Calendar
+## Event Calendar
 
 The Teaclave community organizes a number of public events, including monthly
 general online meetups. You can subscribe to the
