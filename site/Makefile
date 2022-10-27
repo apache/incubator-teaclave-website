@@ -13,8 +13,8 @@ sgx-sdk-api-docs: teaclave-docs
 
 trustzone-sdk-api-docs: teaclave-docs
 	cd teaclave-trustzone-sdk && ./setup.sh
-	bash -c "cd teaclave-trustzone-sdk && source environment && cd optee-utee && xargo doc --target aarch64-unknown-optee-trustzone"
-	bash -c "cd teaclave-trustzone-sdk && source environment && cd optee-teec && cargo doc --target aarch64-unknown-linux-gnu"
+	bash -c "cd teaclave-trustzone-sdk && source environment && cd optee-utee && xargo doc --target aarch64-unknown-optee-trustzone --no-deps"
+	bash -c "cd teaclave-trustzone-sdk && source environment && cd optee-teec && cargo doc --target aarch64-unknown-linux-gnu --no-deps"
 	mkdir -p .vuepress/dist/api-docs/trustzone-sdk
 	cp -r teaclave-trustzone-sdk/optee-utee/target/aarch64-unknown-optee-trustzone/doc .vuepress/dist/api-docs/trustzone-sdk/optee-utee
 	cp -r teaclave-trustzone-sdk/optee-teec/target/aarch64-unknown-linux-gnu/doc .vuepress/dist/api-docs/trustzone-sdk/optee-teec
@@ -41,14 +41,14 @@ teaclave-docs:
 	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
 	git clone https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk || cd teaclave-sgx-sdk && git pull
 	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk
-	cd teaclave-trustzone-sdk && git checkout 352ff919eabf18941deb79eb30a98a02a7785d2c
+	cd teaclave-trustzone-sdk && git checkout 38452505f36e2a49279fbfcb7199147cf1190a95
 	vuepress build
 
 dev:
 	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
 	git clone https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk || cd teaclave-sgx-sdk && git pull
 	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk
-	cd teaclave-trustzone-sdk && git checkout 352ff919eabf18941deb79eb30a98a02a7785d2c
+	cd teaclave-trustzone-sdk && git checkout 38452505f36e2a49279fbfcb7199147cf1190a95
 	vuepress dev
 
 preview:
