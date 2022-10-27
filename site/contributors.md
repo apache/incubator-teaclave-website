@@ -34,17 +34,19 @@ The role of
 (PPMC) is to help to govern the project and is directly responsible for the
 oversight of Teaclave.
 
-| Name          | Apache ID     | GitHub ID                                         | Tag   |
-|:--------------|:--------------|:--------------------------------------------------|:------|
-| Mingshen Sun  | mssun         | [mssun](https://github.com/mssun)                 | `all` |
-| Pei Wang      | uraj          | [uraj](https://github.com/uraj)                   | -     |
-| Rundong Zhou  | rdzhou        | [rdzhou](https://github.com/rdzhou)               | -     |
-| Tao Wei       | lenxwei       | -                                                 | -     |
-| Tongxin Li    | litongxin1991 | [litongxin1991](https://github.com/litongxin1991) | -     |
-| Yiming Jing   | yjing         | -                                                 | -     |
-| Yu Ding       | dingelish     | [dingelish](https://github.com/dingelish)         | -     |
-| Yulong Zhang  | yulongzhang   | [yulongzhang](https://github.com/yulongzhang)     | -     |
-| Zhaofeng Chen | zfc           | [m4sterchain](https://github.com/m4sterchain)     | -     |
+| Name            | Apache ID       | GitHub ID                                           | Tag                 |
+| :-------------- | :-------------- | :-------------------------------------------------- | :------------------ |
+| Mingshen Sun    | mssun           | [mssun](https://github.com/mssun)                   | `all`               |
+| Pei Wang        | uraj            | [uraj](https://github.com/uraj)                     | -                   |
+| Ran Duan        | rduan           | [volcano0dr](https://github.com/volcano0dr)         | `sgx-sdk`           |
+| Rundong Zhou    | rdzhou          | [rdzhou](https://github.com/rdzhou)                 | -                   |
+| Tao Wei         | lenxwei         | -                                                   | -                   |
+| Tongxin Li      | litongxin1991   | [litongxin1991](https://github.com/litongxin1991)   | -                   |
+| Yiming Jing     | yjing           | -                                                   | -                   |
+| Yu Ding         | dingelish       | [dingelish](https://github.com/dingelish)           | `sgx-sdk`           |
+| Yuan Zhuang     | yuanz           | [DemesneGH](https://github.com/DemesneGH)           | `trustzone-sgx-sdk` |
+| Yulong Zhang    | yulongzhang     | [yulongzhang](https://github.com/yulongzhang)       | -                   |
+| Zhaofeng Chen   | zfc             | [m4sterchain](https://github.com/m4sterchain)       | -                   |
 
 
 ## Committers
@@ -56,9 +58,7 @@ being active.
 | :------------ | :---------- | :-------------------------------------------- | :-------------------------- |
 | Hongbo Chen   | ya0guang    | [ya0guang](https://github.com/ya0guang)       | `webassembly`, `executor`   |
 | Qinkun Bao    | qinkun      | [qinkunbao](https://github.com/qinkunbao)     | `teaclave-faas`             |
-| Ran Duan      | rduan       | [volcano0dr](https://github.com/volcano0dr)   | `sgx-sdk`                   |
 | Rong Fan      | fanrong     | [fanrong1992](https://github.com/fanrong1992) | `trustzone-sgx-sdk`         |
-| Yuan Zhuang   | yuanz       | [DemesneGH](https://github.com/DemesneGH)     | `trustzone-sgx-sdk`         |
 
 ## Contributors
 
