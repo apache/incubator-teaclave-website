@@ -54,19 +54,23 @@ oversight of Teaclave.
 Committers are people who have made substantial contribution to the project and
 being active.
 
-| Name          | Apache ID   | GitHub ID                                     | Tag                         |
-| :------------ | :---------- | :-------------------------------------------- | :-------------------------- |
-| Hongbo Chen   | ya0guang    | [ya0guang](https://github.com/ya0guang)       | `webassembly`, `executor`   |
-| Qinkun Bao    | qinkun      | [qinkunbao](https://github.com/qinkunbao)     | `teaclave-faas`             |
-| Rong Fan      | fanrong     | [fanrong1992](https://github.com/fanrong1992) | `trustzone-sgx-sdk`         |
+| Name          | Apache ID   | GitHub ID                                         | Tag                         |
+| :------------ | :---------- | :------------------------------------------------ | :-------------------------- |
+| Hongbo Chen   | ya0guang    | [ya0guang](https://github.com/ya0guang)           | `webassembly`, `executor`   |
+| Lei Yu        | yulei       | [yuleil](https://github.com/yuleil)               | `java-tee-sdk`              |
+| Qinkun Bao    | qinkun      | [qinkunbao](https://github.com/qinkunbao)         | `teaclave-faas`             |
+| Rong Fan      | fanrong     | [fanrong1992](https://github.com/fanrong1992)     | `trustzone-sgx-sdk`         |
+| Sanhong Li    | sanhongli   | -                                                 | `java-tee-sdk`              |
+| Shaojun Wang  | shaojunwang | [superajun-wsj](https://github.com/superajun-wsj) | `java-tee-sdk`              |
+| Ziyi Lin      | ziyilin     | [ziyilin](https://github.com/ziyilin)             | `java-tee-sdk`              |
 
 ## Contributors
 
 Teaclave is a community project and is very thankful for the many community
 contributions it receives.
 
-List of external contributors of Teaclave, Teaclave SGX SDK, and Teaclave
-TrustZone SDK (in alphabetical order):
+List of external contributors of Teaclave, Teaclave SGX SDK, Teaclave Java TEE
+SDK and Teaclave TrustZone SDK (in alphabetical order):
 
   - [Akhil Velagapudi](https://github.com/akhilles)
   - [Bing Duan](https://github.com/duanbing)
@@ -123,3 +127,4 @@ More people tracked in GitHub:
   - [Teaclave](https://github.com/apache/incubator-teaclave/graphs/contributors)
   - [Teaclave SGX SDK](https://github.com/apache/incubator-teaclave-sgx-sdk/graphs/contributors)
   - [Teaclave TrustZone SDK](https://github.com/apache/incubator-teaclave-trustzone-sdk/graphs/contributors)
+  - [Teaclave Java TEE SDK](https://github.com/apache/incubator-teaclave-java-tee-sdk/graphs/contributors)

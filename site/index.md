@@ -43,8 +43,8 @@ client SDKs and command line tools. </p>
 <h3><i class="fas fa-shapes"></i>&nbsp; Flexible</h3>
 <p> Components in Teaclave are designed in
 modular, and features like remote attestation can be easily embedded in other
-projects. In addition, Teaclave SGX SDK and Teaclave TrustZone SDK can also be
-used separately to write TEE apps for other purposes. </p>
+projects. In addition, Teaclave SGX SDK, Teaclave Java TEE SDK, and Teaclave
+TrustZone SDK can also be used separately to write TEE apps for other purposes. </p>
 </div>
 
 </div>
