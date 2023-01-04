@@ -56,6 +56,7 @@ being active.
 
 | Name          | Apache ID   | GitHub ID                                         | Tag                         |
 | :------------ | :---------- | :------------------------------------------------ | :-------------------------- |
+| He Sun        | hsun        | [henrysun007](https://github.com/henrysun007)     | `teaclave-faas`             |
 | Hongbo Chen   | ya0guang    | [ya0guang](https://github.com/ya0guang)           | `webassembly`, `executor`   |
 | Lei Yu        | yulei       | [yuleil](https://github.com/yuleil)               | `java-tee-sdk`              |
 | Qinkun Bao    | qinkun      | [qinkunbao](https://github.com/qinkunbao)         | `teaclave-faas`             |
@@ -81,7 +82,6 @@ SDK and Teaclave TrustZone SDK (in alphabetical order):
   - [Elichai Turkel](https://github.com/elichai)
   - [GeminiCarrie](https://github.com/GeminiCarrie)
   - [Greg Kapka](https://github.com/gskapka)
-  - [He Sun](https://github.com/henrysun007)
   - [Hongbin Mao](https://github.com/hello2mao)
   - [Jackson Owens](https://github.com/jbowens)
   - [Jimmy Casey](https://github.com/jimmycasey)
