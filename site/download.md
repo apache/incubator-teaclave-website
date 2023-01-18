@@ -33,7 +33,7 @@ by following these
 
 | Version | Date | Source Code               | PGP/SHA | Link |
 |:-------:|:------------:|:-------------------------:|:----:|:-------:|
-| - | - | - | - | - |
+| 0.1.0 | 2023-01-18 | [apache-teaclave-java-tee-sdk-0.1.0-incubating.tar.gz](https://dist.apache.org/repos/dist/release/incubator/teaclave/java-tee-sdk-v0.1.0/apache-teaclave-java-tee-sdk-0.1.0-incubating.tar.gz) | [asc](https://dist.apache.org/repos/dist/release/incubator/teaclave/java-tee-sdk-v0.1.0/apache-teaclave-java-tee-sdk-0.1.0-incubating.tar.gz.asc), [sha512](https://dist.apache.org/repos/dist/release/incubator/teaclave/java-tee-sdk-v0.1.0/apache-teaclave-java-tee-sdk-0.1.0-incubating.tar.gz.sha512) | [notes](https://github.com/apache/incubator-teaclave-java-tee-sdk/releases/tag/v0.1.0) |
 
 Note that older releases can be found in the [archive](https://archive.apache.org/dist/incubator/teaclave/) site.
 
