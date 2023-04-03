@@ -17,6 +17,7 @@
         ref="siteName"
         class="site-name"
         :class="{ 'can-hide': $site.themeConfig.logo }"
+        :style="{display: 'none'}"
       >Teaclave</span>
     </RouterLink>
 
@@ -105,7 +106,8 @@ $navbar-horizontal-padding = 1.5rem
   .logo
     height $navbarHeight - 1.4rem
     min-width $navbarHeight - 1.4rem
-    margin-right 0.8rem
+    margin-left 0.8rem
+    transform scale(2.5)
     vertical-align top
   .site-name
     font-size 1.3rem

@@ -31,6 +31,7 @@ module.exports = {
         twitter: '@ApacheTeaclave',
         domain: 'https://teaclave.apache.org',
         dateFormat: 'MMMM D, YYYY',
+        logo: '/assets/img/logo.svg',
         nav: [
             { text: 'ABOUT', link: '/' },
             { text: 'POWERED BY', link: '/powered-by/' },
