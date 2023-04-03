@@ -150,7 +150,7 @@ module.exports = {
                       '/teaclave/services/',
                       '/teaclave/tests/',
                       '/teaclave/third_party/',
-                      '/teaclave/tool/',
+                      '/teaclave/tools/',
                       '/teaclave/types/',
                       '/teaclave/worker/',
                   ],
