@@ -16,10 +16,7 @@ module.exports = {
         '!teaclave-trustzone-sdk/optee-utee/target/**',
         '!teaclave-trustzone-sdk/optee-teec/target/**',
     ],
-    head: [
-        ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Cutive+Mono|Roboto:100,300,400,500,700,900|Roboto+Condensed:300,400|Noto+Sans+SC:400,500,700,900' }],
-        ['script', { src: 'https://use.fontawesome.com/releases/v5.15.0/js/all.js' } ],
-    ],
+    head: [],
     configureWebpack: {
         resolve: {
             alias: {
@@ -258,12 +255,6 @@ module.exports = {
 
                     add('twitter:site', $site.themeConfig.twitter);
                 },
-            }
-        ],
-        [
-            '@vuepress/google-analytics',
-            {
-                'ga': 'UA-192555999-1'
             }
         ]
     ],
