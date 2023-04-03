@@ -27,7 +27,7 @@ client-sdk-python-docs: teaclave-docs
 
 client-sdk-rust-docs: teaclave-docs
 	(cd teaclave && git submodule update --init third_party/rust-sgx-sdk)
-	rustup default nightly-2020-10-25
+	rustup default nightly-2022-10-22
 	cargo doc --no-deps --manifest-path teaclave/sdk/rust/Cargo.toml
 	cp -r teaclave/sdk/rust/target/doc .vuepress/dist/api-docs/client-sdk-rust
 	@rm -rf teaclave/third_party/rust-sgx-sdk
