@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="The `TopDocs` collector keeps track of the top `K` documents sorted by their score."><meta name="keywords" content="rust, rustlang, rust-lang, TopDocs"><title>TopDocs in tantivy::collector - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../tantivy/index.html"><div class="logo-container"><img src="http://fulmicoton.com/tantivy-logo/tantivy-logo.png" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../tantivy/index.html"><div class="logo-container">
+                    <img src="http://fulmicoton.com/tantivy-logo/tantivy-logo.png" alt="logo"></div></a><h2 class="location"><a href="#">TopDocs</a></h2><div class="sidebar-elems"><section><h3><a href="#implementations">Methods</a></h3><ul class="block"><li><a href="#method.and_offset">and_offset</a></li><li><a href="#method.custom_score">custom_score</a></li><li><a href="#method.order_by_fast_field">order_by_fast_field</a></li><li><a href="#method.order_by_u64_field">order_by_u64_field</a></li><li><a href="#method.tweak_score">tweak_score</a></li><li><a href="#method.with_limit">with_limit</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block"><li><a href="#impl-Collector-for-TopDocs">Collector</a></li><li><a href="#impl-Debug-for-TopDocs">Debug</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block"><li><a href="#impl-RefUnwindSafe-for-TopDocs">RefUnwindSafe</a></li><li><a href="#impl-Send-for-TopDocs">Send</a></li><li><a href="#impl-Sync-for-TopDocs">Sync</a></li><li><a href="#impl-Unpin-for-TopDocs">Unpin</a></li><li><a href="#impl-UnwindSafe-for-TopDocs">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block"><li><a href="#impl-Any-for-TopDocs">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-TopDocs">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-TopDocs">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-Downcast-for-TopDocs">Downcast</a></li><li><a href="#impl-DowncastSync-for-TopDocs">DowncastSync</a></li><li><a href="#impl-From%3CT%3E-for-TopDocs">From&lt;T&gt;</a></li><li><a href="#impl-Fruit-for-TopDocs">Fruit</a></li><li><a href="#impl-Into%3CU%3E-for-TopDocs">Into&lt;U&gt;</a></li><li><a href="#impl-Pointable-for-TopDocs">Pointable</a></li><li><a href="#impl-TryFrom%3CU%3E-for-TopDocs">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-TopDocs">TryInto&lt;U&gt;</a></li><li><a href="#impl-VZip%3CV%3E-for-TopDocs">VZip&lt;V&gt;</a></li></ul></section><h2><a href="index.html">In tantivy::collector</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Struct <a href="../index.html">tantivy</a>::<wbr><a href="index.html">collector</a>::<wbr><a class="struct" href="#">TopDocs</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/tantivy/collector/top_score_collector.rs.html#122">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust struct"><code>pub struct TopDocs(_);</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>The <code>TopDocs</code> collector keeps track of the top <code>K</code> documents
+sorted by their score.</p>
+<p>The implementation is based on a <code>BinaryHeap</code>.
+The theoretical complexity for collecting the top <code>K</code> out of <code>n</code> documents
+is <code>O(n log K)</code>.</p>
+<p>This collector guarantees a stable sorting in case of a tie on the
+document score. As such, it is suitable to implement pagination.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::collector::TopDocs;
+<span class="kw">use </span>tantivy::query::QueryParser;
+<span class="kw">use </span>tantivy::schema::{Schema, TEXT};
+<span class="kw">use </span>tantivy::{doc, DocAddress, Index};
+
+<span class="kw">let </span><span class="kw-2">mut </span>schema_builder = Schema::builder();
+<span class="kw">let </span>title = schema_builder.add_text_field(<span class="string">&quot;title&quot;</span>, TEXT);
+<span class="kw">let </span>schema = schema_builder.build();
+<span class="kw">let </span>index = Index::create_in_ram(schema);
+
+<span class="kw">let </span><span class="kw-2">mut </span>index_writer = index.writer_with_num_threads(<span class="number">1</span>, <span class="number">10_000_000</span>)<span class="question-mark">?</span>;
+index_writer.add_document(<span class="macro">doc!</span>(title =&gt; <span class="string">&quot;The Name of the Wind&quot;</span>))<span class="question-mark">?</span>;
+index_writer.add_document(<span class="macro">doc!</span>(title =&gt; <span class="string">&quot;The Diary of Muadib&quot;</span>))<span class="question-mark">?</span>;
+index_writer.add_document(<span class="macro">doc!</span>(title =&gt; <span class="string">&quot;A Dairy Cow&quot;</span>))<span class="question-mark">?</span>;
+index_writer.add_document(<span class="macro">doc!</span>(title =&gt; <span class="string">&quot;The Diary of a Young Girl&quot;</span>))<span class="question-mark">?</span>;
+index_writer.commit()<span class="question-mark">?</span>;
+
+<span class="kw">let </span>reader = index.reader()<span class="question-mark">?</span>;
+<span class="kw">let </span>searcher = reader.searcher();
+
+<span class="kw">let </span>query_parser = QueryParser::for_index(<span class="kw-2">&amp;</span>index, <span class="macro">vec!</span>[title]);
+<span class="kw">let </span>query = query_parser.parse_query(<span class="string">&quot;diary&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">let </span>top_docs = searcher.search(<span class="kw-2">&amp;</span>query, <span class="kw-2">&amp;</span>TopDocs::with_limit(<span class="number">2</span>))<span class="question-mark">?</span>;
+
+<span class="macro">assert_eq!</span>(top_docs[<span class="number">0</span>].<span class="number">1</span>, DocAddress::new(<span class="number">0</span>, <span class="number">1</span>));
+<span class="macro">assert_eq!</span>(top_docs[<span class="number">1</span>].<span class="number">1</span>, DocAddress::new(<span class="number">0</span>, <span class="number">3</span>));</code></pre></div>
+</div></details><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><div id="implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-TopDocs" class="impl has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#164-602">source</a><a href="#impl-TopDocs" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.with_limit" class="method has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#169-171">source</a><h4 class="code-header">pub fn <a href="#method.with_limit" class="fnname">with_limit</a>(limit: usize) -&gt; <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h4></section></summary><div class="docblock"><p>Creates a top score collector, with a number of documents equal to “limit”.</p>
+<h5 id="panics"><a href="#panics">Panics</a></h5>
+<p>The method panics if limit is 0</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.and_offset" class="method has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#214-216">source</a><h4 class="code-header">pub fn <a href="#method.and_offset" class="fnname">and_offset</a>(self, offset: usize) -&gt; <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h4></section></summary><div class="docblock"><p>Skip the first “offset” documents when collecting.</p>
+<p>This is equivalent to <code>OFFSET</code> in MySQL or PostgreSQL and <code>start</code> in
+Lucene’s TopDocsCollector.</p>
+<h5 id="example"><a href="#example">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::collector::TopDocs;
+<span class="kw">use </span>tantivy::query::QueryParser;
+<span class="kw">use </span>tantivy::schema::{Schema, TEXT};
+<span class="kw">use </span>tantivy::{doc, DocAddress, Index};
+
+<span class="kw">let </span><span class="kw-2">mut </span>schema_builder = Schema::builder();
+<span class="kw">let </span>title = schema_builder.add_text_field(<span class="string">&quot;title&quot;</span>, TEXT);
+<span class="kw">let </span>schema = schema_builder.build();
+<span class="kw">let </span>index = Index::create_in_ram(schema);
+
+<span class="kw">let </span><span class="kw-2">mut </span>index_writer = index.writer_with_num_threads(<span class="number">1</span>, <span class="number">10_000_000</span>)<span class="question-mark">?</span>;
+index_writer.add_document(<span class="macro">doc!</span>(title =&gt; <span class="string">&quot;The Name of the Wind&quot;</span>))<span class="question-mark">?</span>;
+index_writer.add_document(<span class="macro">doc!</span>(title =&gt; <span class="string">&quot;The Diary of Muadib&quot;</span>))<span class="question-mark">?</span>;
+index_writer.add_document(<span class="macro">doc!</span>(title =&gt; <span class="string">&quot;A Dairy Cow&quot;</span>))<span class="question-mark">?</span>;
+index_writer.add_document(<span class="macro">doc!</span>(title =&gt; <span class="string">&quot;The Diary of a Young Girl&quot;</span>))<span class="question-mark">?</span>;
+index_writer.add_document(<span class="macro">doc!</span>(title =&gt; <span class="string">&quot;The Diary of Lena Mukhina&quot;</span>))<span class="question-mark">?</span>;
+index_writer.commit()<span class="question-mark">?</span>;
+
+<span class="kw">let </span>reader = index.reader()<span class="question-mark">?</span>;
+<span class="kw">let </span>searcher = reader.searcher();
+
+<span class="kw">let </span>query_parser = QueryParser::for_index(<span class="kw-2">&amp;</span>index, <span class="macro">vec!</span>[title]);
+<span class="kw">let </span>query = query_parser.parse_query(<span class="string">&quot;diary&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">let </span>top_docs = searcher.search(<span class="kw-2">&amp;</span>query, <span class="kw-2">&amp;</span>TopDocs::with_limit(<span class="number">2</span>).and_offset(<span class="number">1</span>))<span class="question-mark">?</span>;
+
+<span class="macro">assert_eq!</span>(top_docs.len(), <span class="number">2</span>);
+<span class="macro">assert_eq!</span>(top_docs[<span class="number">0</span>].<span class="number">1</span>, DocAddress::new(<span class="number">0</span>, <span class="number">4</span>));
+<span class="macro">assert_eq!</span>(top_docs[<span class="number">1</span>].<span class="number">1</span>, DocAddress::new(<span class="number">0</span>, <span class="number">3</span>));
+<span class="prelude-val">Ok</span>(())</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.order_by_u64_field" class="method has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#291-296">source</a><h4 class="code-header">pub fn <a href="#method.order_by_u64_field" class="fnname">order_by_u64_field</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;field: <a class="struct" href="../schema/struct.Field.html" title="struct tantivy::schema::Field">Field</a><br>) -&gt; impl <a class="trait" href="trait.Collector.html" title="trait tantivy::collector::Collector">Collector</a>&lt;Fruit = Vec&lt;(u64, <a class="struct" href="../struct.DocAddress.html" title="struct tantivy::DocAddress">DocAddress</a>)&gt;&gt;</h4></section></summary><div class="docblock"><p>Set top-K to rank documents by a given fast field.</p>
+<p>If the field is not a fast or does not exist, this method returns successfully (it is not
+aware of any schema). An error will be returned at the moment of search.</p>
+<p>If the field is a FAST field but not a u64 field, search will return successfully but it
+will return returns a monotonic u64-representation (ie. the order is still correct) of
+the requested field type.</p>
+<h5 id="example-1"><a href="#example-1">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::Searcher;
+<span class="kw">use </span>tantivy::collector::TopDocs;
+<span class="kw">use </span>tantivy::schema::Field;
+
+<span class="doccomment">/// Searches the document matching the given query, and
+/// collects the top 10 documents, order by the u64-`field`
+/// given in argument.
+</span><span class="kw">fn </span>docs_sorted_by_rating(searcher: <span class="kw-2">&amp;</span>Searcher,
+                         query: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Query,
+                         rating_field: Field)
+    -&gt; tantivy::Result&lt;Vec&lt;(u64, DocAddress)&gt;&gt; {
+
+    <span class="comment">// This is where we build our topdocs collector
+    //
+    // Note the `rating_field` needs to be a FAST field here.
+    </span><span class="kw">let </span>top_books_by_rating = TopDocs
+                ::with_limit(<span class="number">10</span>)
+                 .order_by_u64_field(rating_field);
+
+    <span class="comment">// ... and here are our documents. Note this is a simple vec.
+    // The `u64` in the pair is the value of our fast field for
+    // each documents.
+    //
+    // The vec is sorted decreasingly by `sort_by_field`, and has a
+    // length of 10, or less if not enough documents matched the
+    // query.
+    </span><span class="kw">let </span>resulting_docs: Vec&lt;(u64, DocAddress)&gt; =
+         searcher.search(query, <span class="kw-2">&amp;</span>top_books_by_rating)<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(resulting_docs)
+}</code></pre></div>
+<h5 id="see-also"><a href="#see-also">See also</a></h5>
+<p>To comfortably work with <code>u64</code>s, <code>i64</code>s, <code>f64</code>s, or <code>date</code>s, please refer to
+the <a href="struct.TopDocs.html#method.order_by_fast_field">.order_by_fast_field(…)</a> method.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.order_by_fast_field" class="method has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#368-381">source</a><h4 class="code-header">pub fn <a href="#method.order_by_fast_field" class="fnname">order_by_fast_field</a>&lt;TFastValue&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;fast_field: <a class="struct" href="../schema/struct.Field.html" title="struct tantivy::schema::Field">Field</a><br>) -&gt; impl <a class="trait" href="trait.Collector.html" title="trait tantivy::collector::Collector">Collector</a>&lt;Fruit = Vec&lt;(TFastValue, <a class="struct" href="../struct.DocAddress.html" title="struct tantivy::DocAddress">DocAddress</a>)&gt;&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;TFastValue: <a class="trait" href="../fastfield/trait.FastValue.html" title="trait tantivy::fastfield::FastValue">FastValue</a>,</span></h4></section></summary><div class="docblock"><p>Set top-K to rank documents by a given fast field.</p>
+<p>If the field is not a fast field, or its field type does not match the generic type, this
+method does not panic, but an explicit error will be returned at the moment of
+collection.</p>
+<p>Note that this method is a generic. The requested fast field type will be often
+inferred in your code by the rust compiler.</p>
+<p>Implementation-wise, for performance reason, tantivy will manipulate the u64 representation
+of your fast field until the last moment.</p>
+<h5 id="example-2"><a href="#example-2">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::Searcher;
+<span class="kw">use </span>tantivy::collector::TopDocs;
+<span class="kw">use </span>tantivy::schema::Field;
+
+<span class="doccomment">/// Searches the document matching the given query, and
+/// collects the top 10 documents, order by the u64-`field`
+/// given in argument.
+</span><span class="kw">fn </span>docs_sorted_by_revenue(searcher: <span class="kw-2">&amp;</span>Searcher,
+                         query: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Query,
+                         revenue_field: Field)
+    -&gt; tantivy::Result&lt;Vec&lt;(i64, DocAddress)&gt;&gt; {
+
+    <span class="comment">// This is where we build our topdocs collector
+    //
+    // Note the generics parameter that needs to match the
+    // type `sort_by_field`. revenue_field here is a FAST i64 field.
+    </span><span class="kw">let </span>top_company_by_revenue = TopDocs
+                ::with_limit(<span class="number">2</span>)
+                 .order_by_fast_field(revenue_field);
+
+    <span class="comment">// ... and here are our documents. Note this is a simple vec.
+    // The `i64` in the pair is the value of our fast field for
+    // each documents.
+    //
+    // The vec is sorted decreasingly by `sort_by_field`, and has a
+    // length of 10, or less if not enough documents matched the
+    // query.
+    </span><span class="kw">let </span>resulting_docs: Vec&lt;(i64, DocAddress)&gt; =
+         searcher.search(query, <span class="kw-2">&amp;</span>top_company_by_revenue)<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(resulting_docs)
+}</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.tweak_score" class="method has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#478-488">source</a><h4 class="code-header">pub fn <a href="#method.tweak_score" class="fnname">tweak_score</a>&lt;TScore, TScoreSegmentTweaker, TScoreTweaker&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;score_tweaker: TScoreTweaker<br>) -&gt; impl <a class="trait" href="trait.Collector.html" title="trait tantivy::collector::Collector">Collector</a>&lt;Fruit = Vec&lt;(TScore, <a class="struct" href="../struct.DocAddress.html" title="struct tantivy::DocAddress">DocAddress</a>)&gt;&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;TScore: 'static + Send + Sync + Clone + PartialOrd,<br>&nbsp;&nbsp;&nbsp;&nbsp;TScoreSegmentTweaker: <a class="trait" href="trait.ScoreSegmentTweaker.html" title="trait tantivy::collector::ScoreSegmentTweaker">ScoreSegmentTweaker</a>&lt;TScore&gt; + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;TScoreTweaker: <a class="trait" href="trait.ScoreTweaker.html" title="trait tantivy::collector::ScoreTweaker">ScoreTweaker</a>&lt;TScore, Child = TScoreSegmentTweaker&gt; + Send + Sync,</span></h4></section></summary><div class="docblock"><p>Ranks the documents using a custom score.</p>
+<p>This method offers a convenient way to tweak or replace
+the documents score. As suggested by the prototype you can
+manually define your own <a href="trait.ScoreTweaker.html" title="ScoreTweaker"><code>ScoreTweaker</code></a>
+and pass it as an argument, but there is a much simpler way to
+tweak your score: you can use a closure as in the following
+example.</p>
+<h5 id="example-3"><a href="#example-3">Example</a></h5>
+<p>Typically, you will want to rely on one or more fast fields,
+to alter the original relevance <code>Score</code>.</p>
+<p>For instance, in the following, we assume that we are implementing
+an e-commerce website that has a fast field called <code>popularity</code>
+that rates whether a product is typically often bought by users.</p>
+<p>In the following example will will tweak our ranking a bit by
+boosting popular products a notch.</p>
+<p>In more serious application, this tweaking could involve running a
+learning-to-rank model over various features</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::SegmentReader;
+<span class="kw">use </span>tantivy::collector::TopDocs;
+<span class="kw">use </span>tantivy::schema::Field;
+
+<span class="kw">fn </span>create_schema() -&gt; Schema {
+   <span class="kw">let </span><span class="kw-2">mut </span>schema_builder = Schema::builder();
+   schema_builder.add_text_field(<span class="string">&quot;product_name&quot;</span>, TEXT);
+   schema_builder.add_u64_field(<span class="string">&quot;popularity&quot;</span>, FAST);
+   schema_builder.build()
+}
+
+<span class="kw">fn </span>create_index() -&gt; tantivy::Result&lt;Index&gt; {
+  <span class="kw">let </span>schema = create_schema();
+  <span class="kw">let </span>index = Index::create_in_ram(schema);
+  <span class="kw">let </span><span class="kw-2">mut </span>index_writer = index.writer_with_num_threads(<span class="number">1</span>, <span class="number">10_000_000</span>)<span class="question-mark">?</span>;
+  <span class="kw">let </span>product_name = index.schema().get_field(<span class="string">&quot;product_name&quot;</span>).unwrap();
+  <span class="kw">let </span>popularity: Field = index.schema().get_field(<span class="string">&quot;popularity&quot;</span>).unwrap();
+  index_writer.add_document(<span class="macro">doc!</span>(product_name =&gt; <span class="string">&quot;The Diary of Muadib&quot;</span>, popularity =&gt; <span class="number">1u64</span>))<span class="question-mark">?</span>;
+  index_writer.add_document(<span class="macro">doc!</span>(product_name =&gt; <span class="string">&quot;A Dairy Cow&quot;</span>, popularity =&gt; <span class="number">10u64</span>))<span class="question-mark">?</span>;
+  index_writer.add_document(<span class="macro">doc!</span>(product_name =&gt; <span class="string">&quot;The Diary of a Young Girl&quot;</span>, popularity =&gt; <span class="number">15u64</span>))<span class="question-mark">?</span>;
+  index_writer.commit()<span class="question-mark">?</span>;
+  <span class="prelude-val">Ok</span>(index)
+}
+
+<span class="kw">let </span>index = create_index().unwrap();
+<span class="kw">let </span>product_name = index.schema().get_field(<span class="string">&quot;product_name&quot;</span>).unwrap();
+<span class="kw">let </span>popularity: Field = index.schema().get_field(<span class="string">&quot;popularity&quot;</span>).unwrap();
+
+<span class="kw">let </span>user_query_str = <span class="string">&quot;diary&quot;</span>;
+<span class="kw">let </span>query_parser = QueryParser::for_index(<span class="kw-2">&amp;</span>index, <span class="macro">vec!</span>[product_name]);
+<span class="kw">let </span>query = query_parser.parse_query(user_query_str).unwrap();
+
+<span class="comment">// This is where we build our collector with our custom score.
+</span><span class="kw">let </span>top_docs_by_custom_score = TopDocs
+        ::with_limit(<span class="number">10</span>)
+         .tweak_score(<span class="kw">move </span>|segment_reader: <span class="kw-2">&amp;</span>SegmentReader| {
+            <span class="comment">// The argument is a function that returns our scoring
+            // function.
+            //
+            // The point of this &quot;mother&quot; function is to gather all
+            // of the segment level information we need for scoring.
+            // Typically, fast_fields.
+            //
+            // In our case, we will get a reader for the popularity
+            // fast field.
+            </span><span class="kw">let </span>popularity_reader =
+                segment_reader.fast_fields().u64(popularity).unwrap();
+
+            <span class="comment">// We can now define our actual scoring function
+            </span><span class="kw">move </span>|doc: DocId, original_score: Score| {
+                <span class="kw">let </span>popularity: u64 = popularity_reader.get_val(doc);
+                <span class="comment">// Well.. For the sake of the example we use a simple logarithm
+                // function.
+                </span><span class="kw">let </span>popularity_boost_score = ((<span class="number">2u64 </span>+ popularity) <span class="kw">as </span>Score).log2();
+                popularity_boost_score * original_score
+            }
+          });
+<span class="kw">let </span>reader = index.reader().unwrap();
+<span class="kw">let </span>searcher = reader.searcher();
+<span class="comment">// ... and here are our documents. Note this is a simple vec.
+// The `Score` in the pair is our tweaked score.
+</span><span class="kw">let </span>resulting_docs: Vec&lt;(Score, DocAddress)&gt; =
+     searcher.search(<span class="kw-2">&amp;</span>query, <span class="kw-2">&amp;</span>top_docs_by_custom_score).unwrap();</code></pre></div>
+<h5 id="see-also-1"><a href="#see-also-1">See also</a></h5>
+<ul>
+<li><a href="struct.TopDocs.html#method.custom_score">custom_score(…)</a></li>
+</ul>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.custom_score" class="method has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#591-601">source</a><h4 class="code-header">pub fn <a href="#method.custom_score" class="fnname">custom_score</a>&lt;TScore, TCustomSegmentScorer, TCustomScorer&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;custom_score: TCustomScorer<br>) -&gt; impl <a class="trait" href="trait.Collector.html" title="trait tantivy::collector::Collector">Collector</a>&lt;Fruit = Vec&lt;(TScore, <a class="struct" href="../struct.DocAddress.html" title="struct tantivy::DocAddress">DocAddress</a>)&gt;&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;TScore: 'static + Send + Sync + Clone + PartialOrd,<br>&nbsp;&nbsp;&nbsp;&nbsp;TCustomSegmentScorer: <a class="trait" href="trait.CustomSegmentScorer.html" title="trait tantivy::collector::CustomSegmentScorer">CustomSegmentScorer</a>&lt;TScore&gt; + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;TCustomScorer: <a class="trait" href="trait.CustomScorer.html" title="trait tantivy::collector::CustomScorer">CustomScorer</a>&lt;TScore, Child = TCustomSegmentScorer&gt; + Send + Sync,</span></h4></section></summary><div class="docblock"><p>Ranks the documents using a custom score.</p>
+<p>This method offers a convenient way to use a different score.</p>
+<p>As suggested by the prototype you can manually define your own <a href="trait.CustomScorer.html" title="CustomScorer"><code>CustomScorer</code></a>
+and pass it as an argument, but there is a much simpler way to
+tweak your score: you can use a closure as in the following
+example.</p>
+<h5 id="limitation"><a href="#limitation">Limitation</a></h5>
+<p>This method only makes it possible to compute the score from a given
+<code>DocId</code>, fastfield values for the doc and any information you could
+have precomputed beforehand. It does not make it possible for instance
+to compute something like TfIdf as it does not have access to the list of query
+terms present in the document, nor the term frequencies for the different terms.</p>
+<p>It can be used if your search engine relies on a learning-to-rank model for instance,
+which does not rely on the term frequencies or positions as features.</p>
+<h5 id="example-4"><a href="#example-4">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::SegmentReader;
+<span class="kw">use </span>tantivy::collector::TopDocs;
+<span class="kw">use </span>tantivy::schema::Field;
+
+<span class="kw">let </span>popularity: Field = index.schema().get_field(<span class="string">&quot;popularity&quot;</span>).unwrap();
+<span class="kw">let </span>boosted: Field = index.schema().get_field(<span class="string">&quot;boosted&quot;</span>).unwrap();
+<span class="comment">// ...
+
+// This is where we build our collector with our custom score.
+</span><span class="kw">let </span>top_docs_by_custom_score = TopDocs
+        ::with_limit(<span class="number">10</span>)
+         .custom_score(<span class="kw">move </span>|segment_reader: <span class="kw-2">&amp;</span>SegmentReader| {
+            <span class="comment">// The argument is a function that returns our scoring
+            // function.
+            //
+            // The point of this &quot;mother&quot; function is to gather all
+            // of the segment level information we need for scoring.
+            // Typically, fast_fields.
+            //
+            // In our case, we will get a reader for the popularity
+            // fast field and a boosted field.
+            //
+            // We want to get boosted items score, and when we get
+            // a tie, return the item with the highest popularity.
+            //
+            // Note that this is implemented by using a `(u64, u64)`
+            // as a score.
+            </span><span class="kw">let </span>popularity_reader =
+                segment_reader.fast_fields().u64(popularity).unwrap();
+            <span class="kw">let </span>boosted_reader =
+                segment_reader.fast_fields().u64(boosted).unwrap();
+
+            <span class="comment">// We can now define our actual scoring function
+            </span><span class="kw">move </span>|doc: DocId| {
+                <span class="kw">let </span>popularity: u64 = popularity_reader.get_val(doc);
+                <span class="kw">let </span>boosted: u64 = boosted_reader.get_val(doc);
+                <span class="comment">// Score do not have to be `f64` in tantivy.
+                // Here we return a couple to get lexicographical order
+                // for free.
+                </span>(boosted, popularity)
+            }
+          });
+<span class="comment">// ... and here are our documents. Note this is a simple vec.
+// The `Score` in the pair is our tweaked score.
+</span><span class="kw">let </span>resulting_docs: Vec&lt;((u64, u64), DocAddress)&gt; =
+     searcher.search(<span class="kw-2">&amp;*</span>query, <span class="kw-2">&amp;</span>top_docs_by_custom_score)<span class="question-mark">?</span>;
+</code></pre></div>
+<h5 id="see-also-2"><a href="#see-also-2">See also</a></h5>
+<ul>
+<li><a href="struct.TopDocs.html#method.tweak_score">tweak_score(…)</a></li>
+</ul>
+</div></details></div></details></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Collector-for-TopDocs" class="impl has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#604-694">source</a><a href="#impl-Collector-for-TopDocs" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="trait.Collector.html" title="trait tantivy::collector::Collector">Collector</a> for <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Fruit" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Fruit" class="anchor"></a><h4 class="code-header">type <a href="trait.Collector.html#associatedtype.Fruit" class="associatedtype">Fruit</a> = Vec&lt;(f32, <a class="struct" href="../struct.DocAddress.html" title="struct tantivy::DocAddress">DocAddress</a>), Global&gt;</h4></section></summary><div class='docblock'><code>Fruit</code> is the type for the result of our collection.
+e.g. <code>usize</code> for the <code>Count</code> collector. <a href="trait.Collector.html#associatedtype.Fruit">Read more</a></div></details><details class="rustdoc-toggle" open><summary><section id="associatedtype.Child" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Child" class="anchor"></a><h4 class="code-header">type <a href="trait.Collector.html#associatedtype.Child" class="associatedtype">Child</a> = TopScoreSegmentCollector</h4></section></summary><div class='docblock'>Type of the <code>SegmentCollector</code> associated with this collector.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.for_segment" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#609-616">source</a><a href="#method.for_segment" class="anchor"></a><h4 class="code-header">fn <a href="trait.Collector.html#tymethod.for_segment" class="fnname">for_segment</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;segment_local_id: <a class="type" href="../type.SegmentOrdinal.html" title="type tantivy::SegmentOrdinal">SegmentOrdinal</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;reader: &amp;<a class="struct" href="../struct.SegmentReader.html" title="struct tantivy::SegmentReader">SegmentReader</a><br>) -&gt; <a class="type" href="../type.Result.html" title="type tantivy::Result">Result</a>&lt;Self::<a class="associatedtype" href="trait.Collector.html#associatedtype.Child" title="type tantivy::collector::Collector::Child">Child</a>&gt;</h4></section></summary><div class='docblock'><code>set_segment</code> is called before beginning to enumerate
+on this segment. <a href="trait.Collector.html#tymethod.for_segment">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.requires_scoring" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#618-620">source</a><a href="#method.requires_scoring" class="anchor"></a><h4 class="code-header">fn <a href="trait.Collector.html#tymethod.requires_scoring" class="fnname">requires_scoring</a>(&amp;self) -&gt; bool</h4></section></summary><div class='docblock'>Returns true iff the collector requires to compute scores for documents.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.merge_fruits" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#622-627">source</a><a href="#method.merge_fruits" class="anchor"></a><h4 class="code-header">fn <a href="trait.Collector.html#tymethod.merge_fruits" class="fnname">merge_fruits</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;child_fruits: Vec&lt;Vec&lt;(<a class="type" href="../type.Score.html" title="type tantivy::Score">Score</a>, <a class="struct" href="../struct.DocAddress.html" title="struct tantivy::DocAddress">DocAddress</a>)&gt;&gt;<br>) -&gt; <a class="type" href="../type.Result.html" title="type tantivy::Result">Result</a>&lt;Self::<a class="associatedtype" href="trait.Collector.html#associatedtype.Fruit" title="type tantivy::collector::Collector::Fruit">Fruit</a>&gt;</h4></section></summary><div class='docblock'>Combines the fruit associated with the collection of each segments
+into one fruit. <a href="trait.Collector.html#tymethod.merge_fruits">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.collect_segment" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#629-693">source</a><a href="#method.collect_segment" class="anchor"></a><h4 class="code-header">fn <a href="trait.Collector.html#method.collect_segment" class="fnname">collect_segment</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;weight: &amp;dyn <a class="trait" href="../query/trait.Weight.html" title="trait tantivy::query::Weight">Weight</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;segment_ord: u32,<br>&nbsp;&nbsp;&nbsp;&nbsp;reader: &amp;<a class="struct" href="../struct.SegmentReader.html" title="struct tantivy::SegmentReader">SegmentReader</a><br>) -&gt; <a class="type" href="../type.Result.html" title="type tantivy::Result">Result</a>&lt;&lt;Self::<a class="associatedtype" href="trait.Collector.html#associatedtype.Child" title="type tantivy::collector::Collector::Child">Child</a> as <a class="trait" href="trait.SegmentCollector.html" title="trait tantivy::collector::SegmentCollector">SegmentCollector</a>&gt;::<a class="associatedtype" href="trait.SegmentCollector.html#associatedtype.Fruit" title="type tantivy::collector::SegmentCollector::Fruit">Fruit</a>&gt;</h4></section></summary><div class='docblock'>Created a segment collector and</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Debug-for-TopDocs" class="impl has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#124-132">source</a><a href="#impl-Debug-for-TopDocs" class="anchor"></a><h3 class="code-header">impl Debug for <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fmt" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/top_score_collector.rs.html#125-131">source</a><a href="#method.fmt" class="anchor"></a><h4 class="code-header">fn <a class="fnname">fmt</a>(&amp;self, f: &amp;mut Formatter&lt;'_&gt;) -&gt; Result</h4></section></summary><div class='docblock'>Formats the value using the given formatter. <a>Read more</a></div></details></div></details></div><h2 id="synthetic-implementations" class="small-section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor"></a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-TopDocs" class="impl has-srclink"><a href="#impl-RefUnwindSafe-for-TopDocs" class="anchor"></a><h3 class="code-header">impl RefUnwindSafe for <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h3></section><section id="impl-Send-for-TopDocs" class="impl has-srclink"><a href="#impl-Send-for-TopDocs" class="anchor"></a><h3 class="code-header">impl Send for <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h3></section><section id="impl-Sync-for-TopDocs" class="impl has-srclink"><a href="#impl-Sync-for-TopDocs" class="anchor"></a><h3 class="code-header">impl Sync for <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h3></section><section id="impl-Unpin-for-TopDocs" class="impl has-srclink"><a href="#impl-Unpin-for-TopDocs" class="anchor"></a><h3 class="code-header">impl Unpin for <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h3></section><section id="impl-UnwindSafe-for-TopDocs" class="impl has-srclink"><a href="#impl-UnwindSafe-for-TopDocs" class="anchor"></a><h3 class="code-header">impl UnwindSafe for <a class="struct" href="struct.TopDocs.html" title="struct tantivy::collector::TopDocs">TopDocs</a></h3></section></div><h2 id="blanket-implementations" class="small-section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor"></a></h2><div id="blanket-implementations-list"><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Any-for-TopDocs" class="impl has-srclink"><a href="#impl-Any-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Any for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl has-srclink"><a href="#method.type_id" class="anchor"></a><h4 class="code-header">fn <a class="fnname">type_id</a>(&amp;self) -&gt; TypeId</h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-TopDocs" class="impl has-srclink"><a href="#impl-Borrow%3CT%3E-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Borrow&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow</a>(&amp;self) -&gt; &amp;T</h4></section></summary><div class='docblock'>Immutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-BorrowMut%3CT%3E-for-TopDocs" class="impl has-srclink"><a href="#impl-BorrowMut%3CT%3E-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; BorrowMut&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow_mut" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow_mut" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow_mut</a>(&amp;mut self) -&gt; &amp;mut T</h4></section></summary><div class='docblock'>Mutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Downcast-for-TopDocs" class="impl has-srclink"><a class="srclink rightside" href="../../src/downcast_rs/lib.rs.html#190">source</a><a href="#impl-Downcast-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="../../downcast_rs/trait.Downcast.html" title="trait downcast_rs::Downcast">Downcast</a> for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Any,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.into_any" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/downcast_rs/lib.rs.html#191">source</a><a href="#method.into_any" class="anchor"></a><h4 class="code-header">fn <a href="../../downcast_rs/trait.Downcast.html#tymethod.into_any" class="fnname">into_any</a>(self: Box&lt;T, Global&gt;) -&gt; Box&lt;dyn Any + 'static, Global&gt;</h4></section></summary><div class='docblock'>Convert <code>Box&lt;dyn Trait&gt;</code> (where <code>Trait: Downcast</code>) to <code>Box&lt;dyn Any&gt;</code>. <code>Box&lt;dyn Any&gt;</code> can
+then be further <code>downcast</code> into <code>Box&lt;ConcreteType&gt;</code> where <code>ConcreteType</code> implements <code>Trait</code>. <a href="../../downcast_rs/trait.Downcast.html#tymethod.into_any">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.into_any_rc" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/downcast_rs/lib.rs.html#192">source</a><a href="#method.into_any_rc" class="anchor"></a><h4 class="code-header">fn <a href="../../downcast_rs/trait.Downcast.html#tymethod.into_any_rc" class="fnname">into_any_rc</a>(self: Rc&lt;T&gt;) -&gt; Rc&lt;dyn Any + 'static&gt;</h4></section></summary><div class='docblock'>Convert <code>Rc&lt;Trait&gt;</code> (where <code>Trait: Downcast</code>) to <code>Rc&lt;Any&gt;</code>. <code>Rc&lt;Any&gt;</code> can then be
+further <code>downcast</code> into <code>Rc&lt;ConcreteType&gt;</code> where <code>ConcreteType</code> implements <code>Trait</code>. <a href="../../downcast_rs/trait.Downcast.html#tymethod.into_any_rc">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.as_any" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/downcast_rs/lib.rs.html#193">source</a><a href="#method.as_any" class="anchor"></a><h4 class="code-header">fn <a href="../../downcast_rs/trait.Downcast.html#tymethod.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn Any + 'static)</h4></section></summary><div class='docblock'>Convert <code>&amp;Trait</code> (where <code>Trait: Downcast</code>) to <code>&amp;Any</code>. This is needed since Rust cannot
+generate <code>&amp;Any</code>’s vtable from <code>&amp;Trait</code>’s. <a href="../../downcast_rs/trait.Downcast.html#tymethod.as_any">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.as_any_mut" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/downcast_rs/lib.rs.html#194">source</a><a href="#method.as_any_mut" class="anchor"></a><h4 class="code-header">fn <a href="../../downcast_rs/trait.Downcast.html#tymethod.as_any_mut" class="fnname">as_any_mut</a>(&amp;mut self) -&gt; &amp;mut (dyn Any + 'static)</h4></section></summary><div class='docblock'>Convert <code>&amp;mut Trait</code> (where <code>Trait: Downcast</code>) to <code>&amp;Any</code>. This is needed since Rust cannot
+generate <code>&amp;mut Any</code>’s vtable from <code>&amp;mut Trait</code>’s. <a href="../../downcast_rs/trait.Downcast.html#tymethod.as_any_mut">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-DowncastSync-for-TopDocs" class="impl has-srclink"><a class="srclink rightside" href="../../src/downcast_rs/lib.rs.html#204">source</a><a href="#impl-DowncastSync-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="../../downcast_rs/trait.DowncastSync.html" title="trait downcast_rs::DowncastSync">DowncastSync</a> for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Any + Send + Sync,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.into_any_arc" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/downcast_rs/lib.rs.html#205">source</a><a href="#method.into_any_arc" class="anchor"></a><h4 class="code-header">fn <a href="../../downcast_rs/trait.DowncastSync.html#tymethod.into_any_arc" class="fnname">into_any_arc</a>(self: Arc&lt;T&gt;) -&gt; Arc&lt;dyn Any + Sync + Send + 'static&gt;</h4></section></summary><div class='docblock'>Convert <code>Arc&lt;Trait&gt;</code> (where <code>Trait: Downcast</code>) to <code>Arc&lt;Any&gt;</code>. <code>Arc&lt;Any&gt;</code> can then be
+further <code>downcast</code> into <code>Arc&lt;ConcreteType&gt;</code> where <code>ConcreteType</code> implements <code>Trait</code>. <a href="../../downcast_rs/trait.DowncastSync.html#tymethod.into_any_arc">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-From%3CT%3E-for-TopDocs" class="impl has-srclink"><a href="#impl-From%3CT%3E-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; From&lt;T&gt; for T</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">from</a>(t: T) -&gt; T</h4></section></summary><div class="docblock"><p>Returns the argument unchanged.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-TopDocs" class="impl has-srclink"><a href="#impl-Into%3CU%3E-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; Into&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: From&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">into</a>(self) -&gt; U</h4></section></summary><div class="docblock"><p>Calls <code>U::from(self)</code>.</p>
+<p>That is, this conversion is whatever the implementation of
+<code>[From]&lt;T&gt; for U</code> chooses to do.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Pointable-for-TopDocs" class="impl has-srclink"><a class="srclink rightside" href="../../src/crossbeam_epoch/atomic.rs.html#194">source</a><a href="#impl-Pointable-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="../../crossbeam_epoch/atomic/trait.Pointable.html" title="trait crossbeam_epoch::atomic::Pointable">Pointable</a> for T</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedconstant.ALIGN" class="associatedconstant trait-impl has-srclink"><a class="srclink rightside" href="../../src/crossbeam_epoch/atomic.rs.html#195">source</a><a href="#associatedconstant.ALIGN" class="anchor"></a><h4 class="code-header">const <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#associatedconstant.ALIGN" class="constant">ALIGN</a>: usize = mem::align_of::&lt;T&gt;()</h4></section></summary><div class='docblock'>The alignment of pointer.</div></details><details class="rustdoc-toggle" open><summary><section id="associatedtype.Init" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Init" class="anchor"></a><h4 class="code-header">type <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#associatedtype.Init" class="associatedtype">Init</a> = T</h4></section></summary><div class='docblock'>The type for initializers.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.init" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/crossbeam_epoch/atomic.rs.html#199">source</a><a href="#method.init" class="anchor"></a><h4 class="code-header">unsafe fn <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#tymethod.init" class="fnname">init</a>(init: &lt;T as <a class="trait" href="../../crossbeam_epoch/atomic/trait.Pointable.html" title="trait crossbeam_epoch::atomic::Pointable">Pointable</a>&gt;::<a class="associatedtype" href="../../crossbeam_epoch/atomic/trait.Pointable.html#associatedtype.Init" title="type crossbeam_epoch::atomic::Pointable::Init">Init</a>) -&gt; usize</h4></section></summary><div class='docblock'>Initializes a with the given initializer. <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#tymethod.init">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.deref" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/crossbeam_epoch/atomic.rs.html#203">source</a><a href="#method.deref" class="anchor"></a><h4 class="code-header">unsafe fn <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#tymethod.deref" class="fnname">deref</a>&lt;'a&gt;(ptr: usize) -&gt; &amp;'a T</h4></section></summary><div class='docblock'>Dereferences the given pointer. <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#tymethod.deref">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.deref_mut" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/crossbeam_epoch/atomic.rs.html#207">source</a><a href="#method.deref_mut" class="anchor"></a><h4 class="code-header">unsafe fn <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#tymethod.deref_mut" class="fnname">deref_mut</a>&lt;'a&gt;(ptr: usize) -&gt; &amp;'a mut T</h4></section></summary><div class='docblock'>Mutably dereferences the given pointer. <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#tymethod.deref_mut">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.drop" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/crossbeam_epoch/atomic.rs.html#211">source</a><a href="#method.drop" class="anchor"></a><h4 class="code-header">unsafe fn <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#tymethod.drop" class="fnname">drop</a>(ptr: usize)</h4></section></summary><div class='docblock'>Drops the object pointed to by the given pointer. <a href="../../crossbeam_epoch/atomic/trait.Pointable.html#tymethod.drop">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryFrom%3CU%3E-for-TopDocs" class="impl has-srclink"><a href="#impl-TryFrom%3CU%3E-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryFrom&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: Into&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error-1" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error-1" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = Infallible</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_from</a>(value: U) -&gt; Result&lt;T, &lt;T as TryFrom&lt;U&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryInto%3CU%3E-for-TopDocs" class="impl has-srclink"><a href="#impl-TryInto%3CU%3E-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryInto&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: TryFrom&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-VZip%3CV%3E-for-TopDocs" class="impl has-srclink"><a class="srclink rightside" href="../../src/ppv_lite86/types.rs.html#221">source</a><a href="#impl-VZip%3CV%3E-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;V, T&gt; <a class="trait" href="../../ppv_lite86/types/trait.VZip.html" title="trait ppv_lite86::types::VZip">VZip</a>&lt;V&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../ppv_lite86/types/trait.MultiLane.html" title="trait ppv_lite86::types::MultiLane">MultiLane</a>&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><section id="method.vzip" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/ppv_lite86/types.rs.html#226">source</a><a href="#method.vzip" class="anchor"></a><h4 class="code-header">fn <a href="../../ppv_lite86/types/trait.VZip.html#tymethod.vzip" class="fnname">vzip</a>(self) -&gt; V</h4></section></div></details><section id="impl-Fruit-for-TopDocs" class="impl has-srclink"><a class="srclink rightside" href="../../src/tantivy/collector/mod.rs.html#122">source</a><a href="#impl-Fruit-for-TopDocs" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="trait.Fruit.html" title="trait tantivy::collector::Fruit">Fruit</a> for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Send + <a class="trait" href="../../downcast_rs/trait.Downcast.html" title="trait downcast_rs::Downcast">Downcast</a>,</span></h3></section></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="tantivy" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

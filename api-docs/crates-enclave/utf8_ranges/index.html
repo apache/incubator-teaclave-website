@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Crate `utf8-ranges` converts ranges of Unicode scalar values to equivalent ranges of UTF-8 bytes. This is useful for constructing byte based automatons that need to embed UTF-8 decoding."><meta name="keywords" content="rust, rustlang, rust-lang, utf8_ranges"><title>utf8_ranges - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../normalize.css"><link rel="stylesheet" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../ayu.css" disabled><link rel="stylesheet" href="../dark.css" disabled><link rel="stylesheet" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="../crates.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../utf8_ranges/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../utf8_ranges/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Crate utf8_ranges</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 1.0.5</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Crate <a class="mod" href="#">utf8_ranges</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/utf8_ranges/lib.rs.html#1-532">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Crate <code>utf8-ranges</code> converts ranges of Unicode scalar values to equivalent
+ranges of UTF-8 bytes. This is useful for constructing byte based automatons
+that need to embed UTF-8 decoding.</p>
+<p>See the documentation on the <code>Utf8Sequences</code> iterator for more details and
+an example.</p>
+<h2 id="wait-what-is-this"><a href="#wait-what-is-this">Wait, what is this?</a></h2>
+<p>This is simplest to explain with an example. Let’s say you wanted to test
+whether a particular byte sequence was a Cyrillic character. One possible
+scalar value range is <code>[0400-04FF]</code>. The set of allowed bytes for this
+range can be expressed as a sequence of byte ranges:</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code>[D0-D3][<span class="number">80</span>-BF]</code></pre></div>
+<p>This is simple enough: simply encode the boundaries, <code>0400</code> encodes to
+<code>D0 80</code> and <code>04FF</code> encodes to <code>D3 BF</code>, and create ranges from each
+corresponding pair of bytes: <code>D0</code> to <code>D3</code> and <code>80</code> to <code>BF</code>.</p>
+<p>However, what if you wanted to add the Cyrillic Supplementary characters to
+your range? Your range might then become <code>[0400-052F]</code>. The same procedure
+as above doesn’t quite work because <code>052F</code> encodes to <code>D4 AF</code>. The byte ranges
+you’d get from the previous transformation would be <code>[D0-D4][80-AF]</code>. However,
+this isn’t quite correct because this range doesn’t capture many characters,
+for example, <code>04FF</code> (because its last byte, <code>BF</code> isn’t in the range <code>80-AF</code>).</p>
+<p>Instead, you need multiple sequences of byte ranges:</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code>[D0-D3][<span class="number">80</span>-BF]  # matches codepoints <span class="number">0400</span>-<span class="number">04FF
+</span>[D4][<span class="number">80</span>-AF]     # matches codepoints <span class="number">0500</span>-<span class="number">052F</span></code></pre></div>
+<p>This gets even more complicated if you want bigger ranges, particularly if
+they naively contain surrogate codepoints. For example, the sequence of byte
+ranges for the basic multilingual plane (<code>[0000-FFFF]</code>) look like this:</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code>[<span class="number">0</span>-<span class="number">7F</span>]
+[C2-DF][<span class="number">80</span>-BF]
+[E0][A0-BF][<span class="number">80</span>-BF]
+[E1-EC][<span class="number">80</span>-BF][<span class="number">80</span>-BF]
+[ED][<span class="number">80</span>-<span class="number">9F</span>][<span class="number">80</span>-BF]
+[EE-EF][<span class="number">80</span>-BF][<span class="number">80</span>-BF]</code></pre></div>
+<p>Note that the byte ranges above will <em>not</em> match any erroneous encoding of
+UTF-8, including encodings of surrogate codepoints.</p>
+<p>And, of course, for all of Unicode (<code>[000000-10FFFF]</code>):</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code>[<span class="number">0</span>-<span class="number">7F</span>]
+[C2-DF][<span class="number">80</span>-BF]
+[E0][A0-BF][<span class="number">80</span>-BF]
+[E1-EC][<span class="number">80</span>-BF][<span class="number">80</span>-BF]
+[ED][<span class="number">80</span>-<span class="number">9F</span>][<span class="number">80</span>-BF]
+[EE-EF][<span class="number">80</span>-BF][<span class="number">80</span>-BF]
+[F0][<span class="number">90</span>-BF][<span class="number">80</span>-BF][<span class="number">80</span>-BF]
+[F1-F3][<span class="number">80</span>-BF][<span class="number">80</span>-BF][<span class="number">80</span>-BF]
+[F4][<span class="number">80</span>-<span class="number">8F</span>][<span class="number">80</span>-BF][<span class="number">80</span>-BF]</code></pre></div>
+<p>This crate automates the process of creating these byte ranges from ranges of
+Unicode scalar values.</p>
+<h2 id="why-would-i-ever-use-this"><a href="#why-would-i-ever-use-this">Why would I ever use this?</a></h2>
+<p>You probably won’t ever need this. In 99% of cases, you just decode the byte
+sequence into a Unicode scalar value and compare scalar values directly.
+However, this explicit decoding step isn’t always possible. For example, the
+construction of some finite state machines may benefit from converting ranges
+of scalar values into UTF-8 decoder automata (e.g., for character classes in
+regular expressions).</p>
+<h2 id="lineage"><a href="#lineage">Lineage</a></h2>
+<p>I got the idea and general implementation strategy from Russ Cox in his
+<a href="https://web.archive.org/web/20160404141123/https://swtch.com/~rsc/regexp/regexp3.html">article on regexps</a> and RE2.
+Russ Cox got it from Ken Thompson’s <code>grep</code> (no source, folk lore?).
+I also got the idea from
+<a href="https://github.com/apache/lucene-solr/blob/ae93f4e7ac6a3908046391de35d4f50a0d3c59ca/lucene/core/src/java/org/apache/lucene/util/automaton/UTF32ToUTF8.java">Lucene</a>,
+which uses it for executing automata on their term index.</p>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Utf8Range.html" title="utf8_ranges::Utf8Range struct">Utf8Range</a></div><div class="item-right docblock-short">A single inclusive range of UTF-8 bytes.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Utf8Sequences.html" title="utf8_ranges::Utf8Sequences struct">Utf8Sequences</a></div><div class="item-right docblock-short">An iterator over ranges of matching UTF-8 byte sequences.</div></div></div><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Utf8Sequence.html" title="utf8_ranges::Utf8Sequence enum">Utf8Sequence</a></div><div class="item-right docblock-short">Utf8Sequence represents a sequence of byte ranges.</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="utf8_ranges" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

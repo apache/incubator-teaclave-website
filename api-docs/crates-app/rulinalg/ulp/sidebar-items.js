@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["UlpComparisonResult","Represents the result of an ULP-based comparison between two floating point numbers."]],"trait":[["Ulp","Floating point types for which two instances can be compared for Unit in the Last Place (ULP) difference."]]};

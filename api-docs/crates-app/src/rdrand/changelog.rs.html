@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/registry/src/github.com-1ecc6299db9ec823/rdrand-0.8.2/src/changelog.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>changelog.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../rdrand/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../rdrand/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Project changelog
+
+
+/// Fix the implementation of `try_fill_bytes` when the buffer is aligned but the size is not a
+/// multiple of a word size.
+</span><span class="kw">pub mod </span>r0_8_2 {}
+
+<span class="doccomment">/// Disallow use of `rdrand`/`rdseed` on known-broken AMD systems.
+</span><span class="kw">pub mod </span>r0_8_1 {}
+
+<span class="doccomment">/// ## Breaking changes
+///
+/// * Upgrade to `rand_core = ^0.6.0`.
+</span><span class="kw">pub mod </span>r0_8_0 {}
+
+<span class="doccomment">/// ## Breaking changes
+///
+/// Upgrade to `rand_core = ^0.5.1`. This involves a major change to how errors are handled. See
+/// [`ErrorCode`](crate::ErrorCode).
+///
+/// rustc version 1.42 is now required to build the library (up from 1.32).
+</span><span class="kw">pub mod </span>r0_7_0 {}
+
+<span class="doccomment">/// Fix unsound mutable reference aliasing in the implementation of `try_fill_bytes`.
+///
+/// The affected code has been replaced with safer one where the scope of `unsafe` is reduced to
+/// the loop which obtains a random word via a native instruction.
+///
+/// ## Breaking changes
+///
+/// rustc version 1.32 is now required to build the library (up from 1.30).
+</span><span class="kw">pub mod </span>r0_6_0 {}
+
+<span class="doccomment">/// Replaced likely unsound use of `core::mem::uninitialized()`.
+</span><span class="kw">pub mod </span>r0_5_1 {}
+
+<span class="doccomment">/// ## Breaking changes
+///
+/// Updated rand_core dependency from `0.3` to `0.4`.
+</span><span class="kw">pub mod </span>r0_5_0 {}
+
+<span class="doccomment">/// ## Breaking changes
+///
+/// Crate gained an enabled-by-default `std` feature. If you relied on rdrand being `core`-able
+/// change your dependency to appear as such:
+///
+/// ```toml
+/// rdrand = { version = &quot;0.4&quot;, default-features = false }
+/// ```
+///
+/// This is done so that an advantage of the common feature detection functionality could be
+/// employed by users that are not constrained by `core`. This functionality is faster, caches the
+/// results and is shared between all users of the functionality.
+///
+/// For `core` usage the feature detection has also been improved and will not be done if e.g.
+/// crate is built with `rdrand` instructions enabled globally.
+</span><span class="kw">pub mod </span>r0_4_0 {}
+
+<span class="doccomment">/// Crate now works on stable!
+///
+/// ## Breaking changes
+///
+/// * Updated to `rand_core = ^0.3`.
+</span><span class="kw">pub mod </span>r0_3_0 {}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rdrand" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用 Teaclave SGX SDK 开发 SGX 应用 | Apache Teaclave (incubating)</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="alternate" type="application/rss+xml" href="https://teaclave.apache.org/rss.xml" title="Apache Teaclave (incubating) RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://teaclave.apache.org/feed.atom" title="Apache Teaclave (incubating) Atom Feed">
+    <link rel="alternate" type="application/json" href="https://teaclave.apache.org/feed.json" title="Apache Teaclave (incubating) JSON Feed">
+    <meta name="description" content="Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.">
+    <meta property="article:published_time" content="2021-08-25T00:00:00.000Z">
+    <meta property="article:modified_time" content="2021-08-27T00:13:45.000Z">
+    <meta property="og:site_name" content="Apache Teaclave (incubating)">
+    <meta property="og:title" content="使用 Teaclave SGX SDK 开发 SGX 应用">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teaclave.apache.org/blog/2021-08-25-developing-sgx-application-with-teaclave-sgx-sdk/">
+    <meta name="twitter:title" content="使用 Teaclave SGX SDK 开发 SGX 应用">
+    <meta name="twitter:url" content="https://teaclave.apache.org/blog/2021-08-25-developing-sgx-application-with-teaclave-sgx-sdk/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ApacheTeaclave">
+    
+    <link rel="preload" href="/assets/css/0.styles.7a68c1e3.css" as="style"><link rel="preload" href="/assets/js/app.ed65caa2.js" as="script"><link rel="preload" href="/assets/js/17.1555cdf6.js" as="script"><link rel="preload" href="/assets/js/1.d73ee85d.js" as="script"><link rel="preload" href="/assets/js/20.fdf677d2.js" as="script"><link rel="prefetch" href="/assets/js/10.dd5d6438.js"><link rel="prefetch" href="/assets/js/100.5c7729a0.js"><link rel="prefetch" href="/assets/js/101.cbcbee2a.js"><link rel="prefetch" href="/assets/js/102.f4367d99.js"><link rel="prefetch" href="/assets/js/103.2fed65ff.js"><link rel="prefetch" href="/assets/js/104.b8670e9b.js"><link rel="prefetch" href="/assets/js/105.d7c055c8.js"><link rel="prefetch" href="/assets/js/106.8366d5fe.js"><link rel="prefetch" href="/assets/js/107.7d2880bf.js"><link rel="prefetch" href="/assets/js/108.dc9f4f34.js"><link rel="prefetch" href="/assets/js/109.a752bc7e.js"><link rel="prefetch" href="/assets/js/11.42e7950e.js"><link rel="prefetch" href="/assets/js/110.b94b1daf.js"><link rel="prefetch" href="/assets/js/111.7179d566.js"><link rel="prefetch" href="/assets/js/112.71378da0.js"><link rel="prefetch" href="/assets/js/12.1d03a56a.js"><link rel="prefetch" href="/assets/js/13.fc7df053.js"><link rel="prefetch" href="/assets/js/14.455ca698.js"><link rel="prefetch" href="/assets/js/15.ac8415d3.js"><link rel="prefetch" href="/assets/js/16.196140b7.js"><link rel="prefetch" href="/assets/js/18.92a56d95.js"><link rel="prefetch" href="/assets/js/19.559fa657.js"><link rel="prefetch" href="/assets/js/2.f85cce33.js"><link rel="prefetch" href="/assets/js/21.fbf6ce25.js"><link rel="prefetch" href="/assets/js/22.af4a8652.js"><link rel="prefetch" href="/assets/js/23.dfc575e5.js"><link rel="prefetch" href="/assets/js/24.0a7eb301.js"><link rel="prefetch" href="/assets/js/25.bf769c7f.js"><link rel="prefetch" href="/assets/js/26.1dc556f1.js"><link rel="prefetch" href="/assets/js/27.9513c522.js"><link rel="prefetch" href="/assets/js/28.9b224bd8.js"><link rel="prefetch" href="/assets/js/29.a3201860.js"><link rel="prefetch" href="/assets/js/30.460c0e9d.js"><link rel="prefetch" href="/assets/js/31.f85c3079.js"><link rel="prefetch" href="/assets/js/32.6327034e.js"><link rel="prefetch" href="/assets/js/33.3db23b15.js"><link rel="prefetch" href="/assets/js/34.4b677f53.js"><link rel="prefetch" href="/assets/js/35.74c2bfa1.js"><link rel="prefetch" href="/assets/js/36.a3f36334.js"><link rel="prefetch" href="/assets/js/37.bb8c8383.js"><link rel="prefetch" href="/assets/js/38.25a187b5.js"><link rel="prefetch" href="/assets/js/39.a708e045.js"><link rel="prefetch" href="/assets/js/40.6b369675.js"><link rel="prefetch" href="/assets/js/41.7fbc6e2a.js"><link rel="prefetch" href="/assets/js/42.862f026e.js"><link rel="prefetch" href="/assets/js/43.31bdc33e.js"><link rel="prefetch" href="/assets/js/44.7bd9449b.js"><link rel="prefetch" href="/assets/js/45.9a21ca3e.js"><link rel="prefetch" href="/assets/js/46.3f342721.js"><link rel="prefetch" href="/assets/js/47.ba103762.js"><link rel="prefetch" href="/assets/js/48.e7764c1b.js"><link rel="prefetch" href="/assets/js/49.801c1000.js"><link rel="prefetch" href="/assets/js/5.d9f96a4c.js"><link rel="prefetch" href="/assets/js/50.4240669f.js"><link rel="prefetch" href="/assets/js/51.b33563db.js"><link rel="prefetch" href="/assets/js/52.146509f4.js"><link rel="prefetch" href="/assets/js/53.72230e92.js"><link rel="prefetch" href="/assets/js/54.7d5c4465.js"><link rel="prefetch" href="/assets/js/55.368545c2.js"><link rel="prefetch" href="/assets/js/56.54f9a6d8.js"><link rel="prefetch" href="/assets/js/57.8032472c.js"><link rel="prefetch" href="/assets/js/58.2c88c658.js"><link rel="prefetch" href="/assets/js/59.37e9b78e.js"><link rel="prefetch" href="/assets/js/6.cb964028.js"><link rel="prefetch" href="/assets/js/60.55736931.js"><link rel="prefetch" href="/assets/js/61.91f5c55a.js"><link rel="prefetch" href="/assets/js/62.064fbd15.js"><link rel="prefetch" href="/assets/js/63.f850a914.js"><link rel="prefetch" href="/assets/js/64.0da1b0b6.js"><link rel="prefetch" href="/assets/js/65.e65ac8c1.js"><link rel="prefetch" href="/assets/js/66.bee22286.js"><link rel="prefetch" href="/assets/js/67.114f9fca.js"><link rel="prefetch" href="/assets/js/68.23e53a32.js"><link rel="prefetch" href="/assets/js/69.61ecb198.js"><link rel="prefetch" href="/assets/js/7.5ecfc8a0.js"><link rel="prefetch" href="/assets/js/70.e0b7b0b8.js"><link rel="prefetch" href="/assets/js/71.c26b2f66.js"><link rel="prefetch" href="/assets/js/72.be0f38cd.js"><link rel="prefetch" href="/assets/js/73.559b381f.js"><link rel="prefetch" href="/assets/js/74.f34a49ff.js"><link rel="prefetch" href="/assets/js/75.5733bb30.js"><link rel="prefetch" href="/assets/js/76.b22fffa4.js"><link rel="prefetch" href="/assets/js/77.0bf63761.js"><link rel="prefetch" href="/assets/js/78.04e1fbee.js"><link rel="prefetch" href="/assets/js/79.129bcdaa.js"><link rel="prefetch" href="/assets/js/8.d09df47e.js"><link rel="prefetch" href="/assets/js/80.5d7d1291.js"><link rel="prefetch" href="/assets/js/81.d932a56b.js"><link rel="prefetch" href="/assets/js/82.eaff652c.js"><link rel="prefetch" href="/assets/js/83.f8daefbd.js"><link rel="prefetch" href="/assets/js/84.40da3f7f.js"><link rel="prefetch" href="/assets/js/85.266ee602.js"><link rel="prefetch" href="/assets/js/86.b5c25ac3.js"><link rel="prefetch" href="/assets/js/87.c9ff5e9a.js"><link rel="prefetch" href="/assets/js/88.9e79fbce.js"><link rel="prefetch" href="/assets/js/89.6a5a74c1.js"><link rel="prefetch" href="/assets/js/9.f6966de8.js"><link rel="prefetch" href="/assets/js/90.5a87bc12.js"><link rel="prefetch" href="/assets/js/91.23187fa7.js"><link rel="prefetch" href="/assets/js/92.0ae5dd81.js"><link rel="prefetch" href="/assets/js/93.37f67a09.js"><link rel="prefetch" href="/assets/js/94.05b74137.js"><link rel="prefetch" href="/assets/js/95.5f5bed22.js"><link rel="prefetch" href="/assets/js/96.099c3275.js"><link rel="prefetch" href="/assets/js/97.0d914caf.js"><link rel="prefetch" href="/assets/js/98.fdd1d17a.js"><link rel="prefetch" href="/assets/js/99.b99e5fd6.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.8e583f31.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7a68c1e3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/assets/img/logo.svg" alt="Apache Teaclave (incubating)" class="logo"> <span class="site-name can-hide" style="display:none;">Teaclave</span></a> <div class="links"><!----> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  ABOUT
+</a></div><div class="nav-item"><a href="/powered-by/" class="nav-link">
+  POWERED BY
+</a></div><div class="nav-item"><a href="/community/" class="nav-link">
+  COMMUNITY
+</a></div><div class="nav-item"><a href="/download/" class="nav-link">
+  DOWNLOAD
+</a></div><div class="nav-item"><a href="/contributors/" class="nav-link">
+  CONTRIBUTORS
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="DOCS" class="dropdown-title"><span class="title">DOCS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/" class="nav-link">
+  Teaclave
+</a></li><li class="dropdown-item"><!----> <a href="/sgx-sdk-docs/" class="nav-link">
+  Teaclave SGX SDK
+</a></li><li class="dropdown-item"><!----> <a href="/trustzone-sdk-docs/" class="nav-link">
+  Teaclave TrustZone SDK
+</a></li><li class="dropdown-item"><h4>
+          APIS
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-rust/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Rust)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-python/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Python)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/sgx-sdk/" target="_self" rel="" class="nav-link external">
+  Teaclave SGX SDK
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (Host)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (TA)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-enclave/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (Enclave)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-app/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (App)
+  <!----></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  BLOG
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="REPOS" class="dropdown-title"><span class="title">REPOS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-sgx-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave SGX SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-trustzone-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave TrustZone SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-java-tee-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Java TEE SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-website" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Website
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Apache Software Foundation" class="dropdown-title"><span class="title">ASF</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.apache.org/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ASF Homepage
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  License
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sponsorship
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/security/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Security
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Privacy
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Thanks
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/events/current-event.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Events
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  ABOUT
+</a></div><div class="nav-item"><a href="/powered-by/" class="nav-link">
+  POWERED BY
+</a></div><div class="nav-item"><a href="/community/" class="nav-link">
+  COMMUNITY
+</a></div><div class="nav-item"><a href="/download/" class="nav-link">
+  DOWNLOAD
+</a></div><div class="nav-item"><a href="/contributors/" class="nav-link">
+  CONTRIBUTORS
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="DOCS" class="dropdown-title"><span class="title">DOCS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/" class="nav-link">
+  Teaclave
+</a></li><li class="dropdown-item"><!----> <a href="/sgx-sdk-docs/" class="nav-link">
+  Teaclave SGX SDK
+</a></li><li class="dropdown-item"><!----> <a href="/trustzone-sdk-docs/" class="nav-link">
+  Teaclave TrustZone SDK
+</a></li><li class="dropdown-item"><h4>
+          APIS
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-rust/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Rust)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-python/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Python)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/sgx-sdk/" target="_self" rel="" class="nav-link external">
+  Teaclave SGX SDK
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (Host)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (TA)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-enclave/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (Enclave)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-app/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (App)
+  <!----></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  BLOG
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="REPOS" class="dropdown-title"><span class="title">REPOS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-sgx-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave SGX SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-trustzone-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave TrustZone SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-java-tee-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Java TEE SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-website" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Website
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Apache Software Foundation" class="dropdown-title"><span class="title">ASF</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.apache.org/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ASF Homepage
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  License
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sponsorship
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/security/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Security
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Privacy
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Thanks
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/events/current-event.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Events
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav>  <!----> </aside> <main class="page"> <div id="base-list-layout" class="theme-default-content"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        使用 Teaclave SGX SDK 开发 SGX 应用
+      </h1> <div class="publish-date-author">August 25, 2021 · Wenwen Ruan</div></header> <div itemprop="articleBody" class="content__default"><nav class="table-of-contents"><ol><li><a href="#teaclave-sgx-sdk%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%AE%80%E4%BB%8B%E4%BB%A5%E5%8F%8A%E6%90%AD%E5%BB%BA"> Teaclave SGX SDK应用开发环境简介以及搭建</a><ol><li><a href="#%E5%87%86%E5%A4%87%E6%9D%A1%E4%BB%B6"> 准备条件</a></li><li><a href="#%E5%9F%BA%E4%BA%8E-docker-%E9%85%8D%E7%BD%AE-teaclave-sgx-sdk-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"> 基于 docker 配置 Teaclave SGX SDK 开发环境</a></li></ol></li><li><a href="#teaclave-sgx-sdk-%E7%A4%BA%E4%BE%8B-helloworld-%E5%89%96%E6%9E%90"> Teaclave SGX SDK 示例 helloworld 剖析</a><ol><li><a href="#helloworld-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"> helloworld 目录结构</a></li><li><a href="#%E9%87%8D%E8%A6%81%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90"> 重要代码文件解析</a></li><li><a href="#%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84%E4%BB%A3%E7%A0%81%E7%9B%AE%E5%BD%95"> 编译后的代码目录</a></li></ol></li><li><a href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E8%87%AA%E5%B7%B1%E7%9A%84-rust-sgx-application"> 开发者如何开发自己的 Rust SGX Application</a><ol><li><a href="#%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E5%87%BD%E6%95%B0"> 添加自定义的函数</a></li><li><a href="#%E8%B0%83%E7%94%A8-teaclave-sgx-sdk-%E6%8F%90%E4%BE%9B%E7%9A%84-crate"> 调用 Teaclave SGX SDK 提供的 crate</a></li></ol></li><li><a href="#%E6%80%BB%E7%BB%93"> 总结</a></li><li><a href="#%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB"> 延伸阅读</a></li></ol></nav><h2 id="teaclave-sgx-sdk应用开发环境简介以及搭建"><a href="#teaclave-sgx-sdk应用开发环境简介以及搭建" class="header-anchor">#</a> Teaclave SGX SDK应用开发环境简介以及搭建</h2> <p>Intel SGX (Software Guard Extension, 软件防护扩展) 因为其较为出色的性能和安全性，是目前最为学术界和工业界关注的 TEE (Trusted Execution Environment, 可信执行环境)。Intel SGX 在内存中划分了名为 enclave（飞地）的隔离区域，用来存放敏感数据和代码。通过提供该隔离的可信执行环境，enclave 在操作系统、BIOS 和虚拟机监控器等系统软件均不可信的情况下，仍然对 enclave 内部的代码和数据提供保护，保障用户的关键数据和代码的机密性和完整性。</p> <p>但如果 Intel SGX 程序仍然使用 C/C++ 这类内存不安全的语言开发的话，就会和传统软件一样面临着内存破坏漏洞的问题。对于 enclave 来说，受到的危害会更为严重，因为 enclave 中保存的多是机密数据和代码。Teaclave SGX 的主要目标就是通过使用高效的内存安全语言 —— Rust 来支持 enclave 应用程序的开发，从而在保证 Intel SGX enclave 内存安全的同时不会带来显著的性能开销。</p> <p>Teaclave SGX SDK 内部结构分为三层：</p> <ul><li>最底层是使用 C/C++ 和汇编实现的 Intel SGX SDK。</li> <li>中间层是 Rust 对 C/C++ 的 FFI (Foreign function Interfaces, 外部函数接口)。</li> <li>最高层是 Teaclave SGX SDK。</li></ul> <p><img src="/assets/img/2021-08-13-overview-of-teaclave-sgx-sdk-cn.24012888.png" alt="Teaclave SGX SDK 概要图"></p> <p>Teaclave SGX SDK 应用程序开发者在进行开发时就只需要基于最上层的 Teaclave SGX SDK 来进行开发，底层的实现对于开发者来说是透明的。本文将从开发者的角度介绍基于 Teaclave SGX SDK 开发自己的应用程序的过程。</p> <h3 id="准备条件"><a href="#准备条件" class="header-anchor">#</a> 准备条件</h3> <ul><li>Ubuntu16.04 或者 18.04 或者 20.04 (Teaclave SGX SDK v1.1.3 中增加了对 Ubuntu 20.04 的支持)</li> <li>docker 环境</li></ul> <p><em>本文基于 Teaclave SGX SDK v1.1.3 提交哈希值：d107bd0718f723221750a4f2973451b386cbf9d2</em></p> <h3 id="基于-docker-配置-teaclave-sgx-sdk-开发环境"><a href="#基于-docker-配置-teaclave-sgx-sdk-开发环境" class="header-anchor">#</a> 基于 docker 配置 Teaclave SGX SDK 开发环境</h3> <p>首先需要用户机器 CPU 支持 Intel SGX 并且在 BIOS 上开启了 Intel SGX 支持。用户可以通过 <a href="https://github.com/ayeks/SGX-hardware" rel="noopener noreferrer">SGX-hardware项目</a> 或者在 <a href="https://www.intel.com/content/www/us/en/products/details/processors.html" rel="noopener noreferrer">Intel 官网</a> 中搜索自己的 CPU 型号查看是否支持 Intel SGX。下图以 Intel Core i7-7700K 处理器为例，如下图所示，该机型支持 SGX。</p> <p><img src="/assets/img/2021-08-13-sgx-enable.4a8676dc.png" alt="sgx-enable.png"></p> <p>当确定 CPU 支持 Intel SGX 之后，还需要开启 BIOS 中的 SGX 选项。CPU 上的 SGX 选项可能有 <code>enabled</code> 或者 <code>software controlled</code>。具有 <code>enabled</code> 选项的主机直接在 BIOS 上选择 <code>enabled</code> 即可，而<code>software controlled</code> 表示 SGX 的开启需要由软件触发，还需通过 Intel 官方提供的 <a href="https://github.com/intel/sgx-software-enable" rel="noopener noreferrer">sgx-software-enable</a> 开启。下载好 <code>sgx-software-enable</code> 之后，运行 <code>Makefile</code> 编译生成可执行代码 <code>sgx_enable</code> ，执行 <code>sudo ./sgx_enable</code> 顺利运行后重启主机，即可顺利开启 Intel SGX。</p> <p>硬件条件准备完毕之后，还需要安装 <a href="https://download.01.org/intel-sgx/sgx-linux/2.10/distro/ubuntu16.04-server/sgx_linux_x64_driver_2.6.0_602374c.bin" rel="noopener noreferrer">Linux SGX 驱动</a>（本实验环境的操作系统版本为 ubuntu16.04 ，安装时需要根据自己的操作系统版本号在 <a href="https://download.01.org/intel-sgx/" rel="noopener noreferrer">官网</a> 下载对应的 Intel SGX 驱动） ，安装完毕之后需要确认 <code>/dev/isgx</code> 的存在。</p> <p>下载 Teaclave SGX SDK 以及支持编译 SGX 设备的 docker image。</p> <p><code>$ https://github.com/apache/incubator-teaclave-sgx-sdk</code></p> <p><code>$ docker pull baiduxlab/sgx-rust</code></p> <p>启动一个 docker，并且把 Teaclave SGX SDK 项目目录映射到 docker 中。</p> <p><code>$ docker run -v /your/absolute/path/to/incubator-teaclave-sgx-sdk:/root/sgx -ti --device /dev/isgx baiduxlab/sgx-rust</code></p> <p>在运行的 docker container 中启动 aesm 服务，<strong>White list update request successful for Version</strong> 语句意味着启动成功。</p> <div class="language-bash extra-class"><pre class="language-text"><code>root@docker:/# LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service &amp;
+aesm_service[17]: [ADMIN]White List update requested
+aesm_service[17]: Failed to load QE3: 0x4004
+aesm_service[17]: The server sock is 0x56096ab991c0
+aesm_service[17]: [ADMIN]White list update request successful for Version: 103
+</code></pre></div><p>执行 Teaclave SGX SDK 中的简单实例 helloworld ，检查是否正常运行。</p> <div class="language-bash extra-class"><pre class="language-text"><code>root@docker:~# cd sgx/samplecode/helloworld/
+root@docker:~/sgx/samplecode/helloworld# make
+root@docker:~/sgx/samplecode/helloworld# cd bin/
+root@docker:~/sgx/samplecode/helloworld/bin# ./app
+[+] global_eid: 2
+This is normal world string passed into enclave!
+This is a Rust string!
+[+] say_something success ...
+</code></pre></div><p>至此，我们已经成功在自己的机器上跑起来了 Teaclave SGX SDK 的 helloworld 示例啦！</p> <h2 id="teaclave-sgx-sdk-示例-helloworld-剖析"><a href="#teaclave-sgx-sdk-示例-helloworld-剖析" class="header-anchor">#</a> Teaclave SGX SDK 示例 helloworld 剖析</h2> <p>接下来，我们通过阅读 helloworld 这个简单的例子来理解 Teaclave SGX SDK 应用程序的组织结构和运行方式。</p> <h3 id="helloworld-目录结构"><a href="#helloworld-目录结构" class="header-anchor">#</a> helloworld 目录结构</h3> <div class="language- extra-class"><pre class="language-text"><code>helloworld/ 
+├── app 
+│   ├── app.c 
+│   └── app.h 
+├── bin 
+│   └── readme.txt 
+├── enclave 
+│   ├── Cargo.toml 
+│   ├── Enclave.config.xml 
+│   ├── Enclave.edl 
+│   ├── Enclave.lds 
+│   ├── Enclave_private.pem 
+│   ├── Makefile 
+│   ├── src 
+│   │   └── lib.rs 
+│   ├── x86_64-unknown-linux-sgx.json 
+│   └── Xargo.toml 
+├── lib 
+│   └── readme.txt 
+└── Makefile 
+</code></pre></div><p>helloworld 的目录结构和 Intel SGX 的 <a href="https://github.com/intel/linux-sgx/blob/HEAD/SampleCode/SampleEnclave" rel="noopener noreferrer">SampleEnclave</a> 目录结构非常类似。</p> <ul><li>app 目录中存放的是不可信部分代码，包括 <code>main</code> 函数以及 <code>OCALL</code> 函数具体逻辑实现。</li> <li>enclave 目录中存放的是可信部分代码，主要是 <code>ECALL</code> 函数具体逻辑实现。
+<ul><li>不同于 SGX ，应用安全区的代码实现位于 <strong><code>src/lib.rs</code></strong>, 该文件是整个 <code>helloworld</code> 文件夹中唯一使用 Rust 编写的文件，程序员可以在该文件中增加需要的功能。</li> <li>另外，enclave 文件夹下多了 <code>Cargo.toml</code>, <code>src/lib.rs</code>, <code>x86_64-unknown-linux-sgx.json</code>, <code>Xargo.toml</code>：
+<ul><li><strong><code>Cargo.toml</code></strong>: 项目清单文件，包括项目名称、项目版本以及依赖项等。</li> <li><strong><code>x86_64-unknown-linux-sgx.json</code></strong> 和 <strong><code>Xargo.toml</code></strong> 描述了用于项目交叉编译的信息。</li></ul></li></ul></li></ul> <h3 id="重要代码文件解析"><a href="#重要代码文件解析" class="header-anchor">#</a> 重要代码文件解析</h3> <ul><li><strong><code>Enclave.edl</code></strong> <br>
+该文件规定了 Enclave 边界 <code>ECALL/OCALL</code> 的定义。</li></ul> <div class="language- extra-class"><pre class="language-text"><code>enclave {
+    from &quot;sgx_tstd.edl&quot; import *;
+    from &quot;sgx_stdio.edl&quot; import *;
+    from &quot;sgx_backtrace.edl&quot; import *;
+    from &quot;sgx_tstdc.edl&quot; import *;
+
+    trusted {
+        /* define ECALLs here. */
+        public sgx_status_t say_something([in, size=len] const uint8_t* some_string, size_t len);
+    };
+
+    untrusted {
+
+    };
+};
+</code></pre></div><p><code>trusted {...}</code> 中声明 <code>ECALL</code> 函数， <code>untrusted {...}</code> 中声明 <code>OCALL</code> 函数。本例中声明了一个 <code>ECALL</code> 函数 <code>say_something</code>，该函数的具体实现在 <code>src/lib.rs</code> 中，它的参数包括 <code>uint8_t *</code> 类型的指针和长度参数 <code>len</code>。</p> <ul><li><strong><code>app/app.c</code></strong></li></ul> <p>在 <code>app/app.c</code> 的 <code>main</code> 函数中有一个完整的调用 <code>ECALL</code> 的例子。</p> <div class="language-c extra-class"><pre class="language-text"><code>sgx_ret = say_something(global_eid,
+                        &amp;enclave_ret,
+                        (const uint8_t *) str,
+                        len);
+</code></pre></div><p>这里的 <code>say_something</code> 似乎和 <code>Enclave.edl</code> 中的声明不太一样，ECALL传递参数时多了两个隐参数：<code>enclave_eid</code> 和 <code>say_something</code> 的返回值 <code>&amp;enclave_ret</code>。而 <code>sgx_ret</code> 表示的是 ECALL 执行是否成功，是 SGX 的返回值。</p> <ul><li><strong><code>enclave/</code>文件夹部分</strong></li></ul> <p><code>enclave/Cargo.toml</code> 中声明了这是一个 <code>staticlib</code>，表明 Enclave 在最后会被编译成一个 <code>.a</code> 文件，该文件会和 Intel 提供的 <code>sgx_tstdc.a</code> 等文件链接形成 <code>enclave.so</code>，再经由 <code>sgx_sign</code> 工具配合 <code>Enclave.config.xml</code> 配置文件、<code>Enclave_private.pem</code> 签名私钥做签名并计算 <code>measurement</code> ，最后生成 <code>enclave.signed.so</code>，这是 Enclave 的完全体。</p> <ul><li><strong><code>enclave/src/lib.rs</code></strong></li></ul> <div class="language-rust extra-class"><pre class="language-text"><code>pub extern &quot;C&quot; fn say_something(some_string: *const u8, some_len: usize) -&gt; sgx_status_t {
+
+    let str_slice = unsafe { slice::from_raw_parts(some_string, some_len) };
+    let _ = io::stdout().write(str_slice);
+
+    // A sample &amp;'static string
+    let rust_raw_string = &quot;This is a &quot;;
+    // An array
+    let word:[u8;4] = [82, 117, 115, 116];
+    // An vector
+    let word_vec:Vec&lt;u8&gt; = vec![32, 115, 116, 114, 105, 110, 103, 33];
+
+    // Construct a string from &amp;'static string
+    let mut hello_string = String::from(rust_raw_string);
+
+    // Iterate on word array
+    for c in word.iter() {
+        hello_string.push(*c as char);
+    }
+
+    // Rust style convertion
+    hello_string += String::from_utf8(word_vec).expect(&quot;Invalid UTF-8&quot;)
+                                               .as_str();
+
+    // Ocall to normal world for output
+    println!(&quot;{}&quot;, &amp;hello_string);
+
+    sgx_status_t::SGX_SUCCESS
+}
+</code></pre></div><p>该函数实现了一个简单的将 <code>&amp;[u8]</code> 数组转化为字符串输出的函数，注意在函数的最后调用的 <code>println!</code> 函数是一个 <code>OCALL</code>。 <code>println!</code> 的具体实现中加入了内置的 <code>OCALL</code>，并定义了内置的 <code>edl</code> ，import到了 <code>Enclave.edl</code> 中。</p> <div class="language- extra-class"><pre class="language-text"><code>enclave {
+    from &quot;sgx_tstd.edl&quot; import *;
+    from &quot;sgx_stdio.edl&quot; import *;
+    from &quot;sgx_backtrace.edl&quot; import *;
+    from &quot;sgx_tstdc.edl&quot; import *;
+</code></pre></div><h3 id="编译后的代码目录"><a href="#编译后的代码目录" class="header-anchor">#</a> 编译后的代码目录</h3> <p>经过编译之后的代码目录如下所示，这里省略了 <code>release</code> 文件夹下的内容。</p> <div class="language- extra-class"><pre class="language-text"><code>├── app 
+│   ├── app.c 
+│   ├── app.h 
+│   ├── app.o               #[generate] 
+│   ├── Enclave_u.c         #[generate] 
+│   ├── Enclave_u.h         #[generate] 
+│   └── Enclave_u.o         #[generate] 
+├── bin 
+│   ├── app                 #[generate] 
+│   ├── enclave.signed.so   #[generate] 
+│   └── readme.txt 
+├── enclave 
+│   ├── Cargo.lock          #[generate] 
+│   ├── Cargo.toml 
+│   ├── Enclave.config.xml 
+│   ├── Enclave.edl 
+│   ├── Enclave.lds 
+│   ├── Enclave_private.pem 
+│   ├── enclave.so          #[generate] 
+│   ├── Enclave_t.c         #[generate] 
+│   ├── Enclave_t.h         #[generate] 
+│   ├── Enclave_t.o         #[generate] 
+│   ├── Makefile 
+│   ├── src 
+│   │   └── lib.rs 
+│   ├── target              #[generate] 
+│   │   ├── CACHEDIR.TAG    #[generate] 
+│   │   └── release         #[generate] 
+│   ├── x86_64-unknown-linux-sgx.json 
+│   └── Xargo.toml 
+├── lib 
+│   ├── libenclave.a        #[generate] 
+│   ├── libsgx_ustdc.a      #[generate] 
+│   └── readme.txt 
+└── Makefile 
+</code></pre></div><p>helloworld 编译的基本流程类似于 Intel SGX:</p> <ul><li><code>edger8r</code> 将输入的 <code>EDL</code> 在 <code>app/</code> 目录下生成不可信代码 <code>Enclave_u.h</code> 和 <code>Enclave_u.c</code>；</li> <li>编译不可信部分生成 <code>bin/app</code>；</li> <li><code>edger8r</code> 在 <code>enclave/</code> 目录下生成可信代码 <code>Enclave_t.h</code> 和 <code>Enclave_t.c</code>；</li> <li>编译并签名生成可信动态链接库 <code>enclave.signed.so</code>。</li></ul> <h2 id="开发者如何开发自己的-rust-sgx-application"><a href="#开发者如何开发自己的-rust-sgx-application" class="header-anchor">#</a> 开发者如何开发自己的 Rust SGX Application</h2> <p>同样类似于开发 Intel SGX Application，用户可以通过改写 Teaclave SGX SDK 所提供的 <code>samplecode</code>，在这里，我以一个简单的例子抛砖引玉。</p> <h3 id="添加自定义的函数"><a href="#添加自定义的函数" class="header-anchor">#</a> 添加自定义的函数</h3> <p>假设用户希望在 Teaclave SGX SDK 中实现一个简单的求两个数组的交集的函数，只需要直接在 <code>src/lib.rs</code> 中添加实现的函数。下面的示例代码 <code>intersection</code> 函数是希望添加的求交集函数，注意这里求到的交集结果是无重复元素的。传入的两个参数是需要求交集的 <code>i32</code> 向量，最后返回的是两个向量的交集。其具体的实现是通过一个额外的散列集，记录 <code>num1</code> 出现的元素，再对 <code>num2</code> 进行遍历，如果 <code>num2</code> 出现了散列集中的元素，则将该值 <code>push</code> 到交集数组中，并将散列表中的对应元素移除。当 <code>num2</code> 遍历完毕之后，返回交集数组。</p> <div class="language-rust extra-class"><pre class="language-text"><code>pub fn intersection(nums1: Vec&lt;i32&gt;, nums2: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+        use std::collections::HashSet;
+        let mut set: HashSet&lt;i32&gt; = HashSet::new();
+        let mut vec: Vec&lt;i32&gt; = Vec::new();
+
+        for i in nums1.iter() {
+            set.insert(*i);
+        }
+
+        for i in nums2.iter() {
+            if set.contains(i) {
+                vec.push(*i);
+                set.remove(i);
+            }
+        }
+        return vec;
+    }
+</code></pre></div><p>考虑一个比较现实的场景，两个用户分别将自己的向量作为参数传入 enclave 中进行计算，这时候数据需要从不可信代码区域复制到可信代码区域。
+首先，需要在 <code>Enclave.edl</code> 文件中修改 <code>say_something</code> 函数的定义，输入参数为两个用户的向量指针以及对应的向量大小。</p> <div class="language- extra-class"><pre class="language-text"><code>public sgx_status_t say_something([in, size=len1] size_t* num1, size_t len1,
+                                  [in, size=len2] size_t* num2, size_t len2);
+</code></pre></div><p>接着，在 <code>app.c</code> 文件中声明需要求交集的数组以及大小并仿照示例调用 <code>say_something</code>。</p> <div class="language-c extra-class"><pre class="language-text"><code>    size_t nums1[10] = {0,1,2,3,4,5,6,7,8,9};
+    size_t nums2[10] = {5,6,7,8,9,10,11,12,13,14};
+    size_t len1 = sizeof(nums1);
+    size_t len2 = sizeof(nums2);
+
+    sgx_ret = say_something(global_eid, 
+                            &amp;enclave_ret,
+                            nums1,
+                            len1,
+                            nums2,
+                            len2);
+</code></pre></div><p>回到 <code>enclave/src/lib.rs</code>，<code>say_something</code> 传进来的是两个向量的起始地址以及大小。</p> <div class="language-rust extra-class"><pre class="language-text"><code>pub extern &quot;C&quot; fn say_something(nums1: *mut usize, len1: usize, nums2: *mut usize, len2: usize) -&gt; sgx_status_t 
+</code></pre></div><p>由于数据是从非安全区复制到安全区的，还需要对 <code>intersection</code> 函数进行部分改写。传进来的参数是数组指针，以指针地址为起始地址，根据大小参数限制迭代范围并获得一个用于循环的序号变量 <code>i</code>，在 <code>for</code> 循环中使用 <code>offset</code> 偏移指针，解引用它，读出 <code>nums1</code> 和 <code>nums2</code> 的元素值。</p> <div class="language-rust extra-class"><pre class="language-text"><code>pub fn intersection(nums1: *mut usize, len1: usize, nums2: *mut usize, len2: usize) -&gt; Vec&lt;usize&gt; {
+    use std::collections::HashSet;
+    let mut set: HashSet&lt;usize&gt; = HashSet::new();
+    let mut vec: Vec&lt;usize&gt; = Vec::new();
+
+    for i in 0..len1/mem::size_of::&lt;usize&gt;() {
+        let mut val_nums1 = 0;
+        unsafe {
+            val_nums1 = *nums1.offset(i as isize);
+        }
+        set.insert(val_nums1); 
+    }
+    
+    for i in 0..len2/mem::size_of::&lt;usize&gt;() {
+        let mut val_nums2 = 0;
+        unsafe {
+            val_nums2 = *nums2.offset(i as isize);
+        }
+        if set.contains(&amp;val_nums2) {
+            vec.push(val_nums2);
+            set.remove(&amp;val_nums2);
+        }
+    }
+    return vec;
+}
+</code></pre></div><p>完整的 <code>say_something</code> 函数如下所示。</p> <div class="language-rust extra-class"><pre class="language-text"><code>#[no_mangle]
+pub extern &quot;C&quot; fn say_something(nums1: *mut usize, len1: usize, nums2: *mut usize, len2: usize) -&gt; sgx_status_t {
+    let vec: Vec&lt;usize&gt; = intersection(nums1, len1, nums2, len2); 
+    println!(&quot;intersection set is {:?}&quot;, vec);
+    sgx_status_t::SGX_SUCCESS
+}
+</code></pre></div><p>重新编译并运行，得到运行结果：</p> <div class="language-bash extra-class"><pre class="language-text"><code>[+] global_eid: 2
+intersection set is [5, 6, 7, 8, 9]
+[+] say_something success ...
+</code></pre></div><p>我们基于 Teaclave SGX SDK 的 helloworld 实现了自己的求交集函数。</p> <h3 id="调用-teaclave-sgx-sdk-提供的-crate"><a href="#调用-teaclave-sgx-sdk-提供的-crate" class="header-anchor">#</a> 调用 Teaclave SGX SDK 提供的 <code>crate</code></h3> <p>Teaclave SGX SDK 重写了很多 SGX 的库，当我们需要用某个库时，可以先在仓库中查看是否有相应的 <code>crate</code> 实现以及对应的 <a href="https://teaclave.apache.org/api-docs/crates-enclave/" rel="noopener noreferrer">doc</a>。比如当我们希望生成一个随机数时，在 <code>C++</code> 或者 <code>Rust</code> 环境下，会想到使用 <code>rand</code> 库。自然而然地，Teaclave SGX SDK 也用 Rust 重写了 <a href="https://github.com/apache/incubator-teaclave-sgx-sdk/tree/master/sgx_rand" rel="noopener noreferrer"><code>sgx_rand</code></a> 库。</p> <p>首先在 <code>enclave/Cargo.toml</code> 中的 <code>[target.'cfg(not(target_env = &quot;sgx&quot;))'.dependencies]</code> 部分添加 <code>sgx_rand</code> 库的地址。</p> <div class="language-toml extra-class"><pre class="language-text"><code>[target.'cfg(not(target_env = &quot;sgx&quot;))'.dependencies]
+sgx_rand = {git = &quot;https://github.com/apache/teaclave-sgx-sdk.git&quot; }
+</code></pre></div><p>现在万事俱备，只欠调用。回到 <code>lib.rs</code> 文件中，链接到 <code>sgx_rand</code> <code>crate</code>，导入其中的所有项，声明需要使用的模块。</p> <div class="language-rust extra-class"><pre class="language-text"><code>extern crate sgx_rand;
+use sgx_rand::Rng;
+use sgx_rand::os::SgxRng;
+</code></pre></div><p>调用 <code>gen_range</code> 函数生成 0-10 之间的随机数。</p> <div class="language-rust extra-class"><pre class="language-text"><code>let random = rng.gen_range(0, 10);
+</code></pre></div><p>这样就可以在 Teaclave SGX SDK 中的 enclave 中通过调用官方 <code>crate</code> 随机生成一个随机数。</p> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p>本文首先介绍了 Teaclave SGX SDK 项目的基本结构，然后以 <code>helloworld</code> 为例子，介绍了一个简单的 Teaclave SGX SDK 的示例的组织结构和编译过程，最后，以在 <code>helloworld</code> 中实现 <code>intersection</code> 函数为例，介绍了如何基于提供的 SampleCode 进行 Teaclave SGX SDK 应用程序的开发。</p> <h2 id="延伸阅读"><a href="#延伸阅读" class="header-anchor">#</a> 延伸阅读</h2> <ul><li><a href="https://github.com/dingelish/SGXfail/blob/master/01.md" rel="noopener noreferrer">一份主观的 SGX 导读：运行第一个 SGX 程序</a></li> <li><a href="http://teaclave.apache.org" rel="noopener noreferrer">Teaclave 官网</a></li> <li><a href="https://dl.acm.org/citation.cfm?id=3354241" rel="noopener noreferrer">Teaclave SGX SDK 项目论文：《Towards Memory Safe Enclave Programming with Rust-SGX》</a></li></ul></div></article></div>  <div class="footer">
+    Apache Teaclave (incubating) is an effort undergoing incubation at The Apache
+    Software Foundation (ASF), sponsored by the Apache Incubator.
+    Incubation is required of all newly accepted projects until a further review
+    indicates that the infrastructure, communications, and decision making process
+    have stabilized in a manner consistent with other successful ASF projects. While
+    incubation status is not necessarily a reflection of the completeness or
+    stability of the code, it does indicate that the project has yet to be fully
+    endorsed by the ASF.
+    Copyright © 2020 The Apache Software Foundation.
+    Licensed under the Apache License, Version 2.0.
+    Apache Teaclave, Apache, the Apache feather, and the Apache Teaclave project logo are either
+    trademarks or registered trademarks of the Apache Software Foundation.
+  </div></main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.ed65caa2.js" defer></script><script src="/assets/js/17.1555cdf6.js" defer></script><script src="/assets/js/1.d73ee85d.js" defer></script><script src="/assets/js/20.fdf677d2.js" defer></script>
+  </body>
+</html>

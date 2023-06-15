@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Aapache Incubation Proposal | Apache Teaclave (incubating)</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="alternate" type="application/rss+xml" href="https://teaclave.apache.org/rss.xml" title="Apache Teaclave (incubating) RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://teaclave.apache.org/feed.atom" title="Apache Teaclave (incubating) Atom Feed">
+    <link rel="alternate" type="application/json" href="https://teaclave.apache.org/feed.json" title="Apache Teaclave (incubating) JSON Feed">
+    <meta name="description" content="Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.">
+    <meta property="article:published_time" content="2019-08-20T00:00:00.000Z">
+    <meta property="article:modified_time" content="2020-07-14T22:47:58.000Z">
+    <meta property="og:site_name" content="Apache Teaclave (incubating)">
+    <meta property="og:title" content="Aapache Incubation Proposal">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teaclave.apache.org/blog/2019-08-20-apache-incubation-proposal/">
+    <meta name="twitter:title" content="Aapache Incubation Proposal">
+    <meta name="twitter:url" content="https://teaclave.apache.org/blog/2019-08-20-apache-incubation-proposal/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ApacheTeaclave">
+    
+    <link rel="preload" href="/assets/css/0.styles.7a68c1e3.css" as="style"><link rel="preload" href="/assets/js/app.ed65caa2.js" as="script"><link rel="preload" href="/assets/js/17.1555cdf6.js" as="script"><link rel="preload" href="/assets/js/1.d73ee85d.js" as="script"><link rel="preload" href="/assets/js/36.a3f36334.js" as="script"><link rel="prefetch" href="/assets/js/10.dd5d6438.js"><link rel="prefetch" href="/assets/js/100.5c7729a0.js"><link rel="prefetch" href="/assets/js/101.cbcbee2a.js"><link rel="prefetch" href="/assets/js/102.f4367d99.js"><link rel="prefetch" href="/assets/js/103.2fed65ff.js"><link rel="prefetch" href="/assets/js/104.b8670e9b.js"><link rel="prefetch" href="/assets/js/105.d7c055c8.js"><link rel="prefetch" href="/assets/js/106.8366d5fe.js"><link rel="prefetch" href="/assets/js/107.7d2880bf.js"><link rel="prefetch" href="/assets/js/108.dc9f4f34.js"><link rel="prefetch" href="/assets/js/109.a752bc7e.js"><link rel="prefetch" href="/assets/js/11.42e7950e.js"><link rel="prefetch" href="/assets/js/110.b94b1daf.js"><link rel="prefetch" href="/assets/js/111.7179d566.js"><link rel="prefetch" href="/assets/js/112.71378da0.js"><link rel="prefetch" href="/assets/js/12.1d03a56a.js"><link rel="prefetch" href="/assets/js/13.fc7df053.js"><link rel="prefetch" href="/assets/js/14.455ca698.js"><link rel="prefetch" href="/assets/js/15.ac8415d3.js"><link rel="prefetch" href="/assets/js/16.196140b7.js"><link rel="prefetch" href="/assets/js/18.92a56d95.js"><link rel="prefetch" href="/assets/js/19.559fa657.js"><link rel="prefetch" href="/assets/js/2.f85cce33.js"><link rel="prefetch" href="/assets/js/20.fdf677d2.js"><link rel="prefetch" href="/assets/js/21.fbf6ce25.js"><link rel="prefetch" href="/assets/js/22.af4a8652.js"><link rel="prefetch" href="/assets/js/23.dfc575e5.js"><link rel="prefetch" href="/assets/js/24.0a7eb301.js"><link rel="prefetch" href="/assets/js/25.bf769c7f.js"><link rel="prefetch" href="/assets/js/26.1dc556f1.js"><link rel="prefetch" href="/assets/js/27.9513c522.js"><link rel="prefetch" href="/assets/js/28.9b224bd8.js"><link rel="prefetch" href="/assets/js/29.a3201860.js"><link rel="prefetch" href="/assets/js/30.460c0e9d.js"><link rel="prefetch" href="/assets/js/31.f85c3079.js"><link rel="prefetch" href="/assets/js/32.6327034e.js"><link rel="prefetch" href="/assets/js/33.3db23b15.js"><link rel="prefetch" href="/assets/js/34.4b677f53.js"><link rel="prefetch" href="/assets/js/35.74c2bfa1.js"><link rel="prefetch" href="/assets/js/37.bb8c8383.js"><link rel="prefetch" href="/assets/js/38.25a187b5.js"><link rel="prefetch" href="/assets/js/39.a708e045.js"><link rel="prefetch" href="/assets/js/40.6b369675.js"><link rel="prefetch" href="/assets/js/41.7fbc6e2a.js"><link rel="prefetch" href="/assets/js/42.862f026e.js"><link rel="prefetch" href="/assets/js/43.31bdc33e.js"><link rel="prefetch" href="/assets/js/44.7bd9449b.js"><link rel="prefetch" href="/assets/js/45.9a21ca3e.js"><link rel="prefetch" href="/assets/js/46.3f342721.js"><link rel="prefetch" href="/assets/js/47.ba103762.js"><link rel="prefetch" href="/assets/js/48.e7764c1b.js"><link rel="prefetch" href="/assets/js/49.801c1000.js"><link rel="prefetch" href="/assets/js/5.d9f96a4c.js"><link rel="prefetch" href="/assets/js/50.4240669f.js"><link rel="prefetch" href="/assets/js/51.b33563db.js"><link rel="prefetch" href="/assets/js/52.146509f4.js"><link rel="prefetch" href="/assets/js/53.72230e92.js"><link rel="prefetch" href="/assets/js/54.7d5c4465.js"><link rel="prefetch" href="/assets/js/55.368545c2.js"><link rel="prefetch" href="/assets/js/56.54f9a6d8.js"><link rel="prefetch" href="/assets/js/57.8032472c.js"><link rel="prefetch" href="/assets/js/58.2c88c658.js"><link rel="prefetch" href="/assets/js/59.37e9b78e.js"><link rel="prefetch" href="/assets/js/6.cb964028.js"><link rel="prefetch" href="/assets/js/60.55736931.js"><link rel="prefetch" href="/assets/js/61.91f5c55a.js"><link rel="prefetch" href="/assets/js/62.064fbd15.js"><link rel="prefetch" href="/assets/js/63.f850a914.js"><link rel="prefetch" href="/assets/js/64.0da1b0b6.js"><link rel="prefetch" href="/assets/js/65.e65ac8c1.js"><link rel="prefetch" href="/assets/js/66.bee22286.js"><link rel="prefetch" href="/assets/js/67.114f9fca.js"><link rel="prefetch" href="/assets/js/68.23e53a32.js"><link rel="prefetch" href="/assets/js/69.61ecb198.js"><link rel="prefetch" href="/assets/js/7.5ecfc8a0.js"><link rel="prefetch" href="/assets/js/70.e0b7b0b8.js"><link rel="prefetch" href="/assets/js/71.c26b2f66.js"><link rel="prefetch" href="/assets/js/72.be0f38cd.js"><link rel="prefetch" href="/assets/js/73.559b381f.js"><link rel="prefetch" href="/assets/js/74.f34a49ff.js"><link rel="prefetch" href="/assets/js/75.5733bb30.js"><link rel="prefetch" href="/assets/js/76.b22fffa4.js"><link rel="prefetch" href="/assets/js/77.0bf63761.js"><link rel="prefetch" href="/assets/js/78.04e1fbee.js"><link rel="prefetch" href="/assets/js/79.129bcdaa.js"><link rel="prefetch" href="/assets/js/8.d09df47e.js"><link rel="prefetch" href="/assets/js/80.5d7d1291.js"><link rel="prefetch" href="/assets/js/81.d932a56b.js"><link rel="prefetch" href="/assets/js/82.eaff652c.js"><link rel="prefetch" href="/assets/js/83.f8daefbd.js"><link rel="prefetch" href="/assets/js/84.40da3f7f.js"><link rel="prefetch" href="/assets/js/85.266ee602.js"><link rel="prefetch" href="/assets/js/86.b5c25ac3.js"><link rel="prefetch" href="/assets/js/87.c9ff5e9a.js"><link rel="prefetch" href="/assets/js/88.9e79fbce.js"><link rel="prefetch" href="/assets/js/89.6a5a74c1.js"><link rel="prefetch" href="/assets/js/9.f6966de8.js"><link rel="prefetch" href="/assets/js/90.5a87bc12.js"><link rel="prefetch" href="/assets/js/91.23187fa7.js"><link rel="prefetch" href="/assets/js/92.0ae5dd81.js"><link rel="prefetch" href="/assets/js/93.37f67a09.js"><link rel="prefetch" href="/assets/js/94.05b74137.js"><link rel="prefetch" href="/assets/js/95.5f5bed22.js"><link rel="prefetch" href="/assets/js/96.099c3275.js"><link rel="prefetch" href="/assets/js/97.0d914caf.js"><link rel="prefetch" href="/assets/js/98.fdd1d17a.js"><link rel="prefetch" href="/assets/js/99.b99e5fd6.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.8e583f31.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7a68c1e3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/assets/img/logo.svg" alt="Apache Teaclave (incubating)" class="logo"> <span class="site-name can-hide" style="display:none;">Teaclave</span></a> <div class="links"><!----> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  ABOUT
+</a></div><div class="nav-item"><a href="/powered-by/" class="nav-link">
+  POWERED BY
+</a></div><div class="nav-item"><a href="/community/" class="nav-link">
+  COMMUNITY
+</a></div><div class="nav-item"><a href="/download/" class="nav-link">
+  DOWNLOAD
+</a></div><div class="nav-item"><a href="/contributors/" class="nav-link">
+  CONTRIBUTORS
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="DOCS" class="dropdown-title"><span class="title">DOCS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/" class="nav-link">
+  Teaclave
+</a></li><li class="dropdown-item"><!----> <a href="/sgx-sdk-docs/" class="nav-link">
+  Teaclave SGX SDK
+</a></li><li class="dropdown-item"><!----> <a href="/trustzone-sdk-docs/" class="nav-link">
+  Teaclave TrustZone SDK
+</a></li><li class="dropdown-item"><h4>
+          APIS
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-rust/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Rust)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-python/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Python)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/sgx-sdk/" target="_self" rel="" class="nav-link external">
+  Teaclave SGX SDK
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (Host)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (TA)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-enclave/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (Enclave)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-app/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (App)
+  <!----></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  BLOG
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="REPOS" class="dropdown-title"><span class="title">REPOS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-sgx-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave SGX SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-trustzone-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave TrustZone SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-java-tee-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Java TEE SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-website" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Website
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Apache Software Foundation" class="dropdown-title"><span class="title">ASF</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.apache.org/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ASF Homepage
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  License
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sponsorship
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/security/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Security
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Privacy
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Thanks
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/events/current-event.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Events
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  ABOUT
+</a></div><div class="nav-item"><a href="/powered-by/" class="nav-link">
+  POWERED BY
+</a></div><div class="nav-item"><a href="/community/" class="nav-link">
+  COMMUNITY
+</a></div><div class="nav-item"><a href="/download/" class="nav-link">
+  DOWNLOAD
+</a></div><div class="nav-item"><a href="/contributors/" class="nav-link">
+  CONTRIBUTORS
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="DOCS" class="dropdown-title"><span class="title">DOCS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/" class="nav-link">
+  Teaclave
+</a></li><li class="dropdown-item"><!----> <a href="/sgx-sdk-docs/" class="nav-link">
+  Teaclave SGX SDK
+</a></li><li class="dropdown-item"><!----> <a href="/trustzone-sdk-docs/" class="nav-link">
+  Teaclave TrustZone SDK
+</a></li><li class="dropdown-item"><h4>
+          APIS
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-rust/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Rust)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-python/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Python)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/sgx-sdk/" target="_self" rel="" class="nav-link external">
+  Teaclave SGX SDK
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (Host)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (TA)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-enclave/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (Enclave)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-app/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (App)
+  <!----></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  BLOG
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="REPOS" class="dropdown-title"><span class="title">REPOS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-sgx-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave SGX SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-trustzone-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave TrustZone SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-java-tee-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Java TEE SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-website" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Website
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Apache Software Foundation" class="dropdown-title"><span class="title">ASF</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.apache.org/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ASF Homepage
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  License
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sponsorship
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/security/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Security
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Privacy
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Thanks
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/events/current-event.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Events
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav>  <!----> </aside> <main class="page"> <div id="base-list-layout" class="theme-default-content"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        Aapache Incubation Proposal
+      </h1> <div class="publish-date-author">August 20, 2019 · The Teaclave PPMC</div></header> <div itemprop="articleBody" class="content__default"><div class="language- extra-class"><pre class="language-text"><code>MesaTEE Apache Incubation Proposal
+
+= Abstract =
+
+MesaTEE is a framework for universal secure computing.
+
+= Proposal =
+
+MesaTEE is the next-gen solution to enable general computing service for
+security-critical scenarios. It will allow even the most sensitive data to
+be securely processed to enable offshore businesses without leakage.
+
+The solution combines the advanced Hybrid Memory Safety (HMS) model and the
+power of the Trusted Computing technologies (e.g., TPM) as well as the
+Confidential Computing technologies (e.g., Intel SGX).
+
+  * Code base:
+    * https://github.com/mesalock-linux/mesatee
+    * https://github.com/baidu/rust-sgx-sdk
+  * Website: https://mesatee.org
+  * Documentation: https://mesatee.org/doc/mesatee_sdk/
+
+= Background =
+
+The emerging technologies of big data analytics, machine learning, cloud/edge
+computing, and blockchain are significantly boosting our productivity, but at
+the same time they are bringing new confidentiality and integrity concerns. On
+public cloud and blockchain, sensitive data like health and financial records
+may be consumed at runtime by untrusted computing processes running on
+compromised platforms; during in-house data exchange, confidential information
+may cross different clearance boundaries and possibly fall into the wrong hands;
+also not to mention the privacy issue arises in offshore data supply chains.
+
+Although the consequences of data breaching have been extensively elaborated, we
+should also note that proprietary computing algorithms themselves, such as AI
+models, also need to be well protected. Once leaked, attackers can steal the
+intellectual properties, or launch whitebox attacks and easily exploit the
+weaknesses of the models.
+
+Facing all these risky scenarios, we are in desperate need of a trusted and
+secure mechanism, enabling us to protect both private data and proprietary
+computing models during a migratable execution in potentially unsafe
+environments, yet preserving functionalities, performance, compatibility, and
+flexibility. MesaTEE is targeting to be, as we call it, the full &quot;Universal
+Secure Computing&quot; stack, so it can help users resolve these runtime security
+risks.
+
+MesaTEE aims to promote the development of universal secure computing ecosystem
+through open source and openness, to provide basic support for trust protection
+for the productivity revolution brought by big data and AI, to completely solve
+the data exchange or multi-party computing between departments/companies, to
+enable privacy-crucial services such as financial and medical care using
+blockchain/cloud services, and to convoy businesses that are closely related to
+life and safety such as autonomous driving. MesaTEE has been working closely
+with mainstream cloud computing/blockchain/chip vendors and
+universities/research institutions to promote hardware TEE, software memory
+safety, and versatile computing services to create an internationally protected
+and flexible secure computing framework. MesaTEE’s open-source release will
+greatly accelerate the development of the next generation of big data business
+applications, and it is also of great importance to promoting AI in all business
+areas.
+
+= Rationale =
+
+MesaTEE stack redefines future AI and big data analytics by providing a trusted
+and secure offshore computing environment. The confidentiality and privacy of
+data and models can be well protected with MesaTEE, even if data and model
+originate from different parties with no mutual trust. Moreover, the computing
+platform itself is not necessarily trusted either. The Trusted Computing Base
+(TCB) can thus be largely reduced to MesaTEE framework alone. A detailed
+description of target use-cases can be found at
+https://github.com/mesalock-linux/mesatee/blob/master/docs/case_study.md.
+
+We believe that Apache way of open source community empowers MesaTEE to attract
+a diverse set of contributors who can bring new ideas into the project.
+
+= Initial Goals =
+
+  * Move the existing codebase, website, documentation, and mailing lists to an
+    Apache-hosted infrastructure.
+  * Integrate with the Apache development process.
+  * Ensure all dependencies are compliant with Apache License version 2.0.
+  * Incrementally develop and release per Apache guidelines.
+
+= Current Status =
+
+The MesaTEE project (and its sub-project Rust SGX SDK) has been designed and
+developed at Baidu since 2017, and was open sourced under the Apache License,
+Version 2.0 in 2019. The source code is currently hosted at github.com
+(https://github.com/mesalock-linux/mesatee and
+https://github.com/baidu/rust-sgx-sdk), which will seed the Apache git
+repository.
+
+== Meritocracy ==
+
+We are fully committed to open, transparent, and meritocratic interactions with
+our community. In fact, one of the primary motivations for us to enter the
+incubation process is to be able to rely on Apache best practices that can
+ensure meritocracy. This will eventually help incorporate the best ideas back
+into the project and enable contributors to continue investing their time in the
+project. We already have some guidelines to help external contributors:
+
+  * https://github.com/mesalock-linux/mesatee/blob/master/docs/rust_guideline.md
+  * https://github.com/mesalock-linux/mesatee/blob/master/docs/how_to_add_your_function.md
+  * https://github.com/mesalock-linux/mesatee/blob/master/CODE_OF_CONDUCT.md
+
+== Community ==
+
+The MesaTEE community is fairly young. Since our sub-project (Rust SGX SDK) was
+open sourced in 2017, we received many contributions from various companies and
+individual researchers (https://github.com/baidu/rust-sgx-sdk/pulls). Our
+primary goal during the incubation would be to grow the community and groom our
+existing active contributors for committers.
+
+== Core Developers ==
+
+Current core developers work at Baidu. We are confident that incubation will
+help us grow a diverse community in an open and collaborative way.
+
+== Alignment ==
+
+MesaTEE is designed as a framework for universal secure computing. This is
+complementary to the Apache's projects, providing a trusted and secure computing
+framework.
+
+Our sincere hope is that being a part of the Apache foundation would enable us
+to drive the future of the project in alignment with the other Apache projects
+for the benefit of thousands of organizations that already leverage these
+projects.
+
+= Known Risks =
+
+== Orphaned Products ==
+
+The risk of abandonment of MesaTEE is low. MesaTEE has been incubated at Baidu
+for over two years. Baidu is committed to the further development of the project
+and will keep investing resources towards the Apache processes and community
+building, during the incubation period.
+
+== Inexperience with Open Source ==
+
+Even though the initial committers are new to the Apache world, some have
+considerable open source experience - Yu Ding, Yiming Jing, Mingshen Sun. We
+have been successfully managing the current open source community, answering
+questions, and taking feedback already. Moreover, we hope to obtain guidance and
+mentorship from current ASF members to help us succeed in the incubation.
+
+== Length of Incubation ==
+
+We expect the project to be in incubation for 2 years or less.
+
+== Homogenous Developers ==
+
+Currently, the lead developers for MesaTEE are from Baidu. However, we have an
+active set of early contributors/collaborators from Alibaba and other companies,
+which we hope will increase the diversity going forward. Once again, a primary
+motivation for the incubation is to facilitate this in the Apache way.
+
+== Reliance on Salaried Developers ==
+
+Both the current committers and early contributors have several years of core
+expertise around designing trusted computing systems. Current committers are
+very passionate about the project and have already invested hundreds of hours
+towards helping and building the community. Thus, even with employer changes, we
+expect they will be able to actively engage in the project either because they
+will be working in similar areas even with newer employers or out of belief in
+the project.
+
+== Relationships with Other Apache Products ==
+
+To the best of our knowledge, there are no directly competing projects with
+MesaTEE that offer all of the feature set - memory safety, secure computing,
+multi-party computation, etc. However, some projects share similar goals, e.g.,
+OpenWhisk which provides a serverless cloud platform. We are committed to open
+collaboration with such Apache projects and incorporating changes to MesaTEE or
+contributing patches to other projects, with the goal of making it easier for
+the community at large, to adopt these open source technologies.
+
+== Excessive Fascination with the Apache Brand ==
+
+The Apache Brand is very respected. We are very honored to have the opportunity
+to join ASF, with the understanding that its brand policies shall be respected.
+And we hope Apache can help us build the ecosystem around MesaTEE and attract
+more developers.
+
+= Documentation =
+
+  * Detailed documentation: https://github.com/mesalock-linux/mesatee
+  * MesaTEE SDK API documentation: https://mesatee.org/doc/mesatee_sdk/
+
+= Initial Source =
+
+The codebase is currently hosted on Github:
+
+  * https://github.com/mesalock-linux/mesatee
+  * https://github.com/baidu/rust-sgx-sdk
+
+During incubation, the codebase will be migrated to an Apache infrastructure.
+The source code of MesaTEE is under Apache version 2.0 License, while Rust SGX
+SDK is under BSD 3-Clauses License.
+
+= Source and Intellectual Property Submission Plan =
+
+We will work with the committers to get ICLAs signed. We will provide a Software
+Grant Agreement from an authorized signer per
+https://www.apache.org/licenses/software-grant-template.pdf
+
+= External Dependencies =
+
+MesaTEE directly depends on these third-party Rust crates:
+
+  * adler32, 1.0.3, BSD-3-Clause
+  * aho-corasick, 0.7.4, Unlicense/MIT
+  * array_tool, 1.0.3, MIT
+  * assert_matches, 1.3.0, MIT/Apache-2.0
+  * autocfg, 0.1.4, Apache-2.0/MIT
+  * base64, 0.10.1, MIT/Apache-2.0
+  * bincode, 1.1.4, MIT
+  * bit-vec, 0.6.1, MIT/Apache-2.0
+  * bitflags, 1.1.0, MIT/Apache-2.0
+  * byteorder, 1.3.2, MIT/Unlicense
+  * bytes, 0.5.0, MIT
+  * cc, 1.0.37, MIT/Apache-2.0
+  * cfg-if, 0.1.9, MIT/Apache-2.0
+  * chrono, 0.4.7, MIT/Apache-2.0
+  * color_quant, 1.0.1, MIT
+  * crc32fast, 1.2.0, MIT
+  * ctor, 0.1.9, Apache-2.0
+  * deflate, 0.7.20, MIT/Apache-2.0
+  * either, 1.5.2, MIT/Apache-2.0
+  * env_logger, 0.6.2, MIT/Apache-2.0
+  * erased-serde, 0.3.9, MIT
+  * fnv, 1.0.6, Apache-2.0
+  * getrandom, 0.1.6, MIT
+  * ghost, 0.1.0, MIT/Apache-2.0
+  * gif, 0.10.2, MIT/Apache-2.0
+  * gzip-header, 0.3.0, MIT/Apache-2.0
+  * half, 1.3.0, MIT/Apache-2.0
+  * hashbrown, 0.3.1, Apache-2.0/MIT
+  * heapsize, 0.4.2, MIT/Apache-2.0
+  * hex, 0.3.2, MIT
+  * http, 0.1.17, MIT/Apache-2.0
+  * httparse, 1.3.4, MIT/Apache-2.0
+  * humantime, 1.2.0, MIT/Apache-2.0
+  * image, 0.21.0, MIT
+  * inflate, 0.4.5, MIT
+  * inventory, 0.1.3, MIT
+  * inventory-impl, 0.1.3, MIT
+  * iovec, 0.2.0, MIT/Apache-2.0
+  * itertools, 0.8.0, MIT/Apache-2.0
+  * itoa, 0.4.4, MIT
+  * jpeg-decoder, 0.1.15, MIT
+  * lazy_static, 1.3.0, MIT/Apache-2.0
+  * libc, 0.2.59, MIT
+  * linked-hash-map, 0.5.2, MIT/Apache-2.0
+  * log, 0.4.7, MIT
+  * lzw, 0.10.0, MIT/Apache-2.0
+  * matrixmultiply, 0.2.2, MIT/Apache-2.0
+  * md5, 0.6.1, Apache-2.0/MIT
+  * memchr, 2.2.1, Unlicense/MIT
+  * memory_units, 0.3.0, MPL-2.0
+  * net2, 0.2.33, MIT/Apache-2.0
+  * num, 0.2.0, MIT/Apache-2.0
+  * num-bigint, 0.2.2, MIT/Apache-2.0
+  * num-complex, 0.2.3, MIT/Apache-2.0
+  * num-integer, 0.1.41, MIT/Apache-2.0
+  * num-iter, 0.1.39, MIT/Apache-2.0
+  * num-rational, 0.2.2, MIT/Apache-2.0
+  * num-traits, 0.2.8, MIT/Apache-2.0
+  * parity-wasm, 0.31.3, MIT/Apache-2.0
+  * png, 0.14.1, MIT/Apache-2.0
+  * proc-macro2, 0.4.30, MIT/Apache-2.0
+  * profiler_builtins, 0.1.0, profiler_builtins
+  * quick-error, 1.2.2, MIT/Apache-2.0
+  * quote, 0.3.15, MIT
+  * quote, 0.6.13, MIT
+  * rand, 0.6.5, MIT/Apache-2.0
+  * rand_core, 0.4.0, MIT/Apache-2.0
+  * rand_hc, 0.1.0, MIT/Apache-2.0
+  * rand_pcg, 0.1.2, MIT/Apache-2.0
+  * rawpointer, 0.1.0, MIT/Apache-2.0
+  * regex, 1.1.9, MIT/Apache-2.0
+  * regex-syntax, 0.6.8, MIT/Apache-2.0
+  * ring, 0.14.6, ISC-style
+  * rulinalg, 0.4.2, MIT
+  * rustls, 0.15.2, Apache-2.0/ISC/MIT
+  * rusty-machine, 0.5.4, MIT
+  * ryu, 1.0.0, Apache-2.0
+  * sct, 0.5.0, Apache-2.0/ISC/MIT
+  * serde, 1.0.94, MIT
+  * serde_cbor, 0.10.0, MIT/Apache-2.0
+  * serde_derive, 1.0.94, MIT
+  * serde_json, 1.0.40, MIT
+  * sha1, 0.6.0, BSD-3-Clause
+  * sha2, 0.8.0, sha2
+  * spin, 0.5.0, MIT
+  * syn, 0.11.11, MIT
+  * syn, 0.15.39, MIT
+  * synom, 0.11.3, MIT/Apache-2.0
+  * termcolor, 1.0.5, Unlicense
+  * thread_local, 0.3.6, Apache-2.0/MIT
+  * tiff, 0.3.1, MIT
+  * toml, 0.5.1, MIT/Apache-2.0
+  * typetag, 0.1.3, MIT
+  * typetag-impl, 0.1.3, MIT
+  * ucd-util, 0.1.3, MIT/Apache-2.0
+  * unicode-xid, 0.0.4, MIT/Apache-2.0
+  * unicode-xid, 0.1.0, MIT/Apache-2.0
+  * utf8-ranges, 1.0.3, Unlicense/MIT
+  * uuid, 0.7.4, Apache-2.0
+  * wabt, 0.6.0, Apache-2.0
+  * wasmi, 0.5.0, MIT/Apache-2.0
+  * wasmi-validation, 0.1.0, MIT/Apache-2.0
+  * webpki, 0.19.1, ISC-style
+  * webpki-roots, 0.16.0, MPL-2.0
+  * winapi, 0.3.7, MIT/Apache-2.0
+  * winapi-i686-pc-windows-gnu, 0.4.0, MIT/Apache-2.0
+  * winapi-util, 0.1.2, Unlicense/MIT
+  * winapi-x86_64-pc-windows-gnu, 0.4.0, MIT/Apache-2.0
+  * wincolor, 1.0.1, Unlicense/MIT
+  * yasna, 0.3.1, MIT/Apache-2.0
+
+Note that this is not an exhaustive dependency list and only direct
+dependencies
+of MesaTEE's trusted libs are included.
+
+== Cryptography ==
+
+MesaTEE uses following cryptographic libraries:
+
+  * ring (https://github.com/briansmith/ring): a Rust crypto library based on
+BoringSSL
+  * rustls: a Rust TLS library
+  * sgx_tcrypto in Intel SGX SDK (https://software.intel.com/en-us/sgx/sdk)
+
+= Required Resources =
+
+== Mailing lists ==
+
+  * private@mesatee.incubator.apache.org (with moderated subscriptions)
+  * dev@mesatee.incubator.apache.org
+  * commits@mesatee.incubator.apache.org
+  * user@mesatee.incubator.apache.org
+
+== Git Repositories ==
+
+Upon entering incubation, we want to transfer the existing repos from
+https://github.com/mesalock-linux/mesatee and
+https://github.com/baidu/rust-sgx-sdk to Apache organization in GitHub like:
+
+  * https://github.com/apache/incubator-mesatee
+  * https://github.com/apache/incubator-mesatee-rust-sgx-sdk
+
+== Issue Tracking ==
+
+MesaTEE currently uses GitHub to track issues. Would like to continue doing
+so.
+
+== Continuous Integration Service ==
+
+MesaTEE currently uses self-hosted continuous integration (CI) service which can
+help developers to automatically test commits. The CI service involves several
+nodes which support Intel SGX. We would like to continue doing so.
+
+= Initial Committers =
+
+The list is sorted alphabetically:
+
+  * Mingshen Sun &lt;mssun at mesatee.org&gt;
+  * Pei Wang &lt;wangpei at mesatee.org&gt;
+  * Rundong Zhou &lt;rundongzhou at mesatee.org&gt;
+  * Tao Wei &lt;lenx at mesatee.org&gt;
+  * Tongxin Li &lt;litongxin at mesatee.org&gt;
+  * Yiming Jing &lt;jingyiming at mesatee.org&gt;
+  * Yu Ding &lt;d at mesatee.org&gt;
+  * Yulong Zhang &lt;ylzhang at mesatee.org&gt;
+  * Zhaofeng Chen &lt;zf at mesatee.org&gt;
+
+= Sponsors =
+
+== Champion ==
+
+  * Zhijie Shen &lt;zjshen@apache.org&gt;
+
+== Nominated Mentors ==
+
+  * Jianyong Dai &lt;daijy@apache.org&gt;
+  * Luciano Resende &lt;lresende@apache.org&gt;
+  * Matt Sicker
+  * Furkan Kamaci
+
+== Sponsoring Entity ==
+
+The Incubator PMC
+</code></pre></div></div></article></div>  <div class="footer">
+    Apache Teaclave (incubating) is an effort undergoing incubation at The Apache
+    Software Foundation (ASF), sponsored by the Apache Incubator.
+    Incubation is required of all newly accepted projects until a further review
+    indicates that the infrastructure, communications, and decision making process
+    have stabilized in a manner consistent with other successful ASF projects. While
+    incubation status is not necessarily a reflection of the completeness or
+    stability of the code, it does indicate that the project has yet to be fully
+    endorsed by the ASF.
+    Copyright © 2020 The Apache Software Foundation.
+    Licensed under the Apache License, Version 2.0.
+    Apache Teaclave, Apache, the Apache feather, and the Apache Teaclave project logo are either
+    trademarks or registered trademarks of the Apache Software Foundation.
+  </div></main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.ed65caa2.js" defer></script><script src="/assets/js/17.1555cdf6.js" defer></script><script src="/assets/js/1.d73ee85d.js" defer></script><script src="/assets/js/36.a3f36334.js" defer></script>
+  </body>
+</html>

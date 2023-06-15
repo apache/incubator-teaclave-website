@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Release Guide | Apache Teaclave (incubating)</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="alternate" type="application/rss+xml" href="https://teaclave.apache.org/rss.xml" title="Apache Teaclave (incubating) RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://teaclave.apache.org/feed.atom" title="Apache Teaclave (incubating) Atom Feed">
+    <link rel="alternate" type="application/json" href="https://teaclave.apache.org/feed.json" title="Apache Teaclave (incubating) JSON Feed">
+    <meta name="description" content="Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.">
+    <meta property="article:modified_time" content="2023-05-09T03:44:20.000Z">
+    <meta property="og:site_name" content="Apache Teaclave (incubating)">
+    <meta property="og:title" content="Release Guide">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://teaclave.apache.org/docs/release-guide/">
+    <meta name="twitter:title" content="Release Guide">
+    <meta name="twitter:url" content="https://teaclave.apache.org/docs/release-guide/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ApacheTeaclave">
+    
+    <link rel="preload" href="/assets/css/0.styles.7a68c1e3.css" as="style"><link rel="preload" href="/assets/js/app.ed65caa2.js" as="script"><link rel="preload" href="/assets/js/6.cb964028.js" as="script"><link rel="preload" href="/assets/js/1.d73ee85d.js" as="script"><link rel="preload" href="/assets/js/93.37f67a09.js" as="script"><link rel="prefetch" href="/assets/js/10.dd5d6438.js"><link rel="prefetch" href="/assets/js/100.5c7729a0.js"><link rel="prefetch" href="/assets/js/101.cbcbee2a.js"><link rel="prefetch" href="/assets/js/102.f4367d99.js"><link rel="prefetch" href="/assets/js/103.2fed65ff.js"><link rel="prefetch" href="/assets/js/104.b8670e9b.js"><link rel="prefetch" href="/assets/js/105.d7c055c8.js"><link rel="prefetch" href="/assets/js/106.8366d5fe.js"><link rel="prefetch" href="/assets/js/107.7d2880bf.js"><link rel="prefetch" href="/assets/js/108.dc9f4f34.js"><link rel="prefetch" href="/assets/js/109.a752bc7e.js"><link rel="prefetch" href="/assets/js/11.42e7950e.js"><link rel="prefetch" href="/assets/js/110.b94b1daf.js"><link rel="prefetch" href="/assets/js/111.7179d566.js"><link rel="prefetch" href="/assets/js/112.71378da0.js"><link rel="prefetch" href="/assets/js/12.1d03a56a.js"><link rel="prefetch" href="/assets/js/13.fc7df053.js"><link rel="prefetch" href="/assets/js/14.455ca698.js"><link rel="prefetch" href="/assets/js/15.ac8415d3.js"><link rel="prefetch" href="/assets/js/16.196140b7.js"><link rel="prefetch" href="/assets/js/17.1555cdf6.js"><link rel="prefetch" href="/assets/js/18.92a56d95.js"><link rel="prefetch" href="/assets/js/19.559fa657.js"><link rel="prefetch" href="/assets/js/2.f85cce33.js"><link rel="prefetch" href="/assets/js/20.fdf677d2.js"><link rel="prefetch" href="/assets/js/21.fbf6ce25.js"><link rel="prefetch" href="/assets/js/22.af4a8652.js"><link rel="prefetch" href="/assets/js/23.dfc575e5.js"><link rel="prefetch" href="/assets/js/24.0a7eb301.js"><link rel="prefetch" href="/assets/js/25.bf769c7f.js"><link rel="prefetch" href="/assets/js/26.1dc556f1.js"><link rel="prefetch" href="/assets/js/27.9513c522.js"><link rel="prefetch" href="/assets/js/28.9b224bd8.js"><link rel="prefetch" href="/assets/js/29.a3201860.js"><link rel="prefetch" href="/assets/js/30.460c0e9d.js"><link rel="prefetch" href="/assets/js/31.f85c3079.js"><link rel="prefetch" href="/assets/js/32.6327034e.js"><link rel="prefetch" href="/assets/js/33.3db23b15.js"><link rel="prefetch" href="/assets/js/34.4b677f53.js"><link rel="prefetch" href="/assets/js/35.74c2bfa1.js"><link rel="prefetch" href="/assets/js/36.a3f36334.js"><link rel="prefetch" href="/assets/js/37.bb8c8383.js"><link rel="prefetch" href="/assets/js/38.25a187b5.js"><link rel="prefetch" href="/assets/js/39.a708e045.js"><link rel="prefetch" href="/assets/js/40.6b369675.js"><link rel="prefetch" href="/assets/js/41.7fbc6e2a.js"><link rel="prefetch" href="/assets/js/42.862f026e.js"><link rel="prefetch" href="/assets/js/43.31bdc33e.js"><link rel="prefetch" href="/assets/js/44.7bd9449b.js"><link rel="prefetch" href="/assets/js/45.9a21ca3e.js"><link rel="prefetch" href="/assets/js/46.3f342721.js"><link rel="prefetch" href="/assets/js/47.ba103762.js"><link rel="prefetch" href="/assets/js/48.e7764c1b.js"><link rel="prefetch" href="/assets/js/49.801c1000.js"><link rel="prefetch" href="/assets/js/5.d9f96a4c.js"><link rel="prefetch" href="/assets/js/50.4240669f.js"><link rel="prefetch" href="/assets/js/51.b33563db.js"><link rel="prefetch" href="/assets/js/52.146509f4.js"><link rel="prefetch" href="/assets/js/53.72230e92.js"><link rel="prefetch" href="/assets/js/54.7d5c4465.js"><link rel="prefetch" href="/assets/js/55.368545c2.js"><link rel="prefetch" href="/assets/js/56.54f9a6d8.js"><link rel="prefetch" href="/assets/js/57.8032472c.js"><link rel="prefetch" href="/assets/js/58.2c88c658.js"><link rel="prefetch" href="/assets/js/59.37e9b78e.js"><link rel="prefetch" href="/assets/js/60.55736931.js"><link rel="prefetch" href="/assets/js/61.91f5c55a.js"><link rel="prefetch" href="/assets/js/62.064fbd15.js"><link rel="prefetch" href="/assets/js/63.f850a914.js"><link rel="prefetch" href="/assets/js/64.0da1b0b6.js"><link rel="prefetch" href="/assets/js/65.e65ac8c1.js"><link rel="prefetch" href="/assets/js/66.bee22286.js"><link rel="prefetch" href="/assets/js/67.114f9fca.js"><link rel="prefetch" href="/assets/js/68.23e53a32.js"><link rel="prefetch" href="/assets/js/69.61ecb198.js"><link rel="prefetch" href="/assets/js/7.5ecfc8a0.js"><link rel="prefetch" href="/assets/js/70.e0b7b0b8.js"><link rel="prefetch" href="/assets/js/71.c26b2f66.js"><link rel="prefetch" href="/assets/js/72.be0f38cd.js"><link rel="prefetch" href="/assets/js/73.559b381f.js"><link rel="prefetch" href="/assets/js/74.f34a49ff.js"><link rel="prefetch" href="/assets/js/75.5733bb30.js"><link rel="prefetch" href="/assets/js/76.b22fffa4.js"><link rel="prefetch" href="/assets/js/77.0bf63761.js"><link rel="prefetch" href="/assets/js/78.04e1fbee.js"><link rel="prefetch" href="/assets/js/79.129bcdaa.js"><link rel="prefetch" href="/assets/js/8.d09df47e.js"><link rel="prefetch" href="/assets/js/80.5d7d1291.js"><link rel="prefetch" href="/assets/js/81.d932a56b.js"><link rel="prefetch" href="/assets/js/82.eaff652c.js"><link rel="prefetch" href="/assets/js/83.f8daefbd.js"><link rel="prefetch" href="/assets/js/84.40da3f7f.js"><link rel="prefetch" href="/assets/js/85.266ee602.js"><link rel="prefetch" href="/assets/js/86.b5c25ac3.js"><link rel="prefetch" href="/assets/js/87.c9ff5e9a.js"><link rel="prefetch" href="/assets/js/88.9e79fbce.js"><link rel="prefetch" href="/assets/js/89.6a5a74c1.js"><link rel="prefetch" href="/assets/js/9.f6966de8.js"><link rel="prefetch" href="/assets/js/90.5a87bc12.js"><link rel="prefetch" href="/assets/js/91.23187fa7.js"><link rel="prefetch" href="/assets/js/92.0ae5dd81.js"><link rel="prefetch" href="/assets/js/94.05b74137.js"><link rel="prefetch" href="/assets/js/95.5f5bed22.js"><link rel="prefetch" href="/assets/js/96.099c3275.js"><link rel="prefetch" href="/assets/js/97.0d914caf.js"><link rel="prefetch" href="/assets/js/98.fdd1d17a.js"><link rel="prefetch" href="/assets/js/99.b99e5fd6.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.8e583f31.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7a68c1e3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/assets/img/logo.svg" alt="Apache Teaclave (incubating)" class="logo"> <span class="site-name can-hide" style="display:none;">Teaclave</span></a> <div class="links"><!----> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  ABOUT
+</a></div><div class="nav-item"><a href="/powered-by/" class="nav-link">
+  POWERED BY
+</a></div><div class="nav-item"><a href="/community/" class="nav-link">
+  COMMUNITY
+</a></div><div class="nav-item"><a href="/download/" class="nav-link">
+  DOWNLOAD
+</a></div><div class="nav-item"><a href="/contributors/" class="nav-link">
+  CONTRIBUTORS
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="DOCS" class="dropdown-title"><span class="title">DOCS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/" class="nav-link router-link-active">
+  Teaclave
+</a></li><li class="dropdown-item"><!----> <a href="/sgx-sdk-docs/" class="nav-link">
+  Teaclave SGX SDK
+</a></li><li class="dropdown-item"><!----> <a href="/trustzone-sdk-docs/" class="nav-link">
+  Teaclave TrustZone SDK
+</a></li><li class="dropdown-item"><h4>
+          APIS
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-rust/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Rust)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-python/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Python)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/sgx-sdk/" target="_self" rel="" class="nav-link external">
+  Teaclave SGX SDK
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (Host)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (TA)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-enclave/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (Enclave)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-app/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (App)
+  <!----></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/" class="nav-link">
+  BLOG
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="REPOS" class="dropdown-title"><span class="title">REPOS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-sgx-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave SGX SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-trustzone-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave TrustZone SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-java-tee-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Java TEE SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-website" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Website
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Apache Software Foundation" class="dropdown-title"><span class="title">ASF</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.apache.org/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ASF Homepage
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  License
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sponsorship
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/security/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Security
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Privacy
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Thanks
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/events/current-event.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Events
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  ABOUT
+</a></div><div class="nav-item"><a href="/powered-by/" class="nav-link">
+  POWERED BY
+</a></div><div class="nav-item"><a href="/community/" class="nav-link">
+  COMMUNITY
+</a></div><div class="nav-item"><a href="/download/" class="nav-link">
+  DOWNLOAD
+</a></div><div class="nav-item"><a href="/contributors/" class="nav-link">
+  CONTRIBUTORS
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="DOCS" class="dropdown-title"><span class="title">DOCS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/" class="nav-link router-link-active">
+  Teaclave
+</a></li><li class="dropdown-item"><!----> <a href="/sgx-sdk-docs/" class="nav-link">
+  Teaclave SGX SDK
+</a></li><li class="dropdown-item"><!----> <a href="/trustzone-sdk-docs/" class="nav-link">
+  Teaclave TrustZone SDK
+</a></li><li class="dropdown-item"><h4>
+          APIS
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-rust/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Rust)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-python/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Python)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/sgx-sdk/" target="_self" rel="" class="nav-link external">
+  Teaclave SGX SDK
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (Host)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (TA)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-enclave/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (Enclave)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-app/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (App)
+  <!----></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/" class="nav-link">
+  BLOG
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="REPOS" class="dropdown-title"><span class="title">REPOS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-sgx-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave SGX SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-trustzone-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave TrustZone SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-java-tee-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Java TEE SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-website" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Website
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Apache Software Foundation" class="dropdown-title"><span class="title">ASF</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.apache.org/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ASF Homepage
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  License
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sponsorship
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/security/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Security
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Privacy
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Thanks
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/events/current-event.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Events
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Try</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/my-first-function/" class="sidebar-link">My First Function</a></li><li><a href="/docs/functions-in-python/" class="sidebar-link">Write Functions in Python</a></li><li><a href="/docs/builtin-functions/" class="sidebar-link">How to Add Built-in Functions</a></li><li><a href="/docs/azure-confidential-computing/" class="sidebar-link">Deploying Teaclave on Azure Confidential Computing Virtual Machines</a></li><li><a href="/docs/executing-wasm/" class="sidebar-link">Executing WebAssembly in Teaclave</a></li><li><a href="/docs/inference-with-tvm/" class="sidebar-link">Inference Task with TVM in Teaclave</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Design</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/threat-model/" class="sidebar-link">Threat Model</a></li><li><a href="/docs/mutual-attestation/" class="sidebar-link">Mutual Attestation: Why and How</a></li><li><a href="/docs/access-control/" class="sidebar-link">Access Control in Teaclave</a></li><li><a href="/docs/build-system/" class="sidebar-link">Build System</a></li><li><a href="/docs/service-internals/" class="sidebar-link">Teaclave Service Internals</a></li><li><a href="/docs/adding-executors/" class="sidebar-link">Adding Executors</a></li><li><a href="/docs/papers-talks/" class="sidebar-link">Papers, Talks, and Related Articles</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Contribute</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/release-guide/" aria-current="page" class="active sidebar-link">Release Guide</a></li><li><a href="/docs/development-tips/" class="sidebar-link">Development Tips</a></li><li><a href="/docs/rust-guildeline/" class="sidebar-link">Rust Development Guideline</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Codebase</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/codebase/attestation/" class="sidebar-link">Attestation in Teaclave</a></li><li><a href="/docs/codebase/binder/" class="sidebar-link">Binder</a></li><li><a href="/docs/codebase/cli/" class="sidebar-link">Teaclave Command Line Tool</a></li><li><a href="/docs/codebase/common/" class="sidebar-link">Common Libraries</a></li><li><a href="/docs/codebase/config/" class="sidebar-link">Configurations in Teaclave</a></li><li><a href="/docs/codebase/crypto/" class="sidebar-link">Crypto Primitives</a></li><li><a href="/docs/codebase/dcap/" class="sidebar-link">Data Center Attestation Service</a></li><li><a href="/docs/codebase/docker/" class="sidebar-link">Teaclave Docker</a></li><li><a href="/docs/codebase/examples/" class="sidebar-link">Examples</a></li><li><a href="/docs/codebase/executor/" class="sidebar-link">Function Executors</a></li><li><a href="/docs/codebase/file-agent/" class="sidebar-link">File Agent</a></li><li><a href="/docs/codebase/function/" class="sidebar-link">Built-in Functions</a></li><li><a href="/docs/codebase/rpc/" class="sidebar-link">RPC</a></li><li><a href="/docs/codebase/runtime/" class="sidebar-link">Executor Runtime</a></li><li><a href="/docs/codebase/sdk/" class="sidebar-link">Client SDK</a></li><li><a href="/docs/codebase/services/" class="sidebar-link">Teaclave Services</a></li><li><a href="/docs/codebase/tests/" class="sidebar-link">Test Harness and Test Cases</a></li><li><a href="/docs/codebase/third-party/" class="sidebar-link">Third-Party Dependency Vendoring</a></li><li><a href="/docs/codebase/tools/" class="sidebar-link">Tools</a></li><li><a href="/docs/codebase/types/" class="sidebar-link">Types</a></li><li><a href="/docs/codebase/worker/" class="sidebar-link">Teaclave Worker</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="release-guide"><a href="#release-guide" class="header-anchor">#</a> Release Guide</h1> <p>This document guide you through how to prepare and publish an official release.
+Releasing a new version in the community contains multiple steps, here is an
+overview.</p> <nav class="table-of-contents"><ol><li><a href="#release-guide"> Release Guide</a><ol><li><a href="#prepare-the-release-notes"> Prepare the Release Notes</a></li><li><a href="#prepare-the-gpg-signing-key"> Prepare the GPG Signing Key</a></li><li><a href="#cut-a-release-candidate"> Cut a Release Candidate</a></li><li><a href="#create-release-artifacts"> Create Release Artifacts</a></li><li><a href="#check-the-artifacts"> Check the Artifacts</a></li><li><a href="#upload-the-release-candidate-artifacts"> Upload the Release Candidate Artifacts</a></li><li><a href="#publish-the-pre-release-on-github"> Publish the Pre-Release on GitHub</a></li><li><a href="#call-a-vote-on-the-release-candidate"> Call a Vote on the Release Candidate</a></li><li><a href="#post-the-release"> Post the Release</a></li><li><a href="#update-the-website"> Update the Website</a></li><li><a href="#post-the-announcement"> Post the Announcement</a></li></ol></li></ol></nav><h2 id="prepare-the-release-notes"><a href="#prepare-the-release-notes" class="header-anchor">#</a> Prepare the Release Notes</h2> <p>For a new release, you should first prepare the release note. Release note
+contains summaries of new features, enhancements, bug fixes,
+docs, known issues, and deprecation, etc. You can see the notes of
+<a href="https://github.com/apache/incubator-teaclave/releases" target="_blank" rel="noopener noreferrer">past release</a> as an example.</p> <h2 id="prepare-the-gpg-signing-key"><a href="#prepare-the-gpg-signing-key" class="header-anchor">#</a> Prepare the GPG Signing Key</h2> <p>You can skip this section if you have already uploaded your key. That is, the
+GPG signing key has been added in the following places:</p> <ul><li>The KEYS file in repo (<a href="https://github.com/apache/incubator-teaclave/blob/master/KEYS" target="_blank" rel="noopener noreferrer">https://github.com/apache/incubator-teaclave/blob/master/KEYS</a>)</li> <li>Apache release dist sever (<a href="https://dist.apache.org/repos/dist/release/incubator/teaclave/KEYS" target="_blank" rel="noopener noreferrer">https://dist.apache.org/repos/dist/release/incubator/teaclave/KEYS</a>)</li></ul> <p>If you are the first to publish a release, please follow this instruction to
+generating and uplaoding keys.</p> <p>To generate GPG key, please refer to
+<a href="https://www.apache.org/dev/openpgp.html#generate-key" target="_blank" rel="noopener noreferrer">https://www.apache.org/dev/openpgp.html#generate-key</a> for details.</p> <p>If you want to do the release on another machine, you can transfer your GPG key
+to that machine via the <code>gpg --export</code> and <code>gpg --import</code> commands.</p> <p>The last step is to update the KEYS file with your code signing key. Check in
+the changes to the main branch of the repository, as well as ASF SVN,</p> <p>Here is an instruction of editing the KEYS file in the ASF SVN.</p> <div class="language- extra-class"><pre class="language-text"><code># the --depth=files will avoid checkout existing folders
+svn co --depth=files &quot;https://dist.apache.org/repos/dist/dev/incubator/teaclave&quot; svn-dev-teaclave
+cd svn-dev-teaclave
+# edit KEYS file
+svn ci --username $ASF_USERNAME --password &quot;$ASF_PASSWORD&quot; -m &quot;Update KEYS&quot;
+# update downloads.apache.org
+svn rm --username $ASF_USERNAME --password &quot;$ASF_PASSWORD&quot; https://dist.apache.org/repos/dist/release/incubator/teaclave/KEYS -m &quot;Update KEYS&quot;
+svn cp --username $ASF_USERNAME --password &quot;$ASF_PASSWORD&quot; https://dist.apache.org/repos/dist/dev/incubator/teaclave/KEYS https://dist.apache.org/repos/dist/release/incubator/teaclave/ -m &quot;Update KEYS&quot;
+</code></pre></div><h2 id="cut-a-release-candidate"><a href="#cut-a-release-candidate" class="header-anchor">#</a> Cut a Release Candidate</h2> <p>To cut a release candidate, one needs to first cut a branch from the main branch
+using selected version string. We follow the <a href="https://semver.org/" target="_blank" rel="noopener noreferrer">semantic versioning</a>
+guidelines for new version string. In short, x.y.z means MAJOR.MINOR.PATCH. Since we
+already have the release note, we can decide the version string to be released
+based on the changes.</p> <p>Note that in our workflow, the main branch should be freezed during the
+releasing period, i.e, no new features and enhancements can be merged into it.
+Only changes on this release can be merged and committed into the releasing
+branch.</p> <p>For example, to release version 1.0.0, let us first create a new branch
+<code>release-v1.0.0</code> from the main branch.</p> <div class="language- extra-class"><pre class="language-text"><code>git clone https://github.com/apache/incubator-teaclave
+cd incubator-teaclave
+git checkout -b release-v1.0.0
+</code></pre></div><p>The next step is to do a complete version bumping (e.g., changing files which
+contain versions and bump them from v0.9.0 to v1.0.0). Note that this affect
+multiple files in different languages. Then, commit the changes to this
+releasing branch. Other bug fixes and docs improvements can be also commited at
+this time.</p> <p>When cleanups are done, make sure all tests can be passed. Then, add a tag with
+the current commit in the form of &quot;v1.0.0-rc.1&quot; where 1 means it's the first
+release candidate. You can add the tag using git or add on GitHub.</p> <p>Using Git:</p> <div class="language- extra-class"><pre class="language-text"><code>git tag v1.0.0-rc.1
+git push origin v1.0.0-rc.1
+</code></pre></div><h2 id="create-release-artifacts"><a href="#create-release-artifacts" class="header-anchor">#</a> Create Release Artifacts</h2> <p>Create the source code artifacts, including a self-contained tarball without git
+history, a signature file signed by keys in the KEYS file, and a sha256 hash
+file.</p> <div class="language- extra-class"><pre class="language-text"><code>git clone git@github.com:apache/incubator-teaclave.git apache-teaclave-1.0.0-rc.1-incubating
+cd apache-teaclave-1.0.0-rc.1-incubating
+git checkout v1.0.0-rc.1
+mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; cd ..    # This will init submodules and apply patches
+rm -rf build
+find . -name &quot;.git&quot; -print0 | xargs -0 rm -rf   # Remove all .git directories
+cd ..
+tar czvf apache-teaclave-1.0.0-rc.1-incubating.tar.gz apache-teaclave-1.0.0-rc.1-incubating
+</code></pre></div><p>Use your GPG key to sign the created artifact. First make sure your GPG is set
+to use the correct private key,</p> <div class="language- extra-class"><pre class="language-text"><code>$ gpg --list-key
+/home/user/.gnupg/pubring.kbx
+------------------------------------
+pub   rsa4096 2020-08-17 [SC]
+      154xxx
+uid           [ unknown] XXX (CODE SIGNING KEY) &lt;xxx@apache.org&gt;
+sub   rsa4096 2020-08-17 [E]
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>gpg -u 154xxx --armor --detach-sign apache-teaclave-1.0.0-rc.1-incubating.tar.gz
+sha512sum apache-teaclave-1.0.0-rc.1-incubating.tar.gz &gt; apache-teaclave-1.0.0-rc.1-incubating.tar.gz.sha512
+</code></pre></div><p>At this point, we got three files in the release artifacts:</p> <ul><li><code>apache-teaclave-1.0.0-rc.1-incubating.tar.gz</code>: source code tarball</li> <li><code>apache-teaclave-1.0.0-rc.1-incubating.tar.gz.asc</code>: signature</li> <li><code>apache-teaclave-1.0.0-rc.1-incubating.tar.gz.sha512</code>: SHA512 hash</li></ul> <h2 id="check-the-artifacts"><a href="#check-the-artifacts" class="header-anchor">#</a> Check the Artifacts</h2> <p>We suggest to double check the release artifacts, e.g., verify the signature,
+hash value and build from scratch.
+There is a <a href="https://cwiki.apache.org/confluence/display/INCUBATOR/Incubator+Release+Checklist" target="_blank" rel="noopener noreferrer">checklist</a> which can help the process.</p> <h2 id="upload-the-release-candidate-artifacts"><a href="#upload-the-release-candidate-artifacts" class="header-anchor">#</a> Upload the Release Candidate Artifacts</h2> <p>The release artifacts needs to be uploaded to ASF SVN,</p> <div class="language- extra-class"><pre class="language-text"><code># the --depth=files will avoid checkout existing folders
+svn co --depth=files &quot;https://dist.apache.org/repos/dist/dev/incubator/teaclave&quot; svn-dev-teaclave
+cd svn-dev-teaclave
+mkdir 1.0.0-rc.1
+# copy files (.tar.gz, .asc, .sha512) into it
+svn add 1.0.0-rc.1
+svn ci --username $ASF_USERNAME --password &quot;$ASF_PASSWORD&quot; -m &quot;Add 1.0.0-rc.1&quot;
+</code></pre></div><h2 id="publish-the-pre-release-on-github"><a href="#publish-the-pre-release-on-github" class="header-anchor">#</a> Publish the Pre-Release on GitHub</h2> <p>The next step is to publish a pre-release. Go to the GitHub repo's &quot;Releases&quot;
+tab and click &quot;Draft a new release&quot;.</p> <ul><li>Choose a tag and select v1.0.0-rc.1.</li> <li>Copy and paste the release note draft into the description box.</li> <li>Select &quot;This is a pre-release&quot;.</li> <li>Upload the artifacts created by the previous steps.</li> <li>Click &quot;Publish release&quot;.</li></ul> <h2 id="call-a-vote-on-the-release-candidate"><a href="#call-a-vote-on-the-release-candidate" class="header-anchor">#</a> Call a Vote on the Release Candidate</h2> <p>There are two votes need to be done for releasing a incubating project.
+The first vote takes place on the Apache Teaclave developers list
+(<code>dev@teaclave.apache.org</code>). Once it is closed with pass, we can call for the
+second in the Apache Incubator general list
+(<code>general@incubator.apache.org</code>). Look at past voting threads to see how this
+proceeds. The email should contains these information.</p> <ul><li>Provide the link to the draft of the release notes in the email</li> <li>Provide the link to the release candidate artifacts</li> <li>Make sure the email is in text format and the links are correct</li></ul> <p>For the dev@ vote, there must be at least 3 binding +1 votes and more +1 votes
+than -1 votes. Once the vote is done, you should also send out a summary email
+with the totals, with a subject that looks something like <code>[VOTE][RESULT]</code>.</p> <p>In ASF, votes are open at least 72hrs (3 days). If you don't get enough number
+of binding votes within that time, you cannot close the voting deadline. You
+need to extend it.</p> <p>If the voting fails, the community needs to modified the release accordingly,
+create a new release candidate and re-run the voting process.</p> <p>Here are some examples:</p> <p><strong>Vote in the dev@teaclave list</strong>:</p> <ul><li>subject: [VOTE] Release Apache Teaclave (incubating) v0.3.0-rc.1</li> <li>to: dev@teaclave.apache.org</li> <li>link: <a href="https://lists.apache.org/thread/9dzwv0y9l9qf9hol2rpwv85ns1xfgn7k" target="_blank" rel="noopener noreferrer">https://lists.apache.org/thread/9dzwv0y9l9qf9hol2rpwv85ns1xfgn7k</a></li></ul> <p><strong>Result in the dev@teaclave list</strong>:</p> <ul><li>subject: [RESULT][VOTE] Release Apache Teaclave (incubating) v0.3.0-rc.1</li> <li>to: dev@teaclave.apache.org</li> <li>link: <a href="https://lists.apache.org/thread/tyqhx2m9q0z1qg7dbxczf58nnpvxfzrn" target="_blank" rel="noopener noreferrer">https://lists.apache.org/thread/tyqhx2m9q0z1qg7dbxczf58nnpvxfzrn</a></li></ul> <p><strong>Vote in the general@incubator list</strong>:</p> <ul><li>subject: [VOTE] Release Apache Teaclave (incubating) v0.3.0-rc.1</li> <li>to: general@incubator.apache.org</li> <li>link: <a href="https://lists.apache.org/thread/mrwl41shgx60p432mw2lc6zcdw1lk6lk" target="_blank" rel="noopener noreferrer">https://lists.apache.org/thread/mrwl41shgx60p432mw2lc6zcdw1lk6lk</a></li></ul> <p><strong>Result in the general@incubator list</strong>:</p> <ul><li>subject: [RESULT][VOTE] Release Apache Teaclave (incubating) v0.3.0-rc.1</li> <li>to: general@teaclave.apache.org</li> <li>link: <a href="https://lists.apache.org/thread/gbv3f7l9bf6t1876byqm1v4stsw7g00z" target="_blank" rel="noopener noreferrer">https://lists.apache.org/thread/gbv3f7l9bf6t1876byqm1v4stsw7g00z</a></li></ul> <h2 id="post-the-release"><a href="#post-the-release" class="header-anchor">#</a> Post the Release</h2> <p>After the vote passes, we need to crate the final release artifacts:</p> <div class="language- extra-class"><pre class="language-text"><code>cd svn-dev-teaclave
+mkdir 1.0.0
+# copy RC files (.tar.gz, .asc, .sha512) into it and rename them
+cp 1.0.0-rc.1/apache-teaclave-1.0.0-rc.1-incubating.tar.gz 1.0.0/apache-teaclave-1.0.0-incubating.tar.gz
+cp 1.0.0-rc.1/apache-teaclave-1.0.0-rc.1-incubating.tar.gz.asc 1.0.0/apache-teaclave-1.0.0-incubating.tar.gz.asc
+cp 1.0.0-rc.1/apache-teaclave-1.0.0-rc.1-incubating.tar.gz.sha512 1.0.0/apache-teaclave-1.0.0-incubating.tar.gz.sha512
+# edit the file name (i.e., remove the rc version) in the sha512 file
+vi 1.0.0/apache-teaclave-1.0.0-incubating.tar.gz.sha512
+svn add 1.0.0
+svn ci --username $ASF_USERNAME --password &quot;$ASF_PASSWORD&quot; -m &quot;Add 1.0.0&quot;
+</code></pre></div><p>To upload the binaries to Apache mirrors, you copy the binaries from the dev
+directory (this should be where they are voted) to the dist directory.
+These artifacts will be automatically propagated to the CDN service.</p> <div class="language- extra-class"><pre class="language-text"><code>export SVN_EDITOR=vim
+svn cp https://dist.apache.org/repos/dist/dev/incubator/teaclave/1.0.0 https://dist.apache.org/repos/dist/release/incubator/teaclave/1.0.0
+
+# If you've added your signing key to the KEYS file, also update the release copy.
+svn co --depth=files &quot;https://dist.apache.org/repos/dist/release/incubator/teaclave&quot; svn-dist-teaclave
+curl &quot;https://dist.apache.org/repos/dist/dev/incubator/teaclave/KEYS&quot; &gt; svn-dist-teaclave/KEYS
+(cd svn-dist-teaclave &amp;&amp; svn ci --username $ASF_USERNAME --password &quot;$ASF_PASSWORD&quot; -m &quot;Update KEYS&quot;)
+</code></pre></div><p>Merge commits in the release branch to the main branch, create a new release tag
+(v1.0.0 in this case) on Github and remove the pre-release candidate tag.</p> <div class="language- extra-class"><pre class="language-text"><code>git checkout master
+## merge the release branch and use --ff-only to ensure the commit hash for voting is also in the master branch
+git merge release-v1.0.0 --ff-only
+git tag v1.0.0
+git push origin v1.0.0
+git push --delete origin v1.0.0-rc.1
+git push --delete origin release-v1.0.0
+</code></pre></div><p>At last update the release notes and corresponding artifacts on GitHub.</p> <h2 id="update-the-website"><a href="#update-the-website" class="header-anchor">#</a> Update the Website</h2> <p>The website repository is located at <a href="https://github.com/apache/incubator-teaclave-website" target="_blank" rel="noopener noreferrer">https://github.com/apache/incubator-teaclave-website</a>.
+Modify the download page to include the release artifacts as well as the GPG
+signature and SHA hash. Note that only put the latest version in the download page.
+Older releases are archived in the archive site automatically
+(<a href="https://archive.apache.org/dist/incubator/teaclave/" target="_blank" rel="noopener noreferrer">https://archive.apache.org/dist/incubator/teaclave/</a>).</p> <p>Note that the links to the release artifact should start with
+<code>https://dlcdn.apache.org/incubator/teaclave</code> to better utilize the
+Apache CND. You can refer to the previous release link.</p> <h2 id="post-the-announcement"><a href="#post-the-announcement" class="header-anchor">#</a> Post the Announcement</h2> <p>Post new version release annoucement to the mailing list, blog and other
+channels (Twitter, Discord, etc.).</p> <p><strong>Mailing list example</strong>:</p> <ul><li>subject: [ANNOUNCE] Apache Teaclave (incubating) 0.3.0 released</li> <li>to: announce@apache.org, dev@teaclave.apache.org</li> <li>link: <a href="https://lists.apache.org/thread/frck6z5v135f8c7w64nkgqk86w1soqc7" target="_blank" rel="noopener noreferrer">https://lists.apache.org/thread/frck6z5v135f8c7w64nkgqk86w1soqc7</a></li></ul> <p><strong>Blog example</strong>:</p> <ul><li>title: Announcing Apache Teaclave (incubating) 0.3.0</li> <li>link: <a href="https://teaclave.apache.org/blog/2021-10-01-announcing-teaclave-0-3-0/" target="_blank" rel="noopener noreferrer">https://teaclave.apache.org/blog/2021-10-01-announcing-teaclave-0-3-0/</a></li></ul></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">5/9/2023, 3:44:20 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/docs/papers-talks/" class="prev">
+        Papers, Talks, and Related Articles
+      </a></span> <span class="next"><a href="/docs/development-tips/">
+        Development Tips
+      </a>
+      →
+    </span></p></div>  <div class="footer">
+    Apache Teaclave (incubating) is an effort undergoing incubation at The Apache
+    Software Foundation (ASF), sponsored by the Apache Incubator.
+    Incubation is required of all newly accepted projects until a further review
+    indicates that the infrastructure, communications, and decision making process
+    have stabilized in a manner consistent with other successful ASF projects. While
+    incubation status is not necessarily a reflection of the completeness or
+    stability of the code, it does indicate that the project has yet to be fully
+    endorsed by the ASF.
+    Copyright © 2020 The Apache Software Foundation.
+    Licensed under the Apache License, Version 2.0.
+    Apache Teaclave, Apache, the Apache feather, and the Apache Teaclave project logo are either
+    trademarks or registered trademarks of the Apache Software Foundation.
+  </div></main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.ed65caa2.js" defer></script><script src="/assets/js/6.cb964028.js" defer></script><script src="/assets/js/1.d73ee85d.js" defer></script><script src="/assets/js/93.37f67a09.js" defer></script>
+  </body>
+</html>

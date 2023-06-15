@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["rsgx_create_enclave",""],["rsgx_create_enclave_ex",""],["rsgx_create_enclave_from_buffer_ex",""],["rsgx_destroy_enclave",""],["rsgx_get_enclave_mode",""],["rsgx_get_metadata",""],["rsgx_get_target_info",""]]};

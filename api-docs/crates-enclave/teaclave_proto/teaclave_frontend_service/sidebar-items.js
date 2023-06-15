@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["from_proto_file_ids",""],["from_proto_ownership",""],["to_proto_file_ids",""],["to_proto_ownership",""]],"struct":[["RegisterFunctionRequestBuilder",""],["UpdateFunctionRequestBuilder",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["teaclave_storage_client","Generated client implementations."],["teaclave_storage_server","Generated server implementations."]],"struct":[["DeleteRequest",""],["DequeueRequest",""],["DequeueResponse",""],["EnqueueRequest",""],["GetKeysByPrefixRequest",""],["GetKeysByPrefixResponse",""],["GetRequest",""],["GetResponse",""],["PutRequest",""]]};

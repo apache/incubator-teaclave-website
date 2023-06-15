@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["u_getaddrinfo_ocall",""]],"struct":[["addr_info",""]]};

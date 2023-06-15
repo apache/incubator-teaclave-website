@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="github crates-io docs-rs"><meta name="keywords" content="rust, rustlang, rust-lang, ghost"><title>ghost - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../normalize.css"><link rel="stylesheet" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../ayu.css" disabled><link rel="stylesheet" href="../dark.css" disabled><link rel="stylesheet" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="../crates.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../ghost/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../ghost/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Crate ghost</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.1.9</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#attributes">Attribute Macros</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Crate <a class="mod" href="#">ghost</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/ghost/lib.rs.html#1-329">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p><a href="https://github.com/dtolnay/ghost"><img src="https://img.shields.io/badge/github-8da0cb?style=for-the-badge&amp;labelColor=555555&amp;logo=github" alt="github" /></a> <a href="https://crates.io/crates/ghost"><img src="https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&amp;labelColor=555555&amp;logo=rust" alt="crates-io" /></a> <a href="https://docs.rs/ghost"><img src="https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&amp;labelColor=555555&amp;logo=docs.rs" alt="docs-rs" /></a></p>
+<br>
+<p><strong>Define your own PhantomData and similarly behaved unit types.</strong></p>
+<h2 id="background"><a href="#background">Background</a></h2>
+<p><a href="https://doc.rust-lang.org/std/marker/struct.PhantomData.html"><code>PhantomData</code></a> as defined by the Rust standard library is magical in that
+the same type is impossible to define in ordinary Rust code. It is defined
+in the standard library like this:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[lang = <span class="string">&quot;phantom_data&quot;</span>]
+</span><span class="kw">pub struct </span>PhantomData&lt;T: <span class="question-mark">?</span>Sized&gt;;</code></pre></div>
+<p>The <code>#[lang = &quot;...&quot;]</code> attribute indicates that this is a <a href="https://manishearth.github.io/blog/2017/01/11/rust-tidbits-what-is-a-lang-item/">lang item</a>, a
+special case known to the compiler. It is the only type permitted to carry
+an unused type parameter.</p>
+<p>If we try to define an equivalent unit struct with type parameter, the
+compiler rejects that.</p>
+
+<div class="example-wrap compile_fail"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="kw">struct </span>MyPhantom&lt;T: <span class="question-mark">?</span>Sized&gt;;</code></pre></div>
+<div class="example-wrap"><pre class="language-text"><code>error[E0392]: parameter `T` is never used
+ --&gt; src/main.rs:1:18
+  |
+1 | struct MyPhantom&lt;T: ?Sized&gt;;
+  |                  ^ unused type parameter
+  |
+  = help: consider removing `T` or using a marker such as `std::marker::PhantomData`</code></pre></div>
+<p>This crate provides a <code>#[phantom]</code> attribute that makes it possible to
+define unit structs with generic parameters.</p>
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ghost::phantom;
+
+<span class="attribute">#[phantom]
+</span><span class="kw">struct </span>MyPhantom&lt;T: <span class="question-mark">?</span>Sized&gt;;
+
+<span class="kw">fn </span>main() {
+    <span class="comment">// Proof that MyPhantom behaves like PhantomData.
+    </span><span class="kw">let _</span>: MyPhantom&lt;u8&gt; = MyPhantom::&lt;u8&gt;;
+    <span class="macro">assert_eq!</span>(<span class="number">0</span>, std::mem::size_of::&lt;MyPhantom&lt;u8&gt;&gt;());
+}
+
+<span class="comment">// Proof that MyPhantom is not just a re-export of PhantomData.
+// If it were a re-export, these would be conflicting impls.
+</span><span class="kw">trait </span>Trait {}
+<span class="kw">impl</span>&lt;T&gt; Trait <span class="kw">for </span>std::marker::PhantomData&lt;T&gt; {}
+<span class="kw">impl</span>&lt;T&gt; Trait <span class="kw">for </span>MyPhantom&lt;T&gt; {}
+
+<span class="comment">// Proof that MyPhantom is local to the current crate.
+</span><span class="kw">impl</span>&lt;T&gt; MyPhantom&lt;T&gt; {
+}</code></pre></div>
+<p>The implementation accepts where-clauses, lifetimes, multiple generic
+parameters, and derives. Here is a contrived invocation that demonstrates
+everything at once:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ghost::phantom;
+
+<span class="attribute">#[phantom]
+#[derive(Copy, Clone, Default, Hash, PartialOrd, Ord, PartialEq, Eq, Debug)]
+</span><span class="kw">struct </span>Crazy&lt;<span class="lifetime">&#39;a</span>, V: <span class="lifetime">&#39;a</span>, T&gt; <span class="kw">where </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>V: IntoIterator&lt;Item = T&gt;;
+
+<span class="kw">fn </span>main() {
+    <span class="kw">let _ </span>= Crazy::&lt;<span class="lifetime">&#39;static</span>, Vec&lt;String&gt;, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>String&gt;;
+
+    <span class="comment">// Lifetime elision.
+    </span><span class="kw">let </span>crazy = Crazy::&lt;Vec&lt;String&gt;, <span class="kw-2">&amp;</span>String&gt;;
+    <span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>, crazy);
+}</code></pre></div>
+<h2 id="variance"><a href="#variance">Variance</a></h2>
+<p>The <code>#[phantom]</code> attribute accepts attributes on individual generic
+parameters (both lifetime and type parameters) to make them contravariant or
+invariant. The default is covariance.</p>
+<ul>
+<li><code>#[contra]</code> — contravariant generic parameter</li>
+<li><code>#[invariant]</code> — invariant generic parameter</li>
+</ul>
+<p>The implications of variance are explained in more detail by the <a href="https://doc.rust-lang.org/nomicon/subtyping.html">Subtyping
+chapter</a> of the Rustonomicon.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ghost::phantom;
+
+<span class="attribute">#[phantom]
+</span><span class="kw">struct </span>ContravariantLifetime&lt;<span class="attribute">#[contra] </span><span class="lifetime">&#39;a</span>&gt;;
+
+<span class="kw">fn </span>f&lt;<span class="lifetime">&#39;a</span>&gt;(arg: ContravariantLifetime&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; ContravariantLifetime&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="comment">// This coercion is only legal because the lifetime parameter is
+    // contravariant. If it were covariant (the default) or invariant,
+    // this would not compile.
+    </span>arg
+}
+
+<span class="attribute">#[phantom]
+</span><span class="kw">struct </span>Demo&lt;A, <span class="attribute">#[contra] </span>B, <span class="attribute">#[invariant] </span>C&gt;;</code></pre></div>
+<h2 id="use-cases"><a href="#use-cases">Use cases</a></h2>
+<p>Entirely up to your imagination. Just to name one, how about a typed
+registry library that admits the following syntax for iterating over values
+registered of a particular type:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">for </span>flag <span class="kw">in </span>Registry::&lt;Flag&gt; {
+    <span class="comment">/* ... */
+</span>}</code></pre></div>
+</div></details><h2 id="attributes" class="small-section-header"><a href="#attributes">Attribute Macros</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="attr" href="attr.phantom.html" title="ghost::phantom attr">phantom</a></div><div class="item-right docblock-short">Define your own PhantomData and similarly behaved unit types.</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="ghost" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

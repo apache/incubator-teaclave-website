@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Tokenizer are in charge of chopping text into a stream of tokens ready for indexing."><meta name="keywords" content="rust, rustlang, rust-lang, tokenizer"><title>tantivy::tokenizer - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../tantivy/index.html"><div class="logo-container"><img src="http://fulmicoton.com/tantivy-logo/tantivy-logo.png" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../tantivy/index.html"><div class="logo-container">
+                    <img src="http://fulmicoton.com/tantivy-logo/tantivy-logo.png" alt="logo"></div></a><h2 class="location"><a href="#">Module tokenizer</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Module <a href="../index.html">tantivy</a>::<wbr><a class="mod" href="#">tokenizer</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/tantivy/tokenizer/mod.rs.html#1-302">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Tokenizer are in charge of chopping text into a stream of tokens
+ready for indexing.</p>
+<p>You must define in your schema which tokenizer should be used for
+each of your fields :</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::schema::<span class="kw-2">*</span>;
+
+<span class="kw">let </span><span class="kw-2">mut </span>schema_builder = Schema::builder();
+
+<span class="kw">let </span>text_options = TextOptions::default()
+    .set_indexing_options(
+        TextFieldIndexing::default()
+            .set_tokenizer(<span class="string">&quot;en_stem&quot;</span>)
+            .set_index_option(IndexRecordOption::Basic)
+    )
+    .set_stored();
+
+<span class="kw">let </span>id_options = TextOptions::default()
+    .set_indexing_options(
+        TextFieldIndexing::default()
+            .set_tokenizer(<span class="string">&quot;raw_ids&quot;</span>)
+            .set_index_option(IndexRecordOption::WithFreqsAndPositions)
+    )
+    .set_stored();
+
+schema_builder.add_text_field(<span class="string">&quot;title&quot;</span>, text_options.clone());
+schema_builder.add_text_field(<span class="string">&quot;text&quot;</span>, text_options);
+schema_builder.add_text_field(<span class="string">&quot;uuid&quot;</span>, id_options);
+
+<span class="kw">let </span>schema = schema_builder.build();</code></pre></div>
+<p>By default, <code>tantivy</code> offers the following tokenizers:</p>
+<h3 id="default"><a href="#default"><code>default</code></a></h3>
+<p><code>default</code> is the tokenizer that will be used if you do not
+assign a specific tokenizer to your text field.
+It will chop your text on punctuation and whitespaces,
+removes tokens that are longer than 40 chars, and lowercase your text.</p>
+<h3 id="raw"><a href="#raw"><code>raw</code></a></h3>
+<p>Does not actual tokenizer your text. It keeps it entirely unprocessed.
+It can be useful to index uuids, or urls for instance.</p>
+<h3 id="en_stem"><a href="#en_stem"><code>en_stem</code></a></h3>
+<p>In addition to what <code>default</code> does, the <code>en_stem</code> tokenizer also
+apply stemming to your tokens. Stemming consists in trimming words to
+remove their inflection. This tokenizer is slower than the default one,
+but is recommended to improve recall.</p>
+<h2 id="custom-tokenizers"><a href="#custom-tokenizers">Custom tokenizers</a></h2>
+<p>You can write your own tokenizer by implementing the <a href="trait.Tokenizer.html" title="Tokenizer"><code>Tokenizer</code></a> trait
+or you can extend an existing <a href="trait.Tokenizer.html" title="Tokenizer"><code>Tokenizer</code></a> by chaining it with several
+<a href="trait.TokenFilter.html" title="TokenFilter"><code>TokenFilter</code></a>s.</p>
+<p>For instance, the <code>en_stem</code> is defined as follows.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::tokenizer::<span class="kw-2">*</span>;
+
+<span class="kw">let </span>en_stem = TextAnalyzer::from(SimpleTokenizer)
+    .filter(RemoveLongFilter::limit(<span class="number">40</span>))
+    .filter(LowerCaser)
+    .filter(Stemmer::new(Language::English));</code></pre></div>
+<p>Once your tokenizer is defined, you need to
+register it with a name in your index’s <a href="struct.TokenizerManager.html" title="TokenizerManager"><code>TokenizerManager</code></a>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>custom_en_tokenizer = SimpleTokenizer;
+<span class="kw">let </span>index = Index::create_in_ram(schema);
+index.tokenizers()
+     .register(<span class="string">&quot;custom_en&quot;</span>, custom_en_tokenizer);</code></pre></div>
+<p>If you built your schema programmatically, a complete example
+could like this for instance.</p>
+<p>Note that tokens with a len greater or equal to
+<a href="constant.MAX_TOKEN_LEN.html" title="MAX_TOKEN_LEN"><code>MAX_TOKEN_LEN</code></a>.</p>
+<h2 id="example"><a href="#example">Example</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::schema::{Schema, IndexRecordOption, TextOptions, TextFieldIndexing};
+<span class="kw">use </span>tantivy::tokenizer::<span class="kw-2">*</span>;
+<span class="kw">use </span>tantivy::Index;
+
+<span class="kw">let </span><span class="kw-2">mut </span>schema_builder = Schema::builder();
+<span class="kw">let </span>text_field_indexing = TextFieldIndexing::default()
+    .set_tokenizer(<span class="string">&quot;custom_en&quot;</span>)
+    .set_index_option(IndexRecordOption::WithFreqsAndPositions);
+<span class="kw">let </span>text_options = TextOptions::default()
+    .set_indexing_options(text_field_indexing)
+    .set_stored();
+schema_builder.add_text_field(<span class="string">&quot;title&quot;</span>, text_options);
+<span class="kw">let </span>schema = schema_builder.build();
+<span class="kw">let </span>index = Index::create_in_ram(schema);
+
+<span class="comment">// We need to register our tokenizer :
+</span><span class="kw">let </span>custom_en_tokenizer = TextAnalyzer::from(SimpleTokenizer)
+    .filter(RemoveLongFilter::limit(<span class="number">40</span>))
+    .filter(LowerCaser);
+index
+    .tokenizers()
+    .register(<span class="string">&quot;custom_en&quot;</span>, custom_en_tokenizer);</code></pre></div>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.AlphaNumOnlyFilter.html" title="tantivy::tokenizer::AlphaNumOnlyFilter struct">AlphaNumOnlyFilter</a></div><div class="item-right docblock-short"><code>TokenFilter</code> that removes all tokens that contain non
+ascii alphanumeric characters.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.AsciiFoldingFilter.html" title="tantivy::tokenizer::AsciiFoldingFilter struct">AsciiFoldingFilter</a></div><div class="item-right docblock-short">This class converts alphabetic, numeric, and symbolic Unicode characters
+which are not in the first 127 ASCII characters (the “Basic Latin” Unicode
+block) into their ASCII equivalents, if one exists.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.BoxTokenFilter.html" title="tantivy::tokenizer::BoxTokenFilter struct">BoxTokenFilter</a></div><div class="item-right docblock-short">Simple wrapper of <code>Box&lt;dyn TokenFilter + 'a&gt;</code>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.BoxTokenStream.html" title="tantivy::tokenizer::BoxTokenStream struct">BoxTokenStream</a></div><div class="item-right docblock-short">Simple wrapper of <code>Box&lt;dyn TokenStream + 'a&gt;</code>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.FacetTokenizer.html" title="tantivy::tokenizer::FacetTokenizer struct">FacetTokenizer</a></div><div class="item-right docblock-short">The <code>FacetTokenizer</code> process a <code>Facet</code> binary representation
+and emits a token for all of its parent.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.LowerCaser.html" title="tantivy::tokenizer::LowerCaser struct">LowerCaser</a></div><div class="item-right docblock-short">Token filter that lowercase terms.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.NgramTokenizer.html" title="tantivy::tokenizer::NgramTokenizer struct">NgramTokenizer</a></div><div class="item-right docblock-short">Tokenize the text by splitting words into n-grams of the given size(s)</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.PreTokenizedStream.html" title="tantivy::tokenizer::PreTokenizedStream struct">PreTokenizedStream</a></div><div class="item-right docblock-short"><a href="trait.TokenStream.html" title="TokenStream"><code>TokenStream</code></a> implementation which wraps <a href="struct.PreTokenizedString.html" title="PreTokenizedString"><code>PreTokenizedString</code></a></div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.PreTokenizedString.html" title="tantivy::tokenizer::PreTokenizedString struct">PreTokenizedString</a></div><div class="item-right docblock-short">Struct representing pre-tokenized text</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RawTokenizer.html" title="tantivy::tokenizer::RawTokenizer struct">RawTokenizer</a></div><div class="item-right docblock-short">For each value of the field, emit a single unprocessed token.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RemoveLongFilter.html" title="tantivy::tokenizer::RemoveLongFilter struct">RemoveLongFilter</a></div><div class="item-right docblock-short"><code>RemoveLongFilter</code> removes tokens that are longer
+than a given number of bytes (in UTF-8 representation).</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SimpleTokenizer.html" title="tantivy::tokenizer::SimpleTokenizer struct">SimpleTokenizer</a></div><div class="item-right docblock-short">Tokenize the text by splitting on whitespaces and punctuation.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SplitCompoundWords.html" title="tantivy::tokenizer::SplitCompoundWords struct">SplitCompoundWords</a></div><div class="item-right docblock-short">A <a href="trait.TokenFilter.html" title="TokenFilter"><code>TokenFilter</code></a> which splits compound words into their parts
+based on a given dictionary.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Stemmer.html" title="tantivy::tokenizer::Stemmer struct">Stemmer</a></div><div class="item-right docblock-short"><code>Stemmer</code> token filter. Several languages are supported, see <a href="enum.Language.html" title="Language"><code>Language</code></a> for the available
+languages.
+Tokens are expected to be lowercased beforehand.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.StopWordFilter.html" title="tantivy::tokenizer::StopWordFilter struct">StopWordFilter</a></div><div class="item-right docblock-short"><code>TokenFilter</code> that removes stop words from a token stream</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.TextAnalyzer.html" title="tantivy::tokenizer::TextAnalyzer struct">TextAnalyzer</a></div><div class="item-right docblock-short"><code>TextAnalyzer</code> tokenizes an input text into tokens and modifies the resulting <code>TokenStream</code>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Token.html" title="tantivy::tokenizer::Token struct">Token</a></div><div class="item-right docblock-short">Token</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.TokenizerManager.html" title="tantivy::tokenizer::TokenizerManager struct">TokenizerManager</a></div><div class="item-right docblock-short">The tokenizer manager serves as a store for
+all of the pre-configured tokenizer pipelines.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.WhitespaceTokenizer.html" title="tantivy::tokenizer::WhitespaceTokenizer struct">WhitespaceTokenizer</a></div><div class="item-right docblock-short">Tokenize the text by splitting on whitespaces.</div></div></div><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Language.html" title="tantivy::tokenizer::Language enum">Language</a></div><div class="item-right docblock-short">Available stemmer languages.</div></div></div><h2 id="constants" class="small-section-header"><a href="#constants">Constants</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="constant" href="constant.MAX_TOKEN_LEN.html" title="tantivy::tokenizer::MAX_TOKEN_LEN constant">MAX_TOKEN_LEN</a></div><div class="item-right docblock-short">Maximum authorized len (in bytes) for a token.</div></div></div><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.TokenFilter.html" title="tantivy::tokenizer::TokenFilter trait">TokenFilter</a></div><div class="item-right docblock-short">Trait for the pluggable components of <code>Tokenizer</code>s.</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.TokenStream.html" title="tantivy::tokenizer::TokenStream trait">TokenStream</a></div><div class="item-right docblock-short"><code>TokenStream</code> is the result of the tokenization.</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.Tokenizer.html" title="tantivy::tokenizer::Tokenizer trait">Tokenizer</a></div><div class="item-right docblock-short"><code>Tokenizer</code> are in charge of splitting text into a stream of token
+before indexing.</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="tantivy" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>
