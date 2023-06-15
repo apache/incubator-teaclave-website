@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["compute_num_bits","Computes the number of bits that will be used for bitpacking."],["minmax",""]],"struct":[["BitPacker",""],["BitUnpacker",""],["BlockedBitpacker","`BlockedBitpacker` compresses data in blocks of 128 elements, while keeping an index on it"]]};

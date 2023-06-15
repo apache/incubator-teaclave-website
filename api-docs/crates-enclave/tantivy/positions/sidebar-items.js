@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["PositionReader","When accessing the positions of a term, we get a positions_idx from the `Terminfo`. This means we need to skip to the `nth` position efficiently."],["PositionSerializer","The PositionSerializer is in charge of serializing all of the positions of all of the terms of a given field."]]};

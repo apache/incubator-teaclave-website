@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Occur","Defines whether a term in a query must be present, should be present or must not be present."],["UserInputAst",""],["UserInputBound",""],["UserInputLeaf",""]],"fn":[["parse_query",""]],"struct":[["Error",""],["UserInputLiteral",""]]};

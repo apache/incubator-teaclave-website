@@ -1,0 +1,462 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/git/checkouts/rulinalg-309246e5a94bf5cf/1ed8b93/src/matrix/decomposition/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../../normalize.css"><link rel="stylesheet" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../../ayu.css" disabled><link rel="stylesheet" href="../../../../dark.css" disabled><link rel="stylesheet" href="../../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../../storage.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script><script defer src="../../../../main.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../../../rulinalg/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../../rulinalg/index.html"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Decompositions for matrices.
+//!
+//! This module houses the decomposition API of `rulinalg`.
+//! A decomposition - or factorization - of a matrix is an
+//! ordered set of *factors* such that when multiplied reconstructs
+//! the original matrix. The [Decomposition](trait.Decomposition.html)
+//! trait encodes this property.
+//!
+//! # The decomposition API
+//!
+//! Decompositions in `rulinalg` are in general modeled after
+//! the following:
+//!
+//! 1. Given an appropriate matrix, an opaque decomposition object
+//!    may be computed which internally stores the factors
+//!    in an efficient and appropriate format.
+//! 2. In general, the factors may not be immediately available
+//!    as distinct matrices after decomposition. If the user
+//!    desires the explicit matrix factors involved in the
+//!    decomposition, the user must `unpack` the decomposition.
+//! 3. Before unpacking the decomposition, the decomposition
+//!    data structure in question may offer an API that provides
+//!    efficient implementations for some of the most common
+//!    applications of the decomposition. The user is encouraged
+//!    to use the decomposition-specific API rather than unpacking
+//!    the decompositions whenever possible.
+//!
+//! For a motivating example that explains the rationale behind
+//! this design, let us consider the typical LU decomposition with
+//! partial pivoting. In this case, given a square invertible matrix
+//! `A`, one may find matrices `P`, `L` and `U` such that
+//! `PA = LU`. Here `P` is a permutation matrix, `L` is a lower
+//! triangular matrix and `U` is an upper triangular matrix.
+//!
+//! Once the decomposition has been obtained, one of its applications
+//! is the efficient solution of multiple similar linear systems.
+//! Consider that while computing the LU decomposition requires
+//! O(n&lt;sup&gt;3&lt;/sup&gt;) floating point operations, the solution to
+//! the system `Ax = b` can be computed in O(n&lt;sup&gt;2&lt;/sup&gt;) floating
+//! point operations if the LU decomposition has already been obtained.
+//! Since the right-hand side `b` has no bearing on the LU decomposition,
+//! it follows that one can efficiently solve this system for any `b`.
+//!
+//! It turns out that the matrices `L` and `U` can be stored compactly
+//! in the space of a single matrix. Indeed, this is how `PartialPivLu`
+//! stores the LU decomposition internally. This allows `rulinalg` to
+//! provide the user with efficient implementations of common applications
+//! for the LU decomposition. However, the full matrix factors are easily
+//! available to the user by unpacking the decomposition.
+//!
+//! # Available decompositions
+//!
+//! **The decompositions API is a work in progress.**
+//!
+//! Currently, only a portion of the available decompositions in `rulinalg`
+//! are available through the decomposition API. Please see the
+//! [Matrix](../struct.Matrix.html) API for the old decomposition
+//! implementations that have yet not been implemented within
+//! this framework.
+//!
+//! &lt;table&gt;
+//! &lt;thead&gt;
+//! &lt;tr&gt;
+//! &lt;th&gt;Decomposition&lt;/th&gt;
+//! &lt;th&gt;Matrix requirements&lt;/th&gt;
+//! &lt;th&gt;Supported features&lt;/th&gt;
+//! &lt;/tr&gt;
+//! &lt;tbody&gt;
+//!
+//! &lt;tr&gt;
+//! &lt;td&gt;&lt;a href=&quot;struct.PartialPivLu.html&quot;&gt;PartialPivLu&lt;/a&gt;&lt;/td&gt;
+//! &lt;td&gt;Square, invertible&lt;/td&gt;
+//! &lt;td&gt;
+//!     &lt;ul&gt;
+//!     &lt;li&gt;Linear system solving&lt;/li&gt;
+//!     &lt;li&gt;Matrix inverse&lt;/li&gt;
+//!     &lt;li&gt;Determinant computation&lt;/li&gt;
+//!     &lt;/ul&gt;
+//! &lt;/td&gt;
+//! &lt;/tr&gt;
+//!
+//! &lt;tr&gt;
+//! &lt;td&gt;&lt;a href=&quot;struct.FullPivLu.html&quot;&gt;FullPivLu&lt;/a&gt;&lt;/td&gt;
+//! &lt;td&gt;Square matrices&lt;/td&gt;
+//! &lt;td&gt;
+//!     &lt;ul&gt;
+//!     &lt;li&gt;Linear system solving&lt;/li&gt;
+//!     &lt;li&gt;Matrix inverse&lt;/li&gt;
+//!     &lt;li&gt;Determinant computation&lt;/li&gt;
+//!     &lt;li&gt;Rank computation&lt;/li&gt;
+//!     &lt;/ul&gt;
+//! &lt;/td&gt;
+//! &lt;/tr&gt;
+//!
+//! &lt;tr&gt;
+//! &lt;td&gt;&lt;a href=&quot;struct.Cholesky.html&quot;&gt;Cholesky&lt;/a&gt;&lt;/td&gt;
+//! &lt;td&gt;Square, symmetric positive definite&lt;/td&gt;
+//! &lt;td&gt;
+//!     &lt;ul&gt;
+//!     &lt;li&gt;Linear system solving&lt;/li&gt;
+//!     &lt;li&gt;Matrix inverse&lt;/li&gt;
+//!     &lt;li&gt;Determinant computation&lt;/li&gt;
+//!     &lt;/ul&gt;
+//! &lt;/td&gt;
+//! &lt;/tr&gt;
+//!
+//! &lt;tr&gt;
+//! &lt;td&gt;&lt;a href=&quot;struct.HouseholderQr.html&quot;&gt;HouseholderQr&lt;/a&gt;&lt;/td&gt;
+//! &lt;td&gt;Any matrix&lt;/td&gt;
+//! &lt;td&gt;&lt;/td&gt;
+//! &lt;/tr&gt;
+//!
+//! &lt;/tbody&gt;
+//! &lt;/table&gt;
+
+</span><span class="comment">// References:
+//
+// 1. [On Matrix Balancing and EigenVector computation]
+// (http://arxiv.org/pdf/1401.5766v1.pdf), James, Langou and Lowery
+//
+// 2. [The QR algorithm for eigen decomposition]
+// (http://people.inf.ethz.ch/arbenz/ewp/Lnotes/chapter4.pdf)
+//
+// 3. [Computation of the SVD]
+// (http://www.cs.utexas.edu/users/inderjit/public_papers/HLA_SVD.pdf)
+
+</span><span class="kw">mod </span>qr;
+<span class="kw">mod </span>cholesky;
+<span class="kw">mod </span>bidiagonal;
+<span class="kw">mod </span>svd;
+<span class="kw">mod </span>hessenberg;
+<span class="kw">mod </span>lu;
+<span class="kw">mod </span>eigen;
+<span class="kw">mod </span>householder;
+
+<span class="kw">use </span>std::any::Any;
+
+<span class="kw">use </span>matrix::{Matrix, BaseMatrix};
+<span class="kw">use </span>norm::Euclidean;
+<span class="kw">use </span>vector::Vector;
+<span class="kw">use </span>utils;
+<span class="kw">use </span>error::{Error, ErrorKind};
+
+<span class="kw">use </span><span class="self">self</span>::householder::HouseholderReflection;
+
+<span class="kw">pub use </span><span class="self">self</span>::householder::HouseholderComposition;
+<span class="kw">pub use </span><span class="self">self</span>::lu::{PartialPivLu, LUP, FullPivLu, LUPQ};
+<span class="kw">pub use </span><span class="self">self</span>::cholesky::Cholesky;
+<span class="kw">pub use </span><span class="self">self</span>::qr::{HouseholderQr, QR, ThinQR};
+
+<span class="kw">use </span>libnum::{Float};
+
+<span class="doccomment">/// Base trait for decompositions.
+///
+/// A matrix decomposition, or factorization,
+/// is a procedure which takes a matrix `X` and returns
+/// a set of `k` factors `X_1, X_2, ..., X_k` such that
+/// `X = X_1 * X_2 * ... * X_k`.
+</span><span class="kw">pub trait </span>Decomposition {
+    <span class="doccomment">/// The type representing the ordered set of factors
+    /// that when multiplied yields the decomposed matrix.
+    </span><span class="kw">type </span>Factors;
+
+    <span class="doccomment">/// Extract the individual factors from this decomposition.
+    </span><span class="kw">fn </span>unpack(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Factors;
+}
+
+<span class="kw">impl</span>&lt;T&gt; Matrix&lt;T&gt;
+    <span class="kw">where </span>T: Any + Float
+{
+    <span class="doccomment">/// Compute the cos and sin values for the givens rotation.
+    ///
+    /// Returns a tuple (c, s).
+    </span><span class="kw">fn </span>givens_rot(a: T, b: T) -&gt; (T, T) {
+        <span class="kw">let </span>r = a.hypot(b);
+
+        (a / r, -b / r)
+    }
+
+    <span class="kw">fn </span>make_householder(column: <span class="kw-2">&amp;</span>[T]) -&gt; <span class="prelude-ty">Result</span>&lt;Matrix&lt;T&gt;, Error&gt; {
+        <span class="kw">let </span>size = column.len();
+
+        <span class="kw">if </span>size == <span class="number">0 </span>{
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::InvalidArg,
+                                  <span class="string">&quot;Column for householder transform cannot be empty.&quot;</span>));
+        }
+
+        <span class="kw">let </span>denom = column[<span class="number">0</span>] + column[<span class="number">0</span>].signum() * utils::dot(column, column).sqrt();
+
+        <span class="kw">if </span>denom == T::zero() {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::DecompFailure,
+                                  <span class="string">&quot;Cannot produce househoulder transform from column as first \
+                                   entry is 0.&quot;</span>));
+        }
+
+        <span class="kw">let </span><span class="kw-2">mut </span>v = column.into_iter().map(|<span class="kw-2">&amp;</span>x| x / denom).collect::&lt;Vec&lt;T&gt;&gt;();
+        <span class="comment">// Ensure first element is fixed to 1.
+        </span>v[<span class="number">0</span>] = T::one();
+        <span class="kw">let </span>v = Vector::new(v);
+        <span class="kw">let </span>v_norm_sq = v.dot(<span class="kw-2">&amp;</span>v);
+
+        <span class="kw">let </span>v_vert = Matrix::new(size, <span class="number">1</span>, v.data().clone());
+        <span class="kw">let </span>v_hor = Matrix::new(<span class="number">1</span>, size, v.into_vec());
+        <span class="prelude-val">Ok</span>(Matrix::&lt;T&gt;::identity(size) - (v_vert * v_hor) * ((T::one() + T::one()) / v_norm_sq))
+    }
+
+    <span class="kw">fn </span>make_householder_vec(column: <span class="kw-2">&amp;</span>[T]) -&gt; <span class="prelude-ty">Result</span>&lt;Matrix&lt;T&gt;, Error&gt; {
+        <span class="kw">let </span>size = column.len();
+
+        <span class="kw">if </span>size == <span class="number">0 </span>{
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::InvalidArg,
+                                  <span class="string">&quot;Column for householder transform cannot be empty.&quot;</span>));
+        }
+
+        <span class="kw">let </span>denom = column[<span class="number">0</span>] + column[<span class="number">0</span>].signum() * utils::dot(column, column).sqrt();
+
+        <span class="kw">if </span>denom == T::zero() {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::DecompFailure,
+                                  <span class="string">&quot;Cannot produce househoulder transform from column as first \
+                                   entry is 0.&quot;</span>));
+        }
+
+        <span class="kw">let </span><span class="kw-2">mut </span>v = column.into_iter().map(|<span class="kw-2">&amp;</span>x| x / denom).collect::&lt;Vec&lt;T&gt;&gt;();
+        <span class="comment">// Ensure first element is fixed to 1.
+        </span>v[<span class="number">0</span>] = T::one();
+        <span class="kw">let </span>v = Matrix::new(size, <span class="number">1</span>, v);
+
+        <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span>v / v.norm(Euclidean))
+    }
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="rulinalg" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

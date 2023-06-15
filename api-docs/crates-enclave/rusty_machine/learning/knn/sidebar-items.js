@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["BruteForce","Perform brute-force search"],["KNNClassifier","k-Nearest Neighbor Classifier"]],"trait":[["KNearestSearch","Search K-nearest items"]],"type":[["BallTree","Ball-tree implementation"],["KDTree","Kd-tree implementation"]]};

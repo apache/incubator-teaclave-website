@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Trait for mutable matrices."><meta name="keywords" content="rust, rustlang, rust-lang, BaseMatrixMut"><title>BaseMatrixMut in rusty_machine::linalg - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../rusty_machine/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../rusty_machine/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">BaseMatrixMut</a></h2><div class="sidebar-elems"><section><h3><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.as_mut_ptr">as_mut_ptr</a></li></ul><h3><a href="#provided-methods">Provided Methods</a></h3><ul class="block"><li><a href="#method.apply">apply</a></li><li><a href="#method.as_mut_slice">as_mut_slice</a></li><li><a href="#method.col_iter_mut">col_iter_mut</a></li><li><a href="#method.col_mut">col_mut</a></li><li><a href="#method.col_unchecked_mut">col_unchecked_mut</a></li><li><a href="#method.diag_iter_mut">diag_iter_mut</a></li><li><a href="#method.get_mut">get_mut</a></li><li><a href="#method.get_unchecked_mut">get_unchecked_mut</a></li><li><a href="#method.iter_mut">iter_mut</a></li><li><a href="#method.row_iter_mut">row_iter_mut</a></li><li><a href="#method.row_mut">row_mut</a></li><li><a href="#method.row_unchecked_mut">row_unchecked_mut</a></li><li><a href="#method.set_to">set_to</a></li><li><a href="#method.split_at_mut">split_at_mut</a></li><li><a href="#method.sub_slice_mut">sub_slice_mut</a></li><li><a href="#method.swap_cols">swap_cols</a></li><li><a href="#method.swap_rows">swap_rows</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><h2><a href="index.html">In rusty_machine::linalg</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Trait <a href="../index.html">rusty_machine</a>::<wbr><a href="index.html">linalg</a>::<wbr><a class="trait" href="#">BaseMatrixMut</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/rulinalg/matrix/base/mod.rs.html#1148">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust trait"><code>pub trait BaseMatrixMut&lt;T&gt;: <a class="trait" href="trait.BaseMatrix.html" title="trait rusty_machine::linalg::BaseMatrix">BaseMatrix</a>&lt;T&gt; {
+<details class="rustdoc-toggle type-contents-toggle"><summary class="hideme"><span>Show 18 methods</span></summary>    fn <a href="#tymethod.as_mut_ptr" class="fnname">as_mut_ptr</a>(&amp;mut self) -&gt; *mut T;
+
+    fn <a href="#method.as_mut_slice" class="fnname">as_mut_slice</a>(&amp;mut self) -&gt; <a class="struct" href="struct.MatrixSliceMut.html" title="struct rusty_machine::linalg::MatrixSliceMut">MatrixSliceMut</a>&lt;'_, T&gt; { ... }
+<span class="item-spacer"></span>    unsafe fn <a href="#method.get_unchecked_mut" class="fnname">get_unchecked_mut</a>(&amp;mut self, index: [usize; 2]) -&gt; &amp;mut T { ... }
+<span class="item-spacer"></span>    fn <a href="#method.get_mut" class="fnname">get_mut</a>(&amp;mut self, index: [usize; 2]) -&gt; Option&lt;&amp;mut T&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.iter_mut" class="fnname">iter_mut</a>&lt;'a&gt;(&amp;mut self) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.SliceIterMut.html" title="struct rulinalg::matrix::SliceIterMut">SliceIterMut</a>&lt;'a, T&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: 'a</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.col_mut" class="fnname">col_mut</a>(&amp;mut self, index: usize) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.ColumnMut.html" title="struct rulinalg::matrix::ColumnMut">ColumnMut</a>&lt;'_, T&gt; { ... }
+<span class="item-spacer"></span>    unsafe fn <a href="#method.col_unchecked_mut" class="fnname">col_unchecked_mut</a>(&amp;mut self, index: usize) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.ColumnMut.html" title="struct rulinalg::matrix::ColumnMut">ColumnMut</a>&lt;'_, T&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.row_mut" class="fnname">row_mut</a>(&amp;mut self, index: usize) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.RowMut.html" title="struct rulinalg::matrix::RowMut">RowMut</a>&lt;'_, T&gt; { ... }
+<span class="item-spacer"></span>    unsafe fn <a href="#method.row_unchecked_mut" class="fnname">row_unchecked_mut</a>(&amp;mut self, index: usize) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.RowMut.html" title="struct rulinalg::matrix::RowMut">RowMut</a>&lt;'_, T&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.swap_rows" class="fnname">swap_rows</a>(&amp;mut self, a: usize, b: usize) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.swap_cols" class="fnname">swap_cols</a>(&amp;mut self, a: usize, b: usize) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.col_iter_mut" class="fnname">col_iter_mut</a>(&amp;mut self) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.ColsMut.html" title="struct rulinalg::matrix::ColsMut">ColsMut</a>&lt;'_, T&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.row_iter_mut" class="fnname">row_iter_mut</a>(&amp;mut self) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.RowsMut.html" title="struct rulinalg::matrix::RowsMut">RowsMut</a>&lt;'_, T&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.diag_iter_mut" class="fnname">diag_iter_mut</a>(&amp;mut self, k: <a class="enum" href="../../rulinalg/matrix/enum.DiagOffset.html" title="enum rulinalg::matrix::DiagOffset">DiagOffset</a>) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.DiagonalMut.html" title="struct rulinalg::matrix::DiagonalMut">DiagonalMut</a>&lt;'_, T, Self&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.set_to" class="fnname">set_to</a>&lt;M&gt;(self, target: M)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M: <a class="trait" href="trait.BaseMatrix.html" title="trait rusty_machine::linalg::BaseMatrix">BaseMatrix</a>&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: Copy</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.apply" class="fnname">apply</a>(self, f: &amp;dyn Fn(T)) -&gt; Self<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: Copy</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.split_at_mut" class="fnname">split_at_mut</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mid: usize,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;axis: <a class="enum" href="enum.Axes.html" title="enum rusty_machine::linalg::Axes">Axes</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; (<a class="struct" href="struct.MatrixSliceMut.html" title="struct rusty_machine::linalg::MatrixSliceMut">MatrixSliceMut</a>&lt;'_, T&gt;, <a class="struct" href="struct.MatrixSliceMut.html" title="struct rusty_machine::linalg::MatrixSliceMut">MatrixSliceMut</a>&lt;'_, T&gt;) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.sub_slice_mut" class="fnname">sub_slice_mut</a>&lt;'a&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start: [usize; 2],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows: usize,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cols: usize<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="struct" href="struct.MatrixSliceMut.html" title="struct rusty_machine::linalg::MatrixSliceMut">MatrixSliceMut</a>&lt;'a, T&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: 'a</span>,
+    { ... }
+</details>}</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Trait for mutable matrices.</p>
+</div></details><h2 id="required-methods" class="small-section-header">Required Methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle method-toggle" open><summary><section id="tymethod.as_mut_ptr" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1150">source</a><h4 class="code-header">fn <a href="#tymethod.as_mut_ptr" class="fnname">as_mut_ptr</a>(&amp;mut self) -&gt; *mut T</h4></section></summary><div class="docblock"><p>Top left index of the slice.</p>
+</div></details></div><h2 id="provided-methods" class="small-section-header">Provided Methods<a href="#provided-methods" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.as_mut_slice" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1162">source</a><h4 class="code-header">fn <a href="#method.as_mut_slice" class="fnname">as_mut_slice</a>(&amp;mut self) -&gt; <a class="struct" href="struct.MatrixSliceMut.html" title="struct rusty_machine::linalg::MatrixSliceMut">MatrixSliceMut</a>&lt;'_, T&gt;</h4></section></summary><div class="docblock"><p>Returns a <code>MatrixSliceMut</code> over the whole matrix.</p>
+<h5 id="examples"><a href="#examples">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>a = Matrix::new(<span class="number">3</span>, <span class="number">3</span>, <span class="macro">vec!</span>[<span class="number">2.0</span>; <span class="number">9</span>]);
+<span class="kw">let </span>b = a.as_mut_slice();</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.get_unchecked_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1172">source</a><h4 class="code-header">unsafe fn <a href="#method.get_unchecked_mut" class="fnname">get_unchecked_mut</a>(&amp;mut self, index: [usize; 2]) -&gt; &amp;mut T</h4></section></summary><div class="docblock"><p>Get a mutable reference to an element in the matrix without bounds checks.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.get_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1196">source</a><h4 class="code-header">fn <a href="#method.get_mut" class="fnname">get_mut</a>(&amp;mut self, index: [usize; 2]) -&gt; Option&lt;&amp;mut T&gt;</h4></section></summary><div class="docblock"><p>Get a mutable reference to an element in the matrix.</p>
+<h5 id="examples-1"><a href="#examples-1">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>mat = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>;
+                      <span class="number">3</span>, <span class="number">4</span>;
+                      <span class="number">6</span>, <span class="number">7</span>];
+
+<span class="macro">assert_eq!</span>(mat.get_mut([<span class="number">0</span>, <span class="number">2</span>]), <span class="prelude-val">None</span>);
+<span class="macro">assert_eq!</span>(mat.get_mut([<span class="number">3</span>, <span class="number">0</span>]), <span class="prelude-val">None</span>);
+
+<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>mat.get_mut([<span class="number">0</span>, <span class="number">0</span>]).unwrap(), <span class="number">0</span>);
+<span class="kw-2">*</span>mat.get_mut([<span class="number">0</span>,<span class="number">0</span>]).unwrap() = <span class="number">2</span>;
+<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>mat.get_mut([<span class="number">0</span>, <span class="number">0</span>]).unwrap(), <span class="number">2</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.iter_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1229-1230">source</a><h4 class="code-header">fn <a href="#method.iter_mut" class="fnname">iter_mut</a>&lt;'a&gt;(&amp;mut self) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.SliceIterMut.html" title="struct rulinalg::matrix::SliceIterMut">SliceIterMut</a>&lt;'a, T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'a,</span></h4></section></summary><div class="docblock"><p>Returns a mutable iterator over the matrix.</p>
+<h5 id="examples-2"><a href="#examples-2">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>a = Matrix::new(<span class="number">3</span>,<span class="number">3</span>, (<span class="number">0</span>..<span class="number">9</span>).collect::&lt;Vec&lt;usize&gt;&gt;());
+
+{
+    <span class="kw">let </span><span class="kw-2">mut </span>slice = a.sub_slice_mut([<span class="number">1</span>,<span class="number">1</span>], <span class="number">2</span>, <span class="number">2</span>);
+
+    <span class="kw">for </span>d <span class="kw">in </span>slice.iter_mut() {
+        <span class="kw-2">*</span>d = <span class="kw-2">*</span>d + <span class="number">2</span>;
+    }
+}
+
+<span class="comment">// Only the matrix slice is updated.
+</span><span class="macro">assert_matrix_eq!</span>(a, <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>; <span class="number">3</span>, <span class="number">6</span>, <span class="number">7</span>; <span class="number">6</span>, <span class="number">9</span>, <span class="number">10</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.col_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1270">source</a><h4 class="code-header">fn <a href="#method.col_mut" class="fnname">col_mut</a>(&amp;mut self, index: usize) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.ColumnMut.html" title="struct rulinalg::matrix::ColumnMut">ColumnMut</a>&lt;'_, T&gt;</h4></section></summary><div class="docblock"><p>Returns a mutable reference to the column of a matrix at the given index.
+<code>None</code> if the index is out of bounds.</p>
+<h5 id="examples-3"><a href="#examples-3">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>
+<span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>mat = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>;
+                      <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>;
+                      <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>];
+<span class="kw">let </span><span class="kw-2">mut </span>slice = mat.sub_slice_mut([<span class="number">1</span>,<span class="number">1</span>], <span class="number">2</span>, <span class="number">2</span>);
+{
+    <span class="kw">let </span>col = slice.col_mut(<span class="number">1</span>);
+    <span class="kw">let </span><span class="kw-2">mut </span>expected = <span class="macro">matrix!</span>[<span class="number">5usize</span>; <span class="number">8</span>];
+    <span class="macro">assert_matrix_eq!</span>(<span class="kw-2">*</span>col, expected);
+}</code></pre></div>
+<h5 id="panics"><a href="#panics">Panics</a></h5>
+<p>Will panic if the column index is out of bounds.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.col_unchecked_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1299">source</a><h4 class="code-header">unsafe fn <a href="#method.col_unchecked_mut" class="fnname">col_unchecked_mut</a>(&amp;mut self, index: usize) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.ColumnMut.html" title="struct rulinalg::matrix::ColumnMut">ColumnMut</a>&lt;'_, T&gt;</h4></section></summary><div class="docblock"><p>Returns a mutable reference to the column of a matrix at the given index
+without doing a bounds check.</p>
+<h5 id="examples-4"><a href="#examples-4">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>
+<span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>mat = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>;
+                      <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>;
+                      <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>];
+<span class="kw">let </span><span class="kw-2">mut </span>slice = mat.sub_slice_mut([<span class="number">1</span>,<span class="number">1</span>], <span class="number">2</span>, <span class="number">2</span>);
+<span class="kw">let </span>col = <span class="kw">unsafe </span>{ slice.col_unchecked_mut(<span class="number">1</span>) };
+<span class="kw">let </span><span class="kw-2">mut </span>expected = <span class="macro">matrix!</span>[<span class="number">5usize</span>; <span class="number">8</span>];
+<span class="macro">assert_matrix_eq!</span>(<span class="kw-2">*</span>col, expected);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.row_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1331">source</a><h4 class="code-header">fn <a href="#method.row_mut" class="fnname">row_mut</a>(&amp;mut self, index: usize) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.RowMut.html" title="struct rulinalg::matrix::RowMut">RowMut</a>&lt;'_, T&gt;</h4></section></summary><div class="docblock"><p>Returns a mutable reference to the row of a matrix at the given index.
+<code>None</code> if the index is out of bounds.</p>
+<h5 id="examples-5"><a href="#examples-5">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>
+<span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>mat = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>;
+                      <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>;
+                      <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>];
+<span class="kw">let </span><span class="kw-2">mut </span>slice = mat.sub_slice_mut([<span class="number">1</span>,<span class="number">1</span>], <span class="number">2</span>, <span class="number">2</span>);
+{
+    <span class="kw">let </span>row = slice.row_mut(<span class="number">1</span>);
+    <span class="kw">let </span><span class="kw-2">mut </span>expected = <span class="macro">matrix!</span>[<span class="number">7usize</span>, <span class="number">8</span>];
+    <span class="macro">assert_matrix_eq!</span>(<span class="kw-2">*</span>row, expected);
+}</code></pre></div>
+<h5 id="panics-1"><a href="#panics-1">Panics</a></h5>
+<p>Will panic if the row index is out of bounds.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.row_unchecked_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1360">source</a><h4 class="code-header">unsafe fn <a href="#method.row_unchecked_mut" class="fnname">row_unchecked_mut</a>(&amp;mut self, index: usize) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.RowMut.html" title="struct rulinalg::matrix::RowMut">RowMut</a>&lt;'_, T&gt;</h4></section></summary><div class="docblock"><p>Returns a mutable reference to the row of a matrix at the given index
+without doing a bounds check.</p>
+<h5 id="examples-6"><a href="#examples-6">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>
+<span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>mat = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>;
+                      <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>;
+                      <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>];
+<span class="kw">let </span><span class="kw-2">mut </span>slice = mat.sub_slice_mut([<span class="number">1</span>,<span class="number">1</span>], <span class="number">2</span>, <span class="number">2</span>);
+<span class="kw">let </span>row = <span class="kw">unsafe </span>{ slice.row_unchecked_mut(<span class="number">1</span>) };
+<span class="kw">let </span><span class="kw-2">mut </span>expected = <span class="macro">matrix!</span>[<span class="number">7usize</span>, <span class="number">8</span>];
+<span class="macro">assert_matrix_eq!</span>(<span class="kw-2">*</span>row, expected);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.swap_rows" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1394">source</a><h4 class="code-header">fn <a href="#method.swap_rows" class="fnname">swap_rows</a>(&amp;mut self, a: usize, b: usize)</h4></section></summary><div class="docblock"><p>Swaps two rows in a matrix.</p>
+<p>If <code>a == b</code>, this method does nothing.</p>
+<h5 id="examples-7"><a href="#examples-7">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>x = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>;
+                    <span class="number">2</span>, <span class="number">3</span>;
+                    <span class="number">4</span>, <span class="number">5</span>;
+                    <span class="number">6</span>, <span class="number">7</span>];
+
+x.swap_rows(<span class="number">1</span>, <span class="number">3</span>);
+<span class="kw">let </span>expected = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>;
+                       <span class="number">6</span>, <span class="number">7</span>;
+                       <span class="number">4</span>, <span class="number">5</span>;
+                       <span class="number">2</span>, <span class="number">3</span>];
+
+<span class="macro">assert_matrix_eq!</span>(x, expected);</code></pre></div>
+<h5 id="panics-2"><a href="#panics-2">Panics</a></h5>
+<p>Panics if <code>a</code> or <code>b</code> are out of bounds.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.swap_cols" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1446">source</a><h4 class="code-header">fn <a href="#method.swap_cols" class="fnname">swap_cols</a>(&amp;mut self, a: usize, b: usize)</h4></section></summary><div class="docblock"><p>Swaps two columns in a matrix.</p>
+<p>If <code>a == b</code>, this method does nothing.</p>
+<h5 id="examples-8"><a href="#examples-8">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>x = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>;
+                    <span class="number">2</span>, <span class="number">3</span>;
+                    <span class="number">4</span>, <span class="number">5</span>];
+
+x.swap_cols(<span class="number">0</span>, <span class="number">1</span>);
+<span class="kw">let </span>expected = <span class="macro">matrix!</span>[<span class="number">1</span>, <span class="number">0</span>;
+                       <span class="number">3</span>, <span class="number">2</span>;
+                       <span class="number">5</span>, <span class="number">4</span>];
+
+<span class="macro">assert_matrix_eq!</span>(x, expected);</code></pre></div>
+<h5 id="panics-3"><a href="#panics-3">Panics</a></h5>
+<p>Panics if <code>a</code> or <code>b</code> are out of bounds.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.col_iter_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1484">source</a><h4 class="code-header">fn <a href="#method.col_iter_mut" class="fnname">col_iter_mut</a>(&amp;mut self) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.ColsMut.html" title="struct rulinalg::matrix::ColsMut">ColsMut</a>&lt;'_, T&gt;</h4></section></summary><div class="docblock"><p>Iterate over the mutable columns of the matrix.</p>
+<h5 id="examples-9"><a href="#examples-9">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>a = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>;
+                    <span class="number">2</span>, <span class="number">3</span>;
+                    <span class="number">4</span>, <span class="number">5</span>];
+
+<span class="kw">for </span><span class="kw-2">mut </span>col <span class="kw">in </span>a.col_iter_mut() {
+    <span class="kw-2">*</span>col += <span class="number">1</span>;
+}
+
+<span class="comment">// Now contains the range 1..7
+</span><span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, a);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.row_iter_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1515">source</a><h4 class="code-header">fn <a href="#method.row_iter_mut" class="fnname">row_iter_mut</a>(&amp;mut self) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.RowsMut.html" title="struct rulinalg::matrix::RowsMut">RowsMut</a>&lt;'_, T&gt;</h4></section></summary><div class="docblock"><p>Iterate over the mutable rows of the matrix.</p>
+<h5 id="examples-10"><a href="#examples-10">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>a = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>;
+                    <span class="number">2</span>, <span class="number">3</span>;
+                    <span class="number">4</span>, <span class="number">5</span>];
+
+<span class="kw">for </span><span class="kw-2">mut </span>row <span class="kw">in </span>a.row_iter_mut() {
+    <span class="kw-2">*</span>row += <span class="number">1</span>;
+}
+
+<span class="comment">// Now contains the range 1..7
+</span><span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, a);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.diag_iter_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1562">source</a><h4 class="code-header">fn <a href="#method.diag_iter_mut" class="fnname">diag_iter_mut</a>(&amp;mut self, k: <a class="enum" href="../../rulinalg/matrix/enum.DiagOffset.html" title="enum rulinalg::matrix::DiagOffset">DiagOffset</a>) -&gt; <a class="struct" href="../../rulinalg/matrix/struct.DiagonalMut.html" title="struct rulinalg::matrix::DiagonalMut">DiagonalMut</a>&lt;'_, T, Self&gt;</h4></section></summary><div class="docblock"><p>Iterate over diagonal entries mutably</p>
+<h5 id="examples-11"><a href="#examples-11">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>
+<span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut, DiagOffset};
+
+<span class="kw">let </span><span class="kw-2">mut </span>a = <span class="macro">matrix!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>;
+                    <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>;
+                    <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>];
+
+<span class="comment">// Increment super diag
+</span><span class="kw">for </span>d <span class="kw">in </span>a.diag_iter_mut(DiagOffset::Above(<span class="number">1</span>)) {
+    <span class="kw-2">*</span>d = <span class="kw-2">*</span>d + <span class="number">1</span>;
+}
+
+<span class="comment">// Zero the sub-diagonal (sets 3 and 7 to 0)
+// Equivalent to `diag_iter(DiagOffset::Below(1))`
+</span><span class="kw">for </span>sub_d <span class="kw">in </span>a.diag_iter_mut(DiagOffset::from(-<span class="number">1</span>)) {
+    <span class="kw-2">*</span>sub_d = <span class="number">0</span>;
+}
+
+<span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, a);</code></pre></div>
+<h5 id="panics-4"><a href="#panics-4">Panics</a></h5>
+<p>If using an <code>Above</code> or <code>Below</code> offset which is
+out-of-bounds this function will panic.</p>
+<p>This function will never panic if the <code>Main</code> diagonal
+offset is used.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_to" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1607-1608">source</a><h4 class="code-header">fn <a href="#method.set_to" class="fnname">set_to</a>&lt;M&gt;(self, target: M)<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;M: <a class="trait" href="trait.BaseMatrix.html" title="trait rusty_machine::linalg::BaseMatrix">BaseMatrix</a>&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Copy,</span></h4></section></summary><div class="docblock"><p>Sets the underlying matrix data to the target data.</p>
+<h5 id="examples-12"><a href="#examples-12">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>mat = Matrix::&lt;f32&gt;::zeros(<span class="number">4</span>,<span class="number">4</span>);
+<span class="kw">let </span>one_block = Matrix::&lt;f32&gt;::ones(<span class="number">2</span>,<span class="number">2</span>);
+
+<span class="comment">// Get a mutable slice of the upper left 2x2 block.
+</span><span class="kw">let </span>mat_block = mat.sub_slice_mut([<span class="number">0</span>,<span class="number">0</span>], <span class="number">2</span>, <span class="number">2</span>);
+
+<span class="comment">// Set the upper left 2x2 block to be ones.
+</span>mat_block.set_to(one_block);</code></pre></div>
+<h5 id="panics-5"><a href="#panics-5">Panics</a></h5>
+<p>Panics if the dimensions of <code>self</code> and <code>target</code> are not the same.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.apply" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1639-1640">source</a><h4 class="code-header">fn <a href="#method.apply" class="fnname">apply</a>(self, f: &amp;dyn Fn(T)) -&gt; Self<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Copy,</span></h4></section></summary><div class="docblock"><p>Applies a function to each element in the matrix.</p>
+<h5 id="examples-13"><a href="#examples-13">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, BaseMatrixMut};
+
+<span class="kw">fn </span>add_two(a: f64) -&gt; f64 {
+    a + <span class="number">2f64
+</span>}
+
+<span class="kw">let </span>a = Matrix::new(<span class="number">2</span>, <span class="number">2</span>, <span class="macro">vec!</span>[<span class="number">0.</span>;<span class="number">4</span>]);
+
+<span class="kw">let </span>b = a.apply(<span class="kw-2">&amp;</span>add_two);
+
+<span class="macro">assert_eq!</span>(b, <span class="macro">matrix!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>; <span class="number">2.0</span>, <span class="number">2.0</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.split_at_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1658">source</a><h4 class="code-header">fn <a href="#method.split_at_mut" class="fnname">split_at_mut</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;mid: usize,<br>&nbsp;&nbsp;&nbsp;&nbsp;axis: <a class="enum" href="enum.Axes.html" title="enum rusty_machine::linalg::Axes">Axes</a><br>) -&gt; (<a class="struct" href="struct.MatrixSliceMut.html" title="struct rusty_machine::linalg::MatrixSliceMut">MatrixSliceMut</a>&lt;'_, T&gt;, <a class="struct" href="struct.MatrixSliceMut.html" title="struct rusty_machine::linalg::MatrixSliceMut">MatrixSliceMut</a>&lt;'_, T&gt;)</h4></section></summary><div class="docblock"><p>Split the matrix at the specified axis returning two <code>MatrixSliceMut</code>s.</p>
+<h5 id="examples-14"><a href="#examples-14">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Axes, Matrix, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>a = Matrix::new(<span class="number">3</span>,<span class="number">3</span>, <span class="macro">vec!</span>[<span class="number">2.0</span>; <span class="number">9</span>]);
+<span class="kw">let </span>(b, c) = a.split_at_mut(<span class="number">1</span>, Axes::Col);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.sub_slice_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/mod.rs.html#1710-1715">source</a><h4 class="code-header">fn <a href="#method.sub_slice_mut" class="fnname">sub_slice_mut</a>&lt;'a&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;start: [usize; 2],<br>&nbsp;&nbsp;&nbsp;&nbsp;rows: usize,<br>&nbsp;&nbsp;&nbsp;&nbsp;cols: usize<br>) -&gt; <a class="struct" href="struct.MatrixSliceMut.html" title="struct rusty_machine::linalg::MatrixSliceMut">MatrixSliceMut</a>&lt;'a, T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'a,</span></h4></section></summary><div class="docblock"><p>Produce a <code>MatrixSliceMut</code> from an existing matrix.</p>
+<h5 id="examples-15"><a href="#examples-15">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rulinalg::matrix::{Matrix, MatrixSliceMut, BaseMatrixMut};
+
+<span class="kw">let </span><span class="kw-2">mut </span>a = Matrix::new(<span class="number">3</span>,<span class="number">3</span>, (<span class="number">0</span>..<span class="number">9</span>).collect::&lt;Vec&lt;usize&gt;&gt;());
+<span class="kw">let </span><span class="kw-2">mut </span>slice = MatrixSliceMut::from_matrix(<span class="kw-2">&amp;mut </span>a, [<span class="number">1</span>,<span class="number">1</span>], <span class="number">2</span>, <span class="number">2</span>);
+<span class="kw">let </span>new_slice = slice.sub_slice_mut([<span class="number">0</span>,<span class="number">0</span>], <span class="number">1</span>, <span class="number">1</span>);</code></pre></div>
+</div></details></div><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor"></a></h2><div id="implementors-list"><section id="impl-BaseMatrixMut%3CT%3E-for-ColumnMut%3C%27a%2C%20T%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/impl_base.rs.html#196">source</a><a href="#impl-BaseMatrixMut%3CT%3E-for-ColumnMut%3C%27a%2C%20T%3E" class="anchor"></a><h3 class="code-header">impl&lt;'a, T&gt; <a class="trait" href="trait.BaseMatrixMut.html" title="trait rusty_machine::linalg::BaseMatrixMut">BaseMatrixMut</a>&lt;T&gt; for <a class="struct" href="../../rulinalg/matrix/struct.ColumnMut.html" title="struct rulinalg::matrix::ColumnMut">ColumnMut</a>&lt;'a, T&gt;</h3></section><section id="impl-BaseMatrixMut%3CT%3E-for-RowMut%3C%27a%2C%20T%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/impl_base.rs.html#157">source</a><a href="#impl-BaseMatrixMut%3CT%3E-for-RowMut%3C%27a%2C%20T%3E" class="anchor"></a><h3 class="code-header">impl&lt;'a, T&gt; <a class="trait" href="trait.BaseMatrixMut.html" title="trait rusty_machine::linalg::BaseMatrixMut">BaseMatrixMut</a>&lt;T&gt; for <a class="struct" href="../../rulinalg/matrix/struct.RowMut.html" title="struct rulinalg::matrix::RowMut">RowMut</a>&lt;'a, T&gt;</h3></section><section id="impl-BaseMatrixMut%3CT%3E-for-MatrixSliceMut%3C%27a%2C%20T%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/impl_base.rs.html#118">source</a><a href="#impl-BaseMatrixMut%3CT%3E-for-MatrixSliceMut%3C%27a%2C%20T%3E" class="anchor"></a><h3 class="code-header">impl&lt;'a, T&gt; <a class="trait" href="trait.BaseMatrixMut.html" title="trait rusty_machine::linalg::BaseMatrixMut">BaseMatrixMut</a>&lt;T&gt; for <a class="struct" href="struct.MatrixSliceMut.html" title="struct rusty_machine::linalg::MatrixSliceMut">MatrixSliceMut</a>&lt;'a, T&gt;</h3></section><section id="impl-BaseMatrixMut%3CT%3E-for-Matrix%3CT%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/rulinalg/matrix/base/impl_base.rs.html#111">source</a><a href="#impl-BaseMatrixMut%3CT%3E-for-Matrix%3CT%3E" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="trait.BaseMatrixMut.html" title="trait rusty_machine::linalg::BaseMatrixMut">BaseMatrixMut</a>&lt;T&gt; for <a class="struct" href="struct.Matrix.html" title="struct rusty_machine::linalg::Matrix">Matrix</a>&lt;T&gt;</h3></section></div><script src="../../implementors/rulinalg/matrix/base/trait.BaseMatrixMut.js" data-ignore-extern-crates="rulinalg" async></script></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rusty_machine" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

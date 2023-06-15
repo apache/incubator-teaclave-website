@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Contains the aggregation request tree. Used to build an `AggregationCollector`."><meta name="keywords" content="rust, rustlang, rust-lang, agg_req"><title>tantivy::aggregation::agg_req - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../tantivy/index.html"><div class="logo-container"><img src="http://fulmicoton.com/tantivy-logo/tantivy-logo.png" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../tantivy/index.html"><div class="logo-container">
+                    <img src="http://fulmicoton.com/tantivy-logo/tantivy-logo.png" alt="logo"></div></a><h2 class="location"><a href="#">Module agg_req</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Module <a href="../../index.html">tantivy</a>::<wbr><a href="../index.html">aggregation</a>::<wbr><a class="mod" href="#">agg_req</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../../src/tantivy/aggregation/agg_req.rs.html#1-369">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Contains the aggregation request tree. Used to build an
+<a href="../struct.AggregationCollector.html"><code>AggregationCollector</code></a>.</p>
+<p><a href="type.Aggregations.html" title="Aggregations"><code>Aggregations</code></a> is the top level entry point to create a request, which is a <code>HashMap&lt;String, Aggregation&gt;</code>.</p>
+<p>Requests are compatible with the json format of elasticsearch.</p>
+<h2 id="example"><a href="#example">Example</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tantivy::aggregation::bucket::RangeAggregation;
+<span class="kw">use </span>tantivy::aggregation::agg_req::BucketAggregationType;
+<span class="kw">use </span>tantivy::aggregation::agg_req::{Aggregation, Aggregations};
+<span class="kw">use </span>tantivy::aggregation::agg_req::BucketAggregation;
+<span class="kw">let </span>agg_req1: Aggregations = <span class="macro">vec!</span>[
+    (
+        <span class="string">&quot;range&quot;</span>.to_string(),
+        Aggregation::Bucket(BucketAggregation {
+            bucket_agg: BucketAggregationType::Range(RangeAggregation{
+                field: <span class="string">&quot;score&quot;</span>.to_string(),
+                ranges: <span class="macro">vec!</span>[(<span class="number">3f64</span>..<span class="number">7f64</span>).into(), (<span class="number">7f64</span>..<span class="number">20f64</span>).into()],
+                keyed: <span class="bool-val">false</span>,
+            }),
+            sub_aggregation: Default::default(),
+        }),
+    ),
+]
+.into_iter()
+.collect();
+
+<span class="kw">let </span>elasticsearch_compatible_json_req = <span class="string">r#&quot;
+{
+  &quot;range&quot;: {
+    &quot;range&quot;: {
+      &quot;field&quot;: &quot;score&quot;,
+      &quot;ranges&quot;: [
+        { &quot;from&quot;: 3.0, &quot;to&quot;: 7.0 },
+        { &quot;from&quot;: 7.0, &quot;to&quot;: 20.0 }
+      ]
+    }
+  }
+}&quot;#</span>;
+<span class="kw">let </span>agg_req2: Aggregations = serde_json::from_str(elasticsearch_compatible_json_req).unwrap();
+<span class="macro">assert_eq!</span>(agg_req1, agg_req2);</code></pre></div>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.BucketAggregation.html" title="tantivy::aggregation::agg_req::BucketAggregation struct">BucketAggregation</a></div><div class="item-right docblock-short">BucketAggregations create buckets of documents. Each bucket is associated with a rule which
+determines whether or not a document in the falls into it. In other words, the buckets
+effectively define document sets. Buckets are not necessarily disjunct, therefore a document can
+fall into multiple buckets. In addition to the buckets themselves, the bucket aggregations also
+compute and return the number of documents for each bucket. Bucket aggregations, as opposed to
+metric aggregations, can hold sub-aggregations. These sub-aggregations will be aggregated for
+the buckets created by their “parent” bucket aggregation. There are different bucket
+aggregators, each with a different “bucketing” strategy. Some define a single bucket, some
+define fixed number of multiple buckets, and others dynamically create the buckets during the
+aggregation process.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RangeAggregation.html" title="tantivy::aggregation::agg_req::RangeAggregation struct">RangeAggregation</a></div><div class="item-right docblock-short">Provide user-defined buckets to aggregate on.
+Two special buckets will automatically be created to cover the whole range of values.
+The provided buckets have to be continuous.
+During the aggregation, the values extracted from the fast_field <code>field</code> will be checked
+against each bucket range. Note that this aggregation includes the from value and excludes the
+to value for each range.</div></div></div><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Aggregation.html" title="tantivy::aggregation::agg_req::Aggregation enum">Aggregation</a></div><div class="item-right docblock-short">Aggregation request of <a href="struct.BucketAggregation.html" title="BucketAggregation"><code>BucketAggregation</code></a> or <a href="enum.MetricAggregation.html" title="MetricAggregation"><code>MetricAggregation</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.BucketAggregationType.html" title="tantivy::aggregation::agg_req::BucketAggregationType enum">BucketAggregationType</a></div><div class="item-right docblock-short">The bucket aggregation types.</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.MetricAggregation.html" title="tantivy::aggregation::agg_req::MetricAggregation enum">MetricAggregation</a></div><div class="item-right docblock-short">The aggregations in this family compute metrics based on values extracted
+from the documents that are being aggregated. Values are extracted from the fast field of
+the document.
+Some aggregations output a single numeric metric (e.g. Average) and are called
+single-value numeric metrics aggregation, others generate multiple metrics (e.g. Stats) and are
+called multi-value numeric metrics aggregation.</div></div></div><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.get_fast_field_names.html" title="tantivy::aggregation::agg_req::get_fast_field_names fn">get_fast_field_names</a></div><div class="item-right docblock-short">Extract all fast field names used in the tree.</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.get_term_dict_field_names.html" title="tantivy::aggregation::agg_req::get_term_dict_field_names fn">get_term_dict_field_names</a></div><div class="item-right docblock-short">Extract all fields, where the term directory is used in the tree.</div></div></div><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="type" href="type.Aggregations.html" title="tantivy::aggregation::agg_req::Aggregations type">Aggregations</a></div><div class="item-right docblock-short">The top-level aggregation request structure, which contains <a href="enum.Aggregation.html" title="Aggregation"><code>Aggregation</code></a> and their user
+defined names. It is also used in <a href="struct.BucketAggregation.html">buckets</a> to define sub-aggregations.</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="tantivy" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="The decision tree."><meta name="keywords" content="rust, rustlang, rust-lang, DecisionTree"><title>DecisionTree in gbdt::decision_tree - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../gbdt/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../gbdt/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">DecisionTree</a></h2><div class="sidebar-elems"><section><h3><a href="#implementations">Methods</a></h3><ul class="block"><li><a href="#method.fit">fit</a></li><li><a href="#method.fit_n">fit_n</a></li><li><a href="#method.get_from_xgboost">get_from_xgboost</a></li><li><a href="#method.is_empty">is_empty</a></li><li><a href="#method.len">len</a></li><li><a href="#method.new">new</a></li><li><a href="#method.predict">predict</a></li><li><a href="#method.predict_n">predict_n</a></li><li><a href="#method.print">print</a></li><li><a href="#method.set_feature_sample_ratio">set_feature_sample_ratio</a></li><li><a href="#method.set_feature_size">set_feature_size</a></li><li><a href="#method.set_loss">set_loss</a></li><li><a href="#method.set_max_depth">set_max_depth</a></li><li><a href="#method.set_min_leaf_size">set_min_leaf_size</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block"><li><a href="#impl-Debug-for-DecisionTree">Debug</a></li><li><a href="#impl-Default-for-DecisionTree">Default</a></li><li><a href="#impl-Deserialize%3C%27de%3E-for-DecisionTree">Deserialize&lt;&#39;de&gt;</a></li><li><a href="#impl-Serialize-for-DecisionTree">Serialize</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block"><li><a href="#impl-RefUnwindSafe-for-DecisionTree">RefUnwindSafe</a></li><li><a href="#impl-Send-for-DecisionTree">Send</a></li><li><a href="#impl-Sync-for-DecisionTree">Sync</a></li><li><a href="#impl-Unpin-for-DecisionTree">Unpin</a></li><li><a href="#impl-UnwindSafe-for-DecisionTree">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block"><li><a href="#impl-Any-for-DecisionTree">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-DecisionTree">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-DecisionTree">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-DeserializeOwned-for-DecisionTree">DeserializeOwned</a></li><li><a href="#impl-From%3CT%3E-for-DecisionTree">From&lt;T&gt;</a></li><li><a href="#impl-Into%3CU%3E-for-DecisionTree">Into&lt;U&gt;</a></li><li><a href="#impl-TryFrom%3CU%3E-for-DecisionTree">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-DecisionTree">TryInto&lt;U&gt;</a></li></ul></section><h2><a href="index.html">In gbdt::decision_tree</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Struct <a href="../index.html">gbdt</a>::<wbr><a href="index.html">decision_tree</a>::<wbr><a class="struct" href="#">DecisionTree</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/gbdt/decision_tree.rs.html#929-943">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust struct"><code>pub struct DecisionTree { /* private fields */ }</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>The decision tree.</p>
+</div></details><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><div id="implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#951-1895">source</a><a href="#impl-DecisionTree" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.new" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#961-970">source</a><h4 class="code-header">pub fn <a href="#method.new" class="fnname">new</a>() -&gt; Self</h4></section></summary><div class="docblock"><p>Return a new decision tree with default values (feature_size = 1, max_depth = 2,
+min_leaf_size = 1, loss = Loss::SquaredError, feature_sample_ratio = 1.0)</p>
+<h5 id="example"><a href="#example">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree};
+<span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_feature_size" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#981-983">source</a><h4 class="code-header">pub fn <a href="#method.set_feature_size" class="fnname">set_feature_size</a>(&amp;mut self, size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</h4></section></summary><div class="docblock"><p>Set the size of feautures. Training data and test data should have same feature size.</p>
+<h5 id="example-1"><a href="#example-1">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree};
+<span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_feature_size(<span class="number">3</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_max_depth" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#993-995">source</a><h4 class="code-header">pub fn <a href="#method.set_max_depth" class="fnname">set_max_depth</a>(&amp;mut self, max_depth: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)</h4></section></summary><div class="docblock"><p>Set the max depth of the decision tree. The root node is considered to be in the layer 0.</p>
+<h5 id="example-2"><a href="#example-2">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree};
+<span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_max_depth(<span class="number">2</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_min_leaf_size" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1005-1007">source</a><h4 class="code-header">pub fn <a href="#method.set_min_leaf_size" class="fnname">set_min_leaf_size</a>(&amp;mut self, min_leaf_size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</h4></section></summary><div class="docblock"><p>Set the minimum number of samples required to be at a leaf node during training.</p>
+<h5 id="example-3"><a href="#example-3">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree};
+<span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_min_leaf_size(<span class="number">1</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_loss" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1017-1019">source</a><h4 class="code-header">pub fn <a href="#method.set_loss" class="fnname">set_loss</a>(&amp;mut self, loss: <a class="enum" href="../config/enum.Loss.html" title="enum gbdt::config::Loss">Loss</a>)</h4></section></summary><div class="docblock"><p>Set the loss function type.</p>
+<h5 id="example-4"><a href="#example-4">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree};
+<span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_loss(Loss::SquaredError);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_feature_sample_ratio" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1030-1032">source</a><h4 class="code-header">pub fn <a href="#method.set_feature_sample_ratio" class="fnname">set_feature_sample_ratio</a>(&amp;mut self, feature_sample_ratio: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>)</h4></section></summary><div class="docblock"><p>Set the portion of features to be splited. When spliting a node, a subset of the features
+(feature_size * feature_sample_ratio) will be randomly selected to calculate impurity.</p>
+<h5 id="example-5"><a href="#example-5">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree};
+<span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_feature_sample_ratio(<span class="number">0.9</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fit_n" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1084-1099">source</a><h4 class="code-header">pub fn <a href="#method.fit_n" class="fnname">fit_n</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;train_data: &amp;<a class="type" href="type.DataVec.html" title="type gbdt::decision_tree::DataVec">DataVec</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;subset: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>],<br>&nbsp;&nbsp;&nbsp;&nbsp;cache: &amp;mut <a class="struct" href="struct.TrainingCache.html" title="struct gbdt::decision_tree::TrainingCache">TrainingCache</a><br>)</h4></section></summary><div class="docblock"><p>Use the <code>subset</code> of the <code>train_data</code> to train a decision tree</p>
+<h5 id="example-6"><a href="#example-6">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree, TrainingCache};
+<span class="comment">// set up training data
+</span><span class="kw">let </span>data1 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.5</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data4 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="number">1.0</span>,
+    <span class="number">3.0</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+dv.push(data4.clone());
+
+
+<span class="comment">// train a decision tree
+</span><span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_feature_size(<span class="number">3</span>);
+tree.set_max_depth(<span class="number">2</span>);
+tree.set_min_leaf_size(<span class="number">1</span>);
+tree.set_loss(Loss::SquaredError);
+<span class="kw">let </span><span class="kw-2">mut </span>cache = TrainingCache::get_cache(<span class="number">3</span>, <span class="kw-2">&amp;</span>dv, <span class="number">2</span>);
+<span class="kw">let </span>subset = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>];
+tree.fit_n(<span class="kw-2">&amp;</span>dv, <span class="kw-2">&amp;</span>subset, <span class="kw-2">&amp;mut </span>cache);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fit" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1144-1160">source</a><h4 class="code-header">pub fn <a href="#method.fit" class="fnname">fit</a>(&amp;mut self, train_data: &amp;<a class="type" href="type.DataVec.html" title="type gbdt::decision_tree::DataVec">DataVec</a>, cache: &amp;mut <a class="struct" href="struct.TrainingCache.html" title="struct gbdt::decision_tree::TrainingCache">TrainingCache</a>)</h4></section></summary><div class="docblock"><p>Use the samples in <code>train_data</code> to train the decision tree.</p>
+<h5 id="example-7"><a href="#example-7">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree, TrainingCache};
+<span class="comment">// set up training data
+</span><span class="kw">let </span>data1 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+
+
+<span class="comment">// train a decision tree
+</span><span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_feature_size(<span class="number">3</span>);
+tree.set_max_depth(<span class="number">2</span>);
+tree.set_min_leaf_size(<span class="number">1</span>);
+tree.set_loss(Loss::SquaredError);
+<span class="kw">let </span><span class="kw-2">mut </span>cache = TrainingCache::get_cache(<span class="number">3</span>, <span class="kw-2">&amp;</span>dv, <span class="number">2</span>);
+tree.fit(<span class="kw-2">&amp;</span>dv, <span class="kw-2">&amp;mut </span>cache);
+</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.predict_n" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1313-1325">source</a><h4 class="code-header">pub fn <a href="#method.predict_n" class="fnname">predict_n</a>(&amp;self, test_data: &amp;<a class="type" href="type.DataVec.html" title="type gbdt::decision_tree::DataVec">DataVec</a>, subset: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>]) -&gt; <a class="type" href="type.PredVec.html" title="type gbdt::decision_tree::PredVec">PredVec</a></h4></section></summary><div class="docblock"><p>Inference the subset of the <code>test_data</code>. Return a vector of
+predicted values. If the <code>i</code> is in the subset, then output[i] is the prediction.
+If <code>i</code> is not in the subset, then output[i] is 0.0</p>
+<h5 id="example-8"><a href="#example-8">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree, TrainingCache};
+<span class="comment">// set up training data
+</span><span class="kw">let </span>data1 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.5</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data4 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="number">1.0</span>,
+    <span class="number">3.0</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+dv.push(data4.clone());
+
+
+<span class="comment">// train a decision tree
+</span><span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_feature_size(<span class="number">3</span>);
+tree.set_max_depth(<span class="number">2</span>);
+tree.set_min_leaf_size(<span class="number">1</span>);
+tree.set_loss(Loss::SquaredError);
+<span class="kw">let </span><span class="kw-2">mut </span>cache = TrainingCache::get_cache(<span class="number">3</span>, <span class="kw-2">&amp;</span>dv, <span class="number">2</span>);
+tree.fit(<span class="kw-2">&amp;</span>dv, <span class="kw-2">&amp;mut </span>cache);
+
+
+<span class="comment">// set up the test data
+</span><span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+dv.push(data4.clone());
+
+
+<span class="comment">// inference the test data with the decision tree
+</span><span class="kw">let </span>subset = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>];
+<span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>, tree.predict_n(<span class="kw-2">&amp;</span>dv, <span class="kw-2">&amp;</span>subset));
+
+
+<span class="comment">// output:
+// [2.0, 0.75, 0.75, 0.0]</span></code></pre></div>
+<h5 id="panic"><a href="#panic">Panic</a></h5>
+<p>If the function is called before the decision tree is trained, it will panic.</p>
+<p>If the test data have a smaller feature size than the tree’s feature size, it will panic.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.predict" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1396-1407">source</a><h4 class="code-header">pub fn <a href="#method.predict" class="fnname">predict</a>(&amp;self, test_data: &amp;<a class="type" href="type.DataVec.html" title="type gbdt::decision_tree::DataVec">DataVec</a>) -&gt; <a class="type" href="type.PredVec.html" title="type gbdt::decision_tree::PredVec">PredVec</a></h4></section></summary><div class="docblock"><p>Inference the values of samples in the <code>test_data</code>. Return a vector of the predicted
+values.</p>
+<h5 id="example-9"><a href="#example-9">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree, TrainingCache};
+<span class="comment">// set up training data
+</span><span class="kw">let </span>data1 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.5</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data4 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="number">1.0</span>,
+    <span class="number">3.0</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+dv.push(data4.clone());
+
+
+<span class="comment">// train a decision tree
+</span><span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_feature_size(<span class="number">3</span>);
+tree.set_max_depth(<span class="number">2</span>);
+tree.set_min_leaf_size(<span class="number">1</span>);
+tree.set_loss(Loss::SquaredError);
+<span class="kw">let </span><span class="kw-2">mut </span>cache = TrainingCache::get_cache(<span class="number">3</span>, <span class="kw-2">&amp;</span>dv, <span class="number">2</span>);
+tree.fit(<span class="kw-2">&amp;</span>dv, <span class="kw-2">&amp;mut </span>cache);
+
+
+<span class="comment">// set up the test data
+</span><span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+dv.push(data4.clone());
+
+
+<span class="comment">// inference the test data with the decision tree
+</span><span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>, tree.predict(<span class="kw-2">&amp;</span>dv));
+
+
+<span class="comment">// output:
+// [2.0, 0.75, 0.75, 3.0]</span></code></pre></div>
+<h5 id="panic-1"><a href="#panic-1">Panic</a></h5>
+<p>If the function is called before the decision tree is trained, it will panic.</p>
+<p>If the test data have a smaller feature size than the tree’s feature size, it will panic.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.print" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1733-1735">source</a><h4 class="code-header">pub fn <a href="#method.print" class="fnname">print</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Print the decision tree. For debug use.</p>
+<h5 id="example-10"><a href="#example-10">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree, TrainingCache};
+<span class="comment">// set up training data
+</span><span class="kw">let </span>data1 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.5</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+
+
+<span class="comment">// train a decision tree
+</span><span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_feature_size(<span class="number">3</span>);
+tree.set_max_depth(<span class="number">2</span>);
+tree.set_min_leaf_size(<span class="number">1</span>);
+tree.set_loss(Loss::SquaredError);
+<span class="kw">let </span><span class="kw-2">mut </span>cache = TrainingCache::get_cache(<span class="number">3</span>, <span class="kw-2">&amp;</span>dv, <span class="number">2</span>);
+<span class="kw">let </span>subset = [<span class="number">0</span>, <span class="number">1</span>];
+tree.fit_n(<span class="kw-2">&amp;</span>dv, <span class="kw-2">&amp;</span>subset, <span class="kw-2">&amp;mut </span>cache);
+
+
+tree.print();
+
+<span class="comment">// output:
+
+//  ----DTNode { feature_index: 0, feature_value: 1.05, pred: 1.5, is_leaf: false }
+//      ----DTNode { feature_index: 0, feature_value: 0.0, pred: 2.0, is_leaf: true }
+//      ----DTNode { feature_index: 0, feature_value: 0.0, pred: 1.0, is_leaf: true }</span></code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.get_from_xgboost" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1749-1755">source</a><h4 class="code-header">pub fn <a href="#method.get_from_xgboost" class="fnname">get_from_xgboost</a>(node: &amp;<a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html" title="trait core::error::Error">Error</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Build a decision tree from xgboost’s model. xgboost can dump the model in JSON format. We used serde_json to parse a JSON string.</p>
+<h5 id="example-11"><a href="#example-11">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>serde_json::{<span class="prelude-ty">Result</span>, Value};
+<span class="kw">use </span>gbdt::decision_tree::DecisionTree;
+<span class="kw">let </span>data = <span class="string">r#&quot;
+      { &quot;nodeid&quot;: 0, &quot;depth&quot;: 0, &quot;split&quot;: 0, &quot;split_condition&quot;: 750, &quot;yes&quot;: 1, &quot;no&quot;: 2, &quot;missing&quot;: 2, &quot;children&quot;: [
+         { &quot;nodeid&quot;: 1, &quot;leaf&quot;: 25.7333336 },
+         { &quot;nodeid&quot;: 2, &quot;leaf&quot;: 15.791667 }]}&quot;#</span>;
+<span class="kw">let </span>node: Value = serde_json::from_str(data).unwrap();
+<span class="kw">let </span>dt = DecisionTree::get_from_xgboost(<span class="kw-2">&amp;</span>node);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.len" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1887-1889">source</a><h4 class="code-header">pub fn <a href="#method.len" class="fnname">len</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h4></section></summary><div class="docblock"><p>For debug use. Return the number of nodes in current decision tree</p>
+<h5 id="example-12"><a href="#example-12">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree, TrainingCache};
+<span class="comment">// set up training data
+</span><span class="kw">let </span>data1 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.5</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+
+
+<span class="comment">// train a decision tree
+</span><span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_feature_size(<span class="number">3</span>);
+tree.set_max_depth(<span class="number">2</span>);
+tree.set_min_leaf_size(<span class="number">1</span>);
+tree.set_loss(Loss::SquaredError);
+<span class="kw">let </span><span class="kw-2">mut </span>cache = TrainingCache::get_cache(<span class="number">3</span>, <span class="kw-2">&amp;</span>dv, <span class="number">2</span>);
+<span class="kw">let </span>subset = [<span class="number">0</span>, <span class="number">1</span>];
+tree.fit_n(<span class="kw-2">&amp;</span>dv, <span class="kw-2">&amp;</span>subset, <span class="kw-2">&amp;mut </span>cache);
+
+<span class="macro">assert_eq!</span>(tree.len(), <span class="number">3</span>)</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.is_empty" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#1892-1894">source</a><h4 class="code-header">pub fn <a href="#method.is_empty" class="fnname">is_empty</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></h4></section></summary><div class="docblock"><p>Returns true if the current decision tree is empty</p>
+</div></details></div></details></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Debug-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#928">source</a><a href="#impl-Debug-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fmt" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#928">source</a><a href="#method.fmt" class="anchor"></a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt" class="fnname">fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>&lt;'_&gt;) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></h4></section></summary><div class='docblock'>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Default-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#945-949">source</a><a href="#impl-Default-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html" title="trait core::default::Default">Default</a> for <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.default" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#946-948">source</a><a href="#method.default" class="anchor"></a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default" class="fnname">default</a>() -&gt; Self</h4></section></summary><div class='docblock'>Returns the “default value” for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Deserialize%3C%27de%3E-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#928">source</a><a href="#impl-Deserialize%3C%27de%3E-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl&lt;'de&gt; <a class="trait" href="../../serde/de/trait.Deserialize.html" title="trait serde::de::Deserialize">Deserialize</a>&lt;'de&gt; for <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.deserialize" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#928">source</a><a href="#method.deserialize" class="anchor"></a><h4 class="code-header">fn <a href="../../serde/de/trait.Deserialize.html#tymethod.deserialize" class="fnname">deserialize</a>&lt;__D&gt;(__deserializer: __D) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, __D::<a class="associatedtype" href="../../serde/de/trait.Deserializer.html#associatedtype.Error" title="type serde::de::Deserializer::Error">Error</a>&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;__D: <a class="trait" href="../../serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Deserializer</a>&lt;'de&gt;,</span></h4></section></summary><div class='docblock'>Deserialize this value from the given Serde deserializer. <a href="../../serde/de/trait.Deserialize.html#tymethod.deserialize">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Serialize-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#928">source</a><a href="#impl-Serialize-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="../../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a> for <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.serialize" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/decision_tree.rs.html#928">source</a><a href="#method.serialize" class="anchor"></a><h4 class="code-header">fn <a href="../../serde/ser/trait.Serialize.html#tymethod.serialize" class="fnname">serialize</a>&lt;__S&gt;(&amp;self, __serializer: __S) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;__S::<a class="associatedtype" href="../../serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, __S::<a class="associatedtype" href="../../serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;__S: <a class="trait" href="../../serde/ser/trait.Serializer.html" title="trait serde::ser::Serializer">Serializer</a>,</span></h4></section></summary><div class='docblock'>Serialize this value into the given Serde serializer. <a href="../../serde/ser/trait.Serialize.html#tymethod.serialize">Read more</a></div></details></div></details></div><h2 id="synthetic-implementations" class="small-section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor"></a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-DecisionTree" class="impl has-srclink"><a href="#impl-RefUnwindSafe-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/panic/unwind_safe/trait.RefUnwindSafe.html" title="trait core::panic::unwind_safe::RefUnwindSafe">RefUnwindSafe</a> for <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section><section id="impl-Send-for-DecisionTree" class="impl has-srclink"><a href="#impl-Send-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section><section id="impl-Sync-for-DecisionTree" class="impl has-srclink"><a href="#impl-Sync-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section><section id="impl-Unpin-for-DecisionTree" class="impl has-srclink"><a href="#impl-Unpin-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Unpin.html" title="trait core::marker::Unpin">Unpin</a> for <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section><section id="impl-UnwindSafe-for-DecisionTree" class="impl has-srclink"><a href="#impl-UnwindSafe-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/panic/unwind_safe/trait.UnwindSafe.html" title="trait core::panic::unwind_safe::UnwindSafe">UnwindSafe</a> for <a class="struct" href="struct.DecisionTree.html" title="struct gbdt::decision_tree::DecisionTree">DecisionTree</a></h3></section></div><h2 id="blanket-implementations" class="small-section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor"></a></h2><div id="blanket-implementations-list"><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Any-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="https://doc.rust-lang.org/nightly/src/core/any.rs.html#200">source</a><a href="#impl-Any-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl has-srclink"><a class="srclink rightside" href="https://doc.rust-lang.org/nightly/src/core/any.rs.html#201">source</a><a href="#method.type_id" class="anchor"></a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html#tymethod.type_id" class="fnname">type_id</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/core/any/struct.TypeId.html" title="struct core::any::TypeId">TypeId</a></h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html#tymethod.type_id">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="https://doc.rust-lang.org/nightly/src/core/borrow.rs.html#211">source</a><a href="#impl-Borrow%3CT%3E-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html" title="trait core::borrow::Borrow">Borrow</a>&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow" class="method trait-impl has-srclink"><span class="rightside"><span class="since" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span> · <a class="srclink" href="https://doc.rust-lang.org/nightly/src/core/borrow.rs.html#213">source</a></span><a href="#method.borrow" class="anchor"></a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html#tymethod.borrow" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T</h4></section></summary><div class='docblock'>Immutably borrows from an owned value. <a href="https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html#tymethod.borrow">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-BorrowMut%3CT%3E-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="https://doc.rust-lang.org/nightly/src/core/borrow.rs.html#220">source</a><a href="#impl-BorrowMut%3CT%3E-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/borrow/trait.BorrowMut.html" title="trait core::borrow::BorrowMut">BorrowMut</a>&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow_mut" class="method trait-impl has-srclink"><span class="rightside"><span class="since" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span> · <a class="srclink" href="https://doc.rust-lang.org/nightly/src/core/borrow.rs.html#221">source</a></span><a href="#method.borrow_mut" class="anchor"></a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/borrow/trait.BorrowMut.html#tymethod.borrow_mut" class="fnname">borrow_mut</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>T</h4></section></summary><div class='docblock'>Mutably borrows from an owned value. <a href="https://doc.rust-lang.org/nightly/core/borrow/trait.BorrowMut.html#tymethod.borrow_mut">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-From%3CT%3E-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="https://doc.rust-lang.org/nightly/src/core/convert/mod.rs.html#733">source</a><a href="#impl-From%3CT%3E-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;T&gt; for T</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from" class="method trait-impl has-srclink"><span class="rightside"><span class="since" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span> · <a class="srclink" href="https://doc.rust-lang.org/nightly/src/core/convert/mod.rs.html#736">source</a></span><a href="#method.from" class="anchor"></a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from" class="fnname">from</a>(t: T) -&gt; T</h4></section></summary><div class="docblock"><p>Returns the argument unchanged.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="https://doc.rust-lang.org/nightly/src/core/convert/mod.rs.html#717">source</a><a href="#impl-Into%3CU%3E-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.into" class="method trait-impl has-srclink"><span class="rightside"><span class="since" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span> · <a class="srclink" href="https://doc.rust-lang.org/nightly/src/core/convert/mod.rs.html#725">source</a></span><a href="#method.into" class="anchor"></a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into" class="fnname">into</a>(self) -&gt; U</h4></section></summary><div class="docblock"><p>Calls <code>U::from(self)</code>.</p>
+<p>That is, this conversion is whatever the implementation of
+<code><a href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="From">From</a>&lt;T&gt; for U</code> chooses to do.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryFrom%3CU%3E-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="https://doc.rust-lang.org/nightly/src/core/convert/mod.rs.html#775">source</a><a href="#impl-TryFrom%3CU%3E-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html" title="trait core::convert::TryFrom">TryFrom</a>&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error-1" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error-1" class="anchor"></a><h4 class="code-header">type <a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#associatedtype.Error" class="associatedtype">Error</a> = <a class="enum" href="https://doc.rust-lang.org/nightly/core/convert/enum.Infallible.html" title="enum core::convert::Infallible">Infallible</a></h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_from" class="method trait-impl has-srclink"><span class="rightside"><span class="since" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span> · <a class="srclink" href="https://doc.rust-lang.org/nightly/src/core/convert/mod.rs.html#781">source</a></span><a href="#method.try_from" class="anchor"></a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#tymethod.try_from" class="fnname">try_from</a>(value: U) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;T, &lt;T as <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html" title="trait core::convert::TryFrom">TryFrom</a>&lt;U&gt;&gt;::<a class="associatedtype" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#associatedtype.Error" title="type core::convert::TryFrom::Error">Error</a>&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryInto%3CU%3E-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="https://doc.rust-lang.org/nightly/src/core/convert/mod.rs.html#760">source</a><a href="#impl-TryInto%3CU%3E-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html" title="trait core::convert::TryInto">TryInto</a>&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html" title="trait core::convert::TryFrom">TryFrom</a>&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error" class="anchor"></a><h4 class="code-header">type <a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#associatedtype.Error" class="associatedtype">Error</a> = &lt;U as <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html" title="trait core::convert::TryFrom">TryFrom</a>&lt;T&gt;&gt;::<a class="associatedtype" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#associatedtype.Error" title="type core::convert::TryFrom::Error">Error</a></h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl has-srclink"><span class="rightside"><span class="since" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span> · <a class="srclink" href="https://doc.rust-lang.org/nightly/src/core/convert/mod.rs.html#766">source</a></span><a href="#method.try_into" class="anchor"></a><h4 class="code-header">fn <a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into" class="fnname">try_into</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;U, &lt;U as <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html" title="trait core::convert::TryFrom">TryFrom</a>&lt;T&gt;&gt;::<a class="associatedtype" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#associatedtype.Error" title="type core::convert::TryFrom::Error">Error</a>&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><section id="impl-DeserializeOwned-for-DecisionTree" class="impl has-srclink"><a class="srclink rightside" href="../../src/serde/de/mod.rs.html#604">source</a><a href="#impl-DeserializeOwned-for-DecisionTree" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="../../serde/de/trait.DeserializeOwned.html" title="trait serde::de::DeserializeOwned">DeserializeOwned</a> for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: for&lt;'de&gt; <a class="trait" href="../../serde/de/trait.Deserialize.html" title="trait serde::de::Deserialize">Deserialize</a>&lt;'de&gt;,</span></h3></section></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gbdt" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

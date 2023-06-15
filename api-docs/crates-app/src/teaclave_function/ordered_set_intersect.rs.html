@@ -1,0 +1,428 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `function/src/ordered_set_intersect.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ordered_set_intersect.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../teaclave_function/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../teaclave_function/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+</pre><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// &quot;License&quot;); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
+</span><span class="kw">use </span>anyhow::bail;
+<span class="kw">use </span>std::cmp;
+<span class="kw">use </span>std::convert::TryFrom;
+<span class="kw">use </span>std::format;
+<span class="kw">use </span>std::io::{<span class="self">self</span>, BufRead, BufReader, Write};
+<span class="kw">use </span>teaclave_types::{FunctionArguments, FunctionRuntime};
+
+<span class="kw">extern crate </span>hex;
+
+<span class="comment">// Input data should be a list of sorted hash values.
+
+</span><span class="kw">const </span>IN_DATA1: <span class="kw-2">&amp;</span>str = <span class="string">&quot;input_data1&quot;</span>;
+<span class="kw">const </span>IN_DATA2: <span class="kw-2">&amp;</span>str = <span class="string">&quot;input_data2&quot;</span>;
+<span class="kw">const </span>OUT_RESULT1: <span class="kw-2">&amp;</span>str = <span class="string">&quot;output_result1&quot;</span>;
+<span class="kw">const </span>OUT_RESULT2: <span class="kw-2">&amp;</span>str = <span class="string">&quot;output_result2&quot;</span>;
+
+<span class="attribute">#[derive(Default)]
+</span><span class="kw">pub struct </span>OrderedSetIntersect;
+
+<span class="attribute">#[derive(serde::Deserialize)]
+</span><span class="kw">pub struct </span>OrderedSetIntersectArguments {
+    order: String,
+}
+
+<span class="kw">impl </span>TryFrom&lt;FunctionArguments&gt; <span class="kw">for </span>OrderedSetIntersectArguments {
+    <span class="kw">type </span>Error = anyhow::Error;
+
+    <span class="kw">fn </span>try_from(arguments: FunctionArguments) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        <span class="kw">use </span>anyhow::Context;
+        serde_json::from_str(<span class="kw-2">&amp;</span>arguments.into_string()).context(<span class="string">&quot;Cannot deserialize arguments&quot;</span>)
+    }
+}
+
+<span class="kw">impl </span>OrderedSetIntersect {
+    <span class="kw">pub const </span>NAME: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;builtin-ordered-set-intersect&quot;</span>;
+
+    <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        Default::default()
+    }
+
+    <span class="kw">pub fn </span>run(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        arguments: FunctionArguments,
+        runtime: FunctionRuntime,
+    ) -&gt; anyhow::Result&lt;String&gt; {
+        <span class="kw">let </span>input1 = runtime.open_input(IN_DATA1)<span class="question-mark">?</span>;
+        <span class="kw">let </span>input2 = runtime.open_input(IN_DATA2)<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>output1 = runtime.create_output(OUT_RESULT1)<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>output2 = runtime.create_output(OUT_RESULT2)<span class="question-mark">?</span>;
+        <span class="kw">let </span>args = OrderedSetIntersectArguments::try_from(arguments)<span class="question-mark">?</span>;
+        <span class="kw">let </span>order = <span class="kw-2">&amp;</span>args.order[..];
+        <span class="kw">let </span>ascending_order = <span class="kw">match </span>order {
+            <span class="string">&quot;ascending&quot; </span>=&gt; <span class="bool-val">true</span>,
+            <span class="string">&quot;desending&quot; </span>=&gt; <span class="bool-val">false</span>,
+            <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Invalid order&quot;</span>),
+        };
+
+        <span class="kw">let </span>vec1 = parse_input_data(input1, ascending_order)<span class="question-mark">?</span>;
+        <span class="kw">let </span>vec2 = parse_input_data(input2, ascending_order)<span class="question-mark">?</span>;
+        <span class="kw">let </span>(result1, result2) = intersection_ordered_vec(<span class="kw-2">&amp;</span>vec1, <span class="kw-2">&amp;</span>vec2, ascending_order)<span class="question-mark">?</span>;
+
+        <span class="kw">let </span><span class="kw-2">mut </span>common_sets = <span class="number">0</span>;
+
+        <span class="kw">for </span>item <span class="kw">in </span>result1 {
+            <span class="macro">write!</span>(<span class="kw-2">&amp;mut </span>output1, <span class="string">&quot;{}&quot;</span>, item <span class="kw">as </span>u32)<span class="question-mark">?</span>;
+            <span class="kw">if </span>item {
+                common_sets += <span class="number">1</span>;
+            }
+        }
+        <span class="kw">for </span>item <span class="kw">in </span>result2 {
+            <span class="macro">write!</span>(<span class="kw-2">&amp;mut </span>output2, <span class="string">&quot;{}&quot;</span>, item <span class="kw">as </span>u32)<span class="question-mark">?</span>;
+        }
+
+        <span class="macro">log::trace!</span>(<span class="string">&quot;{}&quot;</span>, common_sets);
+
+        <span class="prelude-val">Ok</span>(<span class="macro">format!</span>(<span class="string">&quot;{} common items&quot;</span>, common_sets))
+    }
+}
+
+<span class="kw">fn </span>parse_input_data(input: <span class="kw">impl </span>io::Read, ascending_order: bool) -&gt; anyhow::Result&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>samples: Vec&lt;Vec&lt;u8&gt;&gt; = Vec::new();
+    <span class="kw">let </span>reader = BufReader::new(input);
+    <span class="kw">for </span>(index, byte_result) <span class="kw">in </span>reader.lines().enumerate() {
+        <span class="kw">let </span>byte = byte_result<span class="question-mark">?</span>;
+        <span class="kw">let </span>result = hex::decode(byte)<span class="question-mark">?</span>;
+        <span class="kw">if </span>index &gt; <span class="number">0 </span>{
+            <span class="comment">// If vec has more than 2 elements, then verify the ordering
+            </span><span class="kw">let </span>last_element = <span class="kw-2">&amp;</span>samples[index - <span class="number">1</span>];
+            <span class="kw">if </span>ascending_order &amp;&amp; result &lt; <span class="kw-2">*</span>last_element
+                || !ascending_order &amp;&amp; result &gt; <span class="kw-2">*</span>last_element
+            {
+                <span class="macro">bail!</span>(<span class="string">&quot;Invalid ordering&quot;</span>);
+            }
+        }
+        samples.push(result)
+    }
+
+    <span class="prelude-val">Ok</span>(samples)
+}
+
+<span class="kw">fn </span>intersection_ordered_vec(
+    input1: <span class="kw-2">&amp;</span>[Vec&lt;u8&gt;],
+    input2: <span class="kw-2">&amp;</span>[Vec&lt;u8&gt;],
+    ascending_order: bool,
+) -&gt; anyhow::Result&lt;(Vec&lt;bool&gt;, Vec&lt;bool&gt;)&gt; {
+    <span class="kw">let </span>v1_len = input1.len();
+    <span class="kw">let </span>v2_len = input2.len();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>res1 = <span class="macro">std::vec!</span>[<span class="bool-val">false</span>; v1_len];
+    <span class="kw">let </span><span class="kw-2">mut </span>res2 = <span class="macro">std::vec!</span>[<span class="bool-val">false</span>; v2_len];
+
+    <span class="kw">let </span><span class="kw-2">mut </span>i = <span class="number">0</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>j = <span class="number">0</span>;
+
+    <span class="kw">while </span>i &lt; v1_len &amp;&amp; j &lt; v2_len {
+        <span class="kw">let </span>order = <span class="kw-2">&amp;</span>input1[i].cmp(<span class="kw-2">&amp;</span>input2[j]);
+        <span class="kw">match </span>order {
+            cmp::Ordering::Equal =&gt; {
+                res1[i] = <span class="bool-val">true</span>;
+                res2[j] = <span class="bool-val">true</span>;
+                i += <span class="number">1</span>;
+                j += <span class="number">1</span>;
+            }
+            cmp::Ordering::Less =&gt; {
+                <span class="kw">if </span>ascending_order {
+                    i += <span class="number">1</span>;
+                } <span class="kw">else </span>{
+                    j += <span class="number">1</span>;
+                }
+            }
+            cmp::Ordering::Greater =&gt; {
+                <span class="kw">if </span>ascending_order {
+                    j += <span class="number">1</span>;
+                } <span class="kw">else </span>{
+                    i += <span class="number">1</span>;
+                }
+            }
+        }
+    }
+    <span class="prelude-val">Ok</span>((res1, res2))
+}
+
+<span class="attribute">#[cfg(feature = <span class="string">&quot;enclave_unit_test&quot;</span>)]
+</span><span class="kw">pub mod </span>tests {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use </span>serde_json::json;
+    <span class="kw">use </span>std::path::Path;
+    <span class="kw">use </span>std::untrusted::fs;
+    <span class="kw">use </span>teaclave_crypto::<span class="kw-2">*</span>;
+    <span class="kw">use </span>teaclave_runtime::<span class="kw-2">*</span>;
+    <span class="kw">use </span>teaclave_test_utils::<span class="kw-2">*</span>;
+    <span class="kw">use </span>teaclave_types::<span class="kw-2">*</span>;
+
+    <span class="kw">pub fn </span>run_tests() -&gt; bool {
+        <span class="macro">run_tests!</span>(test_ordered_set_intersect)
+    }
+
+    <span class="kw">fn </span>test_ordered_set_intersect() {
+        <span class="kw">let </span>arguments = FunctionArguments::from_json(<span class="macro">json!</span>({
+            <span class="string">&quot;order&quot;</span>: <span class="string">&quot;ascending&quot;
+        </span>}))
+        .unwrap();
+
+        <span class="kw">let </span>base = Path::new(<span class="string">&quot;fixtures/functions/ordered_set_intersect&quot;</span>);
+
+        <span class="kw">let </span>user1_input = base.join(<span class="string">&quot;psi0.txt&quot;</span>);
+        <span class="kw">let </span>user1_output = base.join(<span class="string">&quot;output_psi0.txt&quot;</span>);
+
+        <span class="kw">let </span>user2_input = base.join(<span class="string">&quot;psi1.txt&quot;</span>);
+        <span class="kw">let </span>user2_output = base.join(<span class="string">&quot;output_psi1.txt&quot;</span>);
+
+        <span class="kw">let </span>input_files = StagedFiles::new(<span class="macro">hashmap!</span>(
+            IN_DATA1 =&gt;
+            StagedFileInfo::new(<span class="kw-2">&amp;</span>user1_input, TeaclaveFile128Key::random(), FileAuthTag::mock()),
+            IN_DATA2 =&gt;
+            StagedFileInfo::new(<span class="kw-2">&amp;</span>user2_input, TeaclaveFile128Key::random(), FileAuthTag::mock()),
+        ));
+
+        <span class="kw">let </span>output_files = StagedFiles::new(<span class="macro">hashmap!</span>(
+            OUT_RESULT1 =&gt;
+            StagedFileInfo::new(<span class="kw-2">&amp;</span>user1_output, TeaclaveFile128Key::random(), FileAuthTag::mock()),
+            OUT_RESULT2 =&gt;
+            StagedFileInfo::new(<span class="kw-2">&amp;</span>user2_output, TeaclaveFile128Key::random(), FileAuthTag::mock()),
+        ));
+
+        <span class="kw">let </span>runtime = Box::new(RawIoRuntime::new(input_files, output_files));
+        <span class="kw">let </span>summary = OrderedSetIntersect::new().run(arguments, runtime).unwrap();
+
+        <span class="kw">let </span>user1_result = fs::read_to_string(<span class="kw-2">&amp;</span>user1_output).unwrap();
+        <span class="kw">let </span>user2_result = fs::read_to_string(<span class="kw-2">&amp;</span>user2_output).unwrap();
+
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>user1_result[..], <span class="string">&quot;0101010&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>user2_result[..], <span class="string">&quot;01101&quot;</span>);
+        <span class="macro">assert_eq!</span>(summary, <span class="string">&quot;3 common items&quot;</span>);
+    }
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="teaclave_function" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

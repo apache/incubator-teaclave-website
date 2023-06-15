@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用 Teaclave TrustZone SDK 开发 TrustZone 应用 | Apache Teaclave (incubating)</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="alternate" type="application/rss+xml" href="https://teaclave.apache.org/rss.xml" title="Apache Teaclave (incubating) RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://teaclave.apache.org/feed.atom" title="Apache Teaclave (incubating) Atom Feed">
+    <link rel="alternate" type="application/json" href="https://teaclave.apache.org/feed.json" title="Apache Teaclave (incubating) JSON Feed">
+    <meta name="description" content="Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.">
+    <meta property="article:published_time" content="2021-10-15T00:00:00.000Z">
+    <meta property="article:modified_time" content="2021-10-18T22:39:50.000Z">
+    <meta property="og:site_name" content="Apache Teaclave (incubating)">
+    <meta property="og:title" content="使用 Teaclave TrustZone SDK 开发 TrustZone 应用">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teaclave.apache.org/blog/2021-10-15-developing-teaclave-application-with-teaclave-trustzone-sdk/">
+    <meta name="twitter:title" content="使用 Teaclave TrustZone SDK 开发 TrustZone 应用">
+    <meta name="twitter:url" content="https://teaclave.apache.org/blog/2021-10-15-developing-teaclave-application-with-teaclave-trustzone-sdk/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ApacheTeaclave">
+    
+    <link rel="preload" href="/assets/css/0.styles.7a68c1e3.css" as="style"><link rel="preload" href="/assets/js/app.0cd323ae.js" as="script"><link rel="preload" href="/assets/js/17.1555cdf6.js" as="script"><link rel="preload" href="/assets/js/1.d73ee85d.js" as="script"><link rel="preload" href="/assets/js/29.74f5607e.js" as="script"><link rel="prefetch" href="/assets/js/10.d62258b1.js"><link rel="prefetch" href="/assets/js/100.46160955.js"><link rel="prefetch" href="/assets/js/101.48d154b6.js"><link rel="prefetch" href="/assets/js/102.db34fcee.js"><link rel="prefetch" href="/assets/js/103.07c73389.js"><link rel="prefetch" href="/assets/js/104.9ec95c7b.js"><link rel="prefetch" href="/assets/js/105.1137ce46.js"><link rel="prefetch" href="/assets/js/106.8366d5fe.js"><link rel="prefetch" href="/assets/js/107.7d2880bf.js"><link rel="prefetch" href="/assets/js/108.dc9f4f34.js"><link rel="prefetch" href="/assets/js/109.a752bc7e.js"><link rel="prefetch" href="/assets/js/11.ae218e97.js"><link rel="prefetch" href="/assets/js/110.09c88e1e.js"><link rel="prefetch" href="/assets/js/111.72893b1f.js"><link rel="prefetch" href="/assets/js/112.71378da0.js"><link rel="prefetch" href="/assets/js/12.1d03a56a.js"><link rel="prefetch" href="/assets/js/13.c0bb6576.js"><link rel="prefetch" href="/assets/js/14.57aefd02.js"><link rel="prefetch" href="/assets/js/15.ac8415d3.js"><link rel="prefetch" href="/assets/js/16.196140b7.js"><link rel="prefetch" href="/assets/js/18.92a56d95.js"><link rel="prefetch" href="/assets/js/19.559fa657.js"><link rel="prefetch" href="/assets/js/2.f85cce33.js"><link rel="prefetch" href="/assets/js/20.fd0837c4.js"><link rel="prefetch" href="/assets/js/21.5f0d4fd4.js"><link rel="prefetch" href="/assets/js/22.ec9978bf.js"><link rel="prefetch" href="/assets/js/23.709c4cfe.js"><link rel="prefetch" href="/assets/js/24.0a7eb301.js"><link rel="prefetch" href="/assets/js/25.ccd5af01.js"><link rel="prefetch" href="/assets/js/26.1dc556f1.js"><link rel="prefetch" href="/assets/js/27.9513c522.js"><link rel="prefetch" href="/assets/js/28.29a5ca62.js"><link rel="prefetch" href="/assets/js/30.3d2c33ba.js"><link rel="prefetch" href="/assets/js/31.f85c3079.js"><link rel="prefetch" href="/assets/js/32.3d291077.js"><link rel="prefetch" href="/assets/js/33.03fa525f.js"><link rel="prefetch" href="/assets/js/34.4b677f53.js"><link rel="prefetch" href="/assets/js/35.74c2bfa1.js"><link rel="prefetch" href="/assets/js/36.a3f36334.js"><link rel="prefetch" href="/assets/js/37.bb8c8383.js"><link rel="prefetch" href="/assets/js/38.25a187b5.js"><link rel="prefetch" href="/assets/js/39.744e016c.js"><link rel="prefetch" href="/assets/js/40.0faa17e3.js"><link rel="prefetch" href="/assets/js/41.7fbc6e2a.js"><link rel="prefetch" href="/assets/js/42.533fe560.js"><link rel="prefetch" href="/assets/js/43.6d5be326.js"><link rel="prefetch" href="/assets/js/44.d1b9af54.js"><link rel="prefetch" href="/assets/js/45.3e479bd4.js"><link rel="prefetch" href="/assets/js/46.dd93df8e.js"><link rel="prefetch" href="/assets/js/47.44d6701f.js"><link rel="prefetch" href="/assets/js/48.e4f4bc06.js"><link rel="prefetch" href="/assets/js/49.d05175f8.js"><link rel="prefetch" href="/assets/js/5.0eeb0687.js"><link rel="prefetch" href="/assets/js/50.2d5780b5.js"><link rel="prefetch" href="/assets/js/51.9cf16f12.js"><link rel="prefetch" href="/assets/js/52.146509f4.js"><link rel="prefetch" href="/assets/js/53.8559726f.js"><link rel="prefetch" href="/assets/js/54.42723c3d.js"><link rel="prefetch" href="/assets/js/55.2027f232.js"><link rel="prefetch" href="/assets/js/56.967cf3be.js"><link rel="prefetch" href="/assets/js/57.647eb8a9.js"><link rel="prefetch" href="/assets/js/58.6e4b2193.js"><link rel="prefetch" href="/assets/js/59.29946c67.js"><link rel="prefetch" href="/assets/js/6.cb964028.js"><link rel="prefetch" href="/assets/js/60.987ce7ea.js"><link rel="prefetch" href="/assets/js/61.91f5c55a.js"><link rel="prefetch" href="/assets/js/62.66649d2e.js"><link rel="prefetch" href="/assets/js/63.80d750e3.js"><link rel="prefetch" href="/assets/js/64.578d229f.js"><link rel="prefetch" href="/assets/js/65.0b68bc15.js"><link rel="prefetch" href="/assets/js/66.33d9c266.js"><link rel="prefetch" href="/assets/js/67.114f9fca.js"><link rel="prefetch" href="/assets/js/68.d1510e17.js"><link rel="prefetch" href="/assets/js/69.9585ebff.js"><link rel="prefetch" href="/assets/js/7.87c1adf5.js"><link rel="prefetch" href="/assets/js/70.ae576e11.js"><link rel="prefetch" href="/assets/js/71.3578bb66.js"><link rel="prefetch" href="/assets/js/72.e7c509fb.js"><link rel="prefetch" href="/assets/js/73.c97dedd3.js"><link rel="prefetch" href="/assets/js/74.f2fee3c4.js"><link rel="prefetch" href="/assets/js/75.f5fb1db6.js"><link rel="prefetch" href="/assets/js/76.5e90f553.js"><link rel="prefetch" href="/assets/js/77.0bf63761.js"><link rel="prefetch" href="/assets/js/78.04e1fbee.js"><link rel="prefetch" href="/assets/js/79.129bcdaa.js"><link rel="prefetch" href="/assets/js/8.a196f53f.js"><link rel="prefetch" href="/assets/js/80.2ed3e8c3.js"><link rel="prefetch" href="/assets/js/81.ce072043.js"><link rel="prefetch" href="/assets/js/82.eaff652c.js"><link rel="prefetch" href="/assets/js/83.f8daefbd.js"><link rel="prefetch" href="/assets/js/84.40da3f7f.js"><link rel="prefetch" href="/assets/js/85.e934db2b.js"><link rel="prefetch" href="/assets/js/86.a5a71179.js"><link rel="prefetch" href="/assets/js/87.9b52875a.js"><link rel="prefetch" href="/assets/js/88.9e79fbce.js"><link rel="prefetch" href="/assets/js/89.6a5a74c1.js"><link rel="prefetch" href="/assets/js/9.be5ff211.js"><link rel="prefetch" href="/assets/js/90.5a87bc12.js"><link rel="prefetch" href="/assets/js/91.4ec57186.js"><link rel="prefetch" href="/assets/js/92.9a67f9db.js"><link rel="prefetch" href="/assets/js/93.37f67a09.js"><link rel="prefetch" href="/assets/js/94.05b74137.js"><link rel="prefetch" href="/assets/js/95.5f5bed22.js"><link rel="prefetch" href="/assets/js/96.59de9d4b.js"><link rel="prefetch" href="/assets/js/97.fd14dd00.js"><link rel="prefetch" href="/assets/js/98.a8932452.js"><link rel="prefetch" href="/assets/js/99.b99e5fd6.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.8e583f31.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7a68c1e3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/assets/img/logo.svg" alt="Apache Teaclave (incubating)" class="logo"> <span class="site-name can-hide" style="display:none;">Teaclave</span></a> <div class="links"><!----> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  ABOUT
+</a></div><div class="nav-item"><a href="/powered-by/" class="nav-link">
+  POWERED BY
+</a></div><div class="nav-item"><a href="/community/" class="nav-link">
+  COMMUNITY
+</a></div><div class="nav-item"><a href="/download/" class="nav-link">
+  DOWNLOAD
+</a></div><div class="nav-item"><a href="/contributors/" class="nav-link">
+  CONTRIBUTORS
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="DOCS" class="dropdown-title"><span class="title">DOCS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/" class="nav-link">
+  Teaclave
+</a></li><li class="dropdown-item"><!----> <a href="/sgx-sdk-docs/" class="nav-link">
+  Teaclave SGX SDK
+</a></li><li class="dropdown-item"><!----> <a href="/trustzone-sdk-docs/" class="nav-link">
+  Teaclave TrustZone SDK
+</a></li><li class="dropdown-item"><h4>
+          APIS
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-rust/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Rust)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-python/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Python)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/sgx-sdk/" target="_self" rel="" class="nav-link external">
+  Teaclave SGX SDK
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (Host)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (TA)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-enclave/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (Enclave)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-app/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (App)
+  <!----></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  BLOG
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="REPOS" class="dropdown-title"><span class="title">REPOS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-sgx-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave SGX SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-trustzone-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave TrustZone SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-java-tee-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Java TEE SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-website" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Website
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Apache Software Foundation" class="dropdown-title"><span class="title">ASF</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.apache.org/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ASF Homepage
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  License
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sponsorship
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/security/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Security
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Privacy
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Thanks
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/events/current-event.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Events
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  ABOUT
+</a></div><div class="nav-item"><a href="/powered-by/" class="nav-link">
+  POWERED BY
+</a></div><div class="nav-item"><a href="/community/" class="nav-link">
+  COMMUNITY
+</a></div><div class="nav-item"><a href="/download/" class="nav-link">
+  DOWNLOAD
+</a></div><div class="nav-item"><a href="/contributors/" class="nav-link">
+  CONTRIBUTORS
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="DOCS" class="dropdown-title"><span class="title">DOCS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/" class="nav-link">
+  Teaclave
+</a></li><li class="dropdown-item"><!----> <a href="/sgx-sdk-docs/" class="nav-link">
+  Teaclave SGX SDK
+</a></li><li class="dropdown-item"><!----> <a href="/trustzone-sdk-docs/" class="nav-link">
+  Teaclave TrustZone SDK
+</a></li><li class="dropdown-item"><h4>
+          APIS
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-rust/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Rust)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/client-sdk-python/" target="_self" rel="" class="nav-link external">
+  Teaclave Client SDK (Python)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/sgx-sdk/" target="_self" rel="" class="nav-link external">
+  Teaclave SGX SDK
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (Host)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee" target="_self" rel="" class="nav-link external">
+  Teaclave TrustZone SDK (TA)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-enclave/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (Enclave)
+  <!----></a></li><li class="dropdown-subitem"><a href="https://teaclave.apache.org/api-docs/crates-app/" target="_self" rel="" class="nav-link external">
+  Crates in Teaclave (App)
+  <!----></a></li></ul></li></ul></div></div><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  BLOG
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="REPOS" class="dropdown-title"><span class="title">REPOS</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-sgx-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave SGX SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-trustzone-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave TrustZone SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-java-tee-sdk" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Java TEE SDK
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/apache/incubator-teaclave-website" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Teaclave Website
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Apache Software Foundation" class="dropdown-title"><span class="title">ASF</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://www.apache.org/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ASF Homepage
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  License
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sponsorship
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/security/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Security
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://privacy.apache.org/policies/privacy-policy-public.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Privacy
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Thanks
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.apache.org/events/current-event.html" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Events
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav>  <!----> </aside> <main class="page"> <div id="base-list-layout" class="theme-default-content"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        使用 Teaclave TrustZone SDK 开发 TrustZone 应用
+      </h1> <div class="publish-date-author">October 15, 2021 · Wenwen Ruan</div></header> <div itemprop="articleBody" class="content__default"><nav class="table-of-contents"><ol><li><a href="#teaclave-trustzone-sdk-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"> Teaclave TrustZone SDK 应用开发环境搭建</a><ol><li><a href="#%E5%87%86%E5%A4%87%E6%9D%A1%E4%BB%B6"> 准备条件</a></li><li><a href="#%E9%85%8D%E7%BD%AE-teaclave-trustzone-sdk-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"> 配置 Teaclave TrustZone SDK 编译环境</a></li><li><a href="#%E5%9C%A8-qemu-armv8-%E4%B8%8A%E8%BF%90%E8%A1%8C-teaclave-trustzone-sdk-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"> 在 QEMU ARMv8 上运行 Teaclave TrustZone SDK 应用程序</a></li><li><a href="#%E9%85%8D%E7%BD%AE-teaclave-trustzone-sdk-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84-debug-%E7%8E%AF%E5%A2%83"> 配置 Teaclave TrustZone SDK 应用程序的 debug 环境</a></li></ol></li><li><a href="#teaclave-trustzone-sdk-%E7%A4%BA%E4%BE%8B-hello_world-rs-%E5%89%96%E6%9E%90"> Teaclave TrustZone SDK 示例 hello_world-rs 剖析</a><ol><li><a href="#hello_world-rs-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"> hello_world-rs 目录结构</a></li><li><a href="#hello_world-rs-%E9%87%8D%E8%A6%81%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90"> hello_world-rs 重要代码文件解析</a></li><li><a href="#%E7%BC%96%E8%AF%91%E4%B9%8B%E5%90%8E%E7%9A%84-hello_world-rs-%E4%BB%A3%E7%A0%81%E7%9B%AE%E5%BD%95"> 编译之后的 hello_world-rs 代码目录</a></li></ol></li><li><a href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E8%87%AA%E5%B7%B1%E7%9A%84-teaclave-trustzone-sdk-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"> 开发者如何开发自己的 Teaclave TrustZone SDK 应用程序</a></li><li><a href="#%E6%80%BB%E7%BB%93"> 总结</a></li><li><a href="#%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB"> 延伸阅读</a></li></ol></nav><p>在 <a href="https://teaclave.apache.org/blog/2021-03-15-welcome-rust-optee-trustzone-sdk-cn/" rel="noopener noreferrer">欢迎 RUST OP-TEE TRUSTZONE SDK 成为 TEACLAVE 子项目</a> 一文中已经对Teaclave TrustZone SDK 项目进行了简单的介绍。在本文中，将会介绍使用 Teaclave TrustZone SDK 开发 TrustZone 应用程序。</p> <h2 id="teaclave-trustzone-sdk-应用开发环境搭建"><a href="#teaclave-trustzone-sdk-应用开发环境搭建" class="header-anchor">#</a> Teaclave TrustZone SDK 应用开发环境搭建</h2> <h3 id="准备条件"><a href="#准备条件" class="header-anchor">#</a> 准备条件</h3> <ul><li>Ubuntu 系列</li></ul> <p><em>本文基于的 Teaclave TrustZone SDK 提交哈希值：8520a2018705edcebfb7e729bd2ced12414fc052</em></p> <h3 id="配置-teaclave-trustzone-sdk-编译环境"><a href="#配置-teaclave-trustzone-sdk-编译环境" class="header-anchor">#</a> 配置 Teaclave TrustZone SDK 编译环境</h3> <p>下载 Teaclave TrustZone SDK 项目，初始化相关的子模块并安装 Rust 工具链以及交叉编译工具 Xargo。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ git clone https://github.com/apache/incubator-teaclave-trustzone-sdk
+$ cd incubator-teaclave-trustzone-sdk
+$ ./setup.sh
+</code></pre></div><p>初始化 OP-TEE 子模块。初始化完毕之后，在 <code>optee</code> 根目录下需要有 <code>build/</code>, <code>optee_os/</code> 和 <code>optee_client</code> 子目录。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ git submodule update --init -- optee
+</code></pre></div><p>在编译样例之前，需要设置环境变量。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ source environment
+</code></pre></div><p>默认情况下，目标平台是 <code>aarch64</code>，如果希望为 <code>arm</code> 平台编译，需要在 <code>source environment</code> 之前设置 <code>ARCH</code> 变量。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ export ARCH=arm
+$ source environment
+</code></pre></div><p>接着，下载 ARM 工具链并编译 OP-TEE 库。</p> <div class="language-sh extra-class"><pre class="language-text"><code>make optee
+</code></pre></div><p>最后，编译 Teaclave TrustZone SDK 官方提供的例子。</p> <div class="language-sh extra-class"><pre class="language-text"><code>make examples
+</code></pre></div><h3 id="在-qemu-armv8-上运行-teaclave-trustzone-sdk-应用程序"><a href="#在-qemu-armv8-上运行-teaclave-trustzone-sdk-应用程序" class="header-anchor">#</a> 在 QEMU ARMv8 上运行 Teaclave TrustZone SDK 应用程序</h3> <p>现在，Teaclave TrustZone SDK 官方提供的示例已经编译好了，但如果需要在 QEMU ARMv8 模拟器上运行这些示例，还需要准备一个支持 OP-TEE 的 QEMU 环境，从而在该环境上运行已经编译好的 SDK 中的示例。
+首先，需要安装 QEMU 环境需要的依赖。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ sudo apt-get install android-tools-adb android-tools-fastboot autoconf \
+        automake bc bison build-essential ccache cscope curl device-tree-compiler \
+        expect flex ftp-upload gdisk iasl libattr1-dev libc6:i386 libcap-dev \
+        libfdt-dev libftdi-dev libglib2.0-dev libhidapi-dev libncurses5-dev \
+        libpixman-1-dev libssl-dev libstdc++6:i386 libtool libz1:i386 make \
+        mtools netcat python-crypto python3-crypto python-pyelftools \
+        python3-pycryptodome python3-pyelftools python-serial python3-serial \
+        rsync unzip uuid-dev xdg-utils xterm xz-utils zlib1g-dev
+</code></pre></div><p>也可以选择使用 Teaclave TrustZone SDK 官方提供的 docker，在 docker 中开发就无需下载上述依赖。</p> <div class="language- extra-class"><pre class="language-text"><code>$ docker pull teaclave/teaclave-trustzone-sdk-build:0.2.1
+# start docker
+$ docker run -ti teaclave/teaclave-trustzone-sdk-build:0.2.1
+</code></pre></div><p>下载 QEMU ARMv8 对应的 OP-TEE 的源代码。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ mkdir -p ~/bin
+$ curl https://storage.googleapis.com/git-repo-downloads/repo-1 &gt; ~/bin/repo &amp;&amp; chmod a+x ~/bin/repo
+$ export PATH=~/bin:$PATH
+$ mkdir optee-qemuv8-3.14.0 &amp;&amp; cd optee-qemuv8-3.14.0 &amp;&amp; \
+  repo init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml -b 3.14.0 &amp;&amp; \
+  repo sync -j4 --no-clone-bundle
+</code></pre></div><p>编译 QEMU ARMv8 OP-TEE。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ cd build
+$ make -j2 toolchains &amp;&amp; \
+  make QEMU_VIRTFS_ENABLE=y CFG_TEE_RAM_VA_SIZE=0x00300000
+</code></pre></div><p>在漫长的编译过程之后，还需要新建一个共享文件夹，用于和 QEMU 子系统共享示例的 host apps 和 TAs。</p> <p>首先要将 <code>path/to/example/host/target/aarch64-unknown-linux-gnu/release/example</code> 和 <code>path/to/example/ta/target/aarch64-unknown-optee-trustzone/release/*.ta</code> 分别复制到 <code>incubator-teaclave-trustzone-sdk/out/host</code> 和 <code>incubator-teaclave-trustzone-sdk/out/ta/</code>。接着还需要将 <code>incubator-teaclave-trustzone-sdk/out/*</code> 中的文件复制到 QEMU 共享文件夹 <code>shared_folder/</code> 中。</p> <div class="language- extra-class"><pre class="language-text"><code>$ mkdir shared_folder
+$ (cd /project/root/dir/ &amp;&amp; make examples-install)
+$ cp -r /project/root/dir/out/* shared_folder/
+</code></pre></div><p>如果处于一个没有 GUI 的运行环境，在启动 QEMU 之前，还需要修改 <code>qemu_v8.mk</code> 中的代码。以 OP-TEE QEMU 3.14.0 版本为例，注释掉 <code>optee-qemuv8-3.14.0/build/qemu_v8.mk</code> 中的 386-388 行。</p> <div class="language-makefile extra-class"><pre class="language-text"><code>.PHONY: run-only
+run-only:
+        ln -sf $(ROOT)/out-br/images/rootfs.cpio.gz $(BINARIES_PATH)/
+        $(call check-terminal)
+        $(call run-help)
+        # $(call launch-terminal,54320,&quot;Normal World&quot;)
+        # $(call launch-terminal,54321,&quot;Secure World&quot;)
+        # $(call wait-for-ports,54320,54321)
+        cd $(BINARIES_PATH) &amp;&amp; $(QEMU_BUILD)/aarch64-softmmu/qemu-system-aarch64 \
+</code></pre></div><p>在启动 QEMU 之前前，需要运行 <code>nc</code> 来监听端口 <code>54320</code> 和 <code>54321</code>。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ nc -l 127.0.0.1 -p 54320
+$ nc -l 127.0.0.1 -p 54321
+</code></pre></div><p>进入 <code>qemu_v8.mk</code> 所在的目录启动 QEMU。</p> <div class="language- extra-class"><pre class="language-text"><code>make run-only QEMU_VIRTFS_ENABLE=y QEMU_VIRTFS_HOST_DIR=$(pwd)/shared_folder
+</code></pre></div><p>当 QEMU 启动之后，端口 <code>54320</code> 窗口中运行的是普通世界，端口 <code>54321</code> 窗口中运行的是安全世界。在普通世界中，根据提示输入 <code>root</code> 登录后，需要将共享文件夹挂载到 QEMU 子系统中，用于在 QEMU 中访问编译好的 CA/TA 可执行文件。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ mkdir shared &amp;&amp; mount -t 9p -o trans=virtio host shared
+</code></pre></div><p>接着，需要将 TA 复制到 <code>/lib/optee_armtz</code> 目录下，提供给安全世界调用。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ cd shared &amp;&amp; cp ta/*.ta /lib/optee_armtz/
+</code></pre></div><p>进入 <code>host</code> 文件夹中并执行 host apps。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ cd host
+$ ./hello_world
+original value is 29
+inc value is 129
+dec value is 29
+Success
+</code></pre></div><p>至此，我们成功地在 QEMU 环境中运行了 Teaclave TrustZone SDK 的 <code>hello_world-rs</code> 示例。</p> <h3 id="配置-teaclave-trustzone-sdk-应用程序的-debug-环境"><a href="#配置-teaclave-trustzone-sdk-应用程序的-debug-环境" class="header-anchor">#</a> 配置 Teaclave TrustZone SDK 应用程序的 debug 环境</h3> <p>在开发应用程序的时候，难免会有 debug 的需求，在这不一部分，将会简单介绍如何在 Teaclave TrustZone SDK 中配置 debug 环境。</p> <p>在编译 QEMU ARMv8 OPTEE 时需要关闭 ASLR，可以通过直接修改 <code>OP-TEE/optee_os/mk/config.mk</code> 文件中的 <code>CFG_CORE_ASLR</code> 为 <code>n</code>，注意修改之后还需要重新编译 <code>make run</code>。</p> <div class="language-makefile extra-class"><pre class="language-text"><code># CFG_CORE_ASLR ?= y
+CFG_CORE_ASLR ?= n
+</code></pre></div><p>也可以直接在编译时添加编译信息： <code>make run CFG_CORE_ASLR=n</code>。</p> <p>由于程序是在远程系统上 (QEMU) 上被 debugged，所以在编译时还需要加上 <code>GDBSERVER=y</code>。</p> <p>在启动 gdb 之后，执行 <code>target remote :1234</code> 命令连接上 QEMU GDB 服务器端口。</p> <div class="language-sh extra-class"><pre class="language-text"><code>$ ./path/to/qemu-v8-project/out-br/host/bin/aarch64-buildroot-linux-gnu-gdb
+(gdb) target remote :1234
+Remote debugging using :1234
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the &quot;file&quot; command.
+0xffffb30b00ea12b4 in ?? ()
+</code></pre></div><p>接下来，加载 TEE 内核符号表。</p> <div class="language-sh extra-class"><pre class="language-text"><code>(gdb) symbol-file /path/to/qemu-v8-project/optee_os/out/arm/core/tee.elf
+</code></pre></div><p>以 <code>hello_world-rs</code> 为例，根据安全世界窗口提示，可知 <code>hello_world-rs</code> 的 TA text 部分的起始地址为 0x40014000。</p> <div class="language- extra-class"><pre class="language-text"><code>D/LD:  ldelf:168 ELF (133af0ca-bdab-11eb-9130-43bf7873bf67) at 0x40014000
+</code></pre></div><p>根据该地址提示，从该地址开始加载 <code>hello_world-rs</code> 的 ta 符号表。</p> <div class="language-sh extra-class"><pre class="language-text"><code>(gdb) add-symbol-file /path/to/examples/hello_world-rs/ta/target/aarch64-unknown-optee-trustzone/debug/ta 0x40014000
+</code></pre></div><p>然后，可以根据自己的需求在相应的函数或地址上打断点。</p> <div class="language- extra-class"><pre class="language-text"><code>(gdb) b open_session
+</code></pre></div><p><img src="/assets/img/2021-10-15-qemu-world-execution-windows.48165c83.png" alt="QEMU 执行示意图"></p> <h2 id="teaclave-trustzone-sdk-示例-hello-world-rs-剖析"><a href="#teaclave-trustzone-sdk-示例-hello-world-rs-剖析" class="header-anchor">#</a> Teaclave TrustZone SDK 示例 hello_world-rs 剖析</h2> <h3 id="hello-world-rs-目录结构"><a href="#hello-world-rs-目录结构" class="header-anchor">#</a> <code>hello_world-rs</code> 目录结构</h3> <div class="language- extra-class"><pre class="language-text"><code>├── Makefile
+├── host
+│   ├── Cargo.lock
+│   ├── Cargo.toml
+│   ├── Makefile
+│   └── src
+│       └── main.rs
+├── proto
+│   ├── Cargo.toml
+│   ├── build.rs
+│   └── src
+│       └── lib.rs
+├── ta
+│   ├── Cargo.lock
+│   ├── Cargo.toml
+│   ├── Makefile
+│   ├── Xargo.toml
+│   ├── build.rs
+│   ├── src
+│   │   └── main.rs
+│   ├── ta_aarch64.lds
+│   ├── ta_arm.lds
+│   └── ta_static.rs
+└── uuid.txt
+
+</code></pre></div><ul><li><code>host</code> 文件夹中存放的是普通世界的 <code>untrusted code</code>。
+<ul><li><code>host/src/main.rs</code> 是 <code>hello_world-rs</code> 应用程序执行的入口，<code>Cargo.toml</code> 描述了 <code>host</code> 部分的依赖， <code>Cargo.lock</code> 中包含了依赖项的完整信息，<code>Makefile</code> 定义了 <code>host</code> 部分的编译信息。</li></ul></li> <li><code>ta</code> 文件夹中存放的是安全世界中的 <code>trusted code</code>。
+<ul><li>相比较 <code>host</code>，<code>ta</code> 文件夹中多了以下文件：<code>Xargo.toml</code> 是 TA 的交叉编译文件 ，<code>ta_aarch64.lds</code> 和 <code>ta_arm.lds</code> 分别定义了在 64 位架构和 32 位架构下 teaclave trustzone sdk 应用程序各部分在程序地址空间内的布局；<code>ta_static.rs</code> 定义了 TA 中的静态数据信息。</li></ul></li> <li><code>proto</code> 文件夹中存放的是 CA (Client Application) 和 TA (Trusted Application) 共享的数据结构，并承担着解析 <code>uuid.txt</code> 提取 UUID 的任务。</li> <li><code>uuid.txt</code> 文件中记录的是 TA 的 UUID，是每个 TA 独一无二的身份标识。</li></ul> <h3 id="hello-world-rs-重要代码文件解析"><a href="#hello-world-rs-重要代码文件解析" class="header-anchor">#</a> <code>hello_world-rs</code> 重要代码文件解析</h3> <ul><li><code>host/src/main.rs</code></li></ul> <p>进入 <code>main</code> 函数，首先调用 <code>Context::new</code> 函数建立起 <code>hello_world-rs</code> CA 和 TA 的逻辑联系，<code>ctx</code> 指向类型为 <code>Context</code> 的变量的地址，用于 CA 和 TA 的连接和通信。</p> <div class="language-rust extra-class"><pre class="language-text"><code>let mut ctx = Context::new()?;
+</code></pre></div><p>调用 <code>open_session</code> 在 CA 和对应的 TA 中打开一个 <code>session</code>，并将 <code>hello_world-rs</code> 的 UUID 作为参数传入，用于指引 CA 连接对应 UUID 值的 TA。</p> <div class="language-rust extra-class"><pre class="language-text"><code>let uuid = Uuid::parse_str(UUID).unwrap();
+let mut session = ctx.open_session(uuid)?;
+</code></pre></div><p>将 <code>&amp;mut session</code> 作为参数传入 <code>hello_world</code> 函数中。</p> <div class="language-rust extra-class"><pre class="language-text"><code>hello_world(&amp;mut session)?;
+</code></pre></div><p>进入到 <code>hello_world</code> 函数中，首先将要进行运算的 <code>u32</code> 操作数用 <code>ParamValue</code> 类型包装为操作数 <code>p0</code>，设置其值为29，类型为 <code>ValueInout</code>，表示同时作为输入参数和返回值。</p> <div class="language-rust extra-class"><pre class="language-text"><code>let p0 = ParamValue::new(29, 0, ParamType::ValueInout);
+</code></pre></div><p><code>operation</code> 用于保存 CA 要传递给 TA 的参数信息，第一个参数一般保留为 0，由于这里只有一个要传递的参数 <code>p0</code>，其他参数都保留为 <code>ParamNone</code>。</p> <div class="language-rust extra-class"><pre class="language-text"><code>let mut operation = Operation::new(0, p0, ParamNone, ParamNone, ParamNone);
+</code></pre></div><p>CA 端使用获取到的 <code>session</code>, <code>command_id</code> 和要传递的参数 <code>operation</code> 调用 <code>invoke_command</code> 执行特定的 <code>command</code>，该操作将会切换到安全世界。</p> <div class="language-rust extra-class"><pre class="language-text"><code>session.invoke_command(Command::IncValue as u32, &amp;mut operation)?;
+</code></pre></div><ul><li><code>ta/src/main.rs</code></li></ul> <p><code>ta/src/main.rs</code> 中的 <code>invoke_command</code> 函数参数与 host 中调用的 <code>invoke_command</code> 略有不同，第二个参数是 <code>Paramters</code> 类型。当数据从 CA 传递到 TA 时，实际上执行的是按 bit 的复制操作，所以 <code>params</code> 中的数据就是从 <code>operation</code> 中传递过来的数据.</p> <div class="language-rust extra-class"><pre class="language-text"><code>fn invoke_command(cmd_id: u32, params: &amp;mut Parameters) -&gt; Result&lt;()&gt; {
+</code></pre></div><p><code>values</code> 从 <code>params</code> 取出要操作的 <code>u32</code> 值，<code>match</code> 表达式根据传入的参数 <code>cmd_id</code> 匹配对应的操作。在下面的代码中，如果匹配到 <code>Command::IncValue</code>，就对 <code>values</code> 中的 <code>u32</code> 值执行 +100 的操作；如果匹配到 <code>Command::DecValue</code>，就执行 -100 的操作；如果匹配到其他值，就直接返回错误参数的错误类型。</p> <div class="language-rust extra-class"><pre class="language-text"><code>fn invoke_command(cmd_id: u32, params: &amp;mut Parameters) -&gt; Result&lt;()&gt; {
+    trace_println!(&quot;[+] TA invoke command&quot;);
+    let mut values = unsafe { params.0.as_value().unwrap() };
+    match Command::from(cmd_id) {
+        Command::IncValue =&gt; {
+            values.set_a(values.a() + 100);
+            Ok(())
+        }
+        Command::DecValue =&gt; {
+            values.set_a(values.a() - 100);
+            Ok(())
+        }
+        _ =&gt; Err(Error::new(ErrorKind::BadParameters)),
+    }
+}
+</code></pre></div><ul><li><code>proto/src/lib.rs</code></li></ul> <p><code>lib.rs</code> 中的枚举变量 <code>Command</code> 声明是开发者要实现的命令。</p> <div class="language-rust extra-class"><pre class="language-text"><code>pub enum Command {
+    IncValue,
+    DecValue,
+    Unknown,
+}
+</code></pre></div><h3 id="编译之后的-hello-world-rs-代码目录"><a href="#编译之后的-hello-world-rs-代码目录" class="header-anchor">#</a> 编译之后的 <code>hello_world-rs</code> 代码目录</h3> <p>编译之后的代码目录如下所示，这里省略了 <code>release</code> 文件夹下的内容。</p> <div class="language- extra-class"><pre class="language-text"><code>├── Makefile
+├── host
+│   ├── Cargo.lock
+│   ├── Cargo.toml
+│   ├── Makefile
+│   ├── src
+│   │   └── main.rs
+│   └── target                               #[generate] 
+│       ├── aarch64-unknown-linux-gnu        #[generate] 
+│       │   └── release                      #[generate]
+│       └── release                          #[generate]
+├── proto
+│   ├── Cargo.lock
+│   ├── Cargo.toml
+│   ├── build.rs
+│   ├── src
+│   │   └── lib.rs
+│   └── target                               #[generate]
+│       └── rls                              #[generate]
+│           └── debug                        #[generate]
+├── ta
+│   ├── Cargo.lock
+│   ├── Cargo.toml
+│   ├── Makefile
+│   ├── Xargo.toml
+│   ├── build.rs
+│   ├── src
+│   │   └── main.rs
+│   ├── ta_aarch64.lds
+│   ├── ta_arm.lds
+│   ├── ta_static.rs
+│   └── target                               #[generate]
+│       ├── aarch64-unknown-optee-trustzone  #[generate]
+│       │   └── release                      #[generate]
+│       └── release                          #[generate]
+└── uuid.txt
+</code></pre></div><p><code>hello_world-rs</code> 编译过程更类似于 Rust 程序编译。</p> <ul><li>编译不可信部分 host 文件夹，生成 <code>hello_world-rs</code> 可执行文件；</li> <li>交叉编译可信部分 ta 文件夹，再用 UUID 和密钥进行签名，生成 <code>UUID.ta</code> 可执行文件。</li> <li>在执行时，<code>hello_world-rs</code> 对 <code>UUID.ta</code> 验证通过后调用执行。</li></ul> <h2 id="开发者如何开发自己的-teaclave-trustzone-sdk-应用程序"><a href="#开发者如何开发自己的-teaclave-trustzone-sdk-应用程序" class="header-anchor">#</a> 开发者如何开发自己的 Teaclave TrustZone SDK 应用程序</h2> <p>和前面介绍过的 <a href="https://teaclave.apache.org/blog/2021-08-25-developing-sgx-application-with-teaclave-sgx-sdk/" rel="noopener noreferrer">使用 TEACLAVE SGX SDK 开发 SGX 应用</a> 相似，这里也同样通过对 Teaclave TrustZone SDK 示例程序 <code>hello_world-rs</code> 进行改写来介绍如何构造自己的 Teaclave TrustZone SDK。</p> <p>需要注意的是，Teaclave TrustZone SDK 是通过 UUID 唯一标识系统中的 TA，UUID 值不能重复，所以我们首先需要通过 <a href="https://www.itu.int/en/ITU-T/asn1/Pages/UUID/uuids.aspx" rel="noopener noreferrer">ITU-T UUID generator</a> 网站申请属于自己的唯一的 UUID，并将 <code>uuid.rs</code> 文件中的内容修改为新得到的 UUID 值。</p> <div class="language- extra-class"><pre class="language-text"><code>1487a406-160d-4641-957e-66292f8d1309
+</code></pre></div><p>假设开发目标是为两个 <code>u8</code> 数组求得交集和并集，也就是要实现交集函数 <code>Intersection</code> 和并集函数 <code>Union</code> 两个功能函数。</p> <p>对 <code>proto/lib.rs</code> 进行修改，将 <code>Command</code> 中的成员替换为待实现的 <code>Intersection</code> 和 <code>Union</code>。</p> <div class="language-rust extra-class"><pre class="language-text"><code>pub enum Command {
+    Intersection,
+    Union,
+    Unknown,
+}
+
+impl From&lt;u32&gt; for Command {
+    #[inline]
+    fn from(value: u32) -&gt; Command {
+        match value {
+            0 =&gt; Command::Intersection,
+            1 =&gt; Command::Union,
+            _ =&gt; Command::Unknown,
+        }
+    }
+}
+</code></pre></div><p>接着，进入 <code>host/src/main.rs</code> 中的 <code>main</code> 函数，添加进行数据计算的函数，将用于与 TA 通信的 session 内存地址作为参数传递到 <code>data_compute</code> 中。</p> <div class="language-rust extra-class"><pre class="language-text"><code>data_compute(&amp;mut session)?;
+</code></pre></div><p>在 <code>data_compute</code> 中，首先声明要进行数据处理的两个 <code>u8</code> 数组 <code>nums1</code> 和 <code>nums2</code>，以及用于存储数据处理结果的 <code>resu</code>。在示例代码 <code>hello_world</code> 中的变量声明使用的是 <code>ParamValue</code>，但这里我们需要访问数组，一段连续的内存变量而非变量。通过阅读 Teaclave TrustZone SDK client 端的 Rust 仓库 <a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-teec/optee_teec/index.html" rel="noopener noreferrer">Crate optee_teec</a>，可知 <code>ParamTmpRef</code> 用于定义临时内存访问。于是将这三个数组地址作为参数新建 <code>ParamTmpRef</code> 类型，并将 <code>ParamTmpRef</code> 类型变量传递到 <code>operation</code> 中，用于传递给 TA 交互信息。</p> <p>在准备好与 TA 交互的信息后，调用 <code>invoke_command</code> 通知对应的 TA 执行 <code>Command::Intersection</code> 指定的操作。</p> <div class="language-rust extra-class"><pre class="language-text"><code>// in host/src/main.rs
+fn data_compute(session: &amp;mut Session) -&gt; optee_teec::Result&lt;()&gt; {
+    let nums1:[u8; 5] = [1, 2, 3, 4, 5];
+    let nums2:[u8; 5] = [4, 5, 6, 7, 8];
+    let mut resu = vec![0; 10];
+
+    let p1 = ParamTmpRef::new_input(&amp;nums1);
+    let p2 = ParamTmpRef::new_input(&amp;nums2);
+    let p3 = ParamTmpRef::new_output(&amp;mut resu);
+    let mut operation = Operation::new(0, p1, p2, p3, ParamNone);
+
+    println!(&quot;intersection invoke&quot;);
+    session.invoke_command(Command::Intersection as u32, &amp;mut operation)?;
+}
+</code></pre></div><p><code>invoke_command</code> 函数的具体实现在 <code>ta/sec/main.rs</code> 文件中的 <code>invoke_command</code>。共享的参数通过 <code>params</code> 从 CA 传递到 TA 中，
+同样，可以根据 TA 端的 Rust 仓库 <a href="https://teaclave.apache.org/api-docs/trustzone-sdk/optee-utee/optee_utee/index.html" rel="noopener noreferrer">optee_utee</a> 提供的接口函数抽丝剥茧般地提取出来 <code>ParamMemref</code> 类型的 <code>nums1</code>, <code>nums2</code> 和 <code>vec_resu</code>。</p> <div class="language-rust extra-class"><pre class="language-text"><code>    let nums1 = unsafe { params.0.as_memref().unwrap().raw() };
+    let nums2 = unsafe { params.1.as_memref().unwrap().raw() };
+    let mut vec_resu = unsafe { params.2.as_memref().unwrap().raw() };
+
+    let nums1_size = unsafe { (*nums1).size };
+    let nums2_size = unsafe { (*nums2).size };
+</code></pre></div><p>现在，进入 <code>match</code> 表达式中，将 <code>Command::from</code> 的枚举修改为 <code>Command::Intersection</code> 和 <code>Command::Union</code>。要实现的函数就填充到对应的分支括号中。</p> <div class="language-rust extra-class"><pre class="language-text"><code>  match Command::from(cmd_id) {
+    Command::Intersection =&gt; {
+      Ok(())
+    }
+    Command::Union =&gt; {
+      Ok(())
+    }
+</code></pre></div><p>下面的示例代码实现的是求两个数组之间的交集元素。具体的实现是通过一个额外的散列集 <code>set</code>，记录 <code>nums1</code> 中的所有元素，然后对 <code>nums2</code> 中的元素进行遍历，如果 <code>nums2</code> 中的元素也出现在了 <code>set</code> 中，那么该元素为 <code>nums1</code> 和 <code>nums2</code> 共有，是交集元素，写入结果向量 <code>vec_resu</code> 中，并移除掉 <code>set</code> 中的该元素。最后，将结果向量的 <code>size</code> 修改为共有的交集元素的个数。其中，要读取 <code>nums1</code> 和 <code>nums2</code> 数组中的元素，还需要解引用 <code>ParamMemref</code> 类型的指针读取出指向元素值的 <code>buffer</code> 指针地址，再使用 <code>offset</code> 偏移指针从而读出 <code>nums1</code> 和 <code>nums2</code> 的值。</p> <div class="language-rust extra-class"><pre class="language-text"><code>      let mut set: HashSet&lt;u8&gt; = HashSet::new();
+      let mut vec_count = 0;
+      for i in 0..nums1_size {
+        let mut val_nums1 = 0;
+        unsafe {
+          val_nums1 = *((*nums1).buffer as *mut u8).offset(i as isize);
+        };
+        set.insert(val_nums1);
+      }
+
+      for i in 0..nums2_size {
+        let mut val_nums2 = 0;
+        unsafe {
+          val_nums2 = *((*nums2).buffer as *mut u8).offset(i as isize);
+        };
+
+        if set.contains(&amp;val_nums2) {
+          unsafe { *((*vec_resu).buffer as *mut u8).offset(vec_count as isize) = val_nums2; }
+          vec_count += 1;
+          set.remove(&amp;val_nums2);
+        }
+      }
+      unsafe{ (*vec_resu).size = vec_count; }
+</code></pre></div><p>对于 <code>Union</code> 函数的实现，同样是利用一个额外的散列集 <code>set</code>，记录 <code>nums1</code> 中的所有元素，并直接将 <code>nums1</code> 中的元素写入结果向量 <code>vec_resu</code> 中，而后再依次读取 <code>nums2</code> 中的元素，如果该元素没有在 <code>set</code> 中出现，则写入结果向量 <code>vec_resu</code> 和散列集 <code>set</code> 中。</p> <div class="language-rust extra-class"><pre class="language-text"><code>      let mut set: HashSet&lt;u8&gt; = HashSet::new();
+      let mut vec_count = 0;
+      for i in 0..nums1_size {
+        let mut val_nums1 = 0;
+        unsafe {
+          val_nums1 = *((*nums1).buffer as *mut u8).offset(i as isize);
+          *((*vec_resu).buffer as *mut u8).offset(vec_count as isize) = val_nums1;
+        }
+        vec_count += 1;
+        set.insert(val_nums1);
+      }
+
+      for i in 0..nums2_size {
+        let mut val_nums2 = 0;
+        unsafe {
+          val_nums2 = *((*nums2).buffer as *mut u8).offset(i as isize);
+        };
+
+        if !set.contains(&amp;val_nums2) {
+          unsafe { *((*vec_resu).buffer as *mut u8).offset(vec_count as isize) = val_nums2; }
+          vec_count += 1;
+          set.insert(val_nums2);
+        }
+      }
+      unsafe{ (*vec_resu).size = vec_count; }
+
+</code></pre></div><p>回到 <code>host/src/main.rs</code>，通过 <code>updated_size</code> 函数读取到在 <code>ta/src/main.rs</code> 中对 <code>vec_resu</code> 新设置的 <code>size</code> 值，也就是 <code>nums1</code> 和 <code>nums2</code> 共有的元素的个数，最后打印出结果向量 <code>resu</code> 的值。</p> <div class="language-rust extra-class"><pre class="language-text"><code>    // in data_compute function
+    let updated_size = operation.parameters().2.updated_size();
+    println!(&quot;Intersection resu = {:?}&quot;, &amp;resu[..updated_size]);
+</code></pre></div><p>这样，我们就基于 Teaclave TrustZone SDK 提供的示例代码实现了自己的求交集和并集函数。</p> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p>本文首先介绍 Teaclave TrustZone SDK 项目的环境配置过程，然后介绍了简单示例 <code>hello_world-rs</code> 的组织结构和编译过程 ，最后，通过修改 <code>hello_world-rs</code> 实现 <code>intersection</code> 和 <code>union</code> 函数为例，介绍如何基于提供的 SampleCode 进行 Teaclave TrustZone SDK 应用程序的开发。</p> <h2 id="延伸阅读"><a href="#延伸阅读" class="header-anchor">#</a> 延伸阅读</h2> <ul><li><a href="https://teaclave.apache.org/trustzone-sdk-docs/" rel="noopener noreferrer">Teaclave TrustZone SDK 文档</a></li> <li><a href="https://dl.acm.org/doi/10.1145/3427228.3427262" rel="noopener noreferrer">Teaclave TrustZone SDK 项目论文：《RusTEE: Developing Memory-Safe ARM TrustZone Applications》</a></li></ul></div></article></div>  <div class="footer">
+    Apache Teaclave (incubating) is an effort undergoing incubation at The Apache
+    Software Foundation (ASF), sponsored by the Apache Incubator.
+    Incubation is required of all newly accepted projects until a further review
+    indicates that the infrastructure, communications, and decision making process
+    have stabilized in a manner consistent with other successful ASF projects. While
+    incubation status is not necessarily a reflection of the completeness or
+    stability of the code, it does indicate that the project has yet to be fully
+    endorsed by the ASF.
+    Copyright © 2020 The Apache Software Foundation.
+    Licensed under the Apache License, Version 2.0.
+    Apache Teaclave, Apache, the Apache feather, and the Apache Teaclave project logo are either
+    trademarks or registered trademarks of the Apache Software Foundation.
+  </div></main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.0cd323ae.js" defer></script><script src="/assets/js/17.1555cdf6.js" defer></script><script src="/assets/js/1.d73ee85d.js" defer></script><script src="/assets/js/29.74f5607e.js" defer></script>
+  </body>
+</html>
