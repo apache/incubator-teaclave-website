@@ -1,0 +1,954 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/git/checkouts/rulinalg-309246e5a94bf5cf/1ed8b93/src/matrix/decomposition/householder.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>householder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../../normalize.css"><link rel="stylesheet" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../../ayu.css" disabled><link rel="stylesheet" href="../../../../dark.css" disabled><link rel="stylesheet" href="../../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../../storage.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script><script defer src="../../../../main.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../../../rulinalg/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../../rulinalg/index.html"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+</pre><pre class="rust"><code><span class="kw">use </span>matrix::{Matrix, BaseMatrix, BaseMatrixMut, Column, ColumnMut};
+<span class="kw">use </span>vector::Vector;
+<span class="kw">use </span>utils;
+
+<span class="kw">use </span>libnum::Float;
+
+<span class="doccomment">/// An efficient representation of a Householder reflection,
+/// also known as Householder matrix or elementary reflector.
+///
+/// Mathematically, it has the form
+/// H := I - τ v vᵀ,
+/// with τ = 2 / (vᵀv).
+///
+/// Given a vector `x`, it is possible to choose `v` such that
+/// Hx = a e1,
+/// where a is a constant and e1 is the standard unit vector
+/// whose elements are zero except the first, which is 1.
+///
+/// The implementation here is largely based upon the contents
+/// of Chapter 5.1 (Householder and Givens Transformations)
+/// in Matrix Computations, 4th Ed, Golub and Van Loan,
+/// but with modifications that among other things makes
+/// the implementation compliant with LAPACK.
+</span><span class="kw">pub struct </span>HouseholderReflection&lt;T&gt; {
+    v: Vector&lt;T&gt;,
+    tau: T
+}
+
+<span class="kw">impl</span>&lt;T: Float&gt; HouseholderReflection&lt;T&gt; {
+    <span class="doccomment">/// Compute the Householder reflection which will zero out
+    /// all elements in the vector `x` except the first.
+    </span><span class="kw">pub fn </span>compute(x: Vector&lt;T&gt;) -&gt; HouseholderReflection&lt;T&gt; {
+        <span class="comment">// The following code is loosely based on notes in
+        // Applied Numerical Linear Algebra by Demmel,
+        // Matrix Computations 4th Ed by Golub &amp; Van Loan,
+        // as well as LAPACK documentation.
+        //
+        // From Demmel, we have that we can choose the vector
+        // v = [ x1 + sign(x1) norm(x) ]
+        //     [ x[2:] ]
+        // as our Householder vector (the choice of sign in v(1) avoids
+        // cancellation issues which would lead to reduced accuracy in
+        // certain corner cases). However, we must divide v by
+        // v1 so that the first element of v is 1. Propagating these
+        // changes into τ leads to the below code.
+        // Note that if x[2:] == 0 (norm is identically zero),
+        // we explicitly set τ = 0 since x is already a multiple of
+        // the unit vector e1 (and we avoid potential division by zero).
+        </span><span class="kw">let </span>m = x.size();
+
+        <span class="kw">if </span>m &gt; <span class="number">0 </span>{
+            <span class="kw">let </span>sigma = utils::dot(<span class="kw-2">&amp;</span>x.data()[<span class="number">1 </span>..], <span class="kw-2">&amp;</span>x.data()[<span class="number">1 </span>..]);
+            <span class="kw">let </span>x0 = x[<span class="number">0</span>];
+            <span class="kw">let </span>tau;
+            <span class="kw">let </span><span class="kw-2">mut </span>v = x;
+
+            <span class="kw">if </span>sigma == T::zero() {
+                <span class="comment">// The vector is already a multiple of e1, the unit vector for which
+                // 1 is the first element and all other elements are zero.
+                </span>tau = T::zero();
+            } <span class="kw">else </span>{
+                <span class="kw">let </span>x_norm = T::sqrt(x0 * x0 + sigma);
+                <span class="comment">// This choice avoids accuracy issues related
+                // to cancellation
+                // (see e.g. Demmel, Applied Numerical Linear Algebra).
+                </span><span class="kw">let </span>v0 = <span class="kw">if </span>x0 &gt; T::zero() { x0 + x_norm }
+                         <span class="kw">else </span>{ x0 - x_norm };
+
+                <span class="comment">// Normalize the Householder vector v so that
+                // its first element is 1.
+                </span><span class="kw">let </span>two = T::from(<span class="number">2</span>).unwrap();
+                tau = two * v0 * v0 / (v0 * v0 + sigma);
+                v[<span class="number">0</span>] = v0;
+                v = v / v0;
+            }
+
+            HouseholderReflection {
+                v: v,
+                tau: tau
+            }
+        } <span class="kw">else </span>{
+            <span class="comment">// x is an empty vector, so just use it as the
+            // Householder vector
+            </span>HouseholderReflection {
+                v: x,
+                tau: T::zero()
+            }
+        }
+    }
+
+    <span class="doccomment">/// Left-multiplies the given matrix by this Householder reflection.
+    ///
+    /// More precisely, let `H` denote this Householder reflection matrix,
+    /// and let `A` be a dimensionally compatible matrix. Then
+    /// this function computes the product `HA` and stores the result
+    /// back in `A`.
+    ///
+    /// The user must provide a buffer of size `A.cols()` which is used
+    /// to store intermediate results.
+    </span><span class="kw">pub fn </span>buffered_left_multiply_into&lt;M&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, matrix: <span class="kw-2">&amp;mut </span>M, buffer: <span class="kw-2">&amp;mut </span>[T])
+        <span class="kw">where </span>M: BaseMatrixMut&lt;T&gt;
+    {
+        <span class="kw">use </span>internal_utils::{transpose_gemv, ger};
+        <span class="macro">assert!</span>(buffer.len() == matrix.cols());
+
+        <span class="comment">// Recall that the Householder reflection is represented by
+        // H = I - τ v vᵀ,
+        //
+        // which means that the product HA can be computed as
+        //
+        // HA = A - (τ v) (vᵀ A) = A - (τ v) (Aᵀ v)ᵀ,
+        //
+        // which constitutes a (transposed) matrix-vector product`
+        // u = Aᵀ v and a rank-1 update A &lt;- A - τ v uᵀ
+        //
+        // Performing both the matrix-vector product and the
+        // rank-1 update can actually be performed without
+        // allocating any additional memory, but this would access
+        // the data in the matrix column-by-column, which is inefficient.
+        // Instead, we will use the provided buffer to hold the result of the
+        // matrix-vector product.
+        </span><span class="kw">let </span><span class="kw-2">ref </span>v = <span class="self">self</span>.v.data();
+        <span class="kw">let </span><span class="kw-2">mut </span>u = buffer;
+
+        <span class="comment">// u = A^T v
+        </span>transpose_gemv(matrix, v, u);
+
+        <span class="comment">// A &lt;- A - τ v uᵀ
+        </span>ger(matrix, - <span class="self">self</span>.tau, v, u);
+    }
+
+    <span class="kw">pub fn </span>as_vector(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vector&lt;T&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.v
+    }
+
+    <span class="kw">pub fn </span>into_vector(<span class="self">self</span>) -&gt; Vector&lt;T&gt; {
+        <span class="self">self</span>.v
+    }
+
+    <span class="kw">pub fn </span>from_parameters(v: Vector&lt;T&gt;, tau: T) -&gt; HouseholderReflection&lt;T&gt; {
+        HouseholderReflection {
+            v: v,
+            tau: tau
+        }
+    }
+
+    <span class="kw">pub fn </span>tau(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; T {
+        <span class="self">self</span>.tau
+    }
+
+    <span class="kw">pub fn </span>store_in_col(<span class="kw-2">&amp;</span><span class="self">self</span>, col: <span class="kw-2">&amp;mut </span>ColumnMut&lt;T&gt;) {
+        <span class="kw">let </span>m = col.rows();
+        <span class="macro">assert!</span>(m == <span class="self">self</span>.v.size());
+
+        <span class="kw">if </span>m &gt; <span class="number">0 </span>{
+            <span class="comment">// The first element is implicitly 1, so make sure we don&#39;t
+            // touch it
+            </span><span class="kw">let </span><span class="kw-2">mut </span>slice_after_first =  col.sub_slice_mut([<span class="number">1</span>, <span class="number">0</span>], m - <span class="number">1</span>, <span class="number">1</span>);
+            <span class="kw">let </span><span class="kw-2">mut </span>col_after_first = slice_after_first.col_mut(<span class="number">0</span>);
+            col_after_first.clone_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.as_vector().data()[<span class="number">1</span>..]);
+        }
+    }
+}
+
+<span class="doccomment">/// An efficient representation for a composition of
+/// Householder transformations.
+///
+/// This means that `HouseholderComposition` represents
+/// an operator `Q` of the form
+///
+/// ```text
+/// Q = Q_1 * Q_2 * ... * Q_p
+/// ```
+///
+/// as explained in the documentation for
+/// [HouseholderQr](struct.HouseholderQr.html).
+</span><span class="attribute">#[derive(Debug, Clone)]
+</span><span class="kw">pub struct </span>HouseholderComposition&lt;<span class="lifetime">&#39;a</span>, T&gt; <span class="kw">where </span>T: <span class="lifetime">&#39;a </span>{
+    storage: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Matrix&lt;T&gt;,
+    tau: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[T]
+}
+
+<span class="doccomment">/// Instantiates a HouseholderComposition with the given
+/// storage and vector of tau values.
+///
+/// Note: This function is deliberately not exported to
+/// the public API. This means that users cannot create
+/// a HouseholderComposition by themselves, which is desirable
+/// because we want to have the freedom to change details
+/// of the internal representation if necessary.
+</span><span class="kw">pub fn </span>create_composition&lt;<span class="lifetime">&#39;a</span>, T&gt;(storage: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Matrix&lt;T&gt;, tau: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[T])
+    -&gt; HouseholderComposition&lt;<span class="lifetime">&#39;a</span>, T&gt;
+{
+    HouseholderComposition {
+            storage: storage,
+            tau: tau
+    }
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; HouseholderComposition&lt;<span class="lifetime">&#39;a</span>, T&gt; <span class="kw">where </span>T: Float {
+    <span class="doccomment">/// Given a matrix `A` of compatible dimensions, computes
+    /// the product `A &lt;- QA`, storing the result in `A`.
+    </span><span class="kw">pub fn </span>left_multiply_into&lt;X&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, matrix: <span class="kw-2">&amp;mut </span>X)
+        <span class="kw">where </span>X: BaseMatrixMut&lt;T&gt;
+    {
+        <span class="kw">use </span>std::cmp::min;
+
+        <span class="kw">let </span>m = <span class="self">self</span>.storage.rows();
+        <span class="kw">let </span>n = <span class="self">self</span>.storage.cols();
+        <span class="kw">let </span>p = min(m, n);
+        <span class="kw">let </span>q = matrix.cols();
+
+        <span class="macro">assert!</span>(matrix.rows() == m, <span class="string">&quot;Matrix does not have compatible dimensions.&quot;</span>);
+
+        <span class="kw">let </span><span class="kw-2">mut </span>house_buffer = Vec::with_capacity(m);
+        <span class="kw">let </span><span class="kw-2">mut </span>multiply_buffer = <span class="macro">vec!</span>[T::zero(); q];
+        <span class="kw">for </span>j <span class="kw">in </span>(<span class="number">0 </span>.. p).rev() {
+            house_buffer.resize(m - j, T::zero());
+            <span class="kw">let </span>storage_block = <span class="self">self</span>.storage.sub_slice([j, j], m - j, n - j);
+            <span class="kw">let </span><span class="kw-2">mut </span>matrix_block = matrix.sub_slice_mut([j, <span class="number">0</span>], m - j, q);
+            <span class="kw">let </span>house = load_house_from_col(<span class="kw-2">&amp;</span>storage_block.col(<span class="number">0</span>),
+                                            <span class="self">self</span>.tau[j], house_buffer);
+            house.buffered_left_multiply_into(<span class="kw-2">&amp;mut </span>matrix_block,
+                                              <span class="kw-2">&amp;mut </span>multiply_buffer);
+            house_buffer = house.into_vector().into_vec();
+        }
+    }
+
+    <span class="doccomment">/// Computes the first k columns of the implicitly
+    /// stored matrix `Q`.
+    ///
+    /// # Panics
+    /// - `k` must be less than or equal to `m`, the number
+    ///   of rows of `Q`.
+    </span><span class="kw">pub fn </span>first_k_columns(<span class="kw-2">&amp;</span><span class="self">self</span>, k: usize) -&gt; Matrix&lt;T&gt; {
+        <span class="kw">use </span>std::cmp::min;
+        <span class="kw">let </span>m = <span class="self">self</span>.storage.rows();
+        <span class="kw">let </span>n = <span class="self">self</span>.storage.cols();
+        <span class="kw">let </span>p = min(m, n);
+
+        <span class="macro">assert!</span>(k &lt;= <span class="self">self</span>.storage.rows(),
+            <span class="string">&quot;k cannot exceed m, the number of rows of Q&quot;</span>);
+
+        <span class="comment">// Let Q_k = Q[:, 1:k], the first k rows of Q
+        </span><span class="kw">let </span><span class="kw-2">mut </span>q_k = Matrix::from_fn(m, k, |row, col| {
+            <span class="kw">if </span>row == col { T::one()}
+            <span class="kw">else </span>{ T::zero() }
+        });
+
+        <span class="comment">// This is almost identical to left_multiply_into,
+        // but we can use the sparsity of the identity matrix
+        // to reduce the number of operations
+        // (note the size of the &quot;q_k_block&quot;)
+        </span><span class="kw">let </span><span class="kw-2">mut </span>buffer = Vec::with_capacity(m);
+        <span class="kw">let </span><span class="kw-2">mut </span>multiply_buffer = Vec::with_capacity(k);
+        <span class="kw">for </span>j <span class="kw">in </span>(<span class="number">0 </span>.. min(p, k)).rev() {
+            buffer.resize(m - j, T::zero());
+            multiply_buffer.resize(k - j, T::zero());
+            <span class="kw">let </span>storage_block = <span class="self">self</span>.storage.sub_slice([j, j], m - j, n - j);
+            <span class="kw">let </span><span class="kw-2">mut </span>q_k_block = q_k.sub_slice_mut([j, j], m - j, k - j);
+            <span class="kw">let </span>house = load_house_from_col(<span class="kw-2">&amp;</span>storage_block.col(<span class="number">0</span>),
+                                            <span class="self">self</span>.tau[j], buffer);
+            house.buffered_left_multiply_into(<span class="kw-2">&amp;mut </span>q_k_block,
+                                              <span class="kw-2">&amp;mut </span>multiply_buffer);
+            buffer = house.into_vector().into_vec();
+        }
+        q_k
+    }
+}
+
+<span class="kw">fn </span>load_house_from_col&lt;T: Float&gt;(col: <span class="kw-2">&amp;</span>Column&lt;T&gt;, tau: T, buffer: Vec&lt;T&gt;)
+    -&gt; HouseholderReflection&lt;T&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>v = buffer;
+
+    col.clone_into_slice(<span class="kw-2">&amp;mut </span>v);
+
+    <span class="comment">// First element is implicitly 1 regardless of
+    // whatever is stored in the column.
+    </span><span class="kw">if let </span><span class="prelude-val">Some</span>(first_element) = v.get_mut(<span class="number">0</span>) {
+        <span class="kw-2">*</span>first_element = T::one();
+    }
+
+    HouseholderReflection::from_parameters(Vector::new(v), tau)
+}
+
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>vector::Vector;
+    <span class="kw">use </span>matrix::{Matrix, BaseMatrix};
+    <span class="kw">use </span><span class="kw">super</span>::HouseholderReflection;
+    <span class="kw">use </span><span class="kw">super</span>::create_composition;
+
+    <span class="kw">pub fn </span>house_as_matrix(house: HouseholderReflection&lt;f64&gt;)
+        -&gt; Matrix&lt;f64&gt;
+    {
+        <span class="kw">let </span>m = house.v.size();
+        <span class="kw">let </span>v = Matrix::new(m, <span class="number">1</span>, house.v.into_vec());
+        <span class="kw">let </span>v_t = v.transpose();
+        Matrix::identity(m) - v * v_t * house.tau
+    }
+
+    <span class="kw">fn </span>verify_house(x: Vector&lt;f64&gt;, house: HouseholderReflection&lt;f64&gt;) {
+        <span class="kw">let </span>m = x.size();
+        <span class="macro">assert!</span>(m &gt; <span class="number">0</span>);
+
+        <span class="kw">let </span>house = house_as_matrix(house);
+        <span class="kw">let </span>y = house.clone() * x.clone();
+
+        <span class="comment">// Check that y[1 ..] is approximately zero
+        </span><span class="kw">let </span>z = Vector::new(y.data().iter().skip(<span class="number">1</span>).cloned().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;());
+        <span class="macro">assert_vector_eq!</span>(z, Vector::zeros(m - <span class="number">1</span>), comp = float, eps = <span class="number">1e-12</span>);
+
+        <span class="comment">// Check that applying the Householder transformation again
+        // recovers the original vector (since H = H^T = inv(H))
+        </span><span class="kw">let </span>w = house * y;
+        <span class="macro">assert_vector_eq!</span>(x, w, comp = float);
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>compute_empty_vector() {
+        <span class="kw">let </span>x: Vector&lt;f64&gt; = <span class="macro">vector!</span>[];
+        <span class="kw">let </span>house = HouseholderReflection::compute(x.clone());
+        <span class="macro">assert_scalar_eq!</span>(house.tau, <span class="number">0.0</span>);
+        <span class="macro">assert_vector_eq!</span>(house.v, x.clone());
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>compute_single_element_vector() {
+        <span class="kw">let </span>x = <span class="macro">vector!</span>[<span class="number">2.0</span>];
+        <span class="kw">let </span>house = HouseholderReflection::compute(x.clone());
+        <span class="macro">assert_scalar_eq!</span>(house.tau, <span class="number">0.0</span>);
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>compute_examples() {
+        {
+            <span class="kw">let </span>x = <span class="macro">vector!</span>[<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>];
+            <span class="kw">let </span>house = HouseholderReflection::compute(x.clone());
+            verify_house(x, house);
+        }
+
+        {
+            <span class="kw">let </span>x = <span class="macro">vector!</span>[-<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>];
+            <span class="kw">let </span>house = HouseholderReflection::compute(x.clone());
+            verify_house(x, house);
+        }
+
+        {
+            <span class="kw">let </span>x = <span class="macro">vector!</span>[<span class="number">3.0</span>, -<span class="number">2.0</span>, <span class="number">5.0</span>];
+            <span class="kw">let </span>house = HouseholderReflection::compute(x.clone());
+            verify_house(x, house);
+        }
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>householder_reflection_left_multiply() {
+        <span class="kw">let </span><span class="kw-2">mut </span>x = <span class="macro">matrix!</span>[ <span class="number">0.0</span>,  <span class="number">1.0</span>,  <span class="number">2.0</span>,  <span class="number">3.0</span>;
+                             <span class="number">4.0</span>,  <span class="number">5.0</span>,  <span class="number">6.0</span>,  <span class="number">7.0</span>;
+                             <span class="number">8.0</span>,  <span class="number">9.0</span>, <span class="number">10.0</span>, <span class="number">11.0</span>;
+                            <span class="number">12.0</span>, <span class="number">13.0</span>, <span class="number">14.0</span>, <span class="number">15.0 </span>];
+
+        <span class="comment">// The provided data is rather rubbish, but
+        // the result should still hold
+        </span><span class="kw">let </span>h = HouseholderReflection {
+            tau: <span class="number">0.06666666666666667</span>,
+            v: <span class="macro">vector!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>, <span class="number">4.0</span>]
+        };
+
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer = <span class="macro">vec!</span>[<span class="number">0.0</span>; <span class="number">4</span>];
+
+        h.buffered_left_multiply_into(<span class="kw-2">&amp;mut </span>x, <span class="kw-2">&amp;mut </span>buffer);
+
+        <span class="kw">let </span>expected = <span class="macro">matrix!</span>[ -<span class="number">5.3333</span>,  -<span class="number">5.0000</span>, -<span class="number">4.6667</span>,  -<span class="number">4.3333</span>;
+                                -<span class="number">6.6667</span>,  -<span class="number">7.0000</span>, -<span class="number">7.3333</span>,  -<span class="number">7.6667</span>;
+                                -<span class="number">8.0000</span>,  -<span class="number">9.0000</span>,-<span class="number">10.0000</span>, -<span class="number">11.0000</span>;
+                                -<span class="number">9.3333</span>, -<span class="number">11.0000</span>,-<span class="number">12.6667</span>, -<span class="number">14.3333</span>];
+        <span class="macro">assert_matrix_eq!</span>(x, expected, comp = abs, tol = <span class="number">1e-3</span>);
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>householder_composition_left_multiply() {
+        <span class="kw">let </span>storage = <span class="macro">matrix!</span>[ <span class="number">5.0</span>,  <span class="number">3.0</span>,  <span class="number">2.0</span>;
+                               <span class="number">2.0</span>,  <span class="number">1.0</span>,  <span class="number">3.0</span>;
+                              -<span class="number">2.0</span>,  <span class="number">3.0</span>, -<span class="number">2.0</span>];
+        <span class="kw">let </span>tau = <span class="macro">vec!</span>[<span class="number">2.0</span>/<span class="number">9.0</span>, <span class="number">1.0 </span>/ <span class="number">5.0</span>, <span class="number">2.0</span>];
+
+        <span class="comment">// `q` is a manually computed matrix representation
+        // of the Householder composition stored implicitly in
+        // `storage` and `tau. We leave it here to make writing
+        // further tests easier
+        // let q = matrix![7.0/9.0, -28.0/45.0,   4.0/45.0;
+        //                -4.0/9.0, - 4.0/ 9.0,   7.0/ 9.0;
+        //                 4.0/9.0,  29.0/45.0,  28.0/45.0];
+        </span><span class="kw">let </span>composition = create_composition(<span class="kw-2">&amp;</span>storage, <span class="kw-2">&amp;</span>tau);
+
+        {
+            <span class="comment">// Square
+            </span><span class="kw">let </span><span class="kw-2">mut </span>x = <span class="macro">matrix!</span>[<span class="number">4.0</span>,  <span class="number">5.0</span>, -<span class="number">3.0</span>;
+                                <span class="number">2.0</span>, -<span class="number">1.0</span>, -<span class="number">3.0</span>;
+                                <span class="number">1.0</span>,  <span class="number">3.0</span>,  <span class="number">5.0</span>];
+            composition.left_multiply_into(<span class="kw-2">&amp;mut </span>x);
+
+            <span class="kw">let </span>expected = <span class="macro">matrix!</span>[ <span class="number">88.0</span>/<span class="number">45.0</span>, <span class="number">43.0</span>/<span class="number">9.0</span>, -<span class="number">1.0</span>/<span class="number">45.0</span>;
+                                   -<span class="number">17.0</span>/ <span class="number">9.0</span>,  <span class="number">5.0</span>/<span class="number">9.0</span>, <span class="number">59.0</span>/ <span class="number">9.0</span>;
+                                   <span class="number">166.0</span>/<span class="number">45.0</span>, <span class="number">31.0</span>/<span class="number">9.0</span>, -<span class="number">7.0</span>/<span class="number">45.0</span>];
+            <span class="macro">assert_matrix_eq!</span>(x, expected, comp = float, eps = <span class="number">1e-15</span>);
+        }
+
+        {
+            <span class="comment">// Tall
+            </span><span class="kw">let </span><span class="kw-2">mut </span>x = <span class="macro">matrix!</span>[ <span class="number">4.0</span>, <span class="number">5.0</span>;
+                                 <span class="number">3.0</span>, <span class="number">2.0</span>;
+                                -<span class="number">1.0</span>,-<span class="number">2.0</span>];
+            composition.left_multiply_into(<span class="kw-2">&amp;mut </span>x);
+            <span class="kw">let </span>expected = <span class="macro">matrix!</span>[<span class="number">52.0</span>/<span class="number">45.0</span>,  <span class="number">37.0</span>/<span class="number">15.0</span>;
+                                  -<span class="number">35.0</span>/ <span class="number">9.0</span>, -<span class="number">14.0</span>/ <span class="number">3.0</span>;
+                                  <span class="number">139.0</span>/<span class="number">45.0</span>,  <span class="number">34.0</span>/<span class="number">15.0</span>];
+            <span class="macro">assert_matrix_eq!</span>(x, expected, comp = float, eps = <span class="number">1e-15</span>);
+        }
+
+        {
+            <span class="comment">// Short
+            </span><span class="kw">let </span><span class="kw-2">mut </span>x = <span class="macro">matrix!</span>[ <span class="number">4.0</span>,  <span class="number">5.0</span>,  <span class="number">2.0</span>, -<span class="number">5.0</span>;
+                                 <span class="number">3.0</span>,  <span class="number">2.0</span>,  <span class="number">1.0</span>,  <span class="number">1.0</span>;
+                                -<span class="number">1.0</span>, -<span class="number">2.0</span>,  <span class="number">0.0</span>, -<span class="number">5.0</span>];
+            composition.left_multiply_into(<span class="kw-2">&amp;mut </span>x);
+            <span class="kw">let </span>expected = <span class="macro">matrix!</span>[<span class="number">52.0</span>/<span class="number">45.0</span>,  <span class="number">37.0</span>/<span class="number">15.0</span>, <span class="number">14.0</span>/<span class="number">15.0</span>, -<span class="number">223.0</span>/<span class="number">45.0</span>;
+                                  -<span class="number">35.0</span>/ <span class="number">9.0</span>, -<span class="number">14.0</span>/ <span class="number">3.0</span>, -<span class="number">4.0</span>/ <span class="number">3.0</span>,  -<span class="number">19.0</span>/ <span class="number">9.0</span>;
+                                  <span class="number">139.0</span>/<span class="number">45.0</span>,  <span class="number">34.0</span>/<span class="number">15.0</span>, <span class="number">23.0</span>/<span class="number">15.0</span>, -<span class="number">211.0</span>/<span class="number">45.0</span>];
+            <span class="macro">assert_matrix_eq!</span>(x, expected, comp = float, eps = <span class="number">1e-15</span>);
+        }
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>householder_composition_first_k_columns() {
+        <span class="kw">let </span>storage = <span class="macro">matrix!</span>[ <span class="number">5.0</span>,  <span class="number">3.0</span>,  <span class="number">2.0</span>;
+                               <span class="number">2.0</span>,  <span class="number">1.0</span>,  <span class="number">3.0</span>;
+                              -<span class="number">2.0</span>,  <span class="number">3.0</span>, -<span class="number">2.0</span>];
+        <span class="kw">let </span>tau = <span class="macro">vec!</span>[<span class="number">2.0</span>/<span class="number">9.0</span>, <span class="number">1.0 </span>/ <span class="number">5.0</span>, <span class="number">2.0</span>];
+        <span class="kw">let </span>composition = create_composition(<span class="kw-2">&amp;</span>storage, <span class="kw-2">&amp;</span>tau);
+
+        <span class="comment">// This corresponds to the following `Q` matrix
+        </span><span class="kw">let </span>q = <span class="macro">matrix!</span>[<span class="number">7.0</span>/<span class="number">9.0</span>, -<span class="number">28.0</span>/<span class="number">45.0</span>,   <span class="number">4.0</span>/<span class="number">45.0</span>;
+                       -<span class="number">4.0</span>/<span class="number">9.0</span>, - <span class="number">4.0</span>/ <span class="number">9.0</span>,   <span class="number">7.0</span>/ <span class="number">9.0</span>;
+                        <span class="number">4.0</span>/<span class="number">9.0</span>,  <span class="number">29.0</span>/<span class="number">45.0</span>,  <span class="number">28.0</span>/<span class="number">45.0</span>];
+        {
+            <span class="comment">// First 0 columns
+            </span><span class="kw">let </span>q_k = composition.first_k_columns(<span class="number">0</span>);
+            <span class="macro">assert_eq!</span>(q_k.rows(), <span class="number">3</span>);
+            <span class="macro">assert_eq!</span>(q_k.cols(), <span class="number">0</span>);
+        }
+
+        {
+            <span class="comment">// First column
+            </span><span class="kw">let </span>q_k = composition.first_k_columns(<span class="number">1</span>);
+            <span class="macro">assert_matrix_eq!</span>(q_k, q.sub_slice([<span class="number">0</span>, <span class="number">0</span>], <span class="number">3</span>, <span class="number">1</span>),
+                              comp = float);
+        }
+
+        {
+            <span class="comment">// First 2 columns
+            </span><span class="kw">let </span>q_k = composition.first_k_columns(<span class="number">2</span>);
+            <span class="macro">assert_matrix_eq!</span>(q_k, q.sub_slice([<span class="number">0</span>, <span class="number">0</span>], <span class="number">3</span>, <span class="number">2</span>),
+                              comp = float);
+        }
+
+        {
+            <span class="comment">// First 3 columns
+            </span><span class="kw">let </span>q_k = composition.first_k_columns(<span class="number">3</span>);
+            <span class="macro">assert_matrix_eq!</span>(q_k, q.sub_slice([<span class="number">0</span>, <span class="number">0</span>], <span class="number">3</span>, <span class="number">3</span>),
+                              comp = float);
+        }
+    }
+
+
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="rulinalg" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This module implements a decision tree from the simple binary tree gbdt::binary_tree."><meta name="keywords" content="rust, rustlang, rust-lang, decision_tree"><title>gbdt::decision_tree - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../gbdt/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../gbdt/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Module decision_tree</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#constants">Constants</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Module <a href="../index.html">gbdt</a>::<wbr><a class="mod" href="#">decision_tree</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/gbdt/decision_tree.rs.html#1-1895">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This module implements a decision tree from the simple binary tree <a href="../binary_tree/index.html">gbdt::binary_tree</a>.</p>
+<p>In the training process, the nodes are splited according <code>impurity</code>.</p>
+<p>Following hyperparameters are supported:</p>
+<ol>
+<li>
+<p>feature_size: the size of feautures. Training data and test data should have same
+feature_size. (default = 1)</p>
+</li>
+<li>
+<p>max_depth: the max depth of the decision tree. The root node is considered to be in the layer
+0. (default = 2)</p>
+</li>
+<li>
+<p>min_leaf_size: the minimum number of samples required to be at a leaf node during training.
+(default = 1)</p>
+</li>
+<li>
+<p>loss: the loss function type. SquaredError, LogLikelyhood and LAD are supported. See
+<a href="../config/enum.Loss.html">config::Loss</a>. (default = SquareError).</p>
+</li>
+<li>
+<p>feature_sample_ratio: portion of features to be splited. When spliting a node, a subset of
+the features (feature_size * feature_sample_ratio) will be randomly selected to calculate
+impurity. (default = 1.0)</p>
+</li>
+</ol>
+<h2 id="example"><a href="#example">Example</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Loss;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DecisionTree, TrainingCache};
+<span class="comment">// set up training data
+</span><span class="kw">let </span>data1 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.5</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data4 = Data::new_training_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="number">1.0</span>,
+    <span class="number">3.0</span>,
+    <span class="prelude-val">None</span>,
+);
+
+<span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+dv.push(data4.clone());
+
+
+<span class="comment">// train a decision tree
+</span><span class="kw">let </span><span class="kw-2">mut </span>tree = DecisionTree::new();
+tree.set_feature_size(<span class="number">3</span>);
+tree.set_max_depth(<span class="number">2</span>);
+tree.set_min_leaf_size(<span class="number">1</span>);
+tree.set_loss(Loss::SquaredError);
+<span class="kw">let </span><span class="kw-2">mut </span>cache = TrainingCache::get_cache(<span class="number">3</span>, <span class="kw-2">&amp;</span>dv, <span class="number">2</span>);
+tree.fit(<span class="kw-2">&amp;</span>dv, <span class="kw-2">&amp;mut </span>cache);
+
+
+<span class="comment">// set up the test data
+</span><span class="kw">let </span><span class="kw-2">mut </span>dv = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(Data::new_test_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="prelude-val">None</span>));
+dv.push(Data::new_test_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="prelude-val">Some</span>(<span class="number">3.0</span>)));
+
+
+<span class="comment">// inference the test data with the decision tree
+</span><span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>, tree.predict(<span class="kw-2">&amp;</span>dv));
+
+
+<span class="comment">// output:
+// [2.0, 0.75, 0.75, 3.0]</span></code></pre></div>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Data.html" title="gbdt::decision_tree::Data struct">Data</a></div><div class="item-right docblock-short">A training sample or a test sample. You can call <code>new_training_data</code> to generate a training sample, and call <code>new_test_data</code> to generate a test sample.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.DecisionTree.html" title="gbdt::decision_tree::DecisionTree struct">DecisionTree</a></div><div class="item-right docblock-short">The decision tree.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.TrainingCache.html" title="gbdt::decision_tree::TrainingCache struct">TrainingCache</a></div><div class="item-right docblock-short">Cache the sort results and some calculation results</div></div></div><h2 id="constants" class="small-section-header"><a href="#constants">Constants</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="constant" href="constant.VALUE_TYPE_MAX.html" title="gbdt::decision_tree::VALUE_TYPE_MAX constant">VALUE_TYPE_MAX</a></div></div><div class="item-row"><div class="item-left module-item"><a class="constant" href="constant.VALUE_TYPE_MIN.html" title="gbdt::decision_tree::VALUE_TYPE_MIN constant">VALUE_TYPE_MIN</a></div></div><div class="item-row"><div class="item-left module-item"><a class="constant" href="constant.VALUE_TYPE_UNKNOWN.html" title="gbdt::decision_tree::VALUE_TYPE_UNKNOWN constant">VALUE_TYPE_UNKNOWN</a></div></div></div><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="type" href="type.DataVec.html" title="gbdt::decision_tree::DataVec type">DataVec</a></div><div class="item-right docblock-short">The vector of the samples</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.PredVec.html" title="gbdt::decision_tree::PredVec type">PredVec</a></div><div class="item-right docblock-short">The vector of the predicted values.</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.ValueType.html" title="gbdt::decision_tree::ValueType type">ValueType</a></div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gbdt" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

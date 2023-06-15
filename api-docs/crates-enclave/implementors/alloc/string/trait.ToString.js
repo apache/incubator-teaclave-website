@@ -1,0 +1,4 @@
+(function() {var implementors = {
+"tantivy":[["impl ToString for <a class=\"enum\" href=\"tantivy/aggregation/bucket/enum.OrderTarget.html\" title=\"enum tantivy::aggregation::bucket::OrderTarget\">OrderTarget</a>"],["impl ToString for <a class=\"struct\" href=\"tantivy/struct.Version.html\" title=\"struct tantivy::Version\">Version</a>"]],
+"teaclave_types":[["impl ToString for <a class=\"struct\" href=\"teaclave_types/struct.ExternalID.html\" title=\"struct teaclave_types::ExternalID\">ExternalID</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

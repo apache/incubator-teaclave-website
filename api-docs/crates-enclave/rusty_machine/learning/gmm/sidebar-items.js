@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["CovOption","Covariance options for GMMs."]],"struct":[["GaussianMixtureModel","A Gaussian Mixture Model"]]};

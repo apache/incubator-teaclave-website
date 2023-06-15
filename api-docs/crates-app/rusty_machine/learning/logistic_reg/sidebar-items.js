@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["BaseLogisticRegressor","The Base Logistic Regression model."],["LogisticRegressor","Logistic Regression Model."]]};

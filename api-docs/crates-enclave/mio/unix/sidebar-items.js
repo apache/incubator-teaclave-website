@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["SourceFd","Adapter for [`RawFd`] providing an `event::Source` implementation."]]};

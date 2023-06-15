@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="An operation for digest the message."><meta name="keywords" content="rust, rustlang, rust-lang, Digest"><title>Digest in optee_utee::crypto_op - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../optee_utee/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a><h2 class="location">Struct Digest</h2><div class="sidebar-elems"><div class="block items"><h3 class="sidebar-title"><a href="#implementations">Methods</a></h3><div class="sidebar-links"><a href="#method.allocate">allocate</a><a href="#method.copy">copy</a><a href="#method.do_final">do_final</a><a href="#method.info">info</a><a href="#method.info_multiple">info_multiple</a><a href="#method.null">null</a><a href="#method.reset">reset</a><a href="#method.update">update</a></div><h3 class="sidebar-title"><a href="#trait-implementations">Trait Implementations</a></h3><div class="sidebar-links"><a href="#impl-OpHandle">OpHandle</a></div><h3 class="sidebar-title"><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><div class="sidebar-links"><a href="#impl-RefUnwindSafe">RefUnwindSafe</a><a href="#impl-Send">!Send</a><a href="#impl-Sync">!Sync</a><a href="#impl-Unpin">Unpin</a><a href="#impl-UnwindSafe">UnwindSafe</a></div><h3 class="sidebar-title"><a href="#blanket-implementations">Blanket Implementations</a></h3><div class="sidebar-links"><a href="#impl-Any">Any</a><a href="#impl-Borrow%3CT%3E">Borrow&lt;T&gt;</a><a href="#impl-BorrowMut%3CT%3E">BorrowMut&lt;T&gt;</a><a href="#impl-From%3CT%3E">From&lt;T&gt;</a><a href="#impl-Into%3CU%3E">Into&lt;U&gt;</a><a href="#impl-TryFrom%3CU%3E">TryFrom&lt;U&gt;</a><a href="#impl-TryInto%3CU%3E">TryInto&lt;U&gt;</a></div></div><h2 class="location">Other items in<br><a href="../index.html">optee_utee</a>::<wbr><a href="index.html">crypto_op</a></h2><div id="sidebar-vars" data-name="Digest" data-ty="struct" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Struct <a href="../index.html">optee_utee</a>::<wbr><a href="index.html">crypto_op</a>::<wbr><a class="struct" href="#">Digest</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#258" title="goto source code">[src]</a></span></h1><div class="docblock type-decl"><pre class="rust struct"><code>pub struct Digest(_);</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>An operation for digest the message.</p>
+</div></details><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl" class="impl has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#260-499" title="goto source code">[src]</a></div><a href="#impl" class="anchor"></a><h3 class="code-header in-band">impl <a class="struct" href="struct.Digest.html" title="struct optee_utee::crypto_op::Digest">Digest</a></h3></div></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><div id="method.update" class="method has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#275-279" title="goto source code">[src]</a></div><a href="#method.update" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.update" class="fnname">update</a>(&amp;self, chunk: &amp;[u8])</h4></div></summary><div class="docblock"><p>Accumulate message data for hashing. The message does not have to be block aligned.
+Subsequent calls to this function are possible. The operation may be in either
+initial or active state and becomes active.</p>
+<h1 id="parameters" class="section-header"><a href="#parameters">Parameters</a></h1>
+<ol>
+<li><code>chunk</code>: Chunk of data to be hashed</li>
+</ol>
+<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
+<ol>
+<li>If the operation is not allocated with valid algorithms.</li>
+<li>if input data exceeds maximum length for algorithm.</li>
+<li>Hardware or cryptographic algorithm failure.</li>
+<li>If the Implementation detects any other error.</li>
+</ol>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><div id="method.do_final" class="method has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#322-336" title="goto source code">[src]</a></div><a href="#method.do_final" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.do_final" class="fnname">do_final</a>(&amp;self, chunk: &amp;[u8], hash: &amp;mut [u8]) -&gt; <a class="type" href="../type.Result.html" title="type optee_utee::Result">Result</a>&lt;usize&gt;</h4></div></summary><div class="docblock"><p>Finalize the message digest operation and produces the message hash. Afterwards the
+Message Digest operation is reset to initial state and can be reused.</p>
+<h1 id="parameters-1" class="section-header"><a href="#parameters-1">Parameters</a></h1>
+<ol>
+<li><code>chunk</code>: Last chunk of data to be hashed.</li>
+<li><code>hash</code>: Output buffer filled with the message hash. This buffer should be large enough to
+hold the hash message. The real used size is returned by this function.</li>
+</ol>
+<h1 id="example" class="section-header"><a href="#example">Example</a></h1>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> [<span class="number">0u8</span>;<span class="number">8</span>];
+<span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> [<span class="number">1u8</span>;<span class="number">8</span>];
+<span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> [<span class="number">0u8</span>;<span class="number">32</span>];
+<span class="kw">match</span> <span class="ident">Digest::allocate</span>(<span class="ident">AlgorithmId::Sha256</span>) {
+    <span class="prelude-val">Ok</span>(<span class="ident">operation</span>) <span class="op">=</span><span class="op">&gt;</span>
+    {
+        <span class="ident">operation</span>.<span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="ident">chunk1</span>);
+        <span class="kw">match</span> <span class="ident">operation</span>.<span class="ident">do_final</span>(<span class="kw-2">&amp;</span><span class="ident">chunk2</span>, <span class="ident">hash</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">hash_len</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="comment">// ...</span>
+                <span class="prelude-val">Ok</span>(())
+            }
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+        }
+    }
+    <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+}</code></pre></div>
+<h1 id="errors" class="section-header"><a href="#errors">Errors</a></h1>
+<ol>
+<li><code>ShortBuffer</code>: If the <code>hash</code> is too small. Operation is not finalized for this error.</li>
+</ol>
+<h1 id="panics-1" class="section-header"><a href="#panics-1">Panics</a></h1>
+<ol>
+<li>If the operation is not allocated with valid algorithms.</li>
+<li>if input data exceeds maximum length for algorithm.</li>
+<li>Hardware or cryptographic algorithm failure.</li>
+<li>If the Implementation detects any other error.</li>
+</ol>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><div id="method.null" class="method has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#339-341" title="goto source code">[src]</a></div><a href="#method.null" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.null" class="fnname">null</a>() -&gt; Self</h4></div></summary><div class="docblock"><p>Create a Digest operation without any specific algorithm or other data.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><div id="method.allocate" class="method has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#374-379" title="goto source code">[src]</a></div><a href="#method.allocate" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.allocate" class="fnname">allocate</a>(algo: <a class="enum" href="enum.AlgorithmId.html" title="enum optee_utee::crypto_op::AlgorithmId">AlgorithmId</a>) -&gt; <a class="type" href="../type.Result.html" title="type optee_utee::Result">Result</a>&lt;Self&gt;</h4></div></summary><div class="docblock"><p>Allocate a new cryptographic operation and sets the mode and algorithm type.</p>
+<h1 id="parameters-2" class="section-header"><a href="#parameters-2">Parameters</a></h1>
+<ol>
+<li><code>algo</code>: One of the algorithms that support Digest as listed in
+<a href="enum.AlgorithmId.html">AlgorithmId</a>.</li>
+<li><code>max_key_size</code>: The maximum key sizes of different algorithms as defined in
+<a href="../object/enum.TransientObjectType.html">TransientObjectType</a>.</li>
+</ol>
+<h1 id="example-1" class="section-header"><a href="#example-1">Example</a></h1>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">match</span> <span class="ident">Digest::allocate</span>(<span class="ident">AlgorithmId::Sha256</span>) {
+    <span class="prelude-val">Ok</span>(<span class="ident">operation</span>) <span class="op">=</span><span class="op">&gt;</span>
+    {
+        <span class="comment">// ...</span>
+        <span class="prelude-val">Ok</span>(())
+    }
+    <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+}</code></pre></div>
+<h1 id="errors-1" class="section-header"><a href="#errors-1">Errors</a></h1>
+<ol>
+<li><code>OutOfMemory</code>: If not enough resources are available to allocate the object handle.</li>
+<li><code>NotSupported</code>: If the key size is not supported or the object type is not supported.</li>
+</ol>
+<h1 id="panics-2" class="section-header"><a href="#panics-2">Panics</a></h1>
+<ol>
+<li>If the Implementation detects any error associated with this function which is not
+explicitly associated with a defined return code for this function.</li>
+</ol>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><div id="method.info" class="method has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#399-401" title="goto source code">[src]</a></div><a href="#method.info" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.info" class="fnname">info</a>(&amp;self) -&gt; <a class="struct" href="struct.OperationInfo.html" title="struct optee_utee::crypto_op::OperationInfo">OperationInfo</a></h4></div></summary><div class="docblock"><p>Return the characteristics of a Digest operation.</p>
+<h1 id="example-2" class="section-header"><a href="#example-2">Example</a></h1>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">match</span> <span class="ident">Digest::allocate</span>(<span class="ident">AlgorithmId::Md5</span>, <span class="number">128</span>) {
+    <span class="prelude-val">Ok</span>(<span class="ident">operation</span>) <span class="op">=</span><span class="op">&gt;</span>
+    {
+        <span class="kw">let</span> <span class="ident">info</span> <span class="op">=</span> <span class="ident">operation</span>.<span class="ident">info</span>();
+        <span class="prelude-val">Ok</span>(())
+    }
+    <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+}</code></pre></div>
+<h1 id="panics-3" class="section-header"><a href="#panics-3">Panics</a></h1>
+<ol>
+<li>If the operation is not a valid opened operation.</li>
+<li>if the Implementation detecs any other error.</li>
+</ol>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><div id="method.info_multiple" class="method has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#441-443" title="goto source code">[src]</a></div><a href="#method.info_multiple" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.info_multiple" class="fnname">info_multiple</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;info_buf: &amp;mut [u8]<br>) -&gt; <a class="type" href="../type.Result.html" title="type optee_utee::Result">Result</a>&lt;<a class="struct" href="struct.OperationInfoMultiple.html" title="struct optee_utee::crypto_op::OperationInfoMultiple">OperationInfoMultiple</a>&gt;</h4></div></summary><div class="docblock"><p>Return the characteristics of a Digest operation with multiple keys.</p>
+<h1 id="parameters-3" class="section-header"><a href="#parameters-3">Parameters</a></h1>
+<ol>
+<li><code>info_buf</code>: The buffer is supposed to save multiple keys, and its size should be large enough before passed in.
+The number of keys about this operation can be calculated as: OperationInfoMultiple::size -
+size_of(<a href="struct.OperationInfoMultiple.html">OperationInfoMultiple</a>) / size_of ( raw::TEE_OperationInfoKey)+1.</li>
+</ol>
+<h1 id="example-3" class="section-header"><a href="#example-3">Example</a></h1>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">match</span> <span class="ident">Digest::allocate</span>(<span class="ident">AlgorithmId::Md5</span>, <span class="number">128</span>) {
+    <span class="prelude-val">Ok</span>(<span class="ident">operation</span>) <span class="op">=</span><span class="op">&gt;</span>
+    {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> [<span class="number">0u32</span>, <span class="number">12</span>];
+        <span class="kw">match</span> <span class="ident">operation</span>.<span class="ident">info_multiple</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buffer</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">info_multiple</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="comment">// ...</span>
+                <span class="prelude-val">Ok</span>(())
+            }
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+        }
+    }
+    <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+}</code></pre></div>
+<h1 id="errors-2" class="section-header"><a href="#errors-2">Errors:</a></h1>
+<ol>
+<li><code>ShortBuffer</code>: If the <code>info_buf</code> is not large enough to hold an
+<a href="struct.OperationInfoMultiple.html">OperationInfoMultiple</a> and the corresponding keys.</li>
+</ol>
+<h1 id="panics-4" class="section-header"><a href="#panics-4">Panics:</a></h1>
+<ol>
+<li>If operation is not a valid opened object.</li>
+<li>If the Implementation detects any other error.</li>
+</ol>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><div id="method.reset" class="method has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#455-457" title="goto source code">[src]</a></div><a href="#method.reset" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.reset" class="fnname">reset</a>(&amp;mut self)</h4></div></summary><div class="docblock"><p>Reset the operation state to the state after initial <a href="struct.Digest.html#method.allocate">allocate</a> with the
+add addition of any keys which were configured subsequent to this so that current operation
+can be reused with the same keys.</p>
+<h1 id="panics-5" class="section-header"><a href="#panics-5">Panics</a></h1>
+<ol>
+<li>If operation is not a valid opened object.</li>
+<li>If the key has not been set yet.</li>
+<li>Hardware or cryptographic algorithm failure.</li>
+<li>If the Implementation detects any other error.</li>
+</ol>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><div id="method.copy" class="method has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#496-498" title="goto source code">[src]</a></div><a href="#method.copy" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.copy" class="fnname">copy</a>&lt;T:&nbsp;<a class="trait" href="trait.OpHandle.html" title="trait optee_utee::crypto_op::OpHandle">OpHandle</a>&gt;(&amp;mut self, src: &amp;T)</h4></div></summary><div class="docblock"><p>Copy an operation state to another operation. This also copies the key material associated
+with the source operation.</p>
+<h1 id="parameters-4" class="section-header"><a href="#parameters-4">Parameters</a></h1>
+<ol>
+<li><code>src</code>: the source operation.
+1.1) If <code>src</code> has no key programmed, then the key of this operation is cleared. If there is a key
+programmed in srcOperation, then the maximum key size of current SHALL be greater than or
+equal to the actual key size of src.</li>
+</ol>
+<h1 id="example-4" class="section-header"><a href="#example-4">Example</a></h1>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">match</span> <span class="ident">Digest::allocate</span>(<span class="ident">AlgorithmId::Sha256</span>) {
+    <span class="prelude-val">Ok</span>(<span class="ident">operation</span>) <span class="op">=</span><span class="op">&gt;</span>
+    {
+        <span class="kw">match</span> <span class="ident">Digest::allocate</span>(<span class="ident">AlgorithmId::Sha256</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">operation2</span>) <span class="op">=</span><span class="op">&gt;</span>
+            {
+                <span class="comment">// ...</span>
+                <span class="ident">operation</span>.<span class="ident">copy</span>(<span class="ident">operation2</span>);
+                <span class="prelude-val">Ok</span>(())
+            }
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+        }
+    }
+    <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+}</code></pre></div>
+<h1 id="panics-6" class="section-header"><a href="#panics-6">Panics</a></h1>
+<ol>
+<li>If the operation or source operation is not a valid opened operation.</li>
+<li>If the alogirhtm or mode differe in two perations.</li>
+<li>If <code>src</code> has akey and its size is greater than the maximum key size of the operation.</li>
+<li>Hardware or cryptographic algorithm failure.</li>
+<li>If the Implementation detects any other error.</li>
+</ol>
+</div></details></div></details><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-OpHandle" class="impl has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#501-505" title="goto source code">[src]</a></div><a href="#impl-OpHandle" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="trait.OpHandle.html" title="trait optee_utee::crypto_op::OpHandle">OpHandle</a> for <a class="struct" href="struct.Digest.html" title="struct optee_utee::crypto_op::Digest">Digest</a></h3></div></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><div id="method.handle" class="method trait-impl has-srclink"><div class="rightside"><a class="srclink" href="../../src/optee_utee/crypto_op.rs.html#502-504" title="goto source code">[src]</a></div><a href="#method.handle" class="anchor"></a><h4 class="code-header">fn <a href="trait.OpHandle.html#tymethod.handle" class="fnname">handle</a>(&amp;self) -&gt; TEE_OperationHandle</h4></div></summary><div class='docblock'><p>Return the handle of an operation.</p>
+</div></details></div></details></div><h2 id="synthetic-implementations" class="small-section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor"></a></h2><div id="synthetic-implementations-list"><div id="impl-RefUnwindSafe" class="impl has-srclink"><div class="rightside"></div><a href="#impl-RefUnwindSafe" class="anchor"></a><h3 class="code-header in-band">impl RefUnwindSafe for <a class="struct" href="struct.Digest.html" title="struct optee_utee::crypto_op::Digest">Digest</a></h3></div><div id="impl-Send" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Send" class="anchor"></a><h3 class="code-header in-band">impl !Send for <a class="struct" href="struct.Digest.html" title="struct optee_utee::crypto_op::Digest">Digest</a></h3></div><div id="impl-Sync" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Sync" class="anchor"></a><h3 class="code-header in-band">impl !Sync for <a class="struct" href="struct.Digest.html" title="struct optee_utee::crypto_op::Digest">Digest</a></h3></div><div id="impl-Unpin" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Unpin" class="anchor"></a><h3 class="code-header in-band">impl Unpin for <a class="struct" href="struct.Digest.html" title="struct optee_utee::crypto_op::Digest">Digest</a></h3></div><div id="impl-UnwindSafe" class="impl has-srclink"><div class="rightside"></div><a href="#impl-UnwindSafe" class="anchor"></a><h3 class="code-header in-band">impl UnwindSafe for <a class="struct" href="struct.Digest.html" title="struct optee_utee::crypto_op::Digest">Digest</a></h3></div></div><h2 id="blanket-implementations" class="small-section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor"></a></h2><div id="blanket-implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-Any" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Any" class="anchor"></a><h3 class="code-header in-band">impl&lt;T&gt; Any for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + ?Sized,&nbsp;</span></h3></div></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><div id="method.type_id" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.type_id" class="anchor"></a><h4 class="code-header">pub fn <a  class="fnname">type_id</a>(&amp;self) -&gt; TypeId</h4></div></summary><div class='docblock'><p>Gets the <code>TypeId</code> of <code>self</code>. <a href="#tymethod.type_id">Read more</a></p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-Borrow%3CT%3E" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Borrow%3CT%3E" class="anchor"></a><h3 class="code-header in-band">impl&lt;T&gt; Borrow&lt;T&gt; for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,&nbsp;</span></h3></div></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><div id="method.borrow" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.borrow" class="anchor"></a><h4 class="code-header">pub fn <a  class="fnname">borrow</a>(&amp;self) -&gt; &amp;T</h4></div></summary><div class='docblock'><p>Immutably borrows from an owned value. <a href="#tymethod.borrow">Read more</a></p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-BorrowMut%3CT%3E" class="impl has-srclink"><div class="rightside"></div><a href="#impl-BorrowMut%3CT%3E" class="anchor"></a><h3 class="code-header in-band">impl&lt;T&gt; BorrowMut&lt;T&gt; for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,&nbsp;</span></h3></div></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><div id="method.borrow_mut" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.borrow_mut" class="anchor"></a><h4 class="code-header">pub fn <a  class="fnname">borrow_mut</a>(&amp;mut self) -&gt; &amp;mut T</h4></div></summary><div class='docblock'><p>Mutably borrows from an owned value. <a href="#tymethod.borrow_mut">Read more</a></p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-From%3CT%3E" class="impl has-srclink"><div class="rightside"></div><a href="#impl-From%3CT%3E" class="anchor"></a><h3 class="code-header in-band">impl&lt;T&gt; From&lt;T&gt; for T</h3></div></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><div id="method.from" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.from" class="anchor"></a><h4 class="code-header">pub fn <a  class="fnname">from</a>(t: T) -&gt; T</h4></div></summary><div class='docblock'><p>Performs the conversion.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-Into%3CU%3E" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Into%3CU%3E" class="anchor"></a><h3 class="code-header in-band">impl&lt;T, U&gt; Into&lt;U&gt; for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: From&lt;T&gt;,&nbsp;</span></h3></div></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><div id="method.into" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.into" class="anchor"></a><h4 class="code-header">pub fn <a  class="fnname">into</a>(self) -&gt; U</h4></div></summary><div class='docblock'><p>Performs the conversion.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-TryFrom%3CU%3E" class="impl has-srclink"><div class="rightside"></div><a href="#impl-TryFrom%3CU%3E" class="anchor"></a><h3 class="code-header in-band">impl&lt;T, U&gt; TryFrom&lt;U&gt; for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: Into&lt;T&gt;,&nbsp;</span></h3></div></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><div id="associatedtype.Error" class="type trait-impl has-srclink"><a href="#associatedtype.Error" class="anchor"></a><h4 class="code-header">type <a href="#associatedtype.Error" class="type">Error</a> = Infallible</h4></div></summary><div class='docblock'><p>The type returned in the event of a conversion error.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><div id="method.try_from" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.try_from" class="anchor"></a><h4 class="code-header">pub fn <a  class="fnname">try_from</a>(value: U) -&gt; Result&lt;T, &lt;T as TryFrom&lt;U&gt;&gt;::Error&gt;</h4></div></summary><div class='docblock'><p>Performs the conversion.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-TryInto%3CU%3E" class="impl has-srclink"><div class="rightside"></div><a href="#impl-TryInto%3CU%3E" class="anchor"></a><h3 class="code-header in-band">impl&lt;T, U&gt; TryInto&lt;U&gt; for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: TryFrom&lt;T&gt;,&nbsp;</span></h3></div></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><div id="associatedtype.Error-1" class="type trait-impl has-srclink"><a href="#associatedtype.Error-1" class="anchor"></a><h4 class="code-header">type <a href="#associatedtype.Error" class="type">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></div></summary><div class='docblock'><p>The type returned in the event of a conversion error.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><div id="method.try_into" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.try_into" class="anchor"></a><h4 class="code-header">pub fn <a  class="fnname">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></div></summary><div class='docblock'><p>Performs the conversion.</p>
+</div></details></div></details></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="optee_utee" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script>
+</body></html>

@@ -1,0 +1,4 @@
+(function() {var implementors = {
+"tantivy":[["impl <a class=\"trait\" href=\"tantivy/trait.HasLen.html\" title=\"trait tantivy::HasLen\">HasLen</a> for <a class=\"struct\" href=\"tantivy/directory/struct.FileSlice.html\" title=\"struct tantivy::directory::FileSlice\">FileSlice</a>"],["impl <a class=\"trait\" href=\"tantivy/trait.HasLen.html\" title=\"trait tantivy::HasLen\">HasLen</a> for <a class=\"struct\" href=\"tantivy/postings/struct.SegmentPostings.html\" title=\"struct tantivy::postings::SegmentPostings\">SegmentPostings</a>"]],
+"tantivy_common":[]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

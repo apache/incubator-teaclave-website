@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Loss","This enum defines the loss type."]],"fn":[["loss2string","Converting Loss to std::string::String."],["string2loss","Converting std::string::String to Loss."]],"struct":[["Config","The config for the gradient boosting algorithm."]]};

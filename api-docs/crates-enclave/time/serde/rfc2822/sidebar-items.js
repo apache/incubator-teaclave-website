@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["deserialize","Deserialize an [`OffsetDateTime`] from its RFC2822 representation."],["serialize","Serialize an [`OffsetDateTime`] using the well-known RFC2822 format."]],"mod":[["option","Use the well-known RFC2822 format when serializing and deserializing an [`Option<OffsetDateTime>`]."]]};

@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This module implements the process of gradient boosting decision tree algorithm. This module depends on the following module:"><meta name="keywords" content="rust, rustlang, rust-lang, gradient_boost"><title>gbdt::gradient_boost - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../gbdt/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../gbdt/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Module gradient_boost</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#structs">Structs</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Module <a href="../index.html">gbdt</a>::<wbr><a class="mod" href="#">gradient_boost</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/gbdt/gradient_boost.rs.html#1-785">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This module implements the process of gradient boosting decision tree
+algorithm. This module depends on the following module:</p>
+<ol>
+<li>
+<p><a href="../config/">gbdt::config::Config</a>: <a href="../config/struct.Config.html">Config</a> is needed to configure the gbdt algorithm.</p>
+</li>
+<li>
+<p><a href="../decision_tree/">gbdt::decision_tree</a>: <a href="../decision_tree/struct.DecisionTree.html">DecisionTree</a> is used
+for training and predicting.</p>
+</li>
+<li>
+<p><a href="https://docs.rs/rand/0.6.1/rand/">rand</a>: This standard module is used to randomly select the data or
+features used in a single iteration of training if the
+<a href="../config/struct.Config.html#structfield.data_sample_ratio">data_sample_ratio</a> or
+<a href="../config/struct.Config.html#structfield.feature_sample_ratio">feature_sample_ratio</a> is less than 1.0 .</p>
+</li>
+</ol>
+<h2 id="example"><a href="#example">Example</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Config;
+<span class="kw">use </span>gbdt::gradient_boost::GBDT;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DataVec};
+
+<span class="comment">// set config for algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>cfg = Config::new();
+cfg.set_feature_size(<span class="number">3</span>);
+cfg.set_max_depth(<span class="number">2</span>);
+cfg.set_min_leaf_size(<span class="number">1</span>);
+cfg.set_loss(<span class="string">&quot;SquaredError&quot;</span>);
+cfg.set_iterations(<span class="number">2</span>);
+
+<span class="comment">// initialize GBDT algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>gbdt = GBDT::new(<span class="kw-2">&amp;</span>cfg);
+
+<span class="comment">// setup training data
+</span><span class="kw">let </span>data1 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data4 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.0</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>training_data: DataVec = Vec::new();
+training_data.push(data1.clone());
+training_data.push(data2.clone());
+training_data.push(data3.clone());
+training_data.push(data4.clone());
+
+<span class="comment">// train the decision trees.
+</span>gbdt.fit(<span class="kw-2">&amp;mut </span>training_data);
+
+<span class="comment">// setup the test data
+
+</span><span class="kw">let </span><span class="kw-2">mut </span>test_data: DataVec = Vec::new();
+test_data.push(data1.clone());
+test_data.push(data2.clone());
+test_data.push(Data::new_test_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="prelude-val">None</span>));
+test_data.push(Data::new_test_data(
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="prelude-val">None</span>));
+
+<span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>, gbdt.predict(<span class="kw-2">&amp;</span>test_data));
+
+<span class="comment">// output:
+// [1.0, 1.0, 2.0, 0.0]</span></code></pre></div>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.GBDT.html" title="gbdt::gradient_boost::GBDT struct">GBDT</a></div><div class="item-right docblock-short">The gradient boosting decision tree.</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gbdt" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="The gradient boosting decision tree."><meta name="keywords" content="rust, rustlang, rust-lang, GBDT"><title>GBDT in gbdt::gradient_boost - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../gbdt/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../gbdt/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">GBDT</a></h2><div class="sidebar-elems"><section><h3><a href="#implementations">Methods</a></h3><ul class="block"><li><a href="#method.fit">fit</a></li><li><a href="#method.from_xgoost_dump">from_xgoost_dump</a></li><li><a href="#method.from_xgoost_reader">from_xgoost_reader</a></li><li><a href="#method.load_model">load_model</a></li><li><a href="#method.new">new</a></li><li><a href="#method.predict">predict</a></li><li><a href="#method.predict_multiclass">predict_multiclass</a></li><li><a href="#method.print_trees">print_trees</a></li><li><a href="#method.save_model">save_model</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block"><li><a href="#impl-Default-for-GBDT">Default</a></li><li><a href="#impl-Deserialize%3C%27de%3E-for-GBDT">Deserialize&lt;&#39;de&gt;</a></li><li><a href="#impl-Serialize-for-GBDT">Serialize</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block"><li><a href="#impl-RefUnwindSafe-for-GBDT">RefUnwindSafe</a></li><li><a href="#impl-Send-for-GBDT">Send</a></li><li><a href="#impl-Sync-for-GBDT">Sync</a></li><li><a href="#impl-Unpin-for-GBDT">Unpin</a></li><li><a href="#impl-UnwindSafe-for-GBDT">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block"><li><a href="#impl-Any-for-GBDT">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-GBDT">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-GBDT">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-DeserializeOwned-for-GBDT">DeserializeOwned</a></li><li><a href="#impl-From%3CT%3E-for-GBDT">From&lt;T&gt;</a></li><li><a href="#impl-Into%3CU%3E-for-GBDT">Into&lt;U&gt;</a></li><li><a href="#impl-TryFrom%3CU%3E-for-GBDT">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-GBDT">TryInto&lt;U&gt;</a></li><li><a href="#impl-VZip%3CV%3E-for-GBDT">VZip&lt;V&gt;</a></li></ul></section><h2><a href="index.html">In gbdt::gradient_boost</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Struct <a href="../index.html">gbdt</a>::<wbr><a href="index.html">gradient_boost</a>::<wbr><a class="struct" href="#">GBDT</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/gbdt/gradient_boost.rs.html#116-123">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust struct"><code>pub struct GBDT { /* private fields */ }</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>The gradient boosting decision tree.</p>
+</div></details><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><div id="implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-GBDT" class="impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#125-804">source</a><a href="#impl-GBDT" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.new" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#144-150">source</a><h4 class="code-header">pub fn <a href="#method.new" class="fnname">new</a>(conf: &amp;<a class="struct" href="../config/struct.Config.html" title="struct gbdt::config::Config">Config</a>) -&gt; <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h4></section></summary><div class="docblock"><p>Return a new gbdt with manually set config.</p>
+<h5 id="example"><a href="#example">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Config;
+<span class="kw">use </span>gbdt::gradient_boost::GBDT;
+
+<span class="comment">// set config for algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>cfg = Config::new();
+cfg.set_feature_size(<span class="number">3</span>);
+cfg.set_max_depth(<span class="number">2</span>);
+cfg.set_min_leaf_size(<span class="number">1</span>);
+cfg.set_loss(<span class="string">&quot;SquaredError&quot;</span>);
+cfg.set_iterations(<span class="number">2</span>);
+
+<span class="comment">// initialize GBDT algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>gbdt = GBDT::new(<span class="kw-2">&amp;</span>cfg);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fit" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#251-347">source</a><h4 class="code-header">pub fn <a href="#method.fit" class="fnname">fit</a>(&amp;mut self, train_data: &amp;mut <a class="type" href="../decision_tree/type.DataVec.html" title="type gbdt::decision_tree::DataVec">DataVec</a>)</h4></section></summary><div class="docblock"><p>Fit the train data.</p>
+<p>First, initialize and configure decision trees. Then train the model with certain
+iterations set by config.</p>
+<h5 id="example-1"><a href="#example-1">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Config;
+<span class="kw">use </span>gbdt::gradient_boost::GBDT;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DataVec, PredVec, ValueType};
+
+<span class="comment">// set config for algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>cfg = Config::new();
+cfg.set_feature_size(<span class="number">3</span>);
+cfg.set_max_depth(<span class="number">2</span>);
+cfg.set_min_leaf_size(<span class="number">1</span>);
+cfg.set_loss(<span class="string">&quot;SquaredError&quot;</span>);
+cfg.set_iterations(<span class="number">2</span>);
+
+<span class="comment">// initialize GBDT algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>gbdt = GBDT::new(<span class="kw-2">&amp;</span>cfg);
+
+<span class="comment">// setup training data
+</span><span class="kw">let </span>data1 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data4 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.0</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>training_data: DataVec = Vec::new();
+training_data.push(data1.clone());
+training_data.push(data2.clone());
+training_data.push(data3.clone());
+training_data.push(data4.clone());
+
+<span class="comment">// train the decision trees.
+</span>gbdt.fit(<span class="kw-2">&amp;mut </span>training_data);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.predict" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#456-477">source</a><h4 class="code-header">pub fn <a href="#method.predict" class="fnname">predict</a>(&amp;self, test_data: &amp;<a class="type" href="../decision_tree/type.DataVec.html" title="type gbdt::decision_tree::DataVec">DataVec</a>) -&gt; <a class="type" href="../decision_tree/type.PredVec.html" title="type gbdt::decision_tree::PredVec">PredVec</a></h4></section></summary><div class="docblock"><p>Predict the given data.</p>
+<p>Note that for log likelyhood loss type, the predicted value will be
+normalized between 0 and 1, which is the possibility of label 1</p>
+<h5 id="example-2"><a href="#example-2">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Config;
+<span class="kw">use </span>gbdt::gradient_boost::GBDT;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DataVec, PredVec, ValueType};
+
+<span class="comment">// set config for algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>cfg = Config::new();
+cfg.set_feature_size(<span class="number">3</span>);
+cfg.set_max_depth(<span class="number">2</span>);
+cfg.set_min_leaf_size(<span class="number">1</span>);
+cfg.set_loss(<span class="string">&quot;SquaredError&quot;</span>);
+cfg.set_iterations(<span class="number">2</span>);
+
+<span class="comment">// initialize GBDT algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>gbdt = GBDT::new(<span class="kw-2">&amp;</span>cfg);
+
+<span class="comment">// setup training data
+</span><span class="kw">let </span>data1 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data4 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.0</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>training_data: DataVec = Vec::new();
+training_data.push(data1.clone());
+training_data.push(data2.clone());
+training_data.push(data3.clone());
+training_data.push(data4.clone());
+
+<span class="comment">// train the decision trees.
+</span>gbdt.fit(<span class="kw-2">&amp;mut </span>training_data);
+
+<span class="comment">// setup the test data
+
+</span><span class="kw">let </span><span class="kw-2">mut </span>test_data: DataVec = Vec::new();
+test_data.push(data1.clone());
+test_data.push(data2.clone());
+test_data.push(data3.clone());
+test_data.push(data4.clone());
+
+<span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>, gbdt.predict(<span class="kw-2">&amp;</span>test_data));</code></pre></div>
+<h5 id="panic"><a href="#panic">Panic</a></h5>
+<p>If the training process is not completed, thus, the number of trees that have been
+is less than the iteration configuration in <code>self.conf</code>, it will panic.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.predict_multiclass" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#501-547">source</a><h4 class="code-header">pub fn <a href="#method.predict_multiclass" class="fnname">predict_multiclass</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;test_data: &amp;<a class="type" href="../decision_tree/type.DataVec.html" title="type gbdt::decision_tree::DataVec">DataVec</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;class_num: usize<br>) -&gt; (Vec&lt;usize&gt;, Vec&lt;Vec&lt;<a class="type" href="../decision_tree/type.ValueType.html" title="type gbdt::decision_tree::ValueType">ValueType</a>&gt;&gt;)</h4></section></summary><div class="docblock"><p>Predict multi class data and return the probabilities for each class. The loss type should be “multi:softmax” or “multi:softprob”</p>
+<p>test_data: the test set</p>
+<p>class_num: the number of class</p>
+<p>output: the predicted class label, the predicted possiblity for each class</p>
+<h5 id="example-3"><a href="#example-3">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::gradient_boost::GBDT;
+<span class="kw">use </span>gbdt::input::{load, InputFormat};
+<span class="kw">use </span>gbdt::decision_tree::DataVec;
+<span class="kw">let </span>gbdt =
+    GBDT::from_xgoost_dump(<span class="string">&quot;xgb-data/xgb_multi_softmax/gbdt.model&quot;</span>, <span class="string">&quot;multi:softmax&quot;</span>).unwrap();
+<span class="kw">let </span>test_file = <span class="string">&quot;xgb-data/xgb_multi_softmax/dermatology.data.test&quot;</span>;
+<span class="kw">let </span><span class="kw-2">mut </span>fmt = InputFormat::csv_format();
+fmt.set_label_index(<span class="number">34</span>);
+<span class="kw">let </span>test_data: DataVec = load(test_file, fmt).unwrap();
+<span class="kw">let </span>(labels, probs) = gbdt.predict_multiclass(<span class="kw-2">&amp;</span>test_data, <span class="number">6</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.print_trees" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#606-610">source</a><h4 class="code-header">pub fn <a href="#method.print_trees" class="fnname">print_trees</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Print the tress for debug</p>
+<h5 id="example-4"><a href="#example-4">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Config;
+<span class="kw">use </span>gbdt::gradient_boost::GBDT;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DataVec, PredVec, ValueType};
+
+<span class="comment">// set config for algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>cfg = Config::new();
+cfg.set_feature_size(<span class="number">3</span>);
+cfg.set_max_depth(<span class="number">2</span>);
+cfg.set_min_leaf_size(<span class="number">1</span>);
+cfg.set_loss(<span class="string">&quot;SquaredError&quot;</span>);
+cfg.set_iterations(<span class="number">2</span>);
+
+<span class="comment">// initialize GBDT algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>gbdt = GBDT::new(<span class="kw-2">&amp;</span>cfg);
+
+<span class="comment">// setup training data
+</span><span class="kw">let </span>data1 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data4 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.0</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>dv: DataVec = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+dv.push(data4.clone());
+
+<span class="comment">// train the decision trees.
+</span>gbdt.fit(<span class="kw-2">&amp;mut </span>dv);
+
+<span class="comment">// print the tree.
+</span>gbdt.print_trees();</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.save_model" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#710-716">source</a><h4 class="code-header">pub fn <a href="#method.save_model" class="fnname">save_model</a>(&amp;self, filename: &amp;str) -&gt; <a class="type" href="../errors/type.Result.html" title="type gbdt::errors::Result">Result</a>&lt;()&gt;</h4></section></summary><div class="docblock"><p>Save the model to a file using serde.</p>
+<h5 id="example-5"><a href="#example-5">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::config::Config;
+<span class="kw">use </span>gbdt::gradient_boost::GBDT;
+<span class="kw">use </span>gbdt::decision_tree::{Data, DataVec, PredVec, ValueType};
+
+<span class="comment">// set config for algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>cfg = Config::new();
+cfg.set_feature_size(<span class="number">3</span>);
+cfg.set_max_depth(<span class="number">2</span>);
+cfg.set_min_leaf_size(<span class="number">1</span>);
+cfg.set_loss(<span class="string">&quot;SquaredError&quot;</span>);
+cfg.set_iterations(<span class="number">2</span>);
+
+<span class="comment">// initialize GBDT algorithm
+</span><span class="kw">let </span><span class="kw-2">mut </span>gbdt = GBDT::new(<span class="kw-2">&amp;</span>cfg);
+
+<span class="comment">// setup training data
+</span><span class="kw">let </span>data1 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data2 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">1.1</span>, <span class="number">2.1</span>, <span class="number">3.1</span>],
+    <span class="number">1.0</span>,
+    <span class="number">1.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data3 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>],
+    <span class="number">1.0</span>,
+    <span class="number">2.0</span>,
+    <span class="prelude-val">None
+</span>);
+<span class="kw">let </span>data4 = Data::new_training_data (
+    <span class="macro">vec!</span>[<span class="number">2.0</span>, <span class="number">2.3</span>, <span class="number">1.2</span>],
+    <span class="number">1.0</span>,
+    <span class="number">0.0</span>,
+    <span class="prelude-val">None
+</span>);
+
+<span class="kw">let </span><span class="kw-2">mut </span>dv: DataVec = Vec::new();
+dv.push(data1.clone());
+dv.push(data2.clone());
+dv.push(data3.clone());
+dv.push(data4.clone());
+
+<span class="comment">// train the decision trees.
+</span>gbdt.fit(<span class="kw-2">&amp;mut </span>dv);
+
+<span class="comment">// Save model.
+// gbdt.save_model(&quot;gbdt.model&quot;);</span></code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.load_model" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#729-735">source</a><h4 class="code-header">pub fn <a href="#method.load_model" class="fnname">load_model</a>(filename: &amp;str) -&gt; <a class="type" href="../errors/type.Result.html" title="type gbdt::errors::Result">Result</a>&lt;Self&gt;</h4></section></summary><div class="docblock"><p>Load the model from the file.</p>
+<h5 id="example-6"><a href="#example-6">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::gradient_boost::GBDT;
+<span class="comment">//let gbdt = GBDT::load_model(&quot;./gbdt-rs.model&quot;).unwrap();</span></code></pre></div>
+<h5 id="error"><a href="#error">Error</a></h5>
+<p>Error when get exception during model file parsing or deserialize.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from_xgoost_dump" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#749-753">source</a><h4 class="code-header">pub fn <a href="#method.from_xgoost_dump" class="fnname">from_xgoost_dump</a>(model_file: &amp;str, objective: &amp;str) -&gt; <a class="type" href="../errors/type.Result.html" title="type gbdt::errors::Result">Result</a>&lt;Self&gt;</h4></section></summary><div class="docblock"><p>Load the model from xgboost’s model using a path. The xgboost’s model should be converted by “convert_xgboost.py”</p>
+<h5 id="example-7"><a href="#example-7">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::gradient_boost::GBDT;
+<span class="kw">let </span>gbdt =
+    GBDT::from_xgoost_dump(<span class="string">&quot;xgb-data/xgb_binary_logistic/gbdt.model&quot;</span>, <span class="string">&quot;binary:logistic&quot;</span>).unwrap();</code></pre></div>
+<h5 id="error-1"><a href="#error-1">Error</a></h5>
+<p>Error when get exception during model file parsing.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from_xgoost_reader" class="method has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#767-803">source</a><h4 class="code-header">pub fn <a href="#method.from_xgoost_reader" class="fnname">from_xgoost_reader</a>&lt;R&gt;(reader: R, objective: &amp;str) -&gt; <a class="type" href="../errors/type.Result.html" title="type gbdt::errors::Result">Result</a>&lt;Self&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: BufRead,</span></h4></section></summary><div class="docblock"><p>Load the model from xgboost’s model using a reader. The xgboost’s model should be converted by “convert_xgboost.py”</p>
+<h5 id="example-8"><a href="#example-8">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>gbdt::gradient_boost::GBDT;
+<span class="kw">let </span>gbdt =
+    GBDT::from_xgoost_reader(std::io::Cursor::new(<span class="macro">include_str!</span>(<span class="string">&quot;xgb-data/xgb_binary_logistic/gbdt.model&quot;</span>)), <span class="string">&quot;binary:logistic&quot;</span>).unwrap();</code></pre></div>
+<h5 id="error-2"><a href="#error-2">Error</a></h5>
+<p>Error when get exception during model parsing.</p>
+</div></details></div></details></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Default-for-GBDT" class="impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#115">source</a><a href="#impl-Default-for-GBDT" class="anchor"></a><h3 class="code-header">impl Default for <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.default" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#115">source</a><a href="#method.default" class="anchor"></a><h4 class="code-header">fn <a class="fnname">default</a>() -&gt; <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h4></section></summary><div class='docblock'>Returns the “default value” for a type. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Deserialize%3C%27de%3E-for-GBDT" class="impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#115">source</a><a href="#impl-Deserialize%3C%27de%3E-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;'de&gt; <a class="trait" href="../../serde/de/trait.Deserialize.html" title="trait serde::de::Deserialize">Deserialize</a>&lt;'de&gt; for <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.deserialize" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#115">source</a><a href="#method.deserialize" class="anchor"></a><h4 class="code-header">fn <a href="../../serde/de/trait.Deserialize.html#tymethod.deserialize" class="fnname">deserialize</a>&lt;__D&gt;(__deserializer: __D) -&gt; Result&lt;Self, __D::<a class="associatedtype" href="../../serde/de/trait.Deserializer.html#associatedtype.Error" title="type serde::de::Deserializer::Error">Error</a>&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;__D: <a class="trait" href="../../serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Deserializer</a>&lt;'de&gt;,</span></h4></section></summary><div class='docblock'>Deserialize this value from the given Serde deserializer. <a href="../../serde/de/trait.Deserialize.html#tymethod.deserialize">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Serialize-for-GBDT" class="impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#115">source</a><a href="#impl-Serialize-for-GBDT" class="anchor"></a><h3 class="code-header">impl <a class="trait" href="../../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a> for <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.serialize" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/gbdt/gradient_boost.rs.html#115">source</a><a href="#method.serialize" class="anchor"></a><h4 class="code-header">fn <a href="../../serde/ser/trait.Serialize.html#tymethod.serialize" class="fnname">serialize</a>&lt;__S&gt;(&amp;self, __serializer: __S) -&gt; Result&lt;__S::<a class="associatedtype" href="../../serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, __S::<a class="associatedtype" href="../../serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;__S: <a class="trait" href="../../serde/ser/trait.Serializer.html" title="trait serde::ser::Serializer">Serializer</a>,</span></h4></section></summary><div class='docblock'>Serialize this value into the given Serde serializer. <a href="../../serde/ser/trait.Serialize.html#tymethod.serialize">Read more</a></div></details></div></details></div><h2 id="synthetic-implementations" class="small-section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor"></a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-GBDT" class="impl has-srclink"><a href="#impl-RefUnwindSafe-for-GBDT" class="anchor"></a><h3 class="code-header">impl RefUnwindSafe for <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h3></section><section id="impl-Send-for-GBDT" class="impl has-srclink"><a href="#impl-Send-for-GBDT" class="anchor"></a><h3 class="code-header">impl Send for <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h3></section><section id="impl-Sync-for-GBDT" class="impl has-srclink"><a href="#impl-Sync-for-GBDT" class="anchor"></a><h3 class="code-header">impl Sync for <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h3></section><section id="impl-Unpin-for-GBDT" class="impl has-srclink"><a href="#impl-Unpin-for-GBDT" class="anchor"></a><h3 class="code-header">impl Unpin for <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h3></section><section id="impl-UnwindSafe-for-GBDT" class="impl has-srclink"><a href="#impl-UnwindSafe-for-GBDT" class="anchor"></a><h3 class="code-header">impl UnwindSafe for <a class="struct" href="struct.GBDT.html" title="struct gbdt::gradient_boost::GBDT">GBDT</a></h3></section></div><h2 id="blanket-implementations" class="small-section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor"></a></h2><div id="blanket-implementations-list"><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Any-for-GBDT" class="impl has-srclink"><a href="#impl-Any-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Any for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl has-srclink"><a href="#method.type_id" class="anchor"></a><h4 class="code-header">fn <a class="fnname">type_id</a>(&amp;self) -&gt; TypeId</h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-GBDT" class="impl has-srclink"><a href="#impl-Borrow%3CT%3E-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Borrow&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow</a>(&amp;self) -&gt; &amp;T</h4></section></summary><div class='docblock'>Immutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-BorrowMut%3CT%3E-for-GBDT" class="impl has-srclink"><a href="#impl-BorrowMut%3CT%3E-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; BorrowMut&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow_mut" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow_mut" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow_mut</a>(&amp;mut self) -&gt; &amp;mut T</h4></section></summary><div class='docblock'>Mutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-From%3CT%3E-for-GBDT" class="impl has-srclink"><a href="#impl-From%3CT%3E-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; From&lt;T&gt; for T</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">from</a>(t: T) -&gt; T</h4></section></summary><div class="docblock"><p>Returns the argument unchanged.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-GBDT" class="impl has-srclink"><a href="#impl-Into%3CU%3E-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; Into&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: From&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">into</a>(self) -&gt; U</h4></section></summary><div class="docblock"><p>Calls <code>U::from(self)</code>.</p>
+<p>That is, this conversion is whatever the implementation of
+<code>[From]&lt;T&gt; for U</code> chooses to do.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryFrom%3CU%3E-for-GBDT" class="impl has-srclink"><a href="#impl-TryFrom%3CU%3E-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryFrom&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: Into&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error-1" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error-1" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = Infallible</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_from</a>(value: U) -&gt; Result&lt;T, &lt;T as TryFrom&lt;U&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryInto%3CU%3E-for-GBDT" class="impl has-srclink"><a href="#impl-TryInto%3CU%3E-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryInto&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: TryFrom&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-VZip%3CV%3E-for-GBDT" class="impl has-srclink"><a class="srclink rightside" href="../../src/ppv_lite86/types.rs.html#221">source</a><a href="#impl-VZip%3CV%3E-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;V, T&gt; <a class="trait" href="../../ppv_lite86/types/trait.VZip.html" title="trait ppv_lite86::types::VZip">VZip</a>&lt;V&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../ppv_lite86/types/trait.MultiLane.html" title="trait ppv_lite86::types::MultiLane">MultiLane</a>&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><section id="method.vzip" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/ppv_lite86/types.rs.html#226">source</a><a href="#method.vzip" class="anchor"></a><h4 class="code-header">fn <a href="../../ppv_lite86/types/trait.VZip.html#tymethod.vzip" class="fnname">vzip</a>(self) -&gt; V</h4></section></div></details><section id="impl-DeserializeOwned-for-GBDT" class="impl has-srclink"><a class="srclink rightside" href="../../src/serde/de/mod.rs.html#604">source</a><a href="#impl-DeserializeOwned-for-GBDT" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="../../serde/de/trait.DeserializeOwned.html" title="trait serde::de::DeserializeOwned">DeserializeOwned</a> for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: for&lt;'de&gt; <a class="trait" href="../../serde/de/trait.Deserialize.html" title="trait serde::de::Deserialize">Deserialize</a>&lt;'de&gt;,</span></h3></section></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gbdt" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>
