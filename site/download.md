@@ -15,7 +15,7 @@ by following these
 
 | Version | Date | Source Code               | PGP/SHA | Link |
 |:-------:|:------------:|:-------------------------:|:-------:|:-------------:|
-| 0.5.0   | 2023-04-03   | [apache-teaclave-0.5.0-incubating.tar.gz](https://dlcdn.apache.org/incubator/teaclave/0.5.0/apache-teaclave-0.5.0-incubating.tar.gz)| [asc](https://dlcdn.apache.org/incubator/teaclave/0.5.0/apache-teaclave-0.5.0-incubating.tar.gz.asc), [sha512](https://dlcdn.apache.org/incubator/teaclave/0.5.0/apache-teaclave-0.5.0-incubating.tar.gz.sha512) | [notes](https://github.com/apache/incubator-teaclave/releases/tag/v0.5.0) |
+| 0.5.1   | 2023-05-31   | [apache-teaclave-0.5.1-incubating.tar.gz](https://dlcdn.apache.org/incubator/teaclave/0.5.1/apache-teaclave-0.5.1-incubating.tar.gz)| [asc](https://dlcdn.apache.org/incubator/teaclave/0.5.1/apache-teaclave-0.5.1-incubating.tar.gz.asc), [sha512](https://dlcdn.apache.org/incubator/teaclave/0.5.1/apache-teaclave-0.5.1-incubating.tar.gz.sha512) | [notes](https://github.com/apache/incubator-teaclave/releases/tag/v0.5.1) |
 
 ### Teaclave SGX SDK
 
