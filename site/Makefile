@@ -22,7 +22,8 @@ trustzone-sdk-api-docs: teaclave-docs
 	@echo "<meta http-equiv=refresh content=0;url=`echo optee_teec | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/trustzone-sdk/optee-teec/index.html
 
 client-sdk-python-docs: teaclave-docs
-	pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python
+	python3 -m grpc_tools.protoc --proto_path=teaclave/services/proto/src/proto --python_out=teaclave/sdk/python --grpclib_python_out=teaclave/sdk/python teaclave/services/proto/src/proto/*.proto
+	 PYTHONPATH=teaclave/sdk/python pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python
 	@echo "<meta http-equiv=refresh content=0;url=python/teaclave.html>" > .vuepress/dist/api-docs/client-sdk-python/index.html
 
 client-sdk-rust-docs: teaclave-docs
@@ -34,21 +35,20 @@ client-sdk-rust-docs: teaclave-docs
 	@echo "<meta http-equiv=refresh content=0;url=`echo teaclave_client_sdk | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/client-sdk-rust/index.html
 
 crate-docs:
-	cp ${TEACLAVE_TARGET_DIR}/trusted/doc .vuepress/dist/api-docs/crates-enclave -r
-	cp ${TEACLAVE_TARGET_DIR}/untrusted/doc .vuepress/dist/api-docs/crates-app -r
+	cp ${TEACLAVE_TARGET_DIR}/docs/enclave .vuepress/dist/api-docs/crates-enclave -r
+	cp ${TEACLAVE_TARGET_DIR}/docs/app .vuepress/dist/api-docs/crates-app -r
 
 teaclave-docs:
 	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
-	git clone https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk || cd teaclave-sgx-sdk && git pull
-	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk
-	cd teaclave-trustzone-sdk && git checkout 38452505f36e2a49279fbfcb7199147cf1190a95
+	git clone -b v2.0.0-preview https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk || cd teaclave-sgx-sdk && git pull
+	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk || cd teaclave-trustzone-sdk && git pull
 	vuepress build
 
 dev:
 	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
 	git clone https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk || cd teaclave-sgx-sdk && git pull
 	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk
-	cd teaclave-trustzone-sdk && git checkout 38452505f36e2a49279fbfcb7199147cf1190a95
+	cd teaclave-trustzone-sdk
 	vuepress dev
 
 preview:

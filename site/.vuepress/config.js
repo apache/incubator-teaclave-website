@@ -142,7 +142,6 @@ module.exports = {
                       '/teaclave/executor/',
                       '/teaclave/file_agent/',
                       '/teaclave/function/',
-                      '/teaclave/keys/',
                       '/teaclave/rpc/',
                       '/teaclave/runtime/',
                       '/teaclave/sdk/',
