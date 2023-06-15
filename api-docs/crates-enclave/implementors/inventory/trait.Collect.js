@@ -1,3 +1,0 @@
-(function() {var implementors = {
-"teaclave_test_utils":[["impl <a class=\"trait\" href=\"inventory/trait.Collect.html\" title=\"trait inventory::Collect\">Collect</a> for <a class=\"struct\" href=\"teaclave_test_utils/struct.TestCase.html\" title=\"struct teaclave_test_utils::TestCase\">TestCase</a>"],["impl <a class=\"trait\" href=\"inventory/trait.Collect.html\" title=\"trait inventory::Collect\">Collect</a> for <a class=\"struct\" href=\"teaclave_test_utils/struct.AsyncTestCase.html\" title=\"struct teaclave_test_utils::AsyncTestCase\">AsyncTestCase</a>"]]
-};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

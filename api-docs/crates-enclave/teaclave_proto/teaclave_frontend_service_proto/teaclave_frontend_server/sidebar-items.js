@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["TeaclaveFrontendServer",""]],"trait":[["TeaclaveFrontend","Generated trait containing gRPC methods that should be implemented for use with TeaclaveFrontendServer."]]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["handle_file_request",""],["ocall_handle_file_request",""]]};

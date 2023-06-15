@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":[["teaclave_management_client","Generated client implementations."],["teaclave_management_server","Generated server implementations."]],"struct":[["SaveLogsRequest",""]]};

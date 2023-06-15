@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["RdRand","A random number generator"]]};

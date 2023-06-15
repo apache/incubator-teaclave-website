@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["Reader","A multi-format image reader."]]};

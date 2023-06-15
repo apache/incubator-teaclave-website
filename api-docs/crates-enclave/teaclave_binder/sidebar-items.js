@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"attr":[["handle_ecall",""]],"macro":[["register_ecall_handler",""]],"mod":[["ipc",""],["proto",""]]};

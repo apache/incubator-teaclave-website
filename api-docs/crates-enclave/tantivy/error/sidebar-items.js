@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":[["TantivyError","The library’s error enum"]],"struct":[["DataCorruption","Represents a `DataCorruption` error."]]};

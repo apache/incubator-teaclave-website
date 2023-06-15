@@ -1,3 +1,0 @@
-(function() {var implementors = {
-"tantivy":[["impl TryInto&lt;<a class=\"struct\" href=\"tantivy/struct.IndexReader.html\" title=\"struct tantivy::IndexReader\">IndexReader</a>&gt; for <a class=\"struct\" href=\"tantivy/struct.IndexReaderBuilder.html\" title=\"struct tantivy::IndexReaderBuilder\">IndexReaderBuilder</a>"]]
-};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

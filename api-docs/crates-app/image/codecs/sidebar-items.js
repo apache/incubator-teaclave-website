@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":[["jpeg","Decoding and Encoding of JPEG Images"]]};

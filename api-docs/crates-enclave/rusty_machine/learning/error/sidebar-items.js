@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":[["ErrorKind","Types of errors produced in the learning module."]],"struct":[["Error","An error related to the learning module."]]};

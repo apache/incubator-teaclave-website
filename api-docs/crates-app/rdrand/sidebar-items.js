@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":[["ErrorCode","Errors in this library"]],"mod":[["changelog","Project changelog"]],"struct":[["RdRand","A cryptographically secure statistically uniform, non-periodic and non-deterministic random bit generator."],["RdSeed","A cryptographically secure non-deterministic random bit generator."]]};

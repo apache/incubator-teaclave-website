@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["SVM","Support Vector Machine"]]};

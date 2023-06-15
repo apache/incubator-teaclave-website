@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["Exp","Exponential activation function."],["Linear","Linear activation function."],["Sigmoid","Sigmoid activation function."],["Tanh","Hyperbolic tangent activation function"]],"trait":[["ActivationFunc","Trait for activation functions in models."]]};

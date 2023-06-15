@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["LinRegressor","Linear Regression Model."]]};

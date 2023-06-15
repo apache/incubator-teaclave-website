@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["Standardizer","The Standardizer"],["StandardizerFitter","A builder used to construct a `Standardizer`"]]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"attr":[["async_test_case",""],["test_case",""]]};

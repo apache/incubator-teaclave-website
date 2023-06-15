@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Blocks unless or until the current thread’s token is made available or the specified duration has been reached (may wake spuriously)."><meta name="keywords" content="rust, rustlang, rust-lang, park_timeout"><title>park_timeout in sgx_tstd::thread - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../sgx_tstd/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../sgx_tstd/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><div class="sidebar-elems"><h2><a href="index.html">In sgx_tstd::thread</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Function <a href="../index.html">sgx_tstd</a>::<wbr><a href="index.html">thread</a>::<wbr><a class="fn" href="#">park_timeout</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/sgx_tstd/thread/mod.rs.html#1023-1031">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust fn"><code>pub fn park_timeout(dur: <a class="struct" href="../time/struct.Duration.html" title="struct sgx_tstd::time::Duration">Duration</a>)</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Blocks unless or until the current thread’s token is made available or
+the specified duration has been reached (may wake spuriously).</p>
+<p>The semantics of this function are equivalent to <a href="fn.park.html" title="park"><code>park</code></a> except
+that the thread will be blocked for roughly no longer than <code>dur</code>. This
+method should not be used for precise timing due to anomalies such as
+preemption or platform differences that might not cause the maximum
+amount of time waited to be precisely <code>dur</code> long.</p>
+<p>See the <a href="fn.park.html" title="park">park documentation</a> for more details.</p>
+<h2 id="platform-specific-behavior"><a href="#platform-specific-behavior">Platform-specific behavior</a></h2>
+<p>Platforms which do not support nanosecond precision for sleeping will have
+<code>dur</code> rounded up to the nearest granularity of time they can sleep for.</p>
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+<p>Waiting for the complete expiration of the timeout:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::thread::park_timeout;
+<span class="kw">use </span>std::time::{Instant, Duration};
+
+<span class="kw">let </span>timeout = Duration::from_secs(<span class="number">2</span>);
+<span class="kw">let </span>beginning_park = Instant::now();
+
+<span class="kw">let </span><span class="kw-2">mut </span>timeout_remaining = timeout;
+<span class="kw">loop </span>{
+    park_timeout(timeout_remaining);
+    <span class="kw">let </span>elapsed = beginning_park.elapsed();
+    <span class="kw">if </span>elapsed &gt;= timeout {
+        <span class="kw">break</span>;
+    }
+    <span class="macro">println!</span>(<span class="string">&quot;restarting park_timeout after {elapsed:?}&quot;</span>);
+    timeout_remaining = timeout - elapsed;
+}</code></pre></div>
+</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="sgx_tstd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

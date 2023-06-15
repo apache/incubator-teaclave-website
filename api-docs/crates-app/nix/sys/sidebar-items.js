@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":[["memfd","Interfaces for managing memory-backed files."],["signal","Operating system signals."],["signalfd","Interface for the `signalfd` syscall."],["stat",""],["statfs","Get filesystem statistics, non-portably"],["statvfs","Get filesystem statistics"],["sysinfo",""],["time",""],["wait","Wait for a process to change status"]]};

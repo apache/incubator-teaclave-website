@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":[["KSS_BIT_IDX",""],["LAST_BIT_IDX",""],["PCL_BIT_IDX",""],["SWITCHLESS_BIT_IDX",""]],"struct":[["ExtFeatureBits",""],["ExtFeatures",""],["SgxEnclave",""]]};

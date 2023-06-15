@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["u_read_hostbuf_ocall",""],["u_write_hostbuf_ocall",""]]};

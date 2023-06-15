@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":[["ExecutorCommand",""],["ExecutorStatus",""],["TaskStatus",""]],"mod":[["task_result","Nested message and enum types in `TaskResult`."]],"struct":[["Entry",""],["FileCryptoInfo",""],["TaskFailure",""],["TaskOutputs",""],["TaskResult",""],["UserCredential",""]]};

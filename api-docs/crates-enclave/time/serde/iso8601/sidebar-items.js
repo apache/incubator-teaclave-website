@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["deserialize","Deserialize an [`OffsetDateTime`] from its ISO 8601 representation."],["serialize","Serialize an [`OffsetDateTime`] using the well-known ISO 8601 format."]],"mod":[["option","Use the well-known ISO 8601 format when serializing and deserializing an [`Option<OffsetDateTime>`]."]]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["GBDT","The gradient boosting decision tree."]]};

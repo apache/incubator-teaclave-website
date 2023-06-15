@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["read_model","Load model from any stream or buffer"]],"struct":[["Model",""]]};
