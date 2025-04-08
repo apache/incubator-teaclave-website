@@ -36,7 +36,7 @@ oversight of Teaclave.
 
 | Name            | Apache ID       | GitHub ID                                           | Tag                 |
 | :-------------- | :-------------- | :-------------------------------------------------- | :------------------ |
-| He Sun          | hsun            | [henrysun007](https://github.com/henrysun007)       | `teaclave-faas`             |
+| He Sun          | hsun            | [henrysun007](https://github.com/henrysun007)       | `teaclave-faas`     |
 | Mingshen Sun    | mssun           | [mssun](https://github.com/mssun)                   | `all`               |
 | Pei Wang        | uraj            | [uraj](https://github.com/uraj)                     | -                   |
 | Ran Duan        | rduan           | [volcano0dr](https://github.com/volcano0dr)         | `sgx-sdk`           |
@@ -45,7 +45,7 @@ oversight of Teaclave.
 | Tongxin Li      | litongxin1991   | [litongxin1991](https://github.com/litongxin1991)   | -                   |
 | Yiming Jing     | yjing           | -                                                   | -                   |
 | Yu Ding         | dingelish       | [dingelish](https://github.com/dingelish)           | `sgx-sdk`           |
-| Yuan Zhuang     | yuanz           | [DemesneGH](https://github.com/DemesneGH)           | `trustzone-sgx-sdk` |
+| Yuan Zhuang     | yuanz           | [DemesneGH](https://github.com/DemesneGH)           | `trustzone-sdk`     |
 | Yulong Zhang    | yulongzhang     | [yulongzhang](https://github.com/yulongzhang)       | -                   |
 | Zhaofeng Chen   | zfc             | [m4sterchain](https://github.com/m4sterchain)       | -                   |
 
@@ -60,10 +60,10 @@ being active.
 | Hongbo Chen   | ya0guang    | [ya0guang](https://github.com/ya0guang)           | `webassembly`, `executor`   |
 | Lei Yu        | yulei       | [yuleil](https://github.com/yuleil)               | `java-tee-sdk`              |
 | Qinkun Bao    | qinkun      | [qinkunbao](https://github.com/qinkunbao)         | `teaclave-faas`             |
-| Rong Fan      | fanrong     | [fanrong1992](https://github.com/fanrong1992)     | `trustzone-sgx-sdk`         |
+| Rong Fan      | fanrong     | [fanrong1992](https://github.com/fanrong1992)     | `trustzone-sdk`             |
 | Sanhong Li    | sanhongli   | -                                                 | `java-tee-sdk`              |
 | Shaojun Wang  | shaojunwang | [superajun-wsj](https://github.com/superajun-wsj) | `java-tee-sdk`              |
-| Zehui Chen    | ivila       | [ivila](https://github.com/ivila)                 | `trustzone-sgx-sdk`         |
+| Zehui Chen    | ivila       | [ivila](https://github.com/ivila)                 | `trustzone-sdk`             |
 | Ziyi Lin      | ziyilin     | [ziyilin](https://github.com/ziyilin)             | `java-tee-sdk`              |
 
 ## Contributors
