@@ -6,6 +6,22 @@ staging: build
 site: build
 	ghp-import --no-history --force .vuepress/dist -b asf-site
 
+init-repo:
+	git clone https://github.com/apache/incubator-teaclave.git teaclave
+	git clone -b v2.0.0-preview https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk
+	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk
+
+check-repo:
+	@if [ ! -d "teaclave" ] || [ ! -d "teaclave-sgx-sdk" ] || [ ! -d "teaclave-trustzone-sdk" ]; then \
+		echo "Repositories not found. Running init-repo..."; \
+		$(MAKE) init-repo; \
+	fi
+
+update-repo: check-repo
+	cd teaclave && git pull
+	cd teaclave-sgx-sdk && git pull
+	cd teaclave-trustzone-sdk && git pull
+
 sgx-sdk-api-docs: teaclave-docs
 	cd ../sgx-sdk-api-docs && cargo doc
 	cp -r ../sgx-sdk-api-docs/target/doc .vuepress/dist/api-docs/sgx-sdk
@@ -23,7 +39,7 @@ trustzone-sdk-api-docs: teaclave-docs
 
 client-sdk-python-docs: teaclave-docs
 	python3 -m grpc_tools.protoc --proto_path=teaclave/services/proto/src/proto --python_out=teaclave/sdk/python --grpclib_python_out=teaclave/sdk/python teaclave/services/proto/src/proto/*.proto
-	 PYTHONPATH=teaclave/sdk/python pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python
+	PYTHONPATH=teaclave/sdk/python pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python
 	@echo "<meta http-equiv=refresh content=0;url=python/teaclave.html>" > .vuepress/dist/api-docs/client-sdk-python/index.html
 
 client-sdk-rust-docs: teaclave-docs
@@ -38,16 +54,10 @@ crate-docs:
 	cp ${TEACLAVE_TARGET_DIR}/docs/enclave .vuepress/dist/api-docs/crates-enclave -r
 	cp ${TEACLAVE_TARGET_DIR}/docs/app .vuepress/dist/api-docs/crates-app -r
 
-teaclave-docs:
-	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
-	git clone -b v2.0.0-preview https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk || cd teaclave-sgx-sdk && git pull
-	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk || cd teaclave-trustzone-sdk && git pull
+teaclave-docs: update-repo
 	vuepress build
 
-dev:
-	git clone https://github.com/apache/incubator-teaclave.git teaclave || cd teaclave && git pull
-	git clone https://github.com/apache/incubator-teaclave-sgx-sdk.git teaclave-sgx-sdk || cd teaclave-sgx-sdk && git pull
-	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git teaclave-trustzone-sdk
+dev: update-repo
 	cd teaclave-trustzone-sdk
 	vuepress dev
 
@@ -59,3 +69,4 @@ build: teaclave-docs sgx-sdk-api-docs trustzone-sdk-api-docs client-sdk-python-d
 
 clean:
 	rm -rf .vuepress/dist teaclave teaclave-sgx-sdk teaclave-trustzone-sdk
+
