@@ -22,12 +22,18 @@ update-repo: check-repo
 	cd teaclave-sgx-sdk && git pull
 	cd teaclave-trustzone-sdk && git pull
 
-sgx-sdk-api-docs: teaclave-docs
-	cd ../sgx-sdk-api-docs && cargo doc
+sgx-sdk-dep:
+	@if [ ! -d "teaclave-sgx-sdk/optimized_libs" ]; then \
+		cd teaclave-sgx-sdk/sgx_build_helper/download_prebuilt && ./download_prebuilt.sh; \
+		cp -r teaclave-sgx-sdk/sgx_build_helper/download_prebuilt/optimized_libs teaclave-sgx-sdk/; \
+	fi
+
+sgx-sdk-api-docs: update-repo sgx-sdk-dep
+	cd ../sgx-sdk-api-docs && OPT_LIBS_PATH=$(CURDIR)/teaclave-sgx-sdk cargo doc
 	cp -r ../sgx-sdk-api-docs/target/doc .vuepress/dist/api-docs/sgx-sdk
 	@echo "<meta http-equiv=refresh content=0;url=`echo sgx_tstd | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/sgx-sdk/index.html
 
-trustzone-sdk-api-docs: teaclave-docs
+trustzone-sdk-api-docs: update-repo
 	cd teaclave-trustzone-sdk && ./setup.sh
 	bash -c "cd teaclave-trustzone-sdk && source environment && cd optee-utee && xargo doc --target aarch64-unknown-optee-trustzone --no-deps"
 	bash -c "cd teaclave-trustzone-sdk && source environment && cd optee-teec && cargo doc --target aarch64-unknown-linux-gnu --no-deps"
@@ -37,12 +43,12 @@ trustzone-sdk-api-docs: teaclave-docs
 	@echo "<meta http-equiv=refresh content=0;url=`echo optee_utee | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/trustzone-sdk/optee-utee/index.html
 	@echo "<meta http-equiv=refresh content=0;url=`echo optee_teec | cut -d '/' -f 2`/index.html>" > .vuepress/dist/api-docs/trustzone-sdk/optee-teec/index.html
 
-client-sdk-python-docs: teaclave-docs
+client-sdk-python-docs: update-repo
 	python3 -m grpc_tools.protoc --proto_path=teaclave/services/proto/src/proto --python_out=teaclave/sdk/python --grpclib_python_out=teaclave/sdk/python teaclave/services/proto/src/proto/*.proto
 	PYTHONPATH=teaclave/sdk/python pdoc teaclave/sdk/python/teaclave.py -o .vuepress/dist/api-docs/client-sdk-python
 	@echo "<meta http-equiv=refresh content=0;url=python/teaclave.html>" > .vuepress/dist/api-docs/client-sdk-python/index.html
 
-client-sdk-rust-docs: teaclave-docs
+client-sdk-rust-docs: update-repo
 	(cd teaclave && git submodule update --init third_party/rust-sgx-sdk)
 	rustup default nightly-2022-10-22
 	cargo doc --no-deps --manifest-path teaclave/sdk/rust/Cargo.toml
