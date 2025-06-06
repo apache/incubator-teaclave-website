@@ -41,8 +41,8 @@ Follow [@ApacheTeaclave](https://twitter.com/ApacheTeaclave) for latest news.
 
 Teaclave is open source in [The Apache Way](https://www.apache.org/theapacheway/),
 we aim to create a project that is maintained and owned by the community. All
-kinds of contributions are welcome. Read this [document](CONTRIBUTING.md) to
-learn more about how to contribute. Huge thanks to our [contributors](CONTRIBUTORS.md).
+kinds of contributions are welcome. Read this [contributing document](/contributing/) to
+learn more about how to contribute. Huge thanks to our [contributors](/contributors/).
 
 ## Event Calendar
 

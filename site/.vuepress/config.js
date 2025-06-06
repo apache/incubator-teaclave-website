@@ -8,7 +8,7 @@ module.exports = {
         '*.md',
         'api-docs/*.md',
         'blog/*.md',
-        'teaclave/**/*.md',
+        'teaclave/*/*.md',
         'teaclave-sgx-sdk/documents/*.md',
         'teaclave-trustzone-sdk/docs',
         '!teaclave/sdk/rust/target/**',
@@ -35,9 +35,15 @@ module.exports = {
         nav: [
             { text: 'ABOUT', link: '/' },
             { text: 'POWERED BY', link: '/powered-by/' },
-            { text: 'COMMUNITY', link: '/community/' },
+            { 
+                text: 'COMMUNITY', 
+                link: '/community/',
+                items: [
+                    { text: 'CONTRIBUTING', link: '/contributing/' },
+                    { text: 'CONTRIBUTORS', link: '/contributors/' },
+                ]
+            },
             { text: 'DOWNLOAD', link: '/download/' },
-            { text: 'CONTRIBUTORS', link: '/contributors/' },
             {
                 text: 'DOCS',
                 link: '/docs/',
@@ -290,3 +296,4 @@ module.exports = {
             }])
     },
 }
+
