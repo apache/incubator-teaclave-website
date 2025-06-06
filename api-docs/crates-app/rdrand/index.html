@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="An implementation of random number generators based on `rdrand` and `rdseed` instructions."><meta name="keywords" content="rust, rustlang, rust-lang, rdrand"><title>rdrand - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../normalize.css"><link rel="stylesheet" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../ayu.css" disabled><link rel="stylesheet" href="../dark.css" disabled><link rel="stylesheet" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="../crates.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../rdrand/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../rdrand/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Crate rdrand</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.8.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Crate <a class="mod" href="#">rdrand</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/rdrand/lib.rs.html#13-557">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>An implementation of random number generators based on <code>rdrand</code> and <code>rdseed</code> instructions.</p>
+<p>The random number generators provided by this crate are fairly slow (the latency for these
+instructions is pretty high), but provide high quality random bits. Caveat is: neither AMD’s
+nor Intel’s designs are public and therefore are not verifiable for lack of backdoors.</p>
+<p>Unless you know what you are doing, use the random number generators provided by the <code>rand</code>
+crate (such as <code>OsRng</code>) instead.</p>
+<p>Here are a measurements for select processor architectures. Check <a href="http://agner.org/optimize/">Agner’s instruction tables</a>
+for up-to-date listings.</p>
+<table>
+  <tr>
+    <th>Architecture</th>
+    <th colspan="3">Latency (cycles)</th>
+    <th>Maximum throughput (per core)</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td>u16</td>
+    <td>u32</td>
+    <td>u64</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>AMD Ryzen</td>
+    <td>~1200</td>
+    <td>~1200</td>
+    <td>~2500</td>
+    <td>~12MB/s @ 3.7GHz</td>
+  </tr>
+  <tr>
+    <td>Intel Skylake</td>
+    <td>460</td>
+    <td>460</td>
+    <td>460</td>
+    <td>~72MB/s @ 4.2GHz</td>
+  </tr>
+  <tr>
+    <td>Intel Haswell</td>
+    <td>320</td>
+    <td>320</td>
+    <td>320</td>
+    <td>~110MB/s @ 4.4GHz</td>
+  </tr>
+</table>
+</div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="changelog/index.html" title="rdrand::changelog mod">changelog</a></div><div class="item-right docblock-short">Project changelog</div></div></div><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RdRand.html" title="rdrand::RdRand struct">RdRand</a></div><div class="item-right docblock-short">A cryptographically secure statistically uniform, non-periodic and non-deterministic random bit
+generator.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RdSeed.html" title="rdrand::RdSeed struct">RdSeed</a></div><div class="item-right docblock-short">A cryptographically secure non-deterministic random bit generator.</div></div></div><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.ErrorCode.html" title="rdrand::ErrorCode enum">ErrorCode</a></div><div class="item-right docblock-short">Errors in this library</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="rdrand" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

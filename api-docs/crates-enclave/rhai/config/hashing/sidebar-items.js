@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["get_ahash_seed","Get the current hashing Seed."],["set_ahash_seed","Set the hashing seed. This is used to hash functions etc."]],"struct":[["SusLock","Safety"]]};

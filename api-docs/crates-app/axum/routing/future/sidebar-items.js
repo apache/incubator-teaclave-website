@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["InfallibleRouteFuture","A [`RouteFuture`] that always yields a [`Response`]."],["IntoMakeServiceFuture","Response future for [`IntoMakeService`]."],["RouteFuture","Response future for [`Route`]."]]};

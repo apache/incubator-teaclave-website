@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Create a middleware from an async function."><meta name="keywords" content="rust, rustlang, rust-lang, from_fn"><title>from_fn in axum::middleware - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../axum/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../axum/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><div class="sidebar-elems"><h2><a href="index.html">In axum::middleware</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Function <a href="../index.html">axum</a>::<wbr><a href="index.html">middleware</a>::<wbr><a class="fn" href="#">from_fn</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/axum/middleware/from_fn.rs.html#103-105">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust fn"><code>pub fn from_fn&lt;F, T&gt;(f: F) -&gt; <a class="struct" href="struct.FromFnLayer.html" title="struct axum::middleware::FromFnLayer">FromFnLayer</a>&lt;F, (), T&gt;</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Create a middleware from an async function.</p>
+<p><code>from_fn</code> requires the function given to</p>
+<ol>
+<li>Be an <code>async fn</code>.</li>
+<li>Take one or more <a href="../extract/trait.FromRequest.html">extractors</a> as the first arguments.</li>
+<li>Take <a href="struct.Next.html"><code>Next&lt;B&gt;</code></a> as the final argument.</li>
+<li>Return something that implements <a href="../response/trait.IntoResponse.html" title="IntoResponse"><code>IntoResponse</code></a>.</li>
+</ol>
+<p>Note that this function doesn’t support extracting <a href="../extract/struct.State.html"><code>State</code></a>. For that, use <a href="fn.from_fn_with_state.html" title="from_fn_with_state"><code>from_fn_with_state</code></a>.</p>
+<h2 id="example"><a href="#example">Example</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{
+    Router,
+    http::{<span class="self">self</span>, Request},
+    routing::get,
+    response::Response,
+    middleware::{<span class="self">self</span>, Next},
+};
+
+<span class="kw">async fn </span>my_middleware&lt;B&gt;(
+    request: Request&lt;B&gt;,
+    next: Next&lt;B&gt;,
+) -&gt; Response {
+    <span class="comment">// do something with `request`...
+
+    </span><span class="kw">let </span>response = next.run(request).<span class="kw">await</span>;
+
+    <span class="comment">// do something with `response`...
+
+    </span>response
+}
+
+<span class="kw">let </span>app = Router::new()
+    .route(<span class="string">&quot;/&quot;</span>, get(|| <span class="kw">async </span>{ <span class="comment">/* ... */ </span>}))
+    .layer(middleware::from_fn(my_middleware));</code></pre></div>
+<h2 id="running-extractors"><a href="#running-extractors">Running extractors</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{
+    Router,
+    extract::TypedHeader,
+    http::StatusCode,
+    headers::authorization::{Authorization, Bearer},
+    http::Request,
+    middleware::{<span class="self">self</span>, Next},
+    response::Response,
+    routing::get,
+};
+
+<span class="kw">async fn </span>auth&lt;B&gt;(
+    <span class="comment">// run the `TypedHeader` extractor
+    </span>TypedHeader(auth): TypedHeader&lt;Authorization&lt;Bearer&gt;&gt;,
+    <span class="comment">// you can also add more extractors here but the last
+    // extractor must implement `FromRequest` which
+    // `Request` does
+    </span>request: Request&lt;B&gt;,
+    next: Next&lt;B&gt;,
+) -&gt; <span class="prelude-ty">Result</span>&lt;Response, StatusCode&gt; {
+    <span class="kw">if </span>token_is_valid(auth.token()) {
+        <span class="kw">let </span>response = next.run(request).<span class="kw">await</span>;
+        <span class="prelude-val">Ok</span>(response)
+    } <span class="kw">else </span>{
+        <span class="prelude-val">Err</span>(StatusCode::UNAUTHORIZED)
+    }
+}
+
+<span class="kw">fn </span>token_is_valid(token: <span class="kw-2">&amp;</span>str) -&gt; bool {
+    <span class="comment">// ...
+</span>}
+
+<span class="kw">let </span>app = Router::new()
+    .route(<span class="string">&quot;/&quot;</span>, get(|| <span class="kw">async </span>{ <span class="comment">/* ... */ </span>}))
+    .route_layer(middleware::from_fn(auth));</code></pre></div>
+</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="axum" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

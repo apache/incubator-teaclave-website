@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["OwnedBytes","An OwnedBytes simply wraps an object that owns a slice of data and exposes this data as a slice."]]};

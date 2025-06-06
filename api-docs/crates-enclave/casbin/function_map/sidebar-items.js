@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["key_match",""],["key_match2",""],["key_match3",""],["regex_match",""]],"struct":[["FunctionMap",""]]};

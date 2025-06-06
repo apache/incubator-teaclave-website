@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["BinaryTree","The binary tree."],["BinaryTreeNode","Node of the binary tree."]],"type":[["TreeIndex","The index to retrive the tree node. Always get the index value from `BinaryTree` APIs. Don’t directly assign a value to an index."]]};

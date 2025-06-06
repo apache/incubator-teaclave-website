@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"teaclave_runtime":[["impl <a class=\"trait\" href=\"teaclave_types/worker/trait.TeaclaveRuntime.html\" title=\"trait teaclave_types::worker::TeaclaveRuntime\">TeaclaveRuntime</a> for <a class=\"struct\" href=\"teaclave_runtime/struct.DefaultRuntime.html\" title=\"struct teaclave_runtime::DefaultRuntime\">DefaultRuntime</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

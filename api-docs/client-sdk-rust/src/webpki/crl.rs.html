@@ -1,0 +1,1246 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/registry/src/github.com-1ecc6299db9ec823/rustls-webpki-0.101.1/src/crl.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>crl.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../webpki/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../webpki/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+</pre><pre class="rust"><code><span class="comment">// Copyright 2023 Daniel McCarney.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED &quot;AS IS&quot; AND THE AUTHORS DISCLAIM ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+</span><span class="kw">use </span><span class="kw">crate</span>::der::Tag;
+<span class="kw">use </span><span class="kw">crate</span>::x509::{remember_extension, set_extension_once, Extension};
+<span class="kw">use crate</span>::{der, signed_data, Error, SignatureAlgorithm, Time};
+
+<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+</span><span class="kw">use </span>std::collections::HashMap;
+
+<span class="kw">use </span>private::Sealed;
+
+<span class="doccomment">/// Operations over a RFC 5280[^1] profile Certificate Revocation List (CRL) required
+/// for revocation checking. Implemented by [`OwnedCertRevocationList`] and
+/// [`BorrowedCertRevocationList`].
+///
+/// [^1]: &lt;https://www.rfc-editor.org/rfc/rfc5280#section-5&gt;
+</span><span class="kw">pub trait </span>CertRevocationList: Sealed {
+    <span class="doccomment">/// Return the DER encoded issuer of the CRL.
+    </span><span class="kw">fn </span>issuer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8];
+
+    <span class="doccomment">/// Try to find a revoked certificate in the CRL by DER encoded serial number. This
+    /// may yield an error if the CRL has malformed revoked certificates.
+    </span><span class="kw">fn </span>find_serial(<span class="kw-2">&amp;</span><span class="self">self</span>, serial: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;BorrowedRevokedCert&gt;, Error&gt;;
+
+    <span class="doccomment">/// Verify the CRL signature using the issuer&#39;s subject public key information (SPKI)
+    /// and a list of supported signature algorithms.
+    </span><span class="kw">fn </span>verify_signature(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        supported_sig_algs: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>SignatureAlgorithm],
+        issuer_spki: <span class="kw-2">&amp;</span>[u8],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
+}
+
+<span class="doccomment">/// Owned representation of a RFC 5280[^1] profile Certificate Revocation List (CRL).
+///
+/// This type is only available when using the `alloc` feature.
+///
+/// [^1]: &lt;https://www.rfc-editor.org/rfc/rfc5280#section-5&gt;
+</span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+#[allow(dead_code)] </span><span class="comment">// we parse some fields we don&#39;t expose now, but may choose to expose in the future.
+</span><span class="kw">pub struct </span>OwnedCertRevocationList {
+    <span class="doccomment">/// A map of the revoked certificates contained in then CRL, keyed by the DER encoding
+    /// of the revoked cert&#39;s serial number.
+    </span>revoked_certs: HashMap&lt;Vec&lt;u8&gt;, OwnedRevokedCert&gt;,
+
+    issuer: Vec&lt;u8&gt;,
+
+    signed_data: signed_data::OwnedSignedData,
+}
+
+<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+</span><span class="kw">impl </span>Sealed <span class="kw">for </span>OwnedCertRevocationList {}
+
+<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+</span><span class="kw">impl </span>CertRevocationList <span class="kw">for </span>OwnedCertRevocationList {
+    <span class="kw">fn </span>issuer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8] {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.issuer
+    }
+
+    <span class="kw">fn </span>find_serial(<span class="kw-2">&amp;</span><span class="self">self</span>, serial: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;BorrowedRevokedCert&gt;, Error&gt; {
+        <span class="comment">// note: this is infallible for the owned representation because we process all
+        // revoked certificates at the time of construction to build the `revoked_certs` map,
+        // returning any encountered errors at that time.
+        </span><span class="prelude-val">Ok</span>(<span class="self">self
+            </span>.revoked_certs
+            .get(serial)
+            .map(|owned_revoked_cert| owned_revoked_cert.borrow()))
+    }
+
+    <span class="kw">fn </span>verify_signature(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        supported_sig_algs: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>SignatureAlgorithm],
+        issuer_spki: <span class="kw-2">&amp;</span>[u8],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        signed_data::verify_signed_data(
+            supported_sig_algs,
+            untrusted::Input::from(issuer_spki),
+            <span class="kw-2">&amp;</span><span class="self">self</span>.signed_data.borrow(),
+        )
+    }
+}
+
+<span class="doccomment">/// Borrowed representation of a RFC 5280[^1] profile Certificate Revocation List (CRL).
+///
+/// [^1]: &lt;https://www.rfc-editor.org/rfc/rfc5280#section-5&gt;
+</span><span class="kw">pub struct </span>BorrowedCertRevocationList&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// A `SignedData` structure that can be passed to `verify_signed_data`.
+    </span>signed_data: signed_data::SignedData&lt;<span class="lifetime">&#39;a</span>&gt;,
+
+    <span class="doccomment">/// Identifies the entity that has signed and issued this
+    /// CRL.
+    </span>issuer: untrusted::Input&lt;<span class="lifetime">&#39;a</span>&gt;,
+
+    <span class="doccomment">/// List of certificates revoked by the issuer in this CRL.
+    </span>revoked_certs: untrusted::Input&lt;<span class="lifetime">&#39;a</span>&gt;,
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; BorrowedCertRevocationList&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Try to parse the given bytes as a RFC 5280[^1] profile Certificate Revocation List (CRL).
+    ///
+    /// Webpki does not support:
+    ///   * CRL versions other than version 2.
+    ///   * CRLs missing the next update field.
+    ///   * CRLs missing certificate revocation list extensions.
+    ///   * Delta CRLs.
+    ///   * CRLs larger than (2^32)-1 bytes in size.
+    ///
+    /// [^1]: &lt;https://www.rfc-editor.org/rfc/rfc5280#section-5&gt;
+    </span><span class="kw">pub fn </span>from_der(crl_der: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
+        <span class="comment">// Try to parse the CRL.
+        </span><span class="kw">let </span>reader = untrusted::Input::from(crl_der);
+        <span class="kw">let </span>(tbs_cert_list, signed_data) = reader.read_all(Error::BadDer, |crl_der| {
+            der::nested_limited(
+                crl_der,
+                Tag::Sequence,
+                Error::BadDer,
+                |signed_der| signed_data::parse_signed_data(signed_der, der::MAX_DER_SIZE),
+                der::MAX_DER_SIZE,
+            )
+        })<span class="question-mark">?</span>;
+
+        <span class="kw">let </span>crl = tbs_cert_list.read_all(Error::BadDer, |tbs_cert_list| {
+            <span class="comment">// RFC 5280 §5.1.2.1:
+            //   This optional field describes the version of the encoded CRL.  When
+            //   extensions are used, as required by this profile, this field MUST be
+            //   present and MUST specify version 2 (the integer value is 1).
+            // RFC 5280 §5.2:
+            //   Conforming CRL issuers are REQUIRED to include the authority key
+            //   identifier (Section 5.2.1) and the CRL number (Section 5.2.3)
+            //   extensions in all CRLs issued.
+            // As a result of the above we parse this as a required section, not OPTIONAL.
+            // NOTE: Encoded value of version 2 is 1.
+            </span><span class="kw">if </span>der::small_nonnegative_integer(tbs_cert_list)<span class="question-mark">? </span>!= <span class="number">1 </span>{
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::UnsupportedCrlVersion);
+            }
+
+            <span class="comment">// RFC 5280 §5.1.2.2:
+            //   This field MUST contain the same algorithm identifier as the
+            //   signatureAlgorithm field in the sequence CertificateList
+            </span><span class="kw">let </span>signature = der::expect_tag_and_get_value(tbs_cert_list, Tag::Sequence)<span class="question-mark">?</span>;
+            <span class="kw">if </span>signature != signed_data.algorithm {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureAlgorithmMismatch);
+            }
+
+            <span class="comment">// RFC 5280 §5.1.2.3:
+            //   The issuer field MUST contain a non-empty X.500 distinguished name (DN).
+            </span><span class="kw">let </span>issuer = der::expect_tag_and_get_value(tbs_cert_list, Tag::Sequence)<span class="question-mark">?</span>;
+
+            <span class="comment">// RFC 5280 §5.1.2.4:
+            //    This field indicates the issue date of this CRL.  thisUpdate may be
+            //    encoded as UTCTime or GeneralizedTime.
+            // We do not presently enforce the correct choice of UTCTime or GeneralizedTime based on
+            // whether the date is post 2050.
+            </span>der::time_choice(tbs_cert_list)<span class="question-mark">?</span>;
+
+            <span class="comment">// While OPTIONAL in the ASN.1 module, RFC 5280 §5.1.2.5 says:
+            //   Conforming CRL issuers MUST include the nextUpdate field in all CRLs.
+            // We do not presently enforce the correct choice of UTCTime or GeneralizedTime based on
+            // whether the date is post 2050.
+            </span>der::time_choice(tbs_cert_list)<span class="question-mark">?</span>;
+
+            <span class="comment">// RFC 5280 §5.1.2.6:
+            //   When there are no revoked certificates, the revoked certificates list
+            //   MUST be absent
+            // TODO(@cpu): Do we care to support empty CRLs if we don&#39;t support delta CRLs?
+            </span><span class="kw">let </span>revoked_certs = <span class="kw">if </span>tbs_cert_list.peek(Tag::Sequence.into()) {
+                der::expect_tag_and_get_value_limited(
+                    tbs_cert_list,
+                    Tag::Sequence,
+                    der::MAX_DER_SIZE,
+                )<span class="question-mark">?
+            </span>} <span class="kw">else </span>{
+                untrusted::Input::from(<span class="kw-2">&amp;</span>[])
+            };
+
+            <span class="kw">let </span><span class="kw-2">mut </span>crl = BorrowedCertRevocationList {
+                signed_data,
+                issuer,
+                revoked_certs,
+            };
+
+            <span class="comment">// RFC 5280 §5.1.2.7:
+            //   This field may only appear if the version is 2 (Section 5.1.2.1).  If
+            //   present, this field is a sequence of one or more CRL extensions.
+            // RFC 5280 §5.2:
+            //   Conforming CRL issuers are REQUIRED to include the authority key
+            //   identifier (Section 5.2.1) and the CRL number (Section 5.2.3)
+            //   extensions in all CRLs issued.
+            // As a result of the above we parse this as a required section, not OPTIONAL.
+            </span>der::nested(
+                tbs_cert_list,
+                Tag::ContextSpecificConstructed0,
+                Error::MalformedExtensions,
+                |tagged| {
+                    der::nested_of_mut(
+                        tagged,
+                        Tag::Sequence,
+                        Tag::Sequence,
+                        Error::BadDer,
+                        |extension| {
+                            <span class="comment">// RFC 5280 §5.2:
+                            //   If a CRL contains a critical extension
+                            //   that the application cannot process, then the application MUST NOT
+                            //   use that CRL to determine the status of certificates.  However,
+                            //   applications may ignore unrecognized non-critical extensions.
+                            </span>crl.remember_extension(<span class="kw-2">&amp;</span>Extension::parse(extension)<span class="question-mark">?</span>)
+                        },
+                    )
+                },
+            )<span class="question-mark">?</span>;
+
+            <span class="prelude-val">Ok</span>(crl)
+        })<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(crl)
+    }
+
+    <span class="doccomment">/// Convert the CRL to an [`OwnedCertRevocationList`]. This may error if any of the revoked
+    /// certificates in the CRL are malformed or contain unsupported features.
+    ///
+    /// This function is only available when the &quot;alloc&quot; feature is enabled.
+    </span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+    </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedCertRevocationList, Error&gt; {
+        <span class="comment">// Parse and collect the CRL&#39;s revoked cert entries, ensuring there are no errors. With
+        // the full set in-hand, create a lookup map by serial number for fast revocation checking.
+        </span><span class="kw">let </span>revoked_certs = <span class="self">self
+            </span>.into_iter()
+            .collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw">_</span>&gt;, <span class="kw">_</span>&gt;&gt;()<span class="question-mark">?
+            </span>.iter()
+            .map(|revoked_cert| (revoked_cert.serial_number.to_vec(), revoked_cert.to_owned()))
+            .collect::&lt;HashMap&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt;&gt;();
+
+        <span class="prelude-val">Ok</span>(OwnedCertRevocationList {
+            signed_data: <span class="self">self</span>.signed_data.to_owned(),
+            issuer: <span class="self">self</span>.issuer.as_slice_less_safe().to_vec(),
+            revoked_certs,
+        })
+    }
+
+    <span class="kw">fn </span>remember_extension(<span class="kw-2">&amp;mut </span><span class="self">self</span>, extension: <span class="kw-2">&amp;</span>Extension&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        remember_extension(extension, |id| {
+            <span class="kw">match </span>id {
+                <span class="comment">// id-ce-cRLNumber 2.5.29.20 - RFC 5280 §5.2.3
+                </span><span class="number">20 </span>=&gt; {
+                    <span class="comment">// RFC 5280 §5.2.3:
+                    //   CRL verifiers MUST be able to handle CRLNumber values
+                    //   up to 20 octets.  Conforming CRL issuers MUST NOT use CRLNumber
+                    //   values longer than 20 octets.
+                    //
+                    </span>extension.value.read_all(Error::InvalidCrlNumber, |der| {
+                        <span class="kw">let </span>crl_number = ring::io::der::positive_integer(der)
+                            .map_err(|<span class="kw">_</span>| Error::InvalidCrlNumber)<span class="question-mark">?
+                            </span>.big_endian_without_leading_zero();
+                        <span class="kw">if </span>crl_number.len() &lt;= <span class="number">20 </span>{
+                            <span class="prelude-val">Ok</span>(crl_number)
+                        } <span class="kw">else </span>{
+                            <span class="prelude-val">Err</span>(Error::InvalidCrlNumber)
+                        }
+                    })<span class="question-mark">?</span>;
+                    <span class="comment">// We enforce the cRLNumber is sensible, but don&#39;t retain the value for use.
+                    </span><span class="prelude-val">Ok</span>(())
+                }
+
+                <span class="comment">// id-ce-deltaCRLIndicator 2.5.29.27 - RFC 5280 §5.2.4
+                // We explicitly do not support delta CRLs.
+                </span><span class="number">27 </span>=&gt; <span class="prelude-val">Err</span>(Error::UnsupportedDeltaCrl),
+
+                <span class="comment">// id-ce-issuingDistributionPoint 2.5.29.28 - RFC 5280 §5.2.4
+                //    Although the extension is critical, conforming implementations are not
+                //    required to support this extension.  However, implementations that do not
+                //    support this extension MUST either treat the status of any certificate not listed
+                //    on this CRL as unknown or locate another CRL that does not contain any
+                //    unrecognized critical extensions.
+                // TODO(@cpu): We may want to parse this enough to be able to error on indirectCRL
+                //  bool == true, or to enforce validation based on onlyContainsUserCerts,
+                //  onlyContainsCACerts, and onlySomeReasons. For now we use the carve-out where
+                //  we&#39;ll treat it as understood without parsing and consider certificates not found
+                //  in the list as unknown.
+                </span><span class="number">28 </span>=&gt; <span class="prelude-val">Ok</span>(()),
+
+                <span class="comment">// id-ce-authorityKeyIdentifier 2.5.29.35 - RFC 5280 §5.2.1, §4.2.1.1
+                // We recognize the extension but don&#39;t retain its value for use.
+                </span><span class="number">35 </span>=&gt; <span class="prelude-val">Ok</span>(()),
+
+                <span class="comment">// Unsupported extension
+                </span><span class="kw">_ </span>=&gt; extension.unsupported(),
+            }
+        })
+    }
+}
+
+<span class="kw">impl </span>Sealed <span class="kw">for </span>BorrowedCertRevocationList&lt;<span class="lifetime">&#39;_</span>&gt; {}
+
+<span class="kw">impl </span>CertRevocationList <span class="kw">for </span>BorrowedCertRevocationList&lt;<span class="lifetime">&#39;_</span>&gt; {
+    <span class="kw">fn </span>issuer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8] {
+        <span class="self">self</span>.issuer.as_slice_less_safe()
+    }
+
+    <span class="kw">fn </span>find_serial(<span class="kw-2">&amp;</span><span class="self">self</span>, serial: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;BorrowedRevokedCert&gt;, Error&gt; {
+        <span class="kw">for </span>revoked_cert_result <span class="kw">in </span><span class="self">self </span>{
+            <span class="kw">match </span>revoked_cert_result {
+                <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e),
+                <span class="prelude-val">Ok</span>(revoked_cert) =&gt; {
+                    <span class="kw">if </span>revoked_cert.serial_number.eq(serial) {
+                        <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(revoked_cert));
+                    }
+                }
+            }
+        }
+
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+    }
+
+    <span class="kw">fn </span>verify_signature(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        supported_sig_algs: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>SignatureAlgorithm],
+        issuer_spki: <span class="kw-2">&amp;</span>[u8],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        signed_data::verify_signed_data(
+            supported_sig_algs,
+            untrusted::Input::from(issuer_spki),
+            <span class="kw-2">&amp;</span><span class="self">self</span>.signed_data,
+        )
+    }
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; IntoIterator <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>BorrowedCertRevocationList&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">type </span>Item = <span class="prelude-ty">Result</span>&lt;BorrowedRevokedCert&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt;;
+    <span class="kw">type </span>IntoIter = RevokedCerts&lt;<span class="lifetime">&#39;a</span>&gt;;
+
+    <span class="kw">fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="self">Self</span>::IntoIter {
+        RevokedCerts {
+            reader: untrusted::Reader::new(<span class="self">self</span>.revoked_certs),
+        }
+    }
+}
+
+<span class="kw">pub struct </span>RevokedCerts&lt;<span class="lifetime">&#39;a</span>&gt; {
+    reader: untrusted::Reader&lt;<span class="lifetime">&#39;a</span>&gt;,
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Iterator <span class="kw">for </span>RevokedCerts&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">type </span>Item = <span class="prelude-ty">Result</span>&lt;BorrowedRevokedCert&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt;;
+
+    <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
+        (!<span class="self">self</span>.reader.at_end()).then(|| BorrowedRevokedCert::from_der(<span class="kw-2">&amp;mut </span><span class="self">self</span>.reader))
+    }
+}
+
+<span class="doccomment">/// Owned representation of a RFC 5280[^1] profile Certificate Revocation List (CRL) revoked
+/// certificate entry.
+///
+/// Only available when the &quot;alloc&quot; feature is enabled.
+///
+/// [^1]: &lt;https://www.rfc-editor.org/rfc/rfc5280#section-5&gt;
+</span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+</span><span class="kw">pub struct </span>OwnedRevokedCert {
+    <span class="doccomment">/// Serial number of the revoked certificate.
+    </span><span class="kw">pub </span>serial_number: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// The date at which the CA processed the revocation.
+    </span><span class="kw">pub </span>revocation_date: Time,
+
+    <span class="doccomment">/// Identifies the reason for the certificate revocation. When absent, the revocation reason
+    /// is assumed to be RevocationReason::Unspecified. For consistency with other extensions
+    /// and to ensure only one revocation reason extension may be present we maintain this field
+    /// as optional instead of defaulting to unspecified.
+    </span><span class="kw">pub </span>reason_code: <span class="prelude-ty">Option</span>&lt;RevocationReason&gt;,
+
+    <span class="doccomment">/// Provides the date on which it is known or suspected that the private key was compromised or
+    /// that the certificate otherwise became invalid. This date may be earlier than the revocation
+    /// date which is the date at which the CA processed the revocation.
+    </span><span class="kw">pub </span>invalidity_date: <span class="prelude-ty">Option</span>&lt;Time&gt;,
+}
+
+<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+</span><span class="kw">impl </span>OwnedRevokedCert {
+    <span class="doccomment">/// Convert the owned representation of this revoked cert to a borrowed version.
+    </span><span class="kw">pub fn </span>borrow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedRevokedCert {
+        BorrowedRevokedCert {
+            serial_number: <span class="kw-2">&amp;</span><span class="self">self</span>.serial_number,
+            revocation_date: <span class="self">self</span>.revocation_date,
+            reason_code: <span class="self">self</span>.reason_code,
+            invalidity_date: <span class="self">self</span>.invalidity_date,
+        }
+    }
+}
+
+<span class="doccomment">/// Borrowed representation of a RFC 5280[^1] profile Certificate Revocation List (CRL) revoked
+/// certificate entry.
+///
+/// [^1]: &lt;https://www.rfc-editor.org/rfc/rfc5280#section-5&gt;
+</span><span class="kw">pub struct </span>BorrowedRevokedCert&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Serial number of the revoked certificate.
+    </span><span class="kw">pub </span>serial_number: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8],
+
+    <span class="doccomment">/// The date at which the CA processed the revocation.
+    </span><span class="kw">pub </span>revocation_date: Time,
+
+    <span class="doccomment">/// Identifies the reason for the certificate revocation. When absent, the revocation reason
+    /// is assumed to be RevocationReason::Unspecified. For consistency with other extensions
+    /// and to ensure only one revocation reason extension may be present we maintain this field
+    /// as optional instead of defaulting to unspecified.
+    </span><span class="kw">pub </span>reason_code: <span class="prelude-ty">Option</span>&lt;RevocationReason&gt;,
+
+    <span class="doccomment">/// Provides the date on which it is known or suspected that the private key was compromised or
+    /// that the certificate otherwise became invalid. This date may be earlier than the revocation
+    /// date which is the date at which the CA processed the revocation.
+    </span><span class="kw">pub </span>invalidity_date: <span class="prelude-ty">Option</span>&lt;Time&gt;,
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; BorrowedRevokedCert&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Construct an owned representation of the revoked certificate.
+    ///
+    /// Only available when the &quot;alloc&quot; feature is enabled.
+    </span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+    </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OwnedRevokedCert {
+        OwnedRevokedCert {
+            serial_number: <span class="self">self</span>.serial_number.to_vec(),
+            revocation_date: <span class="self">self</span>.revocation_date,
+            reason_code: <span class="self">self</span>.reason_code,
+            invalidity_date: <span class="self">self</span>.invalidity_date,
+        }
+    }
+
+    <span class="kw">fn </span>from_der(der: <span class="kw-2">&amp;mut </span>untrusted::Reader&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
+        der::nested(der, Tag::Sequence, Error::BadDer, |der| {
+            <span class="comment">// RFC 5280 §4.1.2.2:
+            //    Certificate users MUST be able to handle serialNumber values up to 20 octets.
+            //    Conforming CAs MUST NOT use serialNumber values longer than 20 octets.
+            //
+            //    Note: Non-conforming CAs may issue certificates with serial numbers
+            //    that are negative or zero.  Certificate users SHOULD be prepared to
+            //    gracefully handle such certificates.
+            // Like the handling in cert.rs we choose to be lenient here, not enforcing the length
+            // of a CRL revoked certificate&#39;s serial number is less than 20 octets in encoded form.
+            </span><span class="kw">let </span>serial_number = ring::io::der::positive_integer(der)
+                .map_err(|<span class="kw">_</span>| Error::InvalidSerialNumber)<span class="question-mark">?
+                </span>.big_endian_without_leading_zero();
+
+            <span class="kw">let </span>revocation_date = der::time_choice(der)<span class="question-mark">?</span>;
+
+            <span class="kw">let </span><span class="kw-2">mut </span>revoked_cert = BorrowedRevokedCert {
+                serial_number,
+                revocation_date,
+                reason_code: <span class="prelude-val">None</span>,
+                invalidity_date: <span class="prelude-val">None</span>,
+            };
+
+            <span class="comment">// RFC 5280 §5.3:
+            //   Support for the CRL entry extensions defined in this specification is
+            //   optional for conforming CRL issuers and applications.  However, CRL
+            //   issuers SHOULD include reason codes (Section 5.3.1) and invalidity
+            //   dates (Section 5.3.2) whenever this information is available.
+            </span><span class="kw">if </span>der.at_end() {
+                <span class="kw">return </span><span class="prelude-val">Ok</span>(revoked_cert);
+            }
+
+            <span class="comment">// It would be convenient to use der::nested_of_mut here to unpack a SEQUENCE of one or
+            // more SEQUENCEs, however CAs have been mis-encoding the absence of extensions as an
+            // empty SEQUENCE so we must be tolerant of that.
+            </span><span class="kw">let </span>ext_seq = der::expect_tag_and_get_value(der, Tag::Sequence)<span class="question-mark">?</span>;
+            <span class="kw">if </span>ext_seq.is_empty() {
+                <span class="kw">return </span><span class="prelude-val">Ok</span>(revoked_cert);
+            }
+
+            <span class="kw">let </span><span class="kw-2">mut </span>reader = untrusted::Reader::new(ext_seq);
+            <span class="kw">loop </span>{
+                der::nested(<span class="kw-2">&amp;mut </span>reader, Tag::Sequence, Error::BadDer, |ext_der| {
+                    <span class="comment">// RFC 5280 §5.3:
+                    //   If a CRL contains a critical CRL entry extension that the application cannot
+                    //   process, then the application MUST NOT use that CRL to determine the
+                    //   status of any certificates.  However, applications may ignore
+                    //   unrecognized non-critical CRL entry extensions.
+                    </span>revoked_cert.remember_extension(<span class="kw-2">&amp;</span>Extension::parse(ext_der)<span class="question-mark">?</span>)
+                })<span class="question-mark">?</span>;
+                <span class="kw">if </span>reader.at_end() {
+                    <span class="kw">break</span>;
+                }
+            }
+
+            <span class="prelude-val">Ok</span>(revoked_cert)
+        })
+    }
+
+    <span class="kw">fn </span>remember_extension(<span class="kw-2">&amp;mut </span><span class="self">self</span>, extension: <span class="kw-2">&amp;</span>Extension&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        remember_extension(extension, |id| {
+            <span class="kw">match </span>id {
+                <span class="comment">// id-ce-cRLReasons 2.5.29.21 - RFC 5280 §5.3.1.
+                </span><span class="number">21 </span>=&gt; set_extension_once(<span class="kw-2">&amp;mut </span><span class="self">self</span>.reason_code, || {
+                    RevocationReason::from_der(extension.value)
+                }),
+
+                <span class="comment">// id-ce-invalidityDate 2.5.29.24 - RFC 5280 §5.3.2.
+                </span><span class="number">24 </span>=&gt; set_extension_once(<span class="kw-2">&amp;mut </span><span class="self">self</span>.invalidity_date, || {
+                    extension.value.read_all(Error::BadDer, der::time_choice)
+                }),
+
+                <span class="comment">// id-ce-certificateIssuer 2.5.29.29 - RFC 5280 §5.3.3.
+                //   This CRL entry extension identifies the certificate issuer associated
+                //   with an entry in an indirect CRL, that is, a CRL that has the
+                //   indirectCRL indicator set in its issuing distribution point
+                //   extension.
+                // We choose not to support indirect CRLs and so turn this into a more specific
+                // error rather than simply letting it fail as an unsupported critical extension.
+                </span><span class="number">29 </span>=&gt; <span class="prelude-val">Err</span>(Error::UnsupportedIndirectCrl),
+
+                <span class="comment">// Unsupported extension
+                </span><span class="kw">_ </span>=&gt; extension.unsupported(),
+            }
+        })
+    }
+}
+
+<span class="doccomment">/// Identifies the reason a certificate was revoked.
+/// See RFC 5280 §5.3.1[^1]
+///
+/// [^1] &lt;https://www.rfc-editor.org/rfc/rfc5280#section-5.3.1&gt;
+</span><span class="attribute">#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+#[allow(missing_docs)] </span><span class="comment">// Not much to add above the code name.
+</span><span class="kw">pub enum </span>RevocationReason {
+    <span class="doccomment">/// Unspecified should not be used, and is instead assumed by the absence of a RevocationReason
+    /// extension.
+    </span>Unspecified = <span class="number">0</span>,
+    KeyCompromise = <span class="number">1</span>,
+    CaCompromise = <span class="number">2</span>,
+    AffiliationChanged = <span class="number">3</span>,
+    Superseded = <span class="number">4</span>,
+    CessationOfOperation = <span class="number">5</span>,
+    CertificateHold = <span class="number">6</span>,
+    <span class="comment">// 7 is not used.
+    </span><span class="doccomment">/// RemoveFromCrl only appears in delta CRLs that are unsupported.
+    </span>RemoveFromCrl = <span class="number">8</span>,
+    PrivilegeWithdrawn = <span class="number">9</span>,
+    AaCompromise = <span class="number">10</span>,
+}
+
+<span class="kw">impl </span>RevocationReason {
+    <span class="comment">// RFC 5280 §5.3.1.
+    </span><span class="kw">fn </span>from_der(value: untrusted::Input&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
+        value.read_all(Error::BadDer, |enumerated_reason| {
+            <span class="kw">let </span>value = der::expect_tag(enumerated_reason, Tag::Enum)<span class="question-mark">?</span>;
+            <span class="self">Self</span>::try_from(value.value().read_all(Error::BadDer, |reason| {
+                reason.read_byte().map_err(|<span class="kw">_</span>| Error::BadDer)
+            })<span class="question-mark">?</span>)
+        })
+    }
+}
+
+<span class="kw">impl </span>TryFrom&lt;u8&gt; <span class="kw">for </span>RevocationReason {
+    <span class="kw">type </span>Error = Error;
+
+    <span class="kw">fn </span>try_from(value: u8) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        <span class="comment">// See https://www.rfc-editor.org/rfc/rfc5280#section-5.3.1
+        </span><span class="kw">match </span>value {
+            <span class="number">0 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::Unspecified),
+            <span class="number">1 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::KeyCompromise),
+            <span class="number">2 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::CaCompromise),
+            <span class="number">3 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::AffiliationChanged),
+            <span class="number">4 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::Superseded),
+            <span class="number">5 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::CessationOfOperation),
+            <span class="number">6 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::CertificateHold),
+            <span class="comment">// 7 is not used.
+            </span><span class="number">8 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::RemoveFromCrl),
+            <span class="number">9 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::PrivilegeWithdrawn),
+            <span class="number">10 </span>=&gt; <span class="prelude-val">Ok</span>(RevocationReason::AaCompromise),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::UnsupportedRevocationReason),
+        }
+    }
+}
+
+<span class="kw">mod </span>private {
+    <span class="kw">pub trait </span>Sealed {}
+}
+
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>alloc::vec::Vec;
+
+    <span class="kw">use crate</span>::{Error, RevocationReason};
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>revocation_reasons() {
+        <span class="comment">// Test that we can convert the allowed u8 revocation reason code values into the expected
+        // revocation reason variant.
+        </span><span class="kw">let </span>testcases: Vec&lt;(u8, RevocationReason)&gt; = <span class="macro">vec!</span>[
+            (<span class="number">0</span>, RevocationReason::Unspecified),
+            (<span class="number">1</span>, RevocationReason::KeyCompromise),
+            (<span class="number">2</span>, RevocationReason::CaCompromise),
+            (<span class="number">3</span>, RevocationReason::AffiliationChanged),
+            (<span class="number">4</span>, RevocationReason::Superseded),
+            (<span class="number">5</span>, RevocationReason::CessationOfOperation),
+            (<span class="number">6</span>, RevocationReason::CertificateHold),
+            <span class="comment">// Note: 7 is unused.
+            </span>(<span class="number">8</span>, RevocationReason::RemoveFromCrl),
+            (<span class="number">9</span>, RevocationReason::PrivilegeWithdrawn),
+            (<span class="number">10</span>, RevocationReason::AaCompromise),
+        ];
+        <span class="kw">for </span>tc <span class="kw">in </span>testcases.iter() {
+            <span class="kw">let </span>(id, expected) = tc;
+            <span class="kw">let </span>actual = &lt;u8 <span class="kw">as </span>TryInto&lt;RevocationReason&gt;&gt;::try_into(<span class="kw-2">*</span>id)
+                .expect(<span class="string">&quot;unexpected reason code conversion error&quot;</span>);
+            <span class="macro">assert_eq!</span>(actual, <span class="kw-2">*</span>expected);
+        }
+
+        <span class="comment">// Unsupported/unknown revocation reason codes should produce an error.
+        </span><span class="kw">let </span>res = &lt;u8 <span class="kw">as </span>TryInto&lt;RevocationReason&gt;&gt;::try_into(<span class="number">7</span>);
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(res, <span class="prelude-val">Err</span>(Error::UnsupportedRevocationReason)));
+    }
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="webpki" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

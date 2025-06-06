@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A Condition Variable"><meta name="keywords" content="rust, rustlang, rust-lang, Condvar"><title>Condvar in parking_lot - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../normalize.css"><link rel="stylesheet" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../ayu.css" disabled><link rel="stylesheet" href="../dark.css" disabled><link rel="stylesheet" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../parking_lot/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../parking_lot/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Condvar</a></h2><div class="sidebar-elems"><section><h3><a href="#implementations">Methods</a></h3><ul class="block"><li><a href="#method.new">new</a></li><li><a href="#method.notify_all">notify_all</a></li><li><a href="#method.notify_one">notify_one</a></li><li><a href="#method.wait">wait</a></li><li><a href="#method.wait_for">wait_for</a></li><li><a href="#method.wait_until">wait_until</a></li><li><a href="#method.wait_while">wait_while</a></li><li><a href="#method.wait_while_for">wait_while_for</a></li><li><a href="#method.wait_while_until">wait_while_until</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block"><li><a href="#impl-Debug-for-Condvar">Debug</a></li><li><a href="#impl-Default-for-Condvar">Default</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block"><li><a href="#impl-RefUnwindSafe-for-Condvar">RefUnwindSafe</a></li><li><a href="#impl-Send-for-Condvar">Send</a></li><li><a href="#impl-Sync-for-Condvar">Sync</a></li><li><a href="#impl-Unpin-for-Condvar">Unpin</a></li><li><a href="#impl-UnwindSafe-for-Condvar">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block"><li><a href="#impl-Any-for-Condvar">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-Condvar">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-Condvar">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-From%3CT%3E-for-Condvar">From&lt;T&gt;</a></li><li><a href="#impl-Into%3CU%3E-for-Condvar">Into&lt;U&gt;</a></li><li><a href="#impl-TryFrom%3CU%3E-for-Condvar">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-Condvar">TryInto&lt;U&gt;</a></li></ul></section><h2><a href="index.html">In parking_lot</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Struct <a href="index.html">parking_lot</a>::<wbr><a class="struct" href="#">Condvar</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/parking_lot/condvar.rs.html#90-92">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust struct"><code>pub struct Condvar { /* private fields */ }</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A Condition Variable</p>
+<p>Condition variables represent the ability to block a thread such that it
+consumes no CPU time while waiting for an event to occur. Condition
+variables are typically associated with a boolean predicate (a condition)
+and a mutex. The predicate is always verified inside of the mutex before
+determining that thread must block.</p>
+<p>Note that this module places one additional restriction over the system
+condition variables: each condvar can be used with only one mutex at a
+time. Any attempt to use multiple mutexes on the same condition variable
+simultaneously will result in a runtime panic. However it is possible to
+switch to a different mutex if there are no threads currently waiting on
+the condition variable.</p>
+<h2 id="differences-from-the-standard-library-condvar"><a href="#differences-from-the-standard-library-condvar">Differences from the standard library <code>Condvar</code></a></h2>
+<ul>
+<li>No spurious wakeups: A wait will only return a non-timeout result if it
+was woken up by <code>notify_one</code> or <code>notify_all</code>.</li>
+<li><code>Condvar::notify_all</code> will only wake up a single thread, the rest are
+requeued to wait for the <code>Mutex</code> to be unlocked by the thread that was
+woken up.</li>
+<li>Only requires 1 word of space, whereas the standard library boxes the
+<code>Condvar</code> due to platform limitations.</li>
+<li>Can be statically constructed.</li>
+<li>Does not require any drop glue when dropped.</li>
+<li>Inline fast path for the uncontended case.</li>
+</ul>
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>parking_lot::{Mutex, Condvar};
+<span class="kw">use </span>std::sync::Arc;
+<span class="kw">use </span>std::thread;
+
+<span class="kw">let </span>pair = Arc::new((Mutex::new(<span class="bool-val">false</span>), Condvar::new()));
+<span class="kw">let </span>pair2 = pair.clone();
+
+<span class="comment">// Inside of our lock, spawn a new thread, and then wait for it to start
+</span>thread::spawn(<span class="kw">move</span>|| {
+    <span class="kw">let </span><span class="kw-2">&amp;</span>(<span class="kw-2">ref </span>lock, <span class="kw-2">ref </span>cvar) = <span class="kw-2">&amp;*</span>pair2;
+    <span class="kw">let </span><span class="kw-2">mut </span>started = lock.lock();
+    <span class="kw-2">*</span>started = <span class="bool-val">true</span>;
+    cvar.notify_one();
+});
+
+<span class="comment">// wait for the thread to start up
+</span><span class="kw">let </span><span class="kw-2">&amp;</span>(<span class="kw-2">ref </span>lock, <span class="kw-2">ref </span>cvar) = <span class="kw-2">&amp;*</span>pair;
+<span class="kw">let </span><span class="kw-2">mut </span>started = lock.lock();
+<span class="kw">if </span>!<span class="kw-2">*</span>started {
+    cvar.wait(<span class="kw-2">&amp;mut </span>started);
+}
+<span class="comment">// Note that we used an if instead of a while loop above. This is only
+// possible because parking_lot&#39;s Condvar will never spuriously wake up.
+// This means that wait() will only return after notify_one or notify_all is
+// called.</span></code></pre></div>
+</div></details><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><div id="implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Condvar" class="impl has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#94-508">source</a><a href="#impl-Condvar" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.new" class="method has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#98-102">source</a><h4 class="code-header">pub const fn <a href="#method.new" class="fnname">new</a>() -&gt; <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h4></section></summary><div class="docblock"><p>Creates a new condition variable which is ready to be waited on and
+notified.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.notify_one" class="method has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#128-136">source</a><h4 class="code-header">pub fn <a href="#method.notify_one" class="fnname">notify_one</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Wakes up one blocked thread on this condvar.</p>
+<p>Returns whether a thread was woken up.</p>
+<p>If there is a blocked thread on this condition variable, then it will
+be woken up from its call to <code>wait</code> or <code>wait_timeout</code>. Calls to
+<code>notify_one</code> are not buffered in any way.</p>
+<p>To wake up all threads, see <code>notify_all()</code>.</p>
+<h5 id="examples-1"><a href="#examples-1">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>parking_lot::Condvar;
+
+<span class="kw">let </span>condvar = Condvar::new();
+
+<span class="comment">// do something with condvar, share it with other threads
+
+</span><span class="kw">if </span>!condvar.notify_one() {
+    <span class="macro">println!</span>(<span class="string">&quot;Nobody was listening for this.&quot;</span>);
+}</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.notify_all" class="method has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#187-195">source</a><h4 class="code-header">pub fn <a href="#method.notify_all" class="fnname">notify_all</a>(&amp;self) -&gt; usize</h4></section></summary><div class="docblock"><p>Wakes up all blocked threads on this condvar.</p>
+<p>Returns the number of threads woken up.</p>
+<p>This method will ensure that any current waiters on the condition
+variable are awoken. Calls to <code>notify_all()</code> are not buffered in any
+way.</p>
+<p>To wake up only one thread, see <code>notify_one()</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.wait" class="method has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#255-257">source</a><h4 class="code-header">pub fn <a href="#method.wait" class="fnname">wait</a>&lt;T:&nbsp;?Sized&gt;(&amp;self, mutex_guard: &amp;mut <a class="type" href="type.MutexGuard.html" title="type parking_lot::MutexGuard">MutexGuard</a>&lt;'_, T&gt;)</h4></section></summary><div class="docblock"><p>Blocks the current thread until this condition variable receives a
+notification.</p>
+<p>This function will atomically unlock the mutex specified (represented by
+<code>mutex_guard</code>) and block the current thread. This means that any calls
+to <code>notify_*()</code> which happen logically after the mutex is unlocked are
+candidates to wake this thread up. When this function call returns, the
+lock specified will have been re-acquired.</p>
+<h5 id="panics"><a href="#panics">Panics</a></h5>
+<p>This function will panic if another thread is waiting on the <code>Condvar</code>
+with a different <code>Mutex</code> object.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.wait_until" class="method has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#283-292">source</a><h4 class="code-header">pub fn <a href="#method.wait_until" class="fnname">wait_until</a>&lt;T:&nbsp;?Sized&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;mutex_guard: &amp;mut <a class="type" href="type.MutexGuard.html" title="type parking_lot::MutexGuard">MutexGuard</a>&lt;'_, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;timeout: Instant<br>) -&gt; <a class="struct" href="struct.WaitTimeoutResult.html" title="struct parking_lot::WaitTimeoutResult">WaitTimeoutResult</a></h4></section></summary><div class="docblock"><p>Waits on this condition variable for a notification, timing out after
+the specified time instant.</p>
+<p>The semantics of this function are equivalent to <code>wait()</code> except that
+the thread will be blocked roughly until <code>timeout</code> is reached. This
+method should not be used for precise timing due to anomalies such as
+preemption or platform differences that may not cause the maximum
+amount of time waited to be precisely <code>timeout</code>.</p>
+<p>Note that the best effort is made to ensure that the time waited is
+measured with a monotonic clock, and not affected by the changes made to
+the system time.</p>
+<p>The returned <code>WaitTimeoutResult</code> value indicates if the timeout is
+known to have elapsed.</p>
+<p>Like <code>wait</code>, the lock specified will be re-acquired when this function
+returns, regardless of whether the timeout elapsed or not.</p>
+<h5 id="panics-1"><a href="#panics-1">Panics</a></h5>
+<p>This function will panic if another thread is waiting on the <code>Condvar</code>
+with a different <code>Mutex</code> object.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.wait_for" class="method has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#379-386">source</a><h4 class="code-header">pub fn <a href="#method.wait_for" class="fnname">wait_for</a>&lt;T:&nbsp;?Sized&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;mutex_guard: &amp;mut <a class="type" href="type.MutexGuard.html" title="type parking_lot::MutexGuard">MutexGuard</a>&lt;'_, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;timeout: Duration<br>) -&gt; <a class="struct" href="struct.WaitTimeoutResult.html" title="struct parking_lot::WaitTimeoutResult">WaitTimeoutResult</a></h4></section></summary><div class="docblock"><p>Waits on this condition variable for a notification, timing out after a
+specified duration.</p>
+<p>The semantics of this function are equivalent to <code>wait()</code> except that
+the thread will be blocked for roughly no longer than <code>timeout</code>. This
+method should not be used for precise timing due to anomalies such as
+preemption or platform differences that may not cause the maximum
+amount of time waited to be precisely <code>timeout</code>.</p>
+<p>Note that the best effort is made to ensure that the time waited is
+measured with a monotonic clock, and not affected by the changes made to
+the system time.</p>
+<p>The returned <code>WaitTimeoutResult</code> value indicates if the timeout is
+known to have elapsed.</p>
+<p>Like <code>wait</code>, the lock specified will be re-acquired when this function
+returns, regardless of whether the timeout elapsed or not.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.wait_while" class="method has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#425-431">source</a><h4 class="code-header">pub fn <a href="#method.wait_while" class="fnname">wait_while</a>&lt;T, F&gt;(&amp;self, mutex_guard: &amp;mut <a class="type" href="type.MutexGuard.html" title="type parking_lot::MutexGuard">MutexGuard</a>&lt;'_, T&gt;, condition: F)<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut T) -&gt; bool,</span></h4></section></summary><div class="docblock"><p>Blocks the current thread until this condition variable receives a
+notification. If the provided condition evaluates to <code>false</code>, then the
+thread is no longer blocked and the operation is completed. If the
+condition evaluates to <code>true</code>, then the thread is blocked again and
+waits for another notification before repeating this process.</p>
+<p>This function will atomically unlock the mutex specified (represented by
+<code>mutex_guard</code>) and block the current thread. This means that any calls
+to <code>notify_*()</code> which happen logically after the mutex is unlocked are
+candidates to wake this thread up. When this function call returns, the
+lock specified will have been re-acquired.</p>
+<h5 id="panics-2"><a href="#panics-2">Panics</a></h5>
+<p>This function will panic if another thread is waiting on the <code>Condvar</code>
+with a different <code>Mutex</code> object.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.wait_while_until" class="method has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#461-472">source</a><h4 class="code-header">pub fn <a href="#method.wait_while_until" class="fnname">wait_while_until</a>&lt;T, F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;mutex_guard: &amp;mut <a class="type" href="type.MutexGuard.html" title="type parking_lot::MutexGuard">MutexGuard</a>&lt;'_, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;condition: F,<br>&nbsp;&nbsp;&nbsp;&nbsp;timeout: Instant<br>) -&gt; <a class="struct" href="struct.WaitTimeoutResult.html" title="struct parking_lot::WaitTimeoutResult">WaitTimeoutResult</a><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut T) -&gt; bool,</span></h4></section></summary><div class="docblock"><p>Waits on this condition variable for a notification, timing out after
+the specified time instant. If the provided condition evaluates to
+<code>false</code>, then the thread is no longer blocked and the operation is
+completed. If the condition evaluates to <code>true</code>, then the thread is
+blocked again and waits for another notification before repeating
+this process.</p>
+<p>The semantics of this function are equivalent to <code>wait()</code> except that
+the thread will be blocked roughly until <code>timeout</code> is reached. This
+method should not be used for precise timing due to anomalies such as
+preemption or platform differences that may not cause the maximum
+amount of time waited to be precisely <code>timeout</code>.</p>
+<p>Note that the best effort is made to ensure that the time waited is
+measured with a monotonic clock, and not affected by the changes made to
+the system time.</p>
+<p>The returned <code>WaitTimeoutResult</code> value indicates if the timeout is
+known to have elapsed.</p>
+<p>Like <code>wait</code>, the lock specified will be re-acquired when this function
+returns, regardless of whether the timeout elapsed or not.</p>
+<h5 id="panics-3"><a href="#panics-3">Panics</a></h5>
+<p>This function will panic if another thread is waiting on the <code>Condvar</code>
+with a different <code>Mutex</code> object.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.wait_while_for" class="method has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#496-507">source</a><h4 class="code-header">pub fn <a href="#method.wait_while_for" class="fnname">wait_while_for</a>&lt;T:&nbsp;?Sized, F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;mutex_guard: &amp;mut <a class="type" href="type.MutexGuard.html" title="type parking_lot::MutexGuard">MutexGuard</a>&lt;'_, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;condition: F,<br>&nbsp;&nbsp;&nbsp;&nbsp;timeout: Duration<br>) -&gt; <a class="struct" href="struct.WaitTimeoutResult.html" title="struct parking_lot::WaitTimeoutResult">WaitTimeoutResult</a><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut T) -&gt; bool,</span></h4></section></summary><div class="docblock"><p>Waits on this condition variable for a notification, timing out after a
+specified duration. If the provided condition evaluates to <code>false</code>,
+then the thread is no longer blocked and the operation is completed.
+If the condition evaluates to <code>true</code>, then the thread is blocked again
+and waits for another notification before repeating this process.</p>
+<p>The semantics of this function are equivalent to <code>wait()</code> except that
+the thread will be blocked for roughly no longer than <code>timeout</code>. This
+method should not be used for precise timing due to anomalies such as
+preemption or platform differences that may not cause the maximum
+amount of time waited to be precisely <code>timeout</code>.</p>
+<p>Note that the best effort is made to ensure that the time waited is
+measured with a monotonic clock, and not affected by the changes made to
+the system time.</p>
+<p>The returned <code>WaitTimeoutResult</code> value indicates if the timeout is
+known to have elapsed.</p>
+<p>Like <code>wait</code>, the lock specified will be re-acquired when this function
+returns, regardless of whether the timeout elapsed or not.</p>
+</div></details></div></details></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Debug-for-Condvar" class="impl has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#517-521">source</a><a href="#impl-Debug-for-Condvar" class="anchor"></a><h3 class="code-header">impl Debug for <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fmt" class="method trait-impl has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#518-520">source</a><a href="#method.fmt" class="anchor"></a><h4 class="code-header">fn <a class="fnname">fmt</a>(&amp;self, f: &amp;mut Formatter&lt;'_&gt;) -&gt; Result</h4></section></summary><div class='docblock'>Formats the value using the given formatter. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Default-for-Condvar" class="impl has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#510-515">source</a><a href="#impl-Default-for-Condvar" class="anchor"></a><h3 class="code-header">impl Default for <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.default" class="method trait-impl has-srclink"><a class="srclink rightside" href="../src/parking_lot/condvar.rs.html#512-514">source</a><a href="#method.default" class="anchor"></a><h4 class="code-header">fn <a class="fnname">default</a>() -&gt; <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h4></section></summary><div class='docblock'>Returns the “default value” for a type. <a>Read more</a></div></details></div></details></div><h2 id="synthetic-implementations" class="small-section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor"></a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-Condvar" class="impl has-srclink"><a href="#impl-RefUnwindSafe-for-Condvar" class="anchor"></a><h3 class="code-header">impl RefUnwindSafe for <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h3></section><section id="impl-Send-for-Condvar" class="impl has-srclink"><a href="#impl-Send-for-Condvar" class="anchor"></a><h3 class="code-header">impl Send for <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h3></section><section id="impl-Sync-for-Condvar" class="impl has-srclink"><a href="#impl-Sync-for-Condvar" class="anchor"></a><h3 class="code-header">impl Sync for <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h3></section><section id="impl-Unpin-for-Condvar" class="impl has-srclink"><a href="#impl-Unpin-for-Condvar" class="anchor"></a><h3 class="code-header">impl Unpin for <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h3></section><section id="impl-UnwindSafe-for-Condvar" class="impl has-srclink"><a href="#impl-UnwindSafe-for-Condvar" class="anchor"></a><h3 class="code-header">impl UnwindSafe for <a class="struct" href="struct.Condvar.html" title="struct parking_lot::Condvar">Condvar</a></h3></section></div><h2 id="blanket-implementations" class="small-section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor"></a></h2><div id="blanket-implementations-list"><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Any-for-Condvar" class="impl has-srclink"><a href="#impl-Any-for-Condvar" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Any for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl has-srclink"><a href="#method.type_id" class="anchor"></a><h4 class="code-header">fn <a class="fnname">type_id</a>(&amp;self) -&gt; TypeId</h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-Condvar" class="impl has-srclink"><a href="#impl-Borrow%3CT%3E-for-Condvar" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Borrow&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow</a>(&amp;self) -&gt; &amp;T</h4></section></summary><div class='docblock'>Immutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-BorrowMut%3CT%3E-for-Condvar" class="impl has-srclink"><a href="#impl-BorrowMut%3CT%3E-for-Condvar" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; BorrowMut&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow_mut" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow_mut" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow_mut</a>(&amp;mut self) -&gt; &amp;mut T</h4></section></summary><div class='docblock'>Mutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-From%3CT%3E-for-Condvar" class="impl has-srclink"><a href="#impl-From%3CT%3E-for-Condvar" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; From&lt;T&gt; for T</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">from</a>(t: T) -&gt; T</h4></section></summary><div class="docblock"><p>Returns the argument unchanged.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-Condvar" class="impl has-srclink"><a href="#impl-Into%3CU%3E-for-Condvar" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; Into&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: From&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">into</a>(self) -&gt; U</h4></section></summary><div class="docblock"><p>Calls <code>U::from(self)</code>.</p>
+<p>That is, this conversion is whatever the implementation of
+<code>[From]&lt;T&gt; for U</code> chooses to do.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryFrom%3CU%3E-for-Condvar" class="impl has-srclink"><a href="#impl-TryFrom%3CU%3E-for-Condvar" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryFrom&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: Into&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error-1" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error-1" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = Infallible</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_from</a>(value: U) -&gt; Result&lt;T, &lt;T as TryFrom&lt;U&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryInto%3CU%3E-for-Condvar" class="impl has-srclink"><a href="#impl-TryInto%3CU%3E-for-Condvar" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryInto&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: TryFrom&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="parking_lot" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

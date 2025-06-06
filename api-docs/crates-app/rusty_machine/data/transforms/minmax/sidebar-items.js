@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["MinMaxFitter","A builder used to construct a `MinMaxScaler`"],["MinMaxScaler","The `MinMaxScaler`"]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["boxed","Convert a [`http_body::Body`] into a [`BoxBody`]."]],"type":[["BoxBody","A boxed [`Body`] trait object."]]};

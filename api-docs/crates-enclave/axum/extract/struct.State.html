@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Extractor for state."><meta name="keywords" content="rust, rustlang, rust-lang, State"><title>State in axum::extract - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../axum/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../axum/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">State</a></h2><div class="sidebar-elems"><section><h3><a href="#fields">Tuple Fields</a></h3><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block"><li><a href="#impl-Clone-for-State%3CS%3E">Clone</a></li><li><a href="#impl-Copy-for-State%3CS%3E">Copy</a></li><li><a href="#impl-Debug-for-State%3CS%3E">Debug</a></li><li><a href="#impl-Default-for-State%3CS%3E">Default</a></li><li><a href="#impl-Deref-for-State%3CS%3E">Deref</a></li><li><a href="#impl-DerefMut-for-State%3CS%3E">DerefMut</a></li><li><a href="#impl-FromRequestParts%3COuterState%3E-for-State%3CInnerState%3E">FromRequestParts&lt;OuterState&gt;</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block"><li><a href="#impl-RefUnwindSafe-for-State%3CS%3E">RefUnwindSafe</a></li><li><a href="#impl-Send-for-State%3CS%3E">Send</a></li><li><a href="#impl-Sync-for-State%3CS%3E">Sync</a></li><li><a href="#impl-Unpin-for-State%3CS%3E">Unpin</a></li><li><a href="#impl-UnwindSafe-for-State%3CS%3E">UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block"><li><a href="#impl-Any-for-State%3CS%3E">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-State%3CS%3E">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-State%3CS%3E">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-From%3CT%3E-for-State%3CS%3E">From&lt;T&gt;</a></li><li><a href="#impl-FromRef%3CT%3E-for-State%3CS%3E">FromRef&lt;T&gt;</a></li><li><a href="#impl-FromRequest%3CS%2C%20B%2C%20ViaParts%3E-for-State%3CS%3E">FromRequest&lt;S, B, ViaParts&gt;</a></li><li><a href="#impl-Instrument-for-State%3CS%3E">Instrument</a></li><li><a href="#impl-Into%3CU%3E-for-State%3CS%3E">Into&lt;U&gt;</a></li><li><a href="#impl-ToOwned-for-State%3CS%3E">ToOwned</a></li><li><a href="#impl-TryFrom%3CU%3E-for-State%3CS%3E">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-State%3CS%3E">TryInto&lt;U&gt;</a></li><li><a href="#impl-VZip%3CV%3E-for-State%3CS%3E">VZip&lt;V&gt;</a></li><li><a href="#impl-WithSubscriber-for-State%3CS%3E">WithSubscriber</a></li></ul></section><h2><a href="index.html">In axum::extract</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Struct <a href="../index.html">axum</a>::<wbr><a href="index.html">extract</a>::<wbr><a class="struct" href="#">State</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/axum/extract/state.rs.html#347">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust struct"><code>pub struct State&lt;S&gt;(pub S);</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Extractor for state.</p>
+<p>See <a href="../middleware/index.html#accessing-state-in-middleware">“Accessing state in middleware”</a> for how to
+access state in middleware.</p>
+<h2 id="with-router"><a href="#with-router">With <code>Router</code></a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{Router, routing::get, extract::State};
+
+<span class="comment">// the application state
+//
+// here you can put configuration, database connection pools, or whatever
+// state you need
+//
+// see &quot;When states need to implement `Clone`&quot; for more details on why we need
+// `#[derive(Clone)]` here.
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>AppState {}
+
+<span class="kw">let </span>state = AppState {};
+
+<span class="comment">// create a `Router` that holds our state
+</span><span class="kw">let </span>app = Router::new()
+    .route(<span class="string">&quot;/&quot;</span>, get(handler))
+    <span class="comment">// provide the state so the router can access it
+    </span>.with_state(state);
+
+<span class="kw">async fn </span>handler(
+    <span class="comment">// access the state via the `State` extractor
+    // extracting a state of the wrong type results in a compile error
+    </span>State(state): State&lt;AppState&gt;,
+) {
+    <span class="comment">// use `state`...
+</span>}</code></pre></div>
+<p>Note that <code>State</code> is an extractor, so be sure to put it before any body
+extractors, see <a href="index.html#the-order-of-extractors">“the order of extractors”</a>.</p>
+<h3 id="combining-stateful-routers"><a href="#combining-stateful-routers">Combining stateful routers</a></h3>
+<p>Multiple <a href="../struct.Router.html"><code>Router</code></a>s can be combined with <a href="../struct.Router.html#method.nest"><code>Router::nest</code></a> or <a href="../struct.Router.html#method.merge"><code>Router::merge</code></a>
+When combining <a href="../struct.Router.html"><code>Router</code></a>s with one of these methods, the <a href="../struct.Router.html"><code>Router</code></a>s must have
+the same state type. Generally, this can be inferred automatically:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{Router, routing::get, extract::State};
+
+<span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>AppState {}
+
+<span class="kw">let </span>state = AppState {};
+
+<span class="comment">// create a `Router` that will be nested within another
+</span><span class="kw">let </span>api = Router::new()
+    .route(<span class="string">&quot;/posts&quot;</span>, get(posts_handler));
+
+<span class="kw">let </span>app = Router::new()
+    .nest(<span class="string">&quot;/api&quot;</span>, api)
+    .with_state(state);
+
+<span class="kw">async fn </span>posts_handler(State(state): State&lt;AppState&gt;) {
+    <span class="comment">// use `state`...
+</span>}</code></pre></div>
+<p>However, if you are composing <a href="../struct.Router.html"><code>Router</code></a>s that are defined in separate scopes,
+you may need to annotate the <a href="struct.State.html" title="State"><code>State</code></a> type explicitly:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{Router, routing::get, extract::State};
+
+<span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>AppState {}
+
+<span class="kw">fn </span>make_app() -&gt; Router {
+    <span class="kw">let </span>state = AppState {};
+
+    Router::new()
+        .nest(<span class="string">&quot;/api&quot;</span>, make_api())
+        .with_state(state) <span class="comment">// the outer Router&#39;s state is inferred
+</span>}
+
+<span class="comment">// the inner Router must specify its state type to compose with the
+// outer router
+</span><span class="kw">fn </span>make_api() -&gt; Router&lt;AppState&gt; {
+    Router::new()
+        .route(<span class="string">&quot;/posts&quot;</span>, get(posts_handler))
+}
+
+<span class="kw">async fn </span>posts_handler(State(state): State&lt;AppState&gt;) {
+    <span class="comment">// use `state`...
+</span>}</code></pre></div>
+<p>In short, a <a href="../struct.Router.html"><code>Router</code></a>’s generic state type defaults to <code>()</code>
+(no state) unless <a href="../struct.Router.html#method.with_state"><code>Router::with_state</code></a> is called or the value
+of the generic type is given explicitly.</p>
+<h2 id="with-methodrouter"><a href="#with-methodrouter">With <code>MethodRouter</code></a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{routing::get, extract::State};
+
+<span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>AppState {}
+
+<span class="kw">let </span>state = AppState {};
+
+<span class="kw">let </span>method_router_with_state = get(handler)
+    <span class="comment">// provide the state so the handler can access it
+    </span>.with_state(state);
+
+<span class="kw">async fn </span>handler(State(state): State&lt;AppState&gt;) {
+    <span class="comment">// use `state`...
+</span>}</code></pre></div>
+<h2 id="with-handler"><a href="#with-handler">With <code>Handler</code></a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{routing::get, handler::Handler, extract::State};
+
+<span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>AppState {}
+
+<span class="kw">let </span>state = AppState {};
+
+<span class="kw">async fn </span>handler(State(state): State&lt;AppState&gt;) {
+    <span class="comment">// use `state`...
+</span>}
+
+<span class="comment">// provide the state so the handler can access it
+</span><span class="kw">let </span>handler_with_state = handler.with_state(state);
+
+axum::Server::bind(<span class="kw-2">&amp;</span><span class="string">&quot;0.0.0.0:3000&quot;</span>.parse().unwrap())
+    .serve(handler_with_state.into_make_service())
+    .<span class="kw">await
+    </span>.expect(<span class="string">&quot;server failed&quot;</span>);</code></pre></div>
+<h2 id="substates"><a href="#substates">Substates</a></h2>
+<p><a href="struct.State.html" title="State"><code>State</code></a> only allows a single state type but you can use <a href="trait.FromRef.html" title="FromRef"><code>FromRef</code></a> to extract “substates”:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{Router, routing::get, extract::{State, FromRef}};
+
+<span class="comment">// the application state
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>AppState {
+    <span class="comment">// that holds some api specific state
+    </span>api_state: ApiState,
+}
+
+<span class="comment">// the api specific state
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>ApiState {}
+
+<span class="comment">// support converting an `AppState` in an `ApiState`
+</span><span class="kw">impl </span>FromRef&lt;AppState&gt; <span class="kw">for </span>ApiState {
+    <span class="kw">fn </span>from_ref(app_state: <span class="kw-2">&amp;</span>AppState) -&gt; ApiState {
+        app_state.api_state.clone()
+    }
+}
+
+<span class="kw">let </span>state = AppState {
+    api_state: ApiState {},
+};
+
+<span class="kw">let </span>app = Router::new()
+    .route(<span class="string">&quot;/&quot;</span>, get(handler))
+    .route(<span class="string">&quot;/api/users&quot;</span>, get(api_users))
+    .with_state(state);
+
+<span class="kw">async fn </span>api_users(
+    <span class="comment">// access the api specific state
+    </span>State(api_state): State&lt;ApiState&gt;,
+) {
+}
+
+<span class="kw">async fn </span>handler(
+    <span class="comment">// we can still access to top level state
+    </span>State(state): State&lt;AppState&gt;,
+) {
+}</code></pre></div>
+<p>For convenience <code>FromRef</code> can also be derived using <code>#[derive(FromRef)]</code>.</p>
+<h2 id="for-library-authors"><a href="#for-library-authors">For library authors</a></h2>
+<p>If you’re writing a library that has an extractor that needs state, this is the recommended way
+to do it:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum_core::extract::{FromRequestParts, FromRef};
+<span class="kw">use </span>http::request::Parts;
+<span class="kw">use </span>async_trait::async_trait;
+<span class="kw">use </span>std::convert::Infallible;
+
+<span class="comment">// the extractor your library provides
+</span><span class="kw">struct </span>MyLibraryExtractor;
+
+<span class="attribute">#[async_trait]
+</span><span class="kw">impl</span>&lt;S&gt; FromRequestParts&lt;S&gt; <span class="kw">for </span>MyLibraryExtractor
+<span class="kw">where
+    </span><span class="comment">// keep `S` generic but require that it can produce a `MyLibraryState`
+    // this means users will have to implement `FromRef&lt;UserState&gt; for MyLibraryState`
+    </span>MyLibraryState: FromRef&lt;S&gt;,
+    S: Send + Sync,
+{
+    <span class="kw">type </span>Rejection = Infallible;
+
+    <span class="kw">async fn </span>from_request_parts(parts: <span class="kw-2">&amp;mut </span>Parts, state: <span class="kw-2">&amp;</span>S) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Rejection&gt; {
+        <span class="comment">// get a `MyLibraryState` from a reference to the state
+        </span><span class="kw">let </span>state = MyLibraryState::from_ref(state);
+
+        <span class="comment">// ...
+    </span>}
+}
+
+<span class="comment">// the state your library needs
+</span><span class="kw">struct </span>MyLibraryState {
+    <span class="comment">// ...
+</span>}</code></pre></div>
+<h2 id="when-states-need-to-implement-clone"><a href="#when-states-need-to-implement-clone">When states need to implement <code>Clone</code></a></h2>
+<p>Your top level state type must implement <code>Clone</code> to be extractable with <code>State</code>:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::extract::State;
+
+<span class="comment">// no substates, so to extract to `State&lt;AppState&gt;` we must implement `Clone` for `AppState`
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>AppState {}
+
+<span class="kw">async fn </span>handler(State(state): State&lt;AppState&gt;) {
+    <span class="comment">// ...
+</span>}</code></pre></div>
+<p>This works because of <a href="trait.FromRef.html" title="FromRef"><code>impl&lt;S&gt; FromRef&lt;S&gt; for S where S: Clone</code></a>.</p>
+<p>This is also true if you’re extracting substates, unless you <em>never</em> extract the top level
+state itself:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::extract::{State, FromRef};
+
+<span class="comment">// we never extract `State&lt;AppState&gt;`, just `State&lt;InnerState&gt;`. So `AppState` doesn&#39;t need to
+// implement `Clone`
+</span><span class="kw">struct </span>AppState {
+    inner: InnerState,
+}
+
+<span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>InnerState {}
+
+<span class="kw">impl </span>FromRef&lt;AppState&gt; <span class="kw">for </span>InnerState {
+    <span class="kw">fn </span>from_ref(app_state: <span class="kw-2">&amp;</span>AppState) -&gt; InnerState {
+        app_state.inner.clone()
+    }
+}
+
+<span class="kw">async fn </span>api_users(State(inner): State&lt;InnerState&gt;) {
+    <span class="comment">// ...
+</span>}</code></pre></div>
+<p>In general however we recommend you implement <code>Clone</code> for all your state types to avoid
+potential type errors.</p>
+<h2 id="shared-mutable-state"><a href="#shared-mutable-state">Shared mutable state</a></h2>
+<p><a href="../struct.Router.html#method.with_state">As state is global within a <code>Router</code></a> you can’t directly get a mutable reference to
+the state.</p>
+<p>The most basic solution is to use an <code>Arc&lt;Mutex&lt;_&gt;&gt;</code>. Which kind of mutex you need depends on
+your use case. See <a href="https://docs.rs/tokio/1.25.0/tokio/sync/struct.Mutex.html#which-kind-of-mutex-should-you-use">the tokio docs</a> for more details.</p>
+<p>Note that holding a locked <code>std::sync::Mutex</code> across <code>.await</code> points will result in <code>!Send</code>
+futures which are incompatible with axum. If you need to hold a mutex across <code>.await</code> points,
+consider using a <code>tokio::sync::Mutex</code> instead.</p>
+<h3 id="example"><a href="#example">Example</a></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{Router, routing::get, extract::State};
+<span class="kw">use </span>std::sync::{Arc, Mutex};
+
+<span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>AppState {
+    data: Arc&lt;Mutex&lt;String&gt;&gt;,
+}
+
+<span class="kw">async fn </span>handler(State(state): State&lt;AppState&gt;) {
+    <span class="kw">let </span><span class="kw-2">mut </span>data = state.data.lock().expect(<span class="string">&quot;mutex was poisoned&quot;</span>);
+    <span class="kw-2">*</span>data = <span class="string">&quot;updated foo&quot;</span>.to_owned();
+
+    <span class="comment">// ...
+</span>}
+
+<span class="kw">let </span>state = AppState {
+    data: Arc::new(Mutex::new(<span class="string">&quot;foo&quot;</span>.to_owned())),
+};
+
+<span class="kw">let </span>app = Router::new()
+    .route(<span class="string">&quot;/&quot;</span>, get(handler))
+    .with_state(state);</code></pre></div>
+</div></details><h2 id="fields" class="fields small-section-header">Tuple Fields<a href="#fields" class="anchor"></a></h2><span id="structfield.0" class="structfield small-section-header"><a href="#structfield.0" class="anchor field"></a><code>0: S</code></span><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Clone-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#346">source</a><a href="#impl-Clone-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S:&nbsp;Clone&gt; Clone for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.clone" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#346">source</a><a href="#method.clone" class="anchor"></a><h4 class="code-header">fn <a class="fnname">clone</a>(&amp;self) -&gt; <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;</h4></section></summary><div class='docblock'>Returns a copy of the value. <a>Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.clone_from" class="method trait-impl has-srclink"><span class="since rightside" title="Stable since Rust version 1.0.0">1.0.0</span><a href="#method.clone_from" class="anchor"></a><h4 class="code-header">const fn <a class="fnname">clone_from</a>(&amp;mut self, source: &amp;Self)</h4></section></summary><div class='docblock'>Performs copy-assignment from <code>source</code>. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Debug-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#346">source</a><a href="#impl-Debug-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S:&nbsp;Debug&gt; Debug for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fmt" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#346">source</a><a href="#method.fmt" class="anchor"></a><h4 class="code-header">fn <a class="fnname">fmt</a>(&amp;self, f: &amp;mut Formatter&lt;'_&gt;) -&gt; Result</h4></section></summary><div class='docblock'>Formats the value using the given formatter. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Default-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#346">source</a><a href="#impl-Default-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S:&nbsp;Default&gt; Default for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.default" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#346">source</a><a href="#method.default" class="anchor"></a><h4 class="code-header">fn <a class="fnname">default</a>() -&gt; <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;</h4></section></summary><div class='docblock'>Returns the “default value” for a type. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Deref-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#366-372">source</a><a href="#impl-Deref-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S&gt; Deref for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Target" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Target" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Target</a> = S</h4></section></summary><div class='docblock'>The resulting type after dereferencing.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.deref" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#369-371">source</a><a href="#method.deref" class="anchor"></a><h4 class="code-header">fn <a class="fnname">deref</a>(&amp;self) -&gt; &amp;Self::Target</h4></section></summary><div class='docblock'>Dereferences the value.</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-DerefMut-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#374-378">source</a><a href="#impl-DerefMut-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S&gt; DerefMut for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.deref_mut" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#375-377">source</a><a href="#method.deref_mut" class="anchor"></a><h4 class="code-header">fn <a class="fnname">deref_mut</a>(&amp;mut self) -&gt; &amp;mut Self::Target</h4></section></summary><div class='docblock'>Mutably dereferences the value.</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-FromRequestParts%3COuterState%3E-for-State%3CInnerState%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#350-364">source</a><a href="#impl-FromRequestParts%3COuterState%3E-for-State%3CInnerState%3E" class="anchor"></a><h3 class="code-header">impl&lt;OuterState, InnerState&gt; <a class="trait" href="trait.FromRequestParts.html" title="trait axum::extract::FromRequestParts">FromRequestParts</a>&lt;OuterState&gt; for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;InnerState&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;InnerState: <a class="trait" href="trait.FromRef.html" title="trait axum::extract::FromRef">FromRef</a>&lt;OuterState&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;OuterState: Send + Sync,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Rejection" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Rejection" class="anchor"></a><h4 class="code-header">type <a href="trait.FromRequestParts.html#associatedtype.Rejection" class="associatedtype">Rejection</a> = Infallible</h4></section></summary><div class='docblock'>If the extractor fails it’ll use this “rejection” type. A rejection is
+a kind of error that can be converted into a response. <a href="trait.FromRequestParts.html#associatedtype.Rejection">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from_request_parts" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#357-363">source</a><a href="#method.from_request_parts" class="anchor"></a><h4 class="code-header">fn <a href="trait.FromRequestParts.html#tymethod.from_request_parts" class="fnname">from_request_parts</a>&lt;'life0, 'life1, 'async_trait&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;_parts: &amp;'life0 mut <a class="struct" href="../../http/request/struct.Parts.html" title="struct http::request::Parts">Parts</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;state: &amp;'life1 OuterState<br>) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;Self, Self::<a class="associatedtype" href="trait.FromRequestParts.html#associatedtype.Rejection" title="type axum::extract::FromRequestParts::Rejection">Rejection</a>&gt;&gt; + Send + 'async_trait&gt;&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;'life0: 'async_trait,<br>&nbsp;&nbsp;&nbsp;&nbsp;'life1: 'async_trait,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: 'async_trait,</span></h4></section></summary><div class='docblock'>Perform the extraction.</div></details></div></details><section id="impl-Copy-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/axum/extract/state.rs.html#346">source</a><a href="#impl-Copy-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S:&nbsp;Copy&gt; Copy for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;</h3></section></div><h2 id="synthetic-implementations" class="small-section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor"></a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-RefUnwindSafe-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S&gt; RefUnwindSafe for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: RefUnwindSafe,</span></h3></section><section id="impl-Send-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-Send-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S&gt; Send for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: Send,</span></h3></section><section id="impl-Sync-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-Sync-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S&gt; Sync for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: Sync,</span></h3></section><section id="impl-Unpin-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-Unpin-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S&gt; Unpin for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: Unpin,</span></h3></section><section id="impl-UnwindSafe-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-UnwindSafe-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S&gt; UnwindSafe for <a class="struct" href="struct.State.html" title="struct axum::extract::State">State</a>&lt;S&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: UnwindSafe,</span></h3></section></div><h2 id="blanket-implementations" class="small-section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor"></a></h2><div id="blanket-implementations-list"><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Any-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-Any-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Any for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl has-srclink"><a href="#method.type_id" class="anchor"></a><h4 class="code-header">fn <a class="fnname">type_id</a>(&amp;self) -&gt; TypeId</h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-Borrow%3CT%3E-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Borrow&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow</a>(&amp;self) -&gt; &amp;T</h4></section></summary><div class='docblock'>Immutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-BorrowMut%3CT%3E-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-BorrowMut%3CT%3E-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; BorrowMut&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow_mut" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow_mut" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow_mut</a>(&amp;mut self) -&gt; &amp;mut T</h4></section></summary><div class='docblock'>Mutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-From%3CT%3E-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-From%3CT%3E-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; From&lt;T&gt; for T</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">from</a>(t: T) -&gt; T</h4></section></summary><div class="docblock"><p>Returns the argument unchanged.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-FromRef%3CT%3E-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/axum_core/extract/from_ref.rs.html#18">source</a><a href="#impl-FromRef%3CT%3E-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="trait.FromRef.html" title="trait axum::extract::FromRef">FromRef</a>&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Clone,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from_ref" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/axum_core/extract/from_ref.rs.html#22">source</a><a href="#method.from_ref" class="anchor"></a><h4 class="code-header">fn <a href="trait.FromRef.html#tymethod.from_ref" class="fnname">from_ref</a>(input: &amp;T) -&gt; T</h4></section></summary><div class='docblock'>Converts to this type from a reference to the input type.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-FromRequest%3CS%2C%20B%2C%20ViaParts%3E-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/axum_core/extract/mod.rs.html#127">source</a><a href="#impl-FromRequest%3CS%2C%20B%2C%20ViaParts%3E-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;S, B, T&gt; <a class="trait" href="trait.FromRequest.html" title="trait axum::extract::FromRequest">FromRequest</a>&lt;S, B, ViaParts&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;B: 'static + Send,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: Send + Sync,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="trait.FromRequestParts.html" title="trait axum::extract::FromRequestParts">FromRequestParts</a>&lt;S&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Rejection-1" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Rejection-1" class="anchor"></a><h4 class="code-header">type <a href="trait.FromRequest.html#associatedtype.Rejection" class="associatedtype">Rejection</a> = &lt;T as <a class="trait" href="trait.FromRequestParts.html" title="trait axum::extract::FromRequestParts">FromRequestParts</a>&lt;S&gt;&gt;::<a class="associatedtype" href="trait.FromRequestParts.html#associatedtype.Rejection" title="type axum::extract::FromRequestParts::Rejection">Rejection</a></h4></section></summary><div class='docblock'>If the extractor fails it’ll use this “rejection” type. A rejection is
+a kind of error that can be converted into a response. <a href="trait.FromRequest.html#associatedtype.Rejection">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from_request" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/axum_core/extract/mod.rs.html#135">source</a><a href="#method.from_request" class="anchor"></a><h4 class="code-header">fn <a href="trait.FromRequest.html#tymethod.from_request" class="fnname">from_request</a>&lt;'life0, 'async_trait&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;req: <a class="struct" href="../../http/request/struct.Request.html" title="struct http::request::Request">Request</a>&lt;B&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;state: &amp;'life0 S<br>) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Result&lt;T, &lt;T as <a class="trait" href="trait.FromRequest.html" title="trait axum::extract::FromRequest">FromRequest</a>&lt;S, B, ViaParts&gt;&gt;::<a class="associatedtype" href="trait.FromRequest.html#associatedtype.Rejection" title="type axum::extract::FromRequest::Rejection">Rejection</a>&gt;&gt; + Send + 'async_trait, Global&gt;&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;'life0: 'async_trait,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'async_trait,</span></h4></section></summary><div class='docblock'>Perform the extraction.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Instrument-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/tracing/instrument.rs.html#276">source</a><a href="#impl-Instrument-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="../../tracing/instrument/trait.Instrument.html" title="trait tracing::instrument::Instrument">Instrument</a> for T</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.instrument" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/tracing/instrument.rs.html#82">source</a><a href="#method.instrument" class="anchor"></a><h4 class="code-header">fn <a href="../../tracing/instrument/trait.Instrument.html#method.instrument" class="fnname">instrument</a>(self, span: <a class="struct" href="../../tracing/span/struct.Span.html" title="struct tracing::span::Span">Span</a>) -&gt; <a class="struct" href="../../tracing/instrument/struct.Instrumented.html" title="struct tracing::instrument::Instrumented">Instrumented</a>&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the provided <a href="../../tracing/span/struct.Span.html" title="Span"><code>Span</code></a>, returning an
+<code>Instrumented</code> wrapper. <a href="../../tracing/instrument/trait.Instrument.html#method.instrument">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.in_current_span" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/tracing/instrument.rs.html#121">source</a><a href="#method.in_current_span" class="anchor"></a><h4 class="code-header">fn <a href="../../tracing/instrument/trait.Instrument.html#method.in_current_span" class="fnname">in_current_span</a>(self) -&gt; <a class="struct" href="../../tracing/instrument/struct.Instrumented.html" title="struct tracing::instrument::Instrumented">Instrumented</a>&lt;Self&gt;</h4></section></summary><div class='docblock'>Instruments this type with the <a href="../../tracing/span/struct.Span.html#method.current">current</a> <a href="../../tracing/span/struct.Span.html"><code>Span</code></a>, returning an
+<code>Instrumented</code> wrapper. <a href="../../tracing/instrument/trait.Instrument.html#method.in_current_span">Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-Into%3CU%3E-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; Into&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: From&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">into</a>(self) -&gt; U</h4></section></summary><div class="docblock"><p>Calls <code>U::from(self)</code>.</p>
+<p>That is, this conversion is whatever the implementation of
+<code>[From]&lt;T&gt; for U</code> chooses to do.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-ToOwned-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-ToOwned-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; ToOwned for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Clone,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Owned" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Owned" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Owned</a> = T</h4></section></summary><div class='docblock'>The resulting type after obtaining ownership.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.to_owned" class="method trait-impl has-srclink"><a href="#method.to_owned" class="anchor"></a><h4 class="code-header">fn <a class="fnname">to_owned</a>(&amp;self) -&gt; T</h4></section></summary><div class='docblock'>Creates owned data from borrowed data, usually by cloning. <a>Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.clone_into" class="method trait-impl has-srclink"><a href="#method.clone_into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">clone_into</a>(&amp;self, target: &amp;mut T)</h4></section></summary><div class='docblock'>Uses borrowed data to replace owned data, usually by cloning. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryFrom%3CU%3E-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-TryFrom%3CU%3E-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryFrom&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: Into&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error-1" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error-1" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = Infallible</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_from</a>(value: U) -&gt; Result&lt;T, &lt;T as TryFrom&lt;U&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryInto%3CU%3E-for-State%3CS%3E" class="impl has-srclink"><a href="#impl-TryInto%3CU%3E-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryInto&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: TryFrom&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-VZip%3CV%3E-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/ppv_lite86/types.rs.html#221">source</a><a href="#impl-VZip%3CV%3E-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;V, T&gt; <a class="trait" href="../../ppv_lite86/types/trait.VZip.html" title="trait ppv_lite86::types::VZip">VZip</a>&lt;V&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../ppv_lite86/types/trait.MultiLane.html" title="trait ppv_lite86::types::MultiLane">MultiLane</a>&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><section id="method.vzip" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/ppv_lite86/types.rs.html#226">source</a><a href="#method.vzip" class="anchor"></a><h4 class="code-header">fn <a href="../../ppv_lite86/types/trait.VZip.html#tymethod.vzip" class="fnname">vzip</a>(self) -&gt; V</h4></section></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-WithSubscriber-for-State%3CS%3E" class="impl has-srclink"><a class="srclink rightside" href="../../src/tracing/instrument.rs.html#334">source</a><a href="#impl-WithSubscriber-for-State%3CS%3E" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; <a class="trait" href="../../tracing/instrument/trait.WithSubscriber.html" title="trait tracing::instrument::WithSubscriber">WithSubscriber</a> for T</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.with_subscriber" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/tracing/instrument.rs.html#169-171">source</a><a href="#method.with_subscriber" class="anchor"></a><h4 class="code-header">fn <a href="../../tracing/instrument/trait.WithSubscriber.html#method.with_subscriber" class="fnname">with_subscriber</a>&lt;S&gt;(self, subscriber: S) -&gt; <a class="struct" href="../../tracing/instrument/struct.WithDispatch.html" title="struct tracing::instrument::WithDispatch">WithDispatch</a>&lt;Self&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: Into&lt;<a class="struct" href="../../tracing_core/dispatcher/struct.Dispatch.html" title="struct tracing_core::dispatcher::Dispatch">Dispatch</a>&gt;,</span></h4></section></summary><div class='docblock'>Attaches the provided <a href="../../tracing_core/subscriber/trait.Subscriber.html"><code>Subscriber</code></a> to this type, returning a
+<a href="../../tracing/instrument/struct.WithDispatch.html" title="WithDispatch"><code>WithDispatch</code></a> wrapper. <a href="../../tracing/instrument/trait.WithSubscriber.html#method.with_subscriber">Read more</a></div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.with_current_subscriber" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/tracing/instrument.rs.html#221">source</a><a href="#method.with_current_subscriber" class="anchor"></a><h4 class="code-header">fn <a href="../../tracing/instrument/trait.WithSubscriber.html#method.with_current_subscriber" class="fnname">with_current_subscriber</a>(self) -&gt; <a class="struct" href="../../tracing/instrument/struct.WithDispatch.html" title="struct tracing::instrument::WithDispatch">WithDispatch</a>&lt;Self&gt;</h4></section></summary><div class='docblock'>Attaches the current <a href="../../tracing/dispatcher/index.html#setting-the-default-subscriber">default</a> <a href="../../tracing_core/subscriber/trait.Subscriber.html"><code>Subscriber</code></a> to this type, returning a
+<a href="../../tracing/instrument/struct.WithDispatch.html" title="WithDispatch"><code>WithDispatch</code></a> wrapper. <a href="../../tracing/instrument/trait.WithSubscriber.html#method.with_current_subscriber">Read more</a></div></details></div></details></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="axum" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

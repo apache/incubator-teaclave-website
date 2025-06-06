@@ -1,0 +1,951 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Rhai main scripting engine."><meta name="keywords" content="rust, rustlang, rust-lang, Engine"><title>Engine in rhai::plugin - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../rhai/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../rhai/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Engine</a></h2><div class="sidebar-elems"><section><h3><a href="#implementations">Associated Constants</a></h3><ul class="block"><li><a href="#associatedconstant.RAW">RAW</a></li></ul><h3><a href="#implementations">Methods</a></h3><ul class="block"><li><a href="#method.allow_if_expression">allow_if_expression</a></li><li><a href="#method.allow_loop_expressions">allow_loop_expressions</a></li><li><a href="#method.allow_looping">allow_looping</a></li><li><a href="#method.allow_shadowing">allow_shadowing</a></li><li><a href="#method.allow_statement_expression">allow_statement_expression</a></li><li><a href="#method.allow_switch_expression">allow_switch_expression</a></li><li><a href="#method.build_type">build_type</a></li><li><a href="#method.compact_script">compact_script</a></li><li><a href="#method.compile">compile</a></li><li><a href="#method.compile_expression">compile_expression</a></li><li><a href="#method.compile_expression_with_scope">compile_expression_with_scope</a></li><li><a href="#method.compile_scripts_with_scope">compile_scripts_with_scope</a></li><li><a href="#method.compile_with_scope">compile_with_scope</a></li><li><a href="#method.const_empty_string">const_empty_string</a></li><li><a href="#method.consume">consume</a></li><li><a href="#method.consume_ast">consume_ast</a></li><li><a href="#method.consume_ast_with_scope">consume_ast_with_scope</a></li><li><a href="#method.consume_with_scope">consume_with_scope</a></li><li><a href="#method.default_tag">default_tag</a></li><li><a href="#method.default_tag_mut">default_tag_mut</a></li><li><a href="#method.disable_symbol">disable_symbol</a></li><li><a href="#method.eval">eval</a></li><li><a href="#method.eval_ast">eval_ast</a></li><li><a href="#method.eval_ast_with_scope">eval_ast_with_scope</a></li><li><a href="#method.eval_expression">eval_expression</a></li><li><a href="#method.eval_expression_with_scope">eval_expression_with_scope</a></li><li><a href="#method.eval_with_scope">eval_with_scope</a></li><li><a href="#method.fail_on_invalid_map_property">fail_on_invalid_map_property</a></li><li><a href="#method.fast_operators">fast_operators</a></li><li><a href="#method.is_symbol_disabled">is_symbol_disabled</a></li><li><a href="#method.map_type_name">map_type_name</a></li><li><a href="#method.max_array_size">max_array_size</a></li><li><a href="#method.max_call_levels">max_call_levels</a></li><li><a href="#method.max_expr_depth">max_expr_depth</a></li><li><a href="#method.max_function_expr_depth">max_function_expr_depth</a></li><li><a href="#method.max_map_size">max_map_size</a></li><li><a href="#method.max_modules">max_modules</a></li><li><a href="#method.max_operations">max_operations</a></li><li><a href="#method.max_string_size">max_string_size</a></li><li><a href="#method.new">new</a></li><li><a href="#method.new_raw">new_raw</a></li><li><a href="#method.on_debug">on_debug</a></li><li><a href="#method.on_def_var">on_def_var</a></li><li><a href="#method.on_print">on_print</a></li><li><a href="#method.on_var">on_var</a></li><li><a href="#method.parse_json">parse_json</a></li><li><a href="#method.register_custom_operator">register_custom_operator</a></li><li><a href="#method.register_custom_syntax">register_custom_syntax</a></li><li><a href="#method.register_custom_syntax_raw">register_custom_syntax_raw</a></li><li><a href="#method.register_custom_syntax_with_state_raw">register_custom_syntax_with_state_raw</a></li><li><a href="#method.register_fn">register_fn</a></li><li><a href="#method.register_get">register_get</a></li><li><a href="#method.register_get_result">register_get_result</a></li><li><a href="#method.register_get_set">register_get_set</a></li><li><a href="#method.register_global_module">register_global_module</a></li><li><a href="#method.register_indexer_get">register_indexer_get</a></li><li><a href="#method.register_indexer_get_result">register_indexer_get_result</a></li><li><a href="#method.register_indexer_get_set">register_indexer_get_set</a></li><li><a href="#method.register_indexer_set">register_indexer_set</a></li><li><a href="#method.register_indexer_set_result">register_indexer_set_result</a></li><li><a href="#method.register_iterator">register_iterator</a></li><li><a href="#method.register_iterator_result">register_iterator_result</a></li><li><a href="#method.register_raw_fn">register_raw_fn</a></li><li><a href="#method.register_result_fn">register_result_fn</a></li><li><a href="#method.register_set">register_set</a></li><li><a href="#method.register_set_result">register_set_result</a></li><li><a href="#method.register_type">register_type</a></li><li><a href="#method.register_type_with_name">register_type_with_name</a></li><li><a href="#method.register_type_with_name_raw">register_type_with_name_raw</a></li><li><a href="#method.run">run</a></li><li><a href="#method.run_ast">run_ast</a></li><li><a href="#method.run_ast_with_scope">run_ast_with_scope</a></li><li><a href="#method.run_with_scope">run_with_scope</a></li><li><a href="#method.set_allow_if_expression">set_allow_if_expression</a></li><li><a href="#method.set_allow_loop_expressions">set_allow_loop_expressions</a></li><li><a href="#method.set_allow_looping">set_allow_looping</a></li><li><a href="#method.set_allow_shadowing">set_allow_shadowing</a></li><li><a href="#method.set_allow_statement_expression">set_allow_statement_expression</a></li><li><a href="#method.set_allow_switch_expression">set_allow_switch_expression</a></li><li><a href="#method.set_default_tag">set_default_tag</a></li><li><a href="#method.set_fail_on_invalid_map_property">set_fail_on_invalid_map_property</a></li><li><a href="#method.set_fast_operators">set_fast_operators</a></li><li><a href="#method.set_strict_variables">set_strict_variables</a></li><li><a href="#method.strict_variables">strict_variables</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block"><li><a href="#impl-Debug-for-Engine">Debug</a></li><li><a href="#impl-Default-for-Engine">Default</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block"><li><a href="#impl-RefUnwindSafe-for-Engine">!RefUnwindSafe</a></li><li><a href="#impl-Send-for-Engine">Send</a></li><li><a href="#impl-Sync-for-Engine">Sync</a></li><li><a href="#impl-Unpin-for-Engine">Unpin</a></li><li><a href="#impl-UnwindSafe-for-Engine">!UnwindSafe</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block"><li><a href="#impl-Any-for-Engine">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-Engine">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-Engine">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-From%3CT%3E-for-Engine">From&lt;T&gt;</a></li><li><a href="#impl-Into%3CU%3E-for-Engine">Into&lt;U&gt;</a></li><li><a href="#impl-TryFrom%3CU%3E-for-Engine">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-Engine">TryInto&lt;U&gt;</a></li></ul></section><h2><a href="index.html">In rhai::plugin</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Struct <a href="../index.html">rhai</a>::<wbr><a href="index.html">plugin</a>::<wbr><a class="struct" href="#">Engine</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/rhai/engine.rs.html#95-153">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust struct"><code>pub struct Engine { /* private fields */ }</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Rhai main scripting engine.</p>
+<h2 id="thread-safety"><a href="#thread-safety">Thread Safety</a></h2>
+<p><a href="struct.Engine.html" title="Engine"><code>Engine</code></a> is re-entrant.</p>
+<p>Currently, <a href="struct.Engine.html" title="Engine"><code>Engine</code></a> is neither [<code>Send</code>] nor [<code>Sync</code>].
+Use the <code>sync</code> feature to make it [<code>Send</code>] <code>+</code> [<code>Sync</code>].</p>
+<h2 id="example"><a href="#example">Example</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="kw">let </span>result = engine.eval::&lt;i64&gt;(<span class="string">&quot;40 + 2&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="macro">println!</span>(<span class="string">&quot;Answer: {result}&quot;</span>);   <span class="comment">// prints 42</span></code></pre></div>
+</div></details><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><div id="implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/eval.rs.html#18-275">source</a><a href="#impl-Engine" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.eval" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/eval.rs.html#34-36">source</a><h4 class="code-header">pub fn <a href="#method.eval" class="fnname">eval</a>&lt;T:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: &amp;str<br>) -&gt; Result&lt;T, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate a string as a script, returning the result value or an error.</p>
+<h5 id="example-1"><a href="#example-1">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="macro">assert_eq!</span>(engine.eval::&lt;i64&gt;(<span class="string">&quot;40 + 2&quot;</span>)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.eval_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/eval.rs.html#67-78">source</a><h4 class="code-header">pub fn <a href="#method.eval_with_scope" class="fnname">eval_with_scope</a>&lt;T:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;mut <a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: &amp;str<br>) -&gt; Result&lt;T, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate a string as a script with own scope, returning the result value or an error.</p>
+<h6 id="constants-propagation"><a href="#constants-propagation">Constants Propagation</a></h6>
+<p>If not [<code>OptimizationLevel::None</code>][crate::OptimizationLevel::None], constants defined within
+the scope are propagated throughout the script <em>including</em> functions.</p>
+<p>This allows functions to be optimized based on dynamic global constants.</p>
+<h5 id="example-2"><a href="#example-2">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Engine, Scope};
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="comment">// Create initialized scope
+</span><span class="kw">let </span><span class="kw-2">mut </span>scope = Scope::new();
+scope.push(<span class="string">&quot;x&quot;</span>, <span class="number">40_i64</span>);
+
+<span class="macro">assert_eq!</span>(engine.eval_with_scope::&lt;i64&gt;(<span class="kw-2">&amp;mut </span>scope, <span class="string">&quot;x += 2; x&quot;</span>)<span class="question-mark">?</span>, <span class="number">42</span>);
+<span class="macro">assert_eq!</span>(engine.eval_with_scope::&lt;i64&gt;(<span class="kw-2">&amp;mut </span>scope, <span class="string">&quot;x += 2; x&quot;</span>)<span class="question-mark">?</span>, <span class="number">44</span>);
+
+<span class="comment">// The variable in the scope is modified
+</span><span class="macro">assert_eq!</span>(scope.get_value::&lt;i64&gt;(<span class="string">&quot;x&quot;</span>).expect(<span class="string">&quot;variable x should exist&quot;</span>), <span class="number">44</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.eval_expression" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/eval.rs.html#94-96">source</a><h4 class="code-header">pub fn <a href="#method.eval_expression" class="fnname">eval_expression</a>&lt;T:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: &amp;str<br>) -&gt; Result&lt;T, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate a string containing an expression, returning the result value or an error.</p>
+<h5 id="example-3"><a href="#example-3">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="macro">assert_eq!</span>(engine.eval_expression::&lt;i64&gt;(<span class="string">&quot;40 + 2&quot;</span>)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.eval_expression_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/eval.rs.html#116-150">source</a><h4 class="code-header">pub fn <a href="#method.eval_expression_with_scope" class="fnname">eval_expression_with_scope</a>&lt;T:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;mut <a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: &amp;str<br>) -&gt; Result&lt;T, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate a string containing an expression with own scope, returning the result value or an error.</p>
+<h5 id="example-4"><a href="#example-4">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Engine, Scope};
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="comment">// Create initialized scope
+</span><span class="kw">let </span><span class="kw-2">mut </span>scope = Scope::new();
+scope.push(<span class="string">&quot;x&quot;</span>, <span class="number">40_i64</span>);
+
+<span class="macro">assert_eq!</span>(engine.eval_expression_with_scope::&lt;i64&gt;(<span class="kw-2">&amp;mut </span>scope, <span class="string">&quot;x + 2&quot;</span>)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.eval_ast" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/eval.rs.html#170-172">source</a><h4 class="code-header">pub fn <a href="#method.eval_ast" class="fnname">eval_ast</a>&lt;T:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;ast: &amp;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a><br>) -&gt; Result&lt;T, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate an <a href="../struct.AST.html" title="AST"><code>AST</code></a>, returning the result value or an error.</p>
+<h5 id="example-5"><a href="#example-5">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="comment">// Compile a script to an AST and store it for later evaluation
+</span><span class="kw">let </span>ast = engine.compile(<span class="string">&quot;40 + 2&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Evaluate it
+</span><span class="macro">assert_eq!</span>(engine.eval_ast::&lt;i64&gt;(<span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.eval_ast_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/eval.rs.html#200-228">source</a><h4 class="code-header">pub fn <a href="#method.eval_ast_with_scope" class="fnname">eval_ast_with_scope</a>&lt;T:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;mut <a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;ast: &amp;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a><br>) -&gt; Result&lt;T, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate an <a href="../struct.AST.html" title="AST"><code>AST</code></a> with own scope, returning the result value or an error.</p>
+<h5 id="example-6"><a href="#example-6">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Engine, Scope};
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="comment">// Create initialized scope
+</span><span class="kw">let </span><span class="kw-2">mut </span>scope = Scope::new();
+scope.push(<span class="string">&quot;x&quot;</span>, <span class="number">40_i64</span>);
+
+<span class="comment">// Compile a script to an AST and store it for later evaluation
+</span><span class="kw">let </span>ast = engine.compile(<span class="string">&quot;x += 2; x&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Evaluate it
+</span><span class="macro">assert_eq!</span>(engine.eval_ast_with_scope::&lt;i64&gt;(<span class="kw-2">&amp;mut </span>scope, <span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>, <span class="number">42</span>);
+<span class="macro">assert_eq!</span>(engine.eval_ast_with_scope::&lt;i64&gt;(<span class="kw-2">&amp;mut </span>scope, <span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>, <span class="number">44</span>);
+
+<span class="comment">// The variable in the scope is modified
+</span><span class="macro">assert_eq!</span>(scope.get_value::&lt;i64&gt;(<span class="string">&quot;x&quot;</span>).expect(<span class="string">&quot;variable x should exist&quot;</span>), <span class="number">44</span>);</code></pre></div>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-1" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/run.rs.html#11-151">source</a><a href="#impl-Engine-1" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.run" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/run.rs.html#27-29">source</a><h4 class="code-header">pub fn <a href="#method.run" class="fnname">run</a>(&amp;self, script: &amp;str) -&gt; Result&lt;(), Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate a string as a script.</p>
+<h5 id="example-7"><a href="#example-7">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>engine = Engine::new();
+
+engine.run(<span class="string">&quot;print(40 + 2);&quot;</span>)<span class="question-mark">?</span>;</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.run_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/run.rs.html#59-78">source</a><h4 class="code-header">pub fn <a href="#method.run_with_scope" class="fnname">run_with_scope</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;mut <a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: &amp;str<br>) -&gt; Result&lt;(), Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate a string as a script with own scope.</p>
+<h6 id="constants-propagation-1"><a href="#constants-propagation-1">Constants Propagation</a></h6>
+<p>If not [<code>OptimizationLevel::None</code>][crate::OptimizationLevel::None], constants defined within
+the scope are propagated throughout the script <em>including</em> functions.</p>
+<p>This allows functions to be optimized based on dynamic global constants.</p>
+<h5 id="example-8"><a href="#example-8">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Engine, Scope};
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="comment">// Create initialized scope
+</span><span class="kw">let </span><span class="kw-2">mut </span>scope = Scope::new();
+scope.push(<span class="string">&quot;x&quot;</span>, <span class="number">40_i64</span>);
+
+engine.run_with_scope(<span class="kw-2">&amp;mut </span>scope, <span class="string">&quot;x += 2; print(x);&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// The variable in the scope is modified
+</span><span class="macro">assert_eq!</span>(scope.get_value::&lt;i64&gt;(<span class="string">&quot;x&quot;</span>).expect(<span class="string">&quot;variable x should exist&quot;</span>), <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.run_ast" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/run.rs.html#98-100">source</a><h4 class="code-header">pub fn <a href="#method.run_ast" class="fnname">run_ast</a>(&amp;self, ast: &amp;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a>) -&gt; Result&lt;(), Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate an <a href="../struct.AST.html" title="AST"><code>AST</code></a>.</p>
+<h5 id="example-9"><a href="#example-9">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="comment">// Compile a script to an AST and store it for later evaluation
+</span><span class="kw">let </span>ast = engine.compile(<span class="string">&quot;print(40 + 2);&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Evaluate it
+</span>engine.run_ast(<span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>;</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.run_ast_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/run.rs.html#127-150">source</a><h4 class="code-header">pub fn <a href="#method.run_ast_with_scope" class="fnname">run_ast_with_scope</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;mut <a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;ast: &amp;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a><br>) -&gt; Result&lt;(), Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Evaluate an <a href="../struct.AST.html" title="AST"><code>AST</code></a> with own scope.</p>
+<h5 id="example-10"><a href="#example-10">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Engine, Scope};
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="comment">// Create initialized scope
+</span><span class="kw">let </span><span class="kw-2">mut </span>scope = Scope::new();
+scope.push(<span class="string">&quot;x&quot;</span>, <span class="number">40_i64</span>);
+
+<span class="comment">// Compile a script to an AST and store it for later evaluation
+</span><span class="kw">let </span>ast = engine.compile(<span class="string">&quot;x += 2; x&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Evaluate it
+</span>engine.run_ast_with_scope(<span class="kw-2">&amp;mut </span>scope, <span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>;
+
+<span class="comment">// The variable in the scope is modified
+</span><span class="macro">assert_eq!</span>(scope.get_value::&lt;i64&gt;(<span class="string">&quot;x&quot;</span>).expect(<span class="string">&quot;variable x should exist&quot;</span>), <span class="number">42</span>);</code></pre></div>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-2" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/compile.rs.html#10-322">source</a><a href="#impl-Engine-2" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.compile" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/compile.rs.html#31-33">source</a><h4 class="code-header">pub fn <a href="#method.compile" class="fnname">compile</a>(&amp;self, script: impl AsRef&lt;str&gt;) -&gt; Result&lt;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a>, <a class="struct" href="../struct.ParseError.html" title="struct rhai::ParseError">ParseError</a>&gt;</h4></section></summary><div class="docblock"><p>Compile a string into an <a href="../struct.AST.html" title="AST"><code>AST</code></a>, which can be used later for evaluation.</p>
+<h5 id="example-11"><a href="#example-11">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="comment">// Compile a script to an AST and store it for later evaluation
+</span><span class="kw">let </span>ast = engine.compile(<span class="string">&quot;40 + 2&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="kw">for _ in </span><span class="number">0</span>..<span class="number">42 </span>{
+    <span class="macro">assert_eq!</span>(engine.eval_ast::&lt;i64&gt;(<span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>, <span class="number">42</span>);
+}</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.compile_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/compile.rs.html#72-74">source</a><h4 class="code-header">pub fn <a href="#method.compile_with_scope" class="fnname">compile_with_scope</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;<a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: impl AsRef&lt;str&gt;<br>) -&gt; Result&lt;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a>, <a class="struct" href="../struct.ParseError.html" title="struct rhai::ParseError">ParseError</a>&gt;</h4></section></summary><div class="docblock"><p>Compile a string into an <a href="../struct.AST.html" title="AST"><code>AST</code></a> using own scope, which can be used later for evaluation.</p>
+<h6 id="constants-propagation-2"><a href="#constants-propagation-2">Constants Propagation</a></h6>
+<p>If not [<code>OptimizationLevel::None</code>][crate::OptimizationLevel::None], constants defined within
+the scope are propagated throughout the script <em>including</em> functions. This allows functions
+to be optimized based on dynamic global constants.</p>
+<h5 id="example-12"><a href="#example-12">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Engine, Scope, OptimizationLevel};
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Create initialized scope
+</span><span class="kw">let </span><span class="kw-2">mut </span>scope = Scope::new();
+scope.push_constant(<span class="string">&quot;x&quot;</span>, <span class="number">42_i64</span>);   <span class="comment">// &#39;x&#39; is a constant
+
+// Compile a script to an AST and store it for later evaluation.
+// Notice that `Full` optimization is on, so constants are folded
+// into function calls and operators.
+</span><span class="kw">let </span>ast = engine.compile_with_scope(<span class="kw-2">&amp;mut </span>scope,
+            <span class="string">&quot;if x &gt; 40 { x } else { 0 }&quot;    </span><span class="comment">// all &#39;x&#39; are replaced with 42
+</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Normally this would have failed because no scope is passed into the &#39;eval_ast&#39;
+// call and so the variable &#39;x&#39; does not exist.  Here, it passes because the script
+// has been optimized and all references to &#39;x&#39; are already gone.
+</span><span class="macro">assert_eq!</span>(engine.eval_ast::&lt;i64&gt;(<span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.compile_scripts_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/compile.rs.html#201-211">source</a><h4 class="code-header">pub fn <a href="#method.compile_scripts_with_scope" class="fnname">compile_scripts_with_scope</a>&lt;S:&nbsp;AsRef&lt;str&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;<a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;scripts: impl AsRef&lt;[S]&gt;<br>) -&gt; Result&lt;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a>, <a class="struct" href="../struct.ParseError.html" title="struct rhai::ParseError">ParseError</a>&gt;</h4></section></summary><div class="docblock"><p>When passed a list of strings, first join the strings into one large script, and then
+compile them into an <a href="../struct.AST.html" title="AST"><code>AST</code></a> using own scope, which can be used later for evaluation.</p>
+<p>The scope is useful for passing constants into the script for optimization when using
+[<code>OptimizationLevel::Full</code>][crate::OptimizationLevel::Full].</p>
+<h6 id="note"><a href="#note">Note</a></h6>
+<p>All strings are simply parsed one after another with nothing inserted in between, not even a
+newline or space.</p>
+<h6 id="constants-propagation-3"><a href="#constants-propagation-3">Constants Propagation</a></h6>
+<p>If not [<code>OptimizationLevel::None</code>][crate::OptimizationLevel::None], constants defined within
+the scope are propagated throughout the script <em>including</em> functions. This allows functions
+to be optimized based on dynamic global constants.</p>
+<h5 id="example-13"><a href="#example-13">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Engine, Scope, OptimizationLevel};
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Create initialized scope
+</span><span class="kw">let </span><span class="kw-2">mut </span>scope = Scope::new();
+scope.push_constant(<span class="string">&quot;x&quot;</span>, <span class="number">42_i64</span>);   <span class="comment">// &#39;x&#39; is a constant
+
+// Compile a script made up of script segments to an AST and store it for later evaluation.
+// Notice that `Full` optimization is on, so constants are folded
+// into function calls and operators.
+</span><span class="kw">let </span>ast = engine.compile_scripts_with_scope(<span class="kw-2">&amp;mut </span>scope, <span class="kw-2">&amp;</span>[
+            <span class="string">&quot;if x &gt; 40&quot;</span>,            <span class="comment">// all &#39;x&#39; are replaced with 42
+            </span><span class="string">&quot;{ x } el&quot;</span>,
+            <span class="string">&quot;se { 0 }&quot;              </span><span class="comment">// segments do not need to be valid scripts!
+</span>])<span class="question-mark">?</span>;
+
+<span class="comment">// Normally this would have failed because no scope is passed into the &#39;eval_ast&#39;
+// call and so the variable &#39;x&#39; does not exist.  Here, it passes because the script
+// has been optimized and all references to &#39;x&#39; are already gone.
+</span><span class="macro">assert_eq!</span>(engine.eval_ast::&lt;i64&gt;(<span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.compile_expression" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/compile.rs.html#265-267">source</a><h4 class="code-header">pub fn <a href="#method.compile_expression" class="fnname">compile_expression</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: impl AsRef&lt;str&gt;<br>) -&gt; Result&lt;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a>, <a class="struct" href="../struct.ParseError.html" title="struct rhai::ParseError">ParseError</a>&gt;</h4></section></summary><div class="docblock"><p>Compile a string containing an expression into an <a href="../struct.AST.html" title="AST"><code>AST</code></a>,
+which can be used later for evaluation.</p>
+<h5 id="example-14"><a href="#example-14">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="comment">// Compile a script to an AST and store it for later evaluation
+</span><span class="kw">let </span>ast = engine.compile_expression(<span class="string">&quot;40 + 2&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="kw">for _ in </span><span class="number">0</span>..<span class="number">42 </span>{
+    <span class="macro">assert_eq!</span>(engine.eval_ast::&lt;i64&gt;(<span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>, <span class="number">42</span>);
+}</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.compile_expression_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/compile.rs.html#301-321">source</a><h4 class="code-header">pub fn <a href="#method.compile_expression_with_scope" class="fnname">compile_expression_with_scope</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;<a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: impl AsRef&lt;str&gt;<br>) -&gt; Result&lt;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a>, <a class="struct" href="../struct.ParseError.html" title="struct rhai::ParseError">ParseError</a>&gt;</h4></section></summary><div class="docblock"><p>Compile a string containing an expression into an <a href="../struct.AST.html" title="AST"><code>AST</code></a> using own scope,
+which can be used later for evaluation.</p>
+<h5 id="example-15"><a href="#example-15">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Engine, Scope, OptimizationLevel};
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Create initialized scope
+</span><span class="kw">let </span><span class="kw-2">mut </span>scope = Scope::new();
+scope.push_constant(<span class="string">&quot;x&quot;</span>, <span class="number">10_i64</span>);   <span class="comment">// &#39;x&#39; is a constant
+
+// Compile a script to an AST and store it for later evaluation.
+// Notice that `Full` optimization is on, so constants are folded
+// into function calls and operators.
+</span><span class="kw">let </span>ast = engine.compile_expression_with_scope(<span class="kw-2">&amp;mut </span>scope,
+            <span class="string">&quot;2 + (x + x) * 2&quot;    </span><span class="comment">// all &#39;x&#39; are replaced with 10
+</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Normally this would have failed because no scope is passed into the &#39;eval_ast&#39;
+// call and so the variable &#39;x&#39; does not exist.  Here, it passes because the script
+// has been optimized and all references to &#39;x&#39; are already gone.
+</span><span class="macro">assert_eq!</span>(engine.eval_ast::&lt;i64&gt;(<span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-3" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/json.rs.html#12-144">source</a><a href="#impl-Engine-3" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.parse_json" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/json.rs.html#63-143">source</a><h4 class="code-header">pub fn <a href="#method.parse_json" class="fnname">parse_json</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;json: impl AsRef&lt;str&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;has_null: bool<br>) -&gt; Result&lt;<a class="type" href="../type.Map.html" title="type rhai::Map">Map</a>, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Parse a JSON string into an <a href="../type.Map.html" title="Map">object map</a>.</p>
+<p>This is a light-weight alternative to using, say, <a href="https://crates.io/crates/serde_json"><code>serde_json</code></a>
+to deserialize the JSON.</p>
+<p>Not available under <code>no_object</code>.</p>
+<p>The JSON string must be an object hash.  It cannot be a simple primitive value.</p>
+<p>Set <code>has_null</code> to <code>true</code> in order to map <code>null</code> values to <code>()</code>.
+Setting it to <code>false</code> causes a syntax error for any <code>null</code> value.</p>
+<p>JSON sub-objects are handled transparently.</p>
+<p>This function can be used together with <a href="../fn.format_map_as_json.html" title="format_map_as_json"><code>format_map_as_json</code></a> to work with JSON texts
+without using the <a href="https://crates.io/crates/serde_json"><code>serde_json</code></a> crate (which is heavy).</p>
+<h5 id="example-16"><a href="#example-16">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Engine, Map};
+
+<span class="kw">let </span>engine = Engine::new();
+
+<span class="kw">let </span>map = engine.parse_json(<span class="string">r#&quot;
+{
+    &quot;a&quot;: 123,
+    &quot;b&quot;: 42,
+    &quot;c&quot;: {
+        &quot;x&quot;: false,
+        &quot;y&quot;: true,
+        &quot;z&quot;: &#39;$&#39;
+    },
+    &quot;d&quot;: null
+}&quot;#</span>, <span class="bool-val">true</span>)<span class="question-mark">?</span>;
+
+<span class="macro">assert_eq!</span>(map.len(), <span class="number">4</span>);
+<span class="macro">assert_eq!</span>(map[<span class="string">&quot;a&quot;</span>].as_int().expect(<span class="string">&quot;a should exist&quot;</span>), <span class="number">123</span>);
+<span class="macro">assert_eq!</span>(map[<span class="string">&quot;b&quot;</span>].as_int().expect(<span class="string">&quot;b should exist&quot;</span>), <span class="number">42</span>);
+<span class="macro">assert_eq!</span>(map[<span class="string">&quot;d&quot;</span>].as_unit().expect(<span class="string">&quot;d should exist&quot;</span>), ());
+
+<span class="kw">let </span>c = map[<span class="string">&quot;c&quot;</span>].read_lock::&lt;Map&gt;().expect(<span class="string">&quot;c should exist&quot;</span>);
+<span class="macro">assert_eq!</span>(c[<span class="string">&quot;x&quot;</span>].as_bool().expect(<span class="string">&quot;x should be bool&quot;</span>), <span class="bool-val">false</span>);
+<span class="macro">assert_eq!</span>(c[<span class="string">&quot;y&quot;</span>].as_bool().expect(<span class="string">&quot;y should be bool&quot;</span>), <span class="bool-val">true</span>);
+<span class="macro">assert_eq!</span>(c[<span class="string">&quot;z&quot;</span>].as_char().expect(<span class="string">&quot;z should be char&quot;</span>), <span class="string">&#39;$&#39;</span>);</code></pre></div>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-4" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#17-809">source</a><a href="#impl-Engine-4" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_fn" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#58-112">source</a><h4 class="code-header">pub fn <a href="#method.register_fn" class="fnname">register_fn</a>&lt;A:&nbsp;'static, const N:&nbsp;usize, const C:&nbsp;bool, R:&nbsp;Variant + Clone, const L:&nbsp;bool, F:&nbsp;<a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;A, N, C, R, L&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: impl AsRef&lt;str&gt; + Into&lt;<a class="struct" href="../../smartstring/struct.SmartString.html" title="struct smartstring::SmartString">SmartString</a>&lt;<a class="struct" href="../../smartstring/config/struct.LazyCompact.html" title="struct smartstring::config::LazyCompact">LazyCompact</a>&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;func: F<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register a custom function with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<h5 id="example-17"><a href="#example-17">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="comment">// Normal function
+</span><span class="kw">fn </span>add(x: i64, y: i64) -&gt; i64 {
+    x + y
+}
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+engine.register_fn(<span class="string">&quot;add&quot;</span>, add);
+
+<span class="macro">assert_eq!</span>(engine.eval::&lt;i64&gt;(<span class="string">&quot;add(40, 2)&quot;</span>)<span class="question-mark">?</span>, <span class="number">42</span>);
+
+<span class="comment">// You can also register a closure.
+</span>engine.register_fn(<span class="string">&quot;sub&quot;</span>, |x: i64, y: i64| x - y );
+
+<span class="macro">assert_eq!</span>(engine.eval::&lt;i64&gt;(<span class="string">&quot;sub(44, 2)&quot;</span>)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_raw_fn" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#132-146">source</a><h4 class="code-header">pub fn <a href="#method.register_raw_fn" class="fnname">register_raw_fn</a>&lt;T:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: impl AsRef&lt;str&gt; + Into&lt;<a class="struct" href="../../smartstring/struct.SmartString.html" title="struct smartstring::SmartString">SmartString</a>&lt;<a class="struct" href="../../smartstring/config/struct.LazyCompact.html" title="struct smartstring::config::LazyCompact">LazyCompact</a>&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;arg_types: impl AsRef&lt;[<a class="struct" href="struct.TypeId.html" title="struct rhai::plugin::TypeId">TypeId</a>]&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;func: impl Fn(<a class="struct" href="struct.NativeCallContext.html" title="struct rhai::plugin::NativeCallContext">NativeCallContext</a>&lt;'_&gt;, &amp;mut [&amp;'_ mut <a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a>]) -&gt; Result&lt;T, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register a function of the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<h5 id="warning---low-level-api"><a href="#warning---low-level-api">WARNING - Low Level API</a></h5>
+<p>This function is very low level.  It takes a list of <a href="struct.TypeId.html" title="std::any::TypeId"><code>TypeId</code></a>’s
+indicating the actual types of the parameters.</p>
+<h5 id="arguments"><a href="#arguments">Arguments</a></h5>
+<p>Arguments are simply passed in as a mutable array of <a href="struct.Dynamic.html" title="crate::Dynamic"><code>&amp;mut Dynamic</code></a>.
+The arguments are guaranteed to be of the correct types matching the <a href="struct.TypeId.html" title="std::any::TypeId"><code>TypeId</code></a>’s.</p>
+<p>To access a primary argument value (i.e. cloning is cheap), use: <code>args[n].as_xxx().unwrap()</code></p>
+<p>To access an argument value and avoid cloning, use <code>args[n].take().cast::&lt;T&gt;()</code>.
+Notice that this will <em>consume</em> the argument, replacing it with <code>()</code>.</p>
+<p>To access the first mutable parameter, use <code>args.get_mut(0).unwrap()</code></p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_type" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#188-190">source</a><h4 class="code-header">pub fn <a href="#method.register_type" class="fnname">register_type</a>&lt;T:&nbsp;Variant + Clone&gt;(&amp;mut self) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register a custom type for use with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.
+The type must implement [<code>Clone</code>].</p>
+<h5 id="example-18"><a href="#example-18">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Debug, Clone, Eq, PartialEq)]
+</span><span class="kw">struct </span>TestStruct {
+    field: i64
+}
+
+<span class="kw">impl </span>TestStruct {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ field: <span class="number">1 </span>}
+    }
+    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, offset: i64) {
+        <span class="self">self</span>.field += offset;
+    }
+}
+
+<span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register API for the custom type.
+</span>engine
+    .register_type::&lt;TestStruct&gt;()
+    .register_fn(<span class="string">&quot;new_ts&quot;</span>, TestStruct::new)
+    <span class="comment">// Use `register_fn` to register methods on the type.
+    </span>.register_fn(<span class="string">&quot;update&quot;</span>, TestStruct::update);
+
+<span class="macro">assert_eq!</span>(
+    engine.eval::&lt;TestStruct&gt;(<span class="string">&quot;let x = new_ts(); x.update(41); x&quot;</span>)<span class="question-mark">?</span>,
+    TestStruct { field: <span class="number">42 </span>}
+);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_type_with_name" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#234-237">source</a><h4 class="code-header">pub fn <a href="#method.register_type_with_name" class="fnname">register_type_with_name</a>&lt;T:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: &amp;str<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register a custom type for use with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>, with a pretty-print name
+for the <code>type_of</code> function. The type must implement [<code>Clone</code>].</p>
+<h5 id="example-19"><a href="#example-19">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>TestStruct {
+    field: i64
+}
+
+<span class="kw">impl </span>TestStruct {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ field: <span class="number">1 </span>}
+    }
+}
+
+<span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register API for the custom type.
+</span>engine
+    .register_type::&lt;TestStruct&gt;()
+    .register_fn(<span class="string">&quot;new_ts&quot;</span>, TestStruct::new);
+
+<span class="macro">assert_eq!</span>(
+    engine.eval::&lt;String&gt;(<span class="string">&quot;let x = new_ts(); type_of(x)&quot;</span>)<span class="question-mark">?</span>,
+    <span class="string">&quot;rust_out::TestStruct&quot;
+</span>);
+
+<span class="comment">// Re-register the custom type with a name.
+</span>engine.register_type_with_name::&lt;TestStruct&gt;(<span class="string">&quot;Hello&quot;</span>);
+
+<span class="macro">assert_eq!</span>(
+    engine.eval::&lt;String&gt;(<span class="string">&quot;let x = new_ts(); type_of(x)&quot;</span>)<span class="question-mark">?</span>,
+    <span class="string">&quot;Hello&quot;
+</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_type_with_name_raw" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#245-254">source</a><h4 class="code-header">pub fn <a href="#method.register_type_with_name_raw" class="fnname">register_type_with_name_raw</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;type_path: impl Into&lt;<a class="struct" href="../../smartstring/struct.SmartString.html" title="struct smartstring::SmartString">SmartString</a>&lt;<a class="struct" href="../../smartstring/config/struct.LazyCompact.html" title="struct smartstring::config::LazyCompact">LazyCompact</a>&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: impl Into&lt;<a class="struct" href="../../smartstring/struct.SmartString.html" title="struct smartstring::SmartString">SmartString</a>&lt;<a class="struct" href="../../smartstring/config/struct.LazyCompact.html" title="struct smartstring::config::LazyCompact">LazyCompact</a>&gt;&gt;<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register a custom type for use with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>, with a pretty-print name
+for the <code>type_of</code> function. The type must implement [<code>Clone</code>].</p>
+<h5 id="warning---low-level-api-1"><a href="#warning---low-level-api-1">WARNING - Low Level API</a></h5>
+<p>This function is low level.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_iterator" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#258-265">source</a><h4 class="code-header">pub fn <a href="#method.register_iterator" class="fnname">register_iterator</a>&lt;T&gt;(&amp;mut self) -&gt; &amp;mut Self<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Variant + Clone + IntoIterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;T as IntoIterator&gt;::Item: Variant + Clone,</span></h4></section></summary><div class="docblock"><p>Register a type iterator for an iterable type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.
+This is an advanced API.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_iterator_result" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#269-276">source</a><h4 class="code-header">pub fn <a href="#method.register_iterator_result" class="fnname">register_iterator_result</a>&lt;T, X&gt;(&amp;mut self) -&gt; &amp;mut Self<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Variant + Clone + IntoIterator&lt;Item = Result&lt;X, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;X: Variant + Clone,</span></h4></section></summary><div class="docblock"><p>Register a fallible type iterator for an iterable type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.
+This is an advanced API.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_get" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#319-325">source</a><h4 class="code-header">pub fn <a href="#method.register_get" class="fnname">register_get</a>&lt;T:&nbsp;Variant + Clone, const C:&nbsp;bool, V:&nbsp;Variant + Clone, const L:&nbsp;bool&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: impl AsRef&lt;str&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;get_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;,), 1, C, V, L&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register a getter function for a member of a registered type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>The function signature must start with <code>&amp;mut self</code> and not <code>&amp;self</code>.</p>
+<p>Not available under <code>no_object</code>.</p>
+<h5 id="example-20"><a href="#example-20">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>TestStruct {
+    field: i64
+}
+
+<span class="kw">impl </span>TestStruct {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ field: <span class="number">1 </span>}
+    }
+    <span class="comment">// Even a getter must start with `&amp;mut self` and not `&amp;self`.
+    </span><span class="kw">fn </span>get_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; i64  {
+        <span class="self">self</span>.field
+    }
+}
+
+<span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register API for the custom type.
+</span>engine
+    .register_type::&lt;TestStruct&gt;()
+    .register_fn(<span class="string">&quot;new_ts&quot;</span>, TestStruct::new)
+    <span class="comment">// Register a getter on a property (notice it doesn&#39;t have to be the same name).
+    </span>.register_get(<span class="string">&quot;xyz&quot;</span>, TestStruct::get_field);
+
+<span class="macro">assert_eq!</span>(engine.eval::&lt;i64&gt;(<span class="string">&quot;let a = new_ts(); a.xyz&quot;</span>)<span class="question-mark">?</span>, <span class="number">1</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_set" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#369-375">source</a><h4 class="code-header">pub fn <a href="#method.register_set" class="fnname">register_set</a>&lt;T:&nbsp;Variant + Clone, const C:&nbsp;bool, V:&nbsp;Variant + Clone, const L:&nbsp;bool&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: impl AsRef&lt;str&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;set_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;, V), 2, C, (), L&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register a setter function for a member of a registered type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>Not available under <code>no_object</code>.</p>
+<h5 id="example-21"><a href="#example-21">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Debug, Clone, Eq, PartialEq)]
+</span><span class="kw">struct </span>TestStruct {
+    field: i64
+}
+
+<span class="kw">impl </span>TestStruct {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ field: <span class="number">1 </span>}
+    }
+    <span class="kw">fn </span>set_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, new_val: i64) {
+        <span class="self">self</span>.field = new_val;
+    }
+}
+
+<span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register API for the custom type.
+</span>engine
+    .register_type::&lt;TestStruct&gt;()
+    .register_fn(<span class="string">&quot;new_ts&quot;</span>, TestStruct::new)
+    <span class="comment">// Register a setter on a property (notice it doesn&#39;t have to be the same name)
+    </span>.register_set(<span class="string">&quot;xyz&quot;</span>, TestStruct::set_field);
+
+<span class="comment">// Notice that, with a getter, there is no way to get the property value
+</span><span class="macro">assert_eq!</span>(
+    engine.eval::&lt;TestStruct&gt;(<span class="string">&quot;let a = new_ts(); a.xyz = 42; a&quot;</span>)<span class="question-mark">?</span>,
+    TestStruct { field: <span class="number">42 </span>}
+);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_get_set" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#423-437">source</a><h4 class="code-header">pub fn <a href="#method.register_get_set" class="fnname">register_get_set</a>&lt;T:&nbsp;Variant + Clone, const C1:&nbsp;bool, const C2:&nbsp;bool, V:&nbsp;Variant + Clone, const L1:&nbsp;bool, const L2:&nbsp;bool&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: impl AsRef&lt;str&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;get_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;,), 1, C1, V, L1&gt; + SendSync + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;set_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;, V), 2, C2, (), L2&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Short-hand for registering both getter and setter functions
+of a registered type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>All function signatures must start with <code>&amp;mut self</code> and not <code>&amp;self</code>.</p>
+<p>Not available under <code>no_object</code>.</p>
+<h5 id="example-22"><a href="#example-22">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>TestStruct {
+    field: i64
+}
+
+<span class="kw">impl </span>TestStruct {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ field: <span class="number">1 </span>}
+    }
+    <span class="comment">// Even a getter must start with `&amp;mut self` and not `&amp;self`.
+    </span><span class="kw">fn </span>get_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; i64 {
+        <span class="self">self</span>.field
+    }
+    <span class="kw">fn </span>set_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, new_val: i64) {
+        <span class="self">self</span>.field = new_val;
+    }
+}
+
+<span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register API for the custom type.
+</span>engine
+    .register_type::&lt;TestStruct&gt;()
+    .register_fn(<span class="string">&quot;new_ts&quot;</span>, TestStruct::new)
+    <span class="comment">// Register both a getter and a setter on a property
+    // (notice it doesn&#39;t have to be the same name)
+    </span>.register_get_set(<span class="string">&quot;xyz&quot;</span>, TestStruct::get_field, TestStruct::set_field);
+
+<span class="macro">assert_eq!</span>(engine.eval::&lt;i64&gt;(<span class="string">&quot;let a = new_ts(); a.xyz = 42; a.xyz&quot;</span>)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_indexer_get" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#489-518">source</a><h4 class="code-header">pub fn <a href="#method.register_indexer_get" class="fnname">register_indexer_get</a>&lt;T:&nbsp;Variant + Clone, X:&nbsp;Variant + Clone, const C:&nbsp;bool, V:&nbsp;Variant + Clone, const L:&nbsp;bool&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;get_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;, X), 2, C, V, L&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register an index getter for a custom type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>The function signature must start with <code>&amp;mut self</code> and not <code>&amp;self</code>.</p>
+<p>Not available under both <code>no_index</code> and <code>no_object</code>.</p>
+<h5 id="panics"><a href="#panics">Panics</a></h5>
+<p>Panics if the type is <a href="../type.Array.html" title="crate::Array"><code>Array</code></a>, <a href="../type.Map.html" title="crate::Map"><code>Map</code></a>, [<code>String</code>],
+<a href="struct.ImmutableString.html" title="crate::ImmutableString"><code>ImmutableString</code></a>, <code>&amp;str</code> or <a href="../type.INT.html" title="crate::INT"><code>INT</code></a>.
+Indexers for arrays, object maps, strings and integers cannot be registered.</p>
+<h5 id="example-23"><a href="#example-23">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>TestStruct {
+    fields: Vec&lt;i64&gt;
+}
+
+<span class="kw">impl </span>TestStruct {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ fields: <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>] }
+    }
+    <span class="comment">// Even a getter must start with `&amp;mut self` and not `&amp;self`.
+    </span><span class="kw">fn </span>get_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: i64) -&gt; i64 {
+        <span class="self">self</span>.fields[index <span class="kw">as </span>usize]
+    }
+}
+
+<span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register API for the custom type.
+</span>engine.register_type::&lt;TestStruct&gt;();
+
+engine
+    .register_fn(<span class="string">&quot;new_ts&quot;</span>, TestStruct::new)
+    <span class="comment">// Register an indexer.
+    </span>.register_indexer_get(TestStruct::get_field);
+
+<span class="macro">assert_eq!</span>(engine.eval::&lt;i64&gt;(<span class="string">&quot;let a = new_ts(); a[2]&quot;</span>)<span class="question-mark">?</span>, <span class="number">3</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_indexer_set" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#570-599">source</a><h4 class="code-header">pub fn <a href="#method.register_indexer_set" class="fnname">register_indexer_set</a>&lt;T:&nbsp;Variant + Clone, X:&nbsp;Variant + Clone, const C:&nbsp;bool, V:&nbsp;Variant + Clone, const L:&nbsp;bool&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;set_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;, X, V), 3, C, (), L&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register an index setter for a custom type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>Not available under both <code>no_index</code> and <code>no_object</code>.</p>
+<h5 id="panics-1"><a href="#panics-1">Panics</a></h5>
+<p>Panics if the type is <a href="../type.Array.html" title="crate::Array"><code>Array</code></a>, <a href="../type.Map.html" title="crate::Map"><code>Map</code></a>, [<code>String</code>],
+<a href="struct.ImmutableString.html" title="crate::ImmutableString"><code>ImmutableString</code></a>, <code>&amp;str</code> or <a href="../type.INT.html" title="crate::INT"><code>INT</code></a>.
+Indexers for arrays, object maps, strings and integers cannot be registered.</p>
+<h5 id="example-24"><a href="#example-24">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>TestStruct {
+    fields: Vec&lt;i64&gt;
+}
+
+<span class="kw">impl </span>TestStruct {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ fields: <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>] }
+    }
+    <span class="kw">fn </span>set_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: i64, value: i64) {
+        <span class="self">self</span>.fields[index <span class="kw">as </span>usize] = value;
+    }
+}
+
+<span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register API for the custom type.
+</span>engine.register_type::&lt;TestStruct&gt;();
+
+engine
+    .register_fn(<span class="string">&quot;new_ts&quot;</span>, TestStruct::new)
+    <span class="comment">// Register an indexer.
+    </span>.register_indexer_set(TestStruct::set_field);
+
+<span class="kw">let </span>result = engine.eval::&lt;TestStruct&gt;(<span class="string">&quot;let a = new_ts(); a[2] = 42; a&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="macro">assert_eq!</span>(result.fields[<span class="number">2</span>], <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_indexer_get_set" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#652-667">source</a><h4 class="code-header">pub fn <a href="#method.register_indexer_get_set" class="fnname">register_indexer_get_set</a>&lt;T:&nbsp;Variant + Clone, X:&nbsp;Variant + Clone, const C1:&nbsp;bool, const C2:&nbsp;bool, V:&nbsp;Variant + Clone, const L1:&nbsp;bool, const L2:&nbsp;bool&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;get_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;, X), 2, C1, V, L1&gt; + SendSync + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;set_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;, X, V), 3, C2, (), L2&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Short-hand for registering both index getter and setter functions for a custom type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>Not available under both <code>no_index</code> and <code>no_object</code>.</p>
+<h5 id="panics-2"><a href="#panics-2">Panics</a></h5>
+<p>Panics if the type is <a href="../type.Array.html" title="crate::Array"><code>Array</code></a>, <a href="../type.Map.html" title="crate::Map"><code>Map</code></a>, [<code>String</code>],
+<a href="struct.ImmutableString.html" title="crate::ImmutableString"><code>ImmutableString</code></a>, <code>&amp;str</code> or <a href="../type.INT.html" title="crate::INT"><code>INT</code></a>.
+Indexers for arrays, object maps, strings and integers cannot be registered.</p>
+<h5 id="example-25"><a href="#example-25">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Clone)]
+</span><span class="kw">struct </span>TestStruct {
+    fields: Vec&lt;i64&gt;
+}
+
+<span class="kw">impl </span>TestStruct {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ fields: <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>] }
+    }
+    <span class="comment">// Even a getter must start with `&amp;mut self` and not `&amp;self`.
+    </span><span class="kw">fn </span>get_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: i64) -&gt; i64 {
+        <span class="self">self</span>.fields[index <span class="kw">as </span>usize]
+    }
+    <span class="kw">fn </span>set_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: i64, value: i64) {
+        <span class="self">self</span>.fields[index <span class="kw">as </span>usize] = value;
+    }
+}
+
+<span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register API for the custom type.
+</span>engine.register_type::&lt;TestStruct&gt;();
+
+engine
+    .register_fn(<span class="string">&quot;new_ts&quot;</span>, TestStruct::new)
+    <span class="comment">// Register an indexer.
+    </span>.register_indexer_get_set(TestStruct::get_field, TestStruct::set_field);
+
+<span class="macro">assert_eq!</span>(engine.eval::&lt;i64&gt;(<span class="string">&quot;let a = new_ts(); a[2] = 42; a[2]&quot;</span>)<span class="question-mark">?</span>, <span class="number">42</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_global_module" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/register.rs.html#678-686">source</a><h4 class="code-header">pub fn <a href="#method.register_global_module" class="fnname">register_global_module</a>(&amp;mut self, module: <a class="struct" href="../struct.Shared.html" title="struct rhai::Shared">Shared</a>&lt;<a class="struct" href="struct.Module.html" title="struct rhai::plugin::Module">Module</a>&gt;) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register a shared <a href="struct.Module.html" title="Module"><code>Module</code></a> into the global namespace of <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>All functions and type iterators are automatically available to scripts without namespace
+qualifications.</p>
+<p>Sub-modules and variables are <strong>ignored</strong>.</p>
+<p>When searching for functions, modules loaded later are preferred. In other words, loaded
+modules are searched in reverse order.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-5" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#64-209">source</a><a href="#impl-Engine-5" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.allow_if_expression" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#69-71">source</a><h4 class="code-header">pub const fn <a href="#method.allow_if_expression" class="fnname">allow_if_expression</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Is <code>if</code>-expression allowed?
+Default is <code>true</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_allow_if_expression" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#74-77">source</a><h4 class="code-header">pub fn <a href="#method.set_allow_if_expression" class="fnname">set_allow_if_expression</a>(&amp;mut self, enable: bool) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set whether <code>if</code>-expression is allowed.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.allow_switch_expression" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#82-84">source</a><h4 class="code-header">pub const fn <a href="#method.allow_switch_expression" class="fnname">allow_switch_expression</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Is <code>switch</code> expression allowed?
+Default is <code>true</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_allow_switch_expression" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#87-90">source</a><h4 class="code-header">pub fn <a href="#method.set_allow_switch_expression" class="fnname">set_allow_switch_expression</a>(&amp;mut self, enable: bool) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set whether <code>switch</code> expression is allowed.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.allow_loop_expressions" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#95-97">source</a><h4 class="code-header">pub const fn <a href="#method.allow_loop_expressions" class="fnname">allow_loop_expressions</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Are loop expressions allowed?
+Default is <code>true</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_allow_loop_expressions" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#100-103">source</a><h4 class="code-header">pub fn <a href="#method.set_allow_loop_expressions" class="fnname">set_allow_loop_expressions</a>(&amp;mut self, enable: bool) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set whether loop expressions are allowed.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.allow_statement_expression" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#108-110">source</a><h4 class="code-header">pub const fn <a href="#method.allow_statement_expression" class="fnname">allow_statement_expression</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Is statement-expression allowed?
+Default is <code>true</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_allow_statement_expression" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#113-116">source</a><h4 class="code-header">pub fn <a href="#method.set_allow_statement_expression" class="fnname">set_allow_statement_expression</a>(&amp;mut self, enable: bool) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set whether statement-expression is allowed.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.allow_looping" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#140-142">source</a><h4 class="code-header">pub const fn <a href="#method.allow_looping" class="fnname">allow_looping</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Is looping allowed?
+Default is <code>true</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_allow_looping" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#145-148">source</a><h4 class="code-header">pub fn <a href="#method.set_allow_looping" class="fnname">set_allow_looping</a>(&amp;mut self, enable: bool) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set whether looping is allowed.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.allow_shadowing" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#153-155">source</a><h4 class="code-header">pub const fn <a href="#method.allow_shadowing" class="fnname">allow_shadowing</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Is variables shadowing allowed?
+Default is <code>true</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_allow_shadowing" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#158-161">source</a><h4 class="code-header">pub fn <a href="#method.set_allow_shadowing" class="fnname">set_allow_shadowing</a>(&amp;mut self, enable: bool) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set whether variables shadowing is allowed.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.strict_variables" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#166-168">source</a><h4 class="code-header">pub const fn <a href="#method.strict_variables" class="fnname">strict_variables</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Is strict variables mode enabled?
+Default is <code>false</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_strict_variables" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#171-174">source</a><h4 class="code-header">pub fn <a href="#method.set_strict_variables" class="fnname">set_strict_variables</a>(&amp;mut self, enable: bool) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set whether strict variables mode is enabled.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fail_on_invalid_map_property" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#182-185">source</a><h4 class="code-header">pub const fn <a href="#method.fail_on_invalid_map_property" class="fnname">fail_on_invalid_map_property</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Raise error if an object map property does not exist?
+Default is <code>false</code>.</p>
+<p>Not available under <code>no_object</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_fail_on_invalid_map_property" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#191-195">source</a><h4 class="code-header">pub fn <a href="#method.set_fail_on_invalid_map_property" class="fnname">set_fail_on_invalid_map_property</a>(&amp;mut self, enable: bool) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set whether to raise error if an object map property does not exist.</p>
+<p>Not available under <code>no_object</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fast_operators" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#200-202">source</a><h4 class="code-header">pub const fn <a href="#method.fast_operators" class="fnname">fast_operators</a>(&amp;self) -&gt; bool</h4></section></summary><div class="docblock"><p>Is fast operators mode enabled?
+Default is <code>false</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_fast_operators" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/options.rs.html#205-208">source</a><h4 class="code-header">pub fn <a href="#method.set_fast_operators" class="fnname">set_fast_operators</a>(&amp;mut self, enable: bool) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set whether fast operators mode is enabled.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-6" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/limits_unchecked.rs.html#6-71">source</a><a href="#impl-Engine-6" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.max_call_levels" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/limits_unchecked.rs.html#12-14">source</a><h4 class="code-header">pub const fn <a href="#method.max_call_levels" class="fnname">max_call_levels</a>(&amp;self) -&gt; usize</h4></section></summary><div class="docblock"><p>The maximum levels of function calls allowed for a script.</p>
+<p>Always returns [<code>usize::MAX</code>].</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.max_operations" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/limits_unchecked.rs.html#20-22">source</a><h4 class="code-header">pub const fn <a href="#method.max_operations" class="fnname">max_operations</a>(&amp;self) -&gt; u64</h4></section></summary><div class="docblock"><p>The maximum number of operations allowed for a script to run (0 for unlimited).</p>
+<p>Always returns zero.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.max_modules" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/limits_unchecked.rs.html#28-30">source</a><h4 class="code-header">pub const fn <a href="#method.max_modules" class="fnname">max_modules</a>(&amp;self) -&gt; usize</h4></section></summary><div class="docblock"><p>The maximum number of imported <a href="struct.Module.html" title="crate::Module">modules</a> allowed for a script.</p>
+<p>Always returns [<code>usize::MAX</code>].</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.max_expr_depth" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/limits_unchecked.rs.html#36-38">source</a><h4 class="code-header">pub const fn <a href="#method.max_expr_depth" class="fnname">max_expr_depth</a>(&amp;self) -&gt; usize</h4></section></summary><div class="docblock"><p>The depth limit for expressions (0 for unlimited).</p>
+<p>Always returns zero.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.max_function_expr_depth" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/limits_unchecked.rs.html#44-46">source</a><h4 class="code-header">pub const fn <a href="#method.max_function_expr_depth" class="fnname">max_function_expr_depth</a>(&amp;self) -&gt; usize</h4></section></summary><div class="docblock"><p>The depth limit for expressions in functions (0 for unlimited).</p>
+<p>Always returns zero.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.max_string_size" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/limits_unchecked.rs.html#52-54">source</a><h4 class="code-header">pub const fn <a href="#method.max_string_size" class="fnname">max_string_size</a>(&amp;self) -&gt; usize</h4></section></summary><div class="docblock"><p>The maximum length of <a href="struct.ImmutableString.html" title="crate::ImmutableString">strings</a> (0 for unlimited).</p>
+<p>Always returns zero.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.max_array_size" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/limits_unchecked.rs.html#60-62">source</a><h4 class="code-header">pub const fn <a href="#method.max_array_size" class="fnname">max_array_size</a>(&amp;self) -&gt; usize</h4></section></summary><div class="docblock"><p>The maximum length of <a href="../type.Array.html" title="crate::Array">arrays</a> (0 for unlimited).</p>
+<p>Always returns zero.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.max_map_size" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/limits_unchecked.rs.html#68-70">source</a><h4 class="code-header">pub const fn <a href="#method.max_map_size" class="fnname">max_map_size</a>(&amp;self) -&gt; usize</h4></section></summary><div class="docblock"><p>The maximum size of <a href="../type.Map.html" title="crate::Map">object maps</a> (0 for unlimited).</p>
+<p>Always returns zero.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-7" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/events.rs.html#22-369">source</a><a href="#impl-Engine-7" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.on_var" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/events.rs.html#74-82">source</a><h4 class="code-header">pub fn <a href="#method.on_var" class="fnname">on_var</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;callback: impl Fn(&amp;str, usize, <a class="struct" href="../struct.EvalContext.html" title="struct rhai::EvalContext">EvalContext</a>&lt;'_, '_, '_, '_, '_, '_&gt;) -&gt; Result&lt;Option&lt;<a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a>&gt;, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated: This API is NOT deprecated, but it is considered volatile and may change in the future.</span></div></span></summary><div class="docblock"><p>Provide a callback that will be invoked before each variable access.</p>
+<h5 id="warning---unstable-api"><a href="#warning---unstable-api">WARNING - Unstable API</a></h5>
+<p>This API is volatile and may change in the future.</p>
+<h5 id="callback-function-signature"><a href="#callback-function-signature">Callback Function Signature</a></h5>
+<p><code>Fn(name: &amp;str, index: usize, context: EvalContext) -&gt; Result&lt;Option&lt;Dynamic&gt;, Box&lt;EvalAltResult&gt;&gt;</code></p>
+<p>where:</p>
+<ul>
+<li><code>name</code>: name of the variable.</li>
+<li><code>index</code>: an offset from the bottom of the current <a href="../struct.Scope.html" title="crate::Scope"><code>Scope</code></a> that the
+variable is supposed to reside. Offsets start from 1, with 1 meaning the last variable in
+the current <a href="../struct.Scope.html" title="crate::Scope"><code>Scope</code></a>.  Essentially the correct variable is at position
+<code>scope.len() - index</code>. If <code>index</code> is zero, then there is no pre-calculated offset position
+and a search through the current <a href="../struct.Scope.html" title="crate::Scope"><code>Scope</code></a> must be performed.</li>
+<li><code>context</code>: the current <a href="../struct.EvalContext.html" title="EvalContext">evaluation context</a>.</li>
+</ul>
+<h6 id="return-value"><a href="#return-value">Return value</a></h6>
+<ul>
+<li><code>Ok(None)</code>: continue with normal variable access.</li>
+<li><code>Ok(Some(Dynamic))</code>: the variable’s value.</li>
+</ul>
+<h6 id="raising-errors"><a href="#raising-errors">Raising errors</a></h6>
+<p>Return <code>Err(...)</code> if there is an error.</p>
+<h5 id="example-26"><a href="#example-26">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register a variable resolver.
+</span>engine.on_var(|name, <span class="kw">_</span>, <span class="kw">_</span>| {
+    <span class="kw">match </span>name {
+        <span class="string">&quot;MYSTIC_NUMBER&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="number">42_i64</span>.into())),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+    }
+});
+
+engine.eval::&lt;i64&gt;(<span class="string">&quot;MYSTIC_NUMBER&quot;</span>)<span class="question-mark">?</span>;
+</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.on_def_var" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/events.rs.html#136-142">source</a><h4 class="code-header">pub fn <a href="#method.on_def_var" class="fnname">on_def_var</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;callback: impl Fn(bool, <a class="struct" href="../struct.VarDefInfo.html" title="struct rhai::VarDefInfo">VarDefInfo</a>&lt;'_&gt;, <a class="struct" href="../struct.EvalContext.html" title="struct rhai::EvalContext">EvalContext</a>&lt;'_, '_, '_, '_, '_, '_&gt;) -&gt; Result&lt;bool, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated: This API is NOT deprecated, but it is considered volatile and may change in the future.</span></div></span></summary><div class="docblock"><p>Provide a callback that will be invoked before the definition of each variable .</p>
+<h5 id="warning---unstable-api-1"><a href="#warning---unstable-api-1">WARNING - Unstable API</a></h5>
+<p>This API is volatile and may change in the future.</p>
+<h5 id="callback-function-signature-1"><a href="#callback-function-signature-1">Callback Function Signature</a></h5>
+<p><code>Fn(is_runtime: bool, info: VarInfo, context: EvalContext) -&gt; Result&lt;bool, Box&lt;EvalAltResult&gt;&gt;</code></p>
+<p>where:</p>
+<ul>
+<li><code>is_runtime</code>: <code>true</code> if the variable definition event happens during runtime, <code>false</code> if during compilation.</li>
+<li><code>info</code>: information on the variable.</li>
+<li><code>context</code>: the current <a href="../struct.EvalContext.html" title="EvalContext">evaluation context</a>.</li>
+</ul>
+<h6 id="return-value-1"><a href="#return-value-1">Return value</a></h6>
+<ul>
+<li><code>Ok(true)</code>: continue with normal variable definition.</li>
+<li><code>Ok(false)</code>: deny the variable definition with an <a href="enum.EvalAltResult.html#variant.ErrorRuntime" title="crate::EvalAltResult::ErrorRuntime">runtime error</a>.</li>
+</ul>
+<h6 id="raising-errors-1"><a href="#raising-errors-1">Raising errors</a></h6>
+<p>Return <code>Err(...)</code> if there is an error.</p>
+<h5 id="example-27"><a href="#example-27">Example</a></h5>
+<div class="example-wrap should_panic"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register a variable definition filter.
+</span>engine.on_def_var(|<span class="kw">_</span>, info, <span class="kw">_</span>| {
+    <span class="comment">// Disallow defining MYSTIC_NUMBER as a constant
+    </span><span class="kw">if </span>info.name == <span class="string">&quot;MYSTIC_NUMBER&quot; </span>&amp;&amp; info.is_const {
+        <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>)
+    } <span class="kw">else </span>{
+        <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
+    }
+});
+
+<span class="comment">// The following runs fine:
+</span>engine.eval::&lt;i64&gt;(<span class="string">&quot;let MYSTIC_NUMBER = 42;&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// The following will cause an error:
+</span>engine.eval::&lt;i64&gt;(<span class="string">&quot;const MYSTIC_NUMBER = 42;&quot;</span>)<span class="question-mark">?</span>;
+</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.on_print" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/events.rs.html#288-291">source</a><h4 class="code-header">pub fn <a href="#method.on_print" class="fnname">on_print</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;callback: impl Fn(&amp;str) + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Override default action of <code>print</code> (print to stdout using [<code>println!</code>])</p>
+<h5 id="example-28"><a href="#example-28">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>result = Arc::new(RwLock::new(String::new()));
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Override action of &#39;print&#39; function
+</span><span class="kw">let </span>logger = result.clone();
+engine.on_print(<span class="kw">move </span>|s| logger.write().unwrap().push_str(s));
+
+engine.run(<span class="string">&quot;print(40 + 2);&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>result.read().unwrap(), <span class="string">&quot;42&quot;</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.on_debug" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/events.rs.html#335-341">source</a><h4 class="code-header">pub fn <a href="#method.on_debug" class="fnname">on_debug</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;callback: impl Fn(&amp;str, Option&lt;&amp;str&gt;, <a class="struct" href="struct.Position.html" title="struct rhai::plugin::Position">Position</a>) + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Override default action of <code>debug</code> (print to stdout using [<code>println!</code>])</p>
+<h5 id="callback-function-signature-2"><a href="#callback-function-signature-2">Callback Function Signature</a></h5>
+<p>The callback function signature passed takes the following form:</p>
+<p><code>Fn(text: &amp;str, source: Option&lt;&amp;str&gt;, pos: Position)</code></p>
+<p>where:</p>
+<ul>
+<li><code>text</code>: the text to display</li>
+<li><code>source</code>: current source, if any</li>
+<li><a href="struct.Position.html" title="Position"><code>pos</code></a>: location of the <code>debug</code> call</li>
+</ul>
+<h5 id="example-29"><a href="#example-29">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span>result = Arc::new(RwLock::new(String::new()));
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Override action of &#39;print&#39; function
+</span><span class="kw">let </span>logger = result.clone();
+engine.on_debug(<span class="kw">move </span>|s, src, pos| logger.write().unwrap().push_str(
+                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{} @ {:?} &gt; {}&quot;</span>, src.unwrap_or(<span class="string">&quot;unknown&quot;</span>), pos, s)
+               ));
+
+<span class="kw">let </span><span class="kw-2">mut </span>ast = engine.compile(<span class="string">r#&quot;let x = &quot;hello&quot;; debug(x);&quot;#</span>)<span class="question-mark">?</span>;
+ast.set_source(<span class="string">&quot;world&quot;</span>);
+engine.run_ast(<span class="kw-2">&amp;</span>ast)<span class="question-mark">?</span>;
+
+<span class="attribute">#[cfg(not(feature = <span class="string">&quot;no_position&quot;</span>))]
+</span><span class="macro">assert_eq!</span>(<span class="kw-2">*</span>result.read().unwrap(), <span class="string">r#&quot;world @ 1:18 &gt; &quot;hello&quot;&quot;#</span>);
+<span class="attribute">#[cfg(feature = <span class="string">&quot;no_position&quot;</span>)]
+</span><span class="macro">assert_eq!</span>(<span class="kw-2">*</span>result.read().unwrap(), <span class="string">r#&quot;world @ none &gt; &quot;hello&quot;&quot;#</span>);</code></pre></div>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-8" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/formatting.rs.html#192-298">source</a><a href="#impl-Engine-8" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.map_type_name" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/formatting.rs.html#203-219">source</a><h4 class="code-header">pub fn <a href="#method.map_type_name" class="fnname">map_type_name</a>&lt;'a&gt;(&amp;'a self, name: &amp;'a str) -&gt; &amp;'a str</h4></section></summary><div class="docblock"><p>Pretty-print a type name.</p>
+<p>If a type is registered via <a href="struct.Engine.html#method.register_type_with_name" title="Engine::register_type_with_name"><code>register_type_with_name</code></a>,
+the type name provided for the registration will be used.</p>
+<h5 id="panics-3"><a href="#panics-3">Panics</a></h5>
+<p>Panics if the type name is <code>&amp;mut</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.compact_script" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/formatting.rs.html#280-297">source</a><h4 class="code-header">pub fn <a href="#method.compact_script" class="fnname">compact_script</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: impl AsRef&lt;str&gt;<br>) -&gt; Result&lt;String, <a class="struct" href="../struct.ParseError.html" title="struct rhai::ParseError">ParseError</a>&gt;</h4></section></summary><div class="docblock"><p>Compact a script to eliminate insignificant whitespaces and comments.</p>
+<p>This is useful to prepare a script for further compressing.</p>
+<p>The output script is semantically identical to the input script, except smaller in size.</p>
+<p>Unlike other uglifiers and minifiers, this method does not rename variables nor perform any
+optimization on the input script.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-9" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/custom_syntax.rs.html#188-395">source</a><a href="#impl-Engine-9" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_custom_syntax" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/custom_syntax.rs.html#217-340">source</a><h4 class="code-header">pub fn <a href="#method.register_custom_syntax" class="fnname">register_custom_syntax</a>&lt;S:&nbsp;AsRef&lt;str&gt; + Into&lt;<a class="struct" href="../../smartstring/struct.SmartString.html" title="struct smartstring::SmartString">SmartString</a>&lt;<a class="struct" href="../../smartstring/config/struct.LazyCompact.html" title="struct smartstring::config::LazyCompact">LazyCompact</a>&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;symbols: impl AsRef&lt;[S]&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope_may_be_changed: bool,<br>&nbsp;&nbsp;&nbsp;&nbsp;func: impl Fn(&amp;mut <a class="struct" href="../struct.EvalContext.html" title="struct rhai::EvalContext">EvalContext</a>&lt;'_, '_, '_, '_, '_, '_&gt;, &amp;[<a class="struct" href="../struct.Expression.html" title="struct rhai::Expression">Expression</a>&lt;'_&gt;]) -&gt; Result&lt;<a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a>, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt; + SendSync + 'static<br>) -&gt; Result&lt;&amp;mut Self, <a class="struct" href="../struct.ParseError.html" title="struct rhai::ParseError">ParseError</a>&gt;</h4></section></summary><div class="docblock"><p>Register a custom syntax with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>Not available under <code>no_custom_syntax</code>.</p>
+<ul>
+<li><code>symbols</code> holds a slice of strings that define the custom syntax.</li>
+<li><code>scope_may_be_changed</code> specifies variables <em>may</em> be added/removed by this custom syntax.</li>
+<li><code>func</code> is the implementation function.</li>
+</ul>
+<h6 id="note-on-symbols"><a href="#note-on-symbols">Note on <code>symbols</code></a></h6>
+<ul>
+<li>Whitespaces around symbols are stripped.</li>
+<li>Symbols that are all-whitespace or empty are ignored.</li>
+<li>If <code>symbols</code> does not contain at least one valid token, then the custom syntax registration
+is simply ignored.</li>
+</ul>
+<h6 id="note-on-scope_may_be_changed"><a href="#note-on-scope_may_be_changed">Note on <code>scope_may_be_changed</code></a></h6>
+<p>If <code>scope_may_be_changed</code> is <code>true</code>, then <em>size</em> of the current <a href="../struct.Scope.html" title="crate::Scope"><code>Scope</code></a>
+<em>may</em> be modified by this custom syntax.</p>
+<p>Adding new variables and/or removing variables count.</p>
+<p>Simply modifying the values of existing variables does NOT count, as the <em>size</em> of the
+current <a href="../struct.Scope.html" title="crate::Scope"><code>Scope</code></a> is unchanged, so <code>false</code> should be passed.</p>
+<p>Replacing one variable with another (i.e. adding a new variable and removing one variable at
+the same time so that the total <em>size</em> of the <a href="../struct.Scope.html" title="crate::Scope"><code>Scope</code></a> is unchanged) also
+does NOT count, so <code>false</code> should be passed.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_custom_syntax_with_state_raw" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/custom_syntax.rs.html#373-394">source</a><h4 class="code-header">pub fn <a href="#method.register_custom_syntax_with_state_raw" class="fnname">register_custom_syntax_with_state_raw</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;key: impl Into&lt;<a class="struct" href="../../smartstring/struct.SmartString.html" title="struct smartstring::SmartString">SmartString</a>&lt;<a class="struct" href="../../smartstring/config/struct.LazyCompact.html" title="struct smartstring::config::LazyCompact">LazyCompact</a>&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;parse: impl Fn(&amp;[<a class="struct" href="struct.ImmutableString.html" title="struct rhai::plugin::ImmutableString">ImmutableString</a>], &amp;str, &amp;mut <a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a>) -&gt; Result&lt;Option&lt;<a class="struct" href="struct.ImmutableString.html" title="struct rhai::plugin::ImmutableString">ImmutableString</a>&gt;, <a class="struct" href="../struct.ParseError.html" title="struct rhai::ParseError">ParseError</a>&gt; + SendSync + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope_may_be_changed: bool,<br>&nbsp;&nbsp;&nbsp;&nbsp;func: impl Fn(&amp;mut <a class="struct" href="../struct.EvalContext.html" title="struct rhai::EvalContext">EvalContext</a>&lt;'_, '_, '_, '_, '_, '_&gt;, &amp;[<a class="struct" href="../struct.Expression.html" title="struct rhai::Expression">Expression</a>&lt;'_&gt;], &amp;<a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a>) -&gt; Result&lt;<a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a>, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Register a custom syntax with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a> with custom user-defined state.</p>
+<p>Not available under <code>no_custom_syntax</code>.</p>
+<h5 id="warning---low-level-api-2"><a href="#warning---low-level-api-2">WARNING - Low Level API</a></h5>
+<p>This function is very low level.</p>
+<ul>
+<li><code>scope_may_be_changed</code> specifies variables have been added/removed by this custom syntax.</li>
+<li><code>parse</code> is the parsing function.</li>
+<li><code>func</code> is the implementation function.</li>
+</ul>
+<p>All custom keywords used as symbols must be manually registered via <a href="struct.Engine.html#method.register_custom_operator" title="Engine::register_custom_operator"><code>Engine::register_custom_operator</code></a>.
+Otherwise, they won’t be recognized.</p>
+<h5 id="parsing-function-signature"><a href="#parsing-function-signature">Parsing Function Signature</a></h5>
+<p>The parsing function has the following signature:</p>
+<p><code>Fn(symbols: &amp;[ImmutableString], look_ahead: &amp;str, state: &amp;mut Dynamic) -&gt; Result&lt;Option&lt;ImmutableString&gt;, ParseError&gt;</code></p>
+<p>where:</p>
+<ul>
+<li><code>symbols</code>: a slice of symbols that have been parsed so far, possibly containing <code>$expr$</code> and/or <code>$block$</code>;
+<code>$ident$</code> and other literal markers are replaced by the actual text</li>
+<li><code>look_ahead</code>: a string slice containing the next symbol that is about to be read</li>
+<li><code>state</code>: a <a href="struct.Dynamic.html" title="Dynamic"><code>Dynamic</code></a> value that contains a user-defined state</li>
+</ul>
+<h6 id="return-value-2"><a href="#return-value-2">Return value</a></h6>
+<ul>
+<li><code>Ok(None)</code>: parsing complete and there are no more symbols to match.</li>
+<li><code>Ok(Some(symbol))</code>: the next symbol to match, which can also be <code>$expr$</code>, <code>$ident$</code> or <code>$block$</code>.</li>
+<li><code>Err(ParseError)</code>: error that is reflected back to the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>, normally <code>ParseError(ParseErrorType::BadInput(LexError::ImproperSymbol(message)), Position::NONE)</code> to indicate a syntax error, but it can be any <a href="../struct.ParseError.html" title="crate::ParseError"><code>ParseError</code></a>.</li>
+</ul>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-10" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/build_type.rs.html#70-79">source</a><a href="#impl-Engine-10" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.build_type" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/build_type.rs.html#75-78">source</a><h4 class="code-header">pub fn <a href="#method.build_type" class="fnname">build_type</a>&lt;T:&nbsp;<a class="trait" href="../trait.CustomType.html" title="trait rhai::CustomType">CustomType</a>&gt;(&amp;mut self) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Build the API of a custom type for use with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>The custom type must implement <a href="../trait.CustomType.html" title="CustomType"><code>CustomType</code></a>.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-11" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#20-344">source</a><a href="#impl-Engine-11" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.consume" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#69-71">source</a><h4 class="code-header">pub fn <a href="#method.consume" class="fnname">consume</a>(&amp;self, script: &amp;str) -&gt; Result&lt;(), Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.1.0: use <code>run</code> instead</span></div></span></summary><div class="docblock"><p>Evaluate a string, but throw away the result and only return error (if any).
+Useful for when you don’t need the result, but still need to keep track of possible errors.</p>
+<h5 id="deprecated"><a href="#deprecated">Deprecated</a></h5>
+<p>This method is deprecated. Use <a href="struct.Engine.html#method.run" title="Engine::run"><code>run</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.consume_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#83-85">source</a><h4 class="code-header">pub fn <a href="#method.consume_with_scope" class="fnname">consume_with_scope</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;mut <a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;script: &amp;str<br>) -&gt; Result&lt;(), Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.1.0: use <code>run_with_scope</code> instead</span></div></span></summary><div class="docblock"><p>Evaluate a string with own scope, but throw away the result and only return error (if any).
+Useful for when you don’t need the result, but still need to keep track of possible errors.</p>
+<h5 id="deprecated-1"><a href="#deprecated-1">Deprecated</a></h5>
+<p>This method is deprecated. Use <a href="struct.Engine.html#method.run_with_scope" title="Engine::run_with_scope"><code>run_with_scope</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.consume_ast" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#97-99">source</a><h4 class="code-header">pub fn <a href="#method.consume_ast" class="fnname">consume_ast</a>(&amp;self, ast: &amp;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a>) -&gt; Result&lt;(), Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.1.0: use <code>run_ast</code> instead</span></div></span></summary><div class="docblock"><p>Evaluate an <a href="../struct.AST.html" title="AST"><code>AST</code></a>, but throw away the result and only return error (if any).
+Useful for when you don’t need the result, but still need to keep track of possible errors.</p>
+<h5 id="deprecated-2"><a href="#deprecated-2">Deprecated</a></h5>
+<p>This method is deprecated. Use <a href="struct.Engine.html#method.run_ast" title="Engine::run_ast"><code>run_ast</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.consume_ast_with_scope" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#111-113">source</a><h4 class="code-header">pub fn <a href="#method.consume_ast_with_scope" class="fnname">consume_ast_with_scope</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope: &amp;mut <a class="struct" href="../struct.Scope.html" title="struct rhai::Scope">Scope</a>&lt;'_&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;ast: &amp;<a class="struct" href="../struct.AST.html" title="struct rhai::AST">AST</a><br>) -&gt; Result&lt;(), Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt;</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.1.0: use <code>run_ast_with_scope</code> instead</span></div></span></summary><div class="docblock"><p>Evaluate an <a href="../struct.AST.html" title="AST"><code>AST</code></a> with own scope, but throw away the result and only return error (if any).
+Useful for when you don’t need the result, but still need to keep track of possible errors.</p>
+<h5 id="deprecated-3"><a href="#deprecated-3">Deprecated</a></h5>
+<p>This method is deprecated. Use <a href="struct.Engine.html#method.run_ast_with_scope" title="Engine::run_ast_with_scope"><code>run_ast_with_scope</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_result_fn" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#191-197">source</a><h4 class="code-header">pub fn <a href="#method.register_result_fn" class="fnname">register_result_fn</a>&lt;A:&nbsp;'static, const N:&nbsp;usize, const C:&nbsp;bool, R:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: impl AsRef&lt;str&gt; + Into&lt;<a class="struct" href="../../smartstring/struct.SmartString.html" title="struct smartstring::SmartString">SmartString</a>&lt;<a class="struct" href="../../smartstring/config/struct.LazyCompact.html" title="struct smartstring::config::LazyCompact">LazyCompact</a>&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;func: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;A, N, C, R, true&gt;<br>) -&gt; &amp;mut Self</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.9.1: use <code>register_fn</code> instead</span></div></span></summary><div class="docblock"><p>Register a custom fallible function with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<h5 id="deprecated-4"><a href="#deprecated-4">Deprecated</a></h5>
+<p>This method is deprecated. Use <a href="struct.Engine.html#method.register_fn" title="Engine::register_fn"><code>register_fn</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_get_result" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#212-218">source</a><h4 class="code-header">pub fn <a href="#method.register_get_result" class="fnname">register_get_result</a>&lt;T:&nbsp;Variant + Clone, const C:&nbsp;bool, V:&nbsp;Variant + Clone&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: impl AsRef&lt;str&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;get_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;,), 1, C, V, true&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.9.1: use <code>register_get</code> instead</span></div></span></summary><div class="docblock"><p>Register a getter function for a member of a registered type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>The function signature must start with <code>&amp;mut self</code> and not <code>&amp;self</code>.</p>
+<p>Not available under <code>no_object</code>.</p>
+<h5 id="deprecated-5"><a href="#deprecated-5">Deprecated</a></h5>
+<p>This method is deprecated. Use <a href="struct.Engine.html#method.register_get" title="Engine::register_get"><code>register_get</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_set_result" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#231-239">source</a><h4 class="code-header">pub fn <a href="#method.register_set_result" class="fnname">register_set_result</a>&lt;T:&nbsp;Variant + Clone, V:&nbsp;Variant + Clone, const C:&nbsp;bool, S&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: impl AsRef&lt;str&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;set_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;, V), 2, C, (), true&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.9.1: use <code>register_set</code> instead</span></div></span></summary><div class="docblock"><p>Register a setter function for a member of a registered type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>Not available under <code>no_object</code>.</p>
+<h5 id="deprecated-6"><a href="#deprecated-6">Deprecated</a></h5>
+<p>This method is deprecated. Use <a href="struct.Engine.html#method.register_set" title="Engine::register_set"><code>register_set</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_indexer_get_result" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#254-266">source</a><h4 class="code-header">pub fn <a href="#method.register_indexer_get_result" class="fnname">register_indexer_get_result</a>&lt;T:&nbsp;Variant + Clone, X:&nbsp;Variant + Clone, V:&nbsp;Variant + Clone, const C:&nbsp;bool&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;get_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;, X), 2, C, V, true&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.9.1: use <code>register_indexer_get</code> instead</span></div></span></summary><div class="docblock"><p>Register an index getter for a custom type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>The function signature must start with <code>&amp;mut self</code> and not <code>&amp;self</code>.</p>
+<p>Not available under both <code>no_index</code> and <code>no_object</code>.</p>
+<h5 id="deprecated-7"><a href="#deprecated-7">Deprecated</a></h5>
+<p>This method is deprecated. Use <a href="struct.Engine.html#method.register_indexer_get" title="Engine::register_indexer_get"><code>register_indexer_get</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_indexer_set_result" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#279-291">source</a><h4 class="code-header">pub fn <a href="#method.register_indexer_set_result" class="fnname">register_indexer_set_result</a>&lt;T:&nbsp;Variant + Clone, X:&nbsp;Variant + Clone, V:&nbsp;Variant + Clone, const C:&nbsp;bool&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;set_fn: impl <a class="trait" href="../trait.RegisterNativeFunction.html" title="trait rhai::RegisterNativeFunction">RegisterNativeFunction</a>&lt;(Mut&lt;T&gt;, X, V), 3, C, (), true&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.9.1: use <code>register_indexer_set</code> instead</span></div></span></summary><div class="docblock"><p>Register an index setter for a custom type with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>Not available under both <code>no_index</code> and <code>no_object</code>.</p>
+<h5 id="deprecated-8"><a href="#deprecated-8">Deprecated</a></h5>
+<p>This method is deprecated. Use <a href="struct.Engine.html#method.register_indexer_set" title="Engine::register_indexer_set"><code>register_indexer_set</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_custom_syntax_raw" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/deprecated.rs.html#308-325">source</a><h4 class="code-header">pub fn <a href="#method.register_custom_syntax_raw" class="fnname">register_custom_syntax_raw</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;key: impl Into&lt;<a class="struct" href="../../smartstring/struct.SmartString.html" title="struct smartstring::SmartString">SmartString</a>&lt;<a class="struct" href="../../smartstring/config/struct.LazyCompact.html" title="struct smartstring::config::LazyCompact">LazyCompact</a>&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;parse: impl Fn(&amp;[<a class="struct" href="struct.ImmutableString.html" title="struct rhai::plugin::ImmutableString">ImmutableString</a>], &amp;str) -&gt; Result&lt;Option&lt;<a class="struct" href="struct.ImmutableString.html" title="struct rhai::plugin::ImmutableString">ImmutableString</a>&gt;, <a class="struct" href="../struct.ParseError.html" title="struct rhai::ParseError">ParseError</a>&gt; + SendSync + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;scope_may_be_changed: bool,<br>&nbsp;&nbsp;&nbsp;&nbsp;func: impl Fn(&amp;mut <a class="struct" href="../struct.EvalContext.html" title="struct rhai::EvalContext">EvalContext</a>&lt;'_, '_, '_, '_, '_, '_&gt;, &amp;[<a class="struct" href="../struct.Expression.html" title="struct rhai::Expression">Expression</a>&lt;'_&gt;]) -&gt; Result&lt;<a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a>, Box&lt;<a class="enum" href="enum.EvalAltResult.html" title="enum rhai::plugin::EvalAltResult">EvalAltResult</a>&gt;&gt; + SendSync + 'static<br>) -&gt; &amp;mut Self</h4></section><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 1.11.0: use <code>register_custom_syntax_with_state_raw</code> instead</span></div></span></summary><div class="docblock"><p>Register a custom syntax with the <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+<p>Not available under <code>no_custom_syntax</code>.</p>
+<h5 id="deprecated-9"><a href="#deprecated-9">Deprecated</a></h5>
+<p>This method is deprecated.
+Use <a href="struct.Engine.html#method.register_custom_syntax_with_state_raw" title="Engine::register_custom_syntax_with_state_raw"><code>register_custom_syntax_with_state_raw</code></a> instead.</p>
+<p>This method will be removed in the next major version.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-12" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/api/mod.rs.html#49-246">source</a><a href="#impl-Engine-12" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.disable_symbol" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/mod.rs.html#113-118">source</a><h4 class="code-header">pub fn <a href="#method.disable_symbol" class="fnname">disable_symbol</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;symbol: impl Into&lt;<a class="struct" href="../../smartstring/struct.SmartString.html" title="struct smartstring::SmartString">SmartString</a>&lt;<a class="struct" href="../../smartstring/config/struct.LazyCompact.html" title="struct smartstring::config::LazyCompact">LazyCompact</a>&gt;&gt;<br>) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Disable a particular keyword or operator in the language.</p>
+<h5 id="examples"><a href="#examples">Examples</a></h5>
+<p>The following will raise an error during parsing because the <code>if</code> keyword is disabled and is
+recognized as a reserved symbol!</p>
+
+<div class="example-wrap should_panic"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+engine.disable_symbol(<span class="string">&quot;if&quot;</span>);    <span class="comment">// disable the &#39;if&#39; keyword
+
+</span>engine.compile(<span class="string">&quot;let x = if true { 42 } else { 0 };&quot;</span>)<span class="question-mark">?</span>;
+<span class="comment">//                      ^ &#39;if&#39; is rejected as a reserved symbol</span></code></pre></div>
+<p>The following will raise an error during parsing because the <code>+=</code> operator is disabled.</p>
+
+<div class="example-wrap should_panic"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+engine.disable_symbol(<span class="string">&quot;+=&quot;</span>);    <span class="comment">// disable the &#39;+=&#39; operator
+
+</span>engine.compile(<span class="string">&quot;let x = 42; x += 1;&quot;</span>)<span class="question-mark">?</span>;
+<span class="comment">//                            ^ unknown operator</span></code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.is_symbol_disabled" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/mod.rs.html#134-138">source</a><h4 class="code-header">pub fn <a href="#method.is_symbol_disabled" class="fnname">is_symbol_disabled</a>(&amp;self, symbol: &amp;str) -&gt; bool</h4></section></summary><div class="docblock"><p>Is a particular keyword or operator disabled?</p>
+<h5 id="examples-1"><a href="#examples-1">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+engine.disable_symbol(<span class="string">&quot;if&quot;</span>);    <span class="comment">// disable the &#39;if&#39; keyword
+
+</span><span class="macro">assert!</span>(engine.is_symbol_disabled(<span class="string">&quot;if&quot;</span>));</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.register_custom_operator" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/mod.rs.html#171-218">source</a><h4 class="code-header">pub fn <a href="#method.register_custom_operator" class="fnname">register_custom_operator</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;keyword: impl AsRef&lt;str&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;precedence: u8<br>) -&gt; Result&lt;&amp;mut Self, String&gt;</h4></section></summary><div class="docblock"><p>Register a custom operator with a precedence into the language.</p>
+<p>Not available under <code>no_custom_syntax</code>.</p>
+<p>The operator can be a valid identifier, a reserved symbol, a disabled operator or a disabled keyword.</p>
+<p>The precedence cannot be zero.</p>
+<h5 id="example-30"><a href="#example-30">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::Engine;
+
+<span class="kw">let </span><span class="kw-2">mut </span>engine = Engine::new();
+
+<span class="comment">// Register a custom operator called &#39;#&#39; and give it
+// a precedence of 160 (i.e. between +|- and *|/).
+</span>engine.register_custom_operator(<span class="string">&quot;#&quot;</span>, <span class="number">160</span>).expect(<span class="string">&quot;should succeed&quot;</span>);
+
+<span class="comment">// Register a binary function named &#39;#&#39;
+</span>engine.register_fn(<span class="string">&quot;#&quot;</span>, |x: i64, y: i64| (x * y) - (x + y));
+
+<span class="macro">assert_eq!</span>(
+    engine.eval_expression::&lt;i64&gt;(<span class="string">&quot;1 + 2 * 3 # 4 - 5 / 6&quot;</span>)<span class="question-mark">?</span>,
+    <span class="number">15
+</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.default_tag" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/mod.rs.html#232-234">source</a><h4 class="code-header">pub const fn <a href="#method.default_tag" class="fnname">default_tag</a>(&amp;self) -&gt; &amp;<a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a></h4></section></summary><div class="docblock"><p>Get the default value of the custom state for each evaluation run.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.default_tag_mut" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/mod.rs.html#237-239">source</a><h4 class="code-header">pub fn <a href="#method.default_tag_mut" class="fnname">default_tag_mut</a>(&amp;mut self) -&gt; &amp;mut <a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a></h4></section></summary><div class="docblock"><p>Get a mutable reference to the default value of the custom state for each evaluation run.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_default_tag" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/api/mod.rs.html#242-245">source</a><h4 class="code-header">pub fn <a href="#method.set_default_tag" class="fnname">set_default_tag</a>(&amp;mut self, value: impl Into&lt;<a class="struct" href="struct.Dynamic.html" title="struct rhai::plugin::Dynamic">Dynamic</a>&gt;) -&gt; &amp;mut Self</h4></section></summary><div class="docblock"><p>Set the default value of the custom state for each evaluation run.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Engine-13" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/engine.rs.html#228-369">source</a><a href="#impl-Engine-13" class="anchor"></a><h3 class="code-header">impl <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedconstant.RAW" class="associatedconstant has-srclink"><a class="srclink rightside" href="../../src/rhai/engine.rs.html#230-270">source</a><h4 class="code-header">pub const <a href="#associatedconstant.RAW" class="constant">RAW</a>: Self = _</h4></section></summary><div class="docblock"><p>An empty raw <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.new" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/engine.rs.html#275-307">source</a><h4 class="code-header">pub fn <a href="#method.new" class="fnname">new</a>() -&gt; Self</h4></section></summary><div class="docblock"><p>Create a new <a href="struct.Engine.html" title="Engine"><code>Engine</code></a>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.new_raw" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/engine.rs.html#317-319">source</a><h4 class="code-header">pub const fn <a href="#method.new_raw" class="fnname">new_raw</a>() -&gt; Self</h4></section></summary><div class="docblock"><p>Create a new <a href="struct.Engine.html" title="Engine"><code>Engine</code></a> with minimal built-in functions.
+It returns a copy of <a href="struct.Engine.html#associatedconstant.RAW" title="Engine::RAW"><code>Engine::RAW</code></a>.</p>
+<p>This is useful for creating a custom scripting engine with only the functions you need.</p>
+<p>Use <a href="struct.Engine.html#method.register_global_module" title="Engine::register_global_module"><code>register_global_module</code></a> to add packages of functions.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.const_empty_string" class="method has-srclink"><a class="srclink rightside" href="../../src/rhai/engine.rs.html#358-360">source</a><h4 class="code-header">pub fn <a href="#method.const_empty_string" class="fnname">const_empty_string</a>(&amp;self) -&gt; <a class="struct" href="struct.ImmutableString.html" title="struct rhai::plugin::ImmutableString">ImmutableString</a></h4></section></summary><div class="docblock"><p>Get an empty <a href="struct.ImmutableString.html" title="ImmutableString"><code>ImmutableString</code></a> which refers to a shared instance.</p>
+</div></details></div></details></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Debug-for-Engine" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/engine.rs.html#155-196">source</a><a href="#impl-Debug-for-Engine" class="anchor"></a><h3 class="code-header">impl Debug for <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fmt" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/rhai/engine.rs.html#158-195">source</a><a href="#method.fmt" class="anchor"></a><h4 class="code-header">fn <a class="fnname">fmt</a>(&amp;self, f: &amp;mut Formatter&lt;'_&gt;) -&gt; Result</h4></section></summary><div class='docblock'>Formats the value using the given formatter. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><section id="impl-Default-for-Engine" class="impl has-srclink"><a class="srclink rightside" href="../../src/rhai/engine.rs.html#198-204">source</a><a href="#impl-Default-for-Engine" class="anchor"></a><h3 class="code-header">impl Default for <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.default" class="method trait-impl has-srclink"><a class="srclink rightside" href="../../src/rhai/engine.rs.html#201-203">source</a><a href="#method.default" class="anchor"></a><h4 class="code-header">fn <a class="fnname">default</a>() -&gt; Self</h4></section></summary><div class='docblock'>Returns the “default value” for a type. <a>Read more</a></div></details></div></details></div><h2 id="synthetic-implementations" class="small-section-header">Auto Trait Implementations<a href="#synthetic-implementations" class="anchor"></a></h2><div id="synthetic-implementations-list"><section id="impl-RefUnwindSafe-for-Engine" class="impl has-srclink"><a href="#impl-RefUnwindSafe-for-Engine" class="anchor"></a><h3 class="code-header">impl !RefUnwindSafe for <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section><section id="impl-Send-for-Engine" class="impl has-srclink"><a href="#impl-Send-for-Engine" class="anchor"></a><h3 class="code-header">impl Send for <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section><section id="impl-Sync-for-Engine" class="impl has-srclink"><a href="#impl-Sync-for-Engine" class="anchor"></a><h3 class="code-header">impl Sync for <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section><section id="impl-Unpin-for-Engine" class="impl has-srclink"><a href="#impl-Unpin-for-Engine" class="anchor"></a><h3 class="code-header">impl Unpin for <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section><section id="impl-UnwindSafe-for-Engine" class="impl has-srclink"><a href="#impl-UnwindSafe-for-Engine" class="anchor"></a><h3 class="code-header">impl !UnwindSafe for <a class="struct" href="struct.Engine.html" title="struct rhai::plugin::Engine">Engine</a></h3></section></div><h2 id="blanket-implementations" class="small-section-header">Blanket Implementations<a href="#blanket-implementations" class="anchor"></a></h2><div id="blanket-implementations-list"><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Any-for-Engine" class="impl has-srclink"><a href="#impl-Any-for-Engine" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Any for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.type_id" class="method trait-impl has-srclink"><a href="#method.type_id" class="anchor"></a><h4 class="code-header">fn <a class="fnname">type_id</a>(&amp;self) -&gt; <a class="struct" href="struct.TypeId.html" title="struct rhai::plugin::TypeId">TypeId</a></h4></section></summary><div class='docblock'>Gets the <code>TypeId</code> of <code>self</code>. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Borrow%3CT%3E-for-Engine" class="impl has-srclink"><a href="#impl-Borrow%3CT%3E-for-Engine" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; Borrow&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow</a>(&amp;self) -&gt; &amp;T</h4></section></summary><div class='docblock'>Immutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-BorrowMut%3CT%3E-for-Engine" class="impl has-srclink"><a href="#impl-BorrowMut%3CT%3E-for-Engine" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; BorrowMut&lt;T&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: ?Sized,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.borrow_mut" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/91522" title="Tracking issue for const_borrow">unstable</a></span><a href="#method.borrow_mut" class="anchor"></a><h4 class="code-header">fn <a class="fnname">borrow_mut</a>(&amp;mut self) -&gt; &amp;mut T</h4></section></summary><div class='docblock'>Mutably borrows from an owned value. <a>Read more</a></div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-From%3CT%3E-for-Engine" class="impl has-srclink"><a href="#impl-From%3CT%3E-for-Engine" class="anchor"></a><h3 class="code-header">impl&lt;T&gt; From&lt;T&gt; for T</h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">from</a>(t: T) -&gt; T</h4></section></summary><div class="docblock"><p>Returns the argument unchanged.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Into%3CU%3E-for-Engine" class="impl has-srclink"><a href="#impl-Into%3CU%3E-for-Engine" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; Into&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: From&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">into</a>(self) -&gt; U</h4></section></summary><div class="docblock"><p>Calls <code>U::from(self)</code>.</p>
+<p>That is, this conversion is whatever the implementation of
+<code>[From]&lt;T&gt; for U</code> chooses to do.</p>
+</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryFrom%3CU%3E-for-Engine" class="impl has-srclink"><a href="#impl-TryFrom%3CU%3E-for-Engine" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryFrom&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: Into&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error-1" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error-1" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = Infallible</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_from" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_from" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_from</a>(value: U) -&gt; Result&lt;T, &lt;T as TryFrom&lt;U&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-TryInto%3CU%3E-for-Engine" class="impl has-srclink"><a href="#impl-TryInto%3CU%3E-for-Engine" class="anchor"></a><h3 class="code-header">impl&lt;T, U&gt; TryInto&lt;U&gt; for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U: TryFrom&lt;T&gt;,</span></h3></section></summary><div class="impl-items"><details class="rustdoc-toggle" open><summary><section id="associatedtype.Error" class="associatedtype trait-impl has-srclink"><a href="#associatedtype.Error" class="anchor"></a><h4 class="code-header">type <a class="associatedtype">Error</a> = &lt;U as TryFrom&lt;T&gt;&gt;::Error</h4></section></summary><div class='docblock'>The type returned in the event of a conversion error.</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.try_into" class="method trait-impl has-srclink"><span class="since rightside" title="const unstable">const: <a href="https://github.com/rust-lang/rust/issues/88674" title="Tracking issue for const_convert">unstable</a></span><a href="#method.try_into" class="anchor"></a><h4 class="code-header">fn <a class="fnname">try_into</a>(self) -&gt; Result&lt;U, &lt;U as TryFrom&lt;T&gt;&gt;::Error&gt;</h4></section></summary><div class='docblock'>Performs the conversion.</div></details></div></details></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rhai" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Async functions that can be used to handle requests."><meta name="keywords" content="rust, rustlang, rust-lang, handler"><title>axum::handler - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../axum/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../axum/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Module handler</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Module <a href="../index.html">axum</a>::<wbr><a class="mod" href="#">handler</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/axum/handler/mod.rs.html#1-388">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Async functions that can be used to handle requests.</p>
+<p>In axum a “handler” is an async function that accepts zero or more
+<a href="../extract/index.html">“extractors”</a> as arguments and returns something that
+can be converted <a href="../response/index.html">into a response</a>.</p>
+<p>Handlers are where your application logic lives and axum applications are built
+by routing between handlers.</p>
+<p>Some examples of handlers:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{body::Bytes, http::StatusCode};
+
+<span class="comment">// Handler that immediately returns an empty `200 OK` response.
+</span><span class="kw">async fn </span>unit_handler() {}
+
+<span class="comment">// Handler that immediately returns an empty `200 OK` response with a plain
+// text body.
+</span><span class="kw">async fn </span>string_handler() -&gt; String {
+    <span class="string">&quot;Hello, World!&quot;</span>.to_string()
+}
+
+<span class="comment">// Handler that buffers the request body and returns it.
+//
+// This works because `Bytes` implements `FromRequest`
+// and therefore can be used as an extractor.
+//
+// `String` and `StatusCode` both implement `IntoResponse` and
+// therefore `Result&lt;String, StatusCode&gt;` also implements `IntoResponse`
+</span><span class="kw">async fn </span>echo(body: Bytes) -&gt; <span class="prelude-ty">Result</span>&lt;String, StatusCode&gt; {
+    <span class="kw">if let </span><span class="prelude-val">Ok</span>(string) = String::from_utf8(body.to_vec()) {
+        <span class="prelude-val">Ok</span>(string)
+    } <span class="kw">else </span>{
+        <span class="prelude-val">Err</span>(StatusCode::BAD_REQUEST)
+    }
+}</code></pre></div>
+<h3 id="debugging-handler-type-errors"><a href="#debugging-handler-type-errors">Debugging handler type errors</a></h3>
+<p>For a function to be used as a handler it must implement the <a href="trait.Handler.html" title="Handler"><code>Handler</code></a> trait.
+axum provides blanket implementations for functions that:</p>
+<ul>
+<li>Are <code>async fn</code>s.</li>
+<li>Take no more than 16 arguments that all implement <a href="../extract/trait.FromRequest.html" title="FromRequest"><code>FromRequest</code></a>.</li>
+<li>Returns something that implements <a href="../response/trait.IntoResponse.html" title="IntoResponse"><code>IntoResponse</code></a>.</li>
+<li>If a closure is used it must implement <code>Clone + Send</code> and be
+<code>'static</code>.</li>
+<li>Returns a future that is <code>Send</code>. The most common way to accidentally make a
+future <code>!Send</code> is to hold a <code>!Send</code> type across an await.</li>
+</ul>
+<p>Unfortunately Rust gives poor error messages if you try to use a function
+that doesn’t quite match what’s required by <a href="trait.Handler.html" title="Handler"><code>Handler</code></a>.</p>
+<p>You might get an error like this:</p>
+<div class="example-wrap"><pre class="language-not_rust"><code>error[E0277]: the trait bound `fn(bool) -&gt; impl Future {handler}: Handler&lt;_, _&gt;` is not satisfied
+   --&gt; src/main.rs:13:44
+    |
+13  |     let app = Router::new().route(&quot;/&quot;, get(handler));
+    |                                            ^^^^^^^ the trait `Handler&lt;_, _&gt;` is not implemented for `fn(bool) -&gt; impl Future {handler}`
+    |
+   ::: axum/src/handler/mod.rs:116:8
+    |
+116 |     H: Handler&lt;T, B&gt;,
+    |        ------------- required by this bound in `axum::routing::get`</code></pre></div>
+<p>This error doesn’t tell you <em>why</em> your function doesn’t implement
+<a href="trait.Handler.html" title="Handler"><code>Handler</code></a>. It’s possible to improve the error with the <a href="https://docs.rs/axum-macros/latest/axum_macros/attr.debug_handler.html"><code>debug_handler</code></a>
+proc-macro from the <a href="https://docs.rs/axum-macros">axum-macros</a> crate.</p>
+</div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="future/index.html" title="axum::handler::future mod">future</a></div><div class="item-right docblock-short">Handler future types.</div></div></div><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.HandlerService.html" title="axum::handler::HandlerService struct">HandlerService</a></div><div class="item-right docblock-short">An adapter that makes a <a href="trait.Handler.html" title="Handler"><code>Handler</code></a> into a <a href="../../tower_service/trait.Service.html" title="Service"><code>Service</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Layered.html" title="axum::handler::Layered struct">Layered</a></div><div class="item-right docblock-short">A <a href="../../tower_service/trait.Service.html" title="Service"><code>Service</code></a> created from a <a href="trait.Handler.html" title="Handler"><code>Handler</code></a> by applying a Tower middleware.</div></div></div><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.Handler.html" title="axum::handler::Handler trait">Handler</a></div><div class="item-right docblock-short">Trait for async functions that can be used to handle requests.</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.HandlerWithoutStateExt.html" title="axum::handler::HandlerWithoutStateExt trait">HandlerWithoutStateExt</a></div><div class="item-right docblock-short">Extension trait for <a href="trait.Handler.html" title="Handler"><code>Handler</code></a>s that don’t have state.</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="axum" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

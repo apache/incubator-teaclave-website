@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["teaclave_access_control_client","Generated client implementations."],["teaclave_access_control_server","Generated server implementations."]],"struct":[["AuthorizeApiRequest",""],["AuthorizeApiResponse",""]]};

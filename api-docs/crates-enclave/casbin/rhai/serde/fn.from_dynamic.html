@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Deserialize a [`Dynamic`][crate::Dynamic] value into a Rust type that implements [`serde::Deserialize`]."><meta name="keywords" content="rust, rustlang, rust-lang, from_dynamic"><title>from_dynamic in casbin::rhai::serde - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../casbin/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../casbin/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a><div class="sidebar-elems"><h2><a href="index.html">In casbin::rhai::serde</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Function <a href="../../index.html">casbin</a>::<wbr><a href="../index.html">rhai</a>::<wbr><a href="index.html">serde</a>::<wbr><a class="fn" href="#">from_dynamic</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../../src/rhai/serde/de.rs.html#109">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust fn"><code>pub fn from_dynamic&lt;'de, T&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;value: &amp;'de <a class="struct" href="../struct.Dynamic.html" title="struct casbin::rhai::Dynamic">Dynamic</a><br>) -&gt; Result&lt;T, Box&lt;<a class="enum" href="../enum.EvalAltResult.html" title="enum casbin::rhai::EvalAltResult">EvalAltResult</a>, Global&gt;&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../../serde/de/trait.Deserialize.html" title="trait serde::de::Deserialize">Deserialize</a>&lt;'de&gt;,</span></code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Deserialize a <a href="../struct.Dynamic.html" title="crate::Dynamic"><code>Dynamic</code></a> value into a Rust type that implements <a href="../../../serde/de/trait.Deserialize.html" title="serde::Deserialize"><code>serde::Deserialize</code></a>.</p>
+<h2 id="example"><a href="#example">Example</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rhai::{Dynamic, Array, Map, INT};
+<span class="kw">use </span>rhai::serde::from_dynamic;
+<span class="kw">use </span>serde::Deserialize;
+
+<span class="attribute">#[derive(Debug, Deserialize, PartialEq)]
+</span><span class="kw">struct </span>Hello {
+    a: INT,
+    b: bool,
+}
+
+<span class="attribute">#[derive(Debug, Deserialize, PartialEq)]
+</span><span class="kw">struct </span>Test {
+    int: u32,
+    seq: Vec&lt;String&gt;,
+    obj: Hello,
+}
+
+<span class="kw">let </span><span class="kw-2">mut </span>map = Map::new();
+map.insert(<span class="string">&quot;int&quot;</span>.into(), Dynamic::from(<span class="number">42_u32</span>));
+
+<span class="kw">let </span><span class="kw-2">mut </span>map2 = Map::new();
+map2.insert(<span class="string">&quot;a&quot;</span>.into(), (<span class="number">123 </span><span class="kw">as </span>INT).into());
+map2.insert(<span class="string">&quot;b&quot;</span>.into(), <span class="bool-val">true</span>.into());
+
+map.insert(<span class="string">&quot;obj&quot;</span>.into(), map2.into());
+
+<span class="kw">let </span>arr: Array = <span class="macro">vec!</span>[<span class="string">&quot;foo&quot;</span>.into(), <span class="string">&quot;bar&quot;</span>.into(), <span class="string">&quot;baz&quot;</span>.into()];
+map.insert(<span class="string">&quot;seq&quot;</span>.into(), arr.into());
+
+<span class="kw">let </span>value: Test = from_dynamic(<span class="kw-2">&amp;</span>map.into())<span class="question-mark">?</span>;
+
+<span class="kw">let </span>expected = Test {
+    int: <span class="number">42</span>,
+    seq: <span class="macro">vec!</span>[<span class="string">&quot;foo&quot;</span>.into(), <span class="string">&quot;bar&quot;</span>.into(), <span class="string">&quot;baz&quot;</span>.into()],
+    obj: Hello { a: <span class="number">123</span>, b: <span class="bool-val">true </span>},
+};
+
+<span class="macro">assert_eq!</span>(value, expected);</code></pre></div>
+</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="casbin" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

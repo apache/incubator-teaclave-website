@@ -1,0 +1,847 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="An `Iterator` blanket implementation that provides extra adaptors and methods."><meta name="keywords" content="rust, rustlang, rust-lang, Itertools"><title>Itertools in itertools - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../normalize.css"><link rel="stylesheet" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../ayu.css" disabled><link rel="stylesheet" href="../dark.css" disabled><link rel="stylesheet" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../itertools/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../itertools/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Itertools</a></h2><div class="sidebar-elems"><section><h3><a href="#provided-methods">Provided Methods</a></h3><ul class="block"><li><a href="#method.all_equal">all_equal</a></li><li><a href="#method.batching">batching</a></li><li><a href="#method.cartesian_product">cartesian_product</a></li><li><a href="#method.coalesce">coalesce</a></li><li><a href="#method.collect_tuple">collect_tuple</a></li><li><a href="#method.concat">concat</a></li><li><a href="#method.dedup">dedup</a></li><li><a href="#method.dedup_by">dedup_by</a></li><li><a href="#method.dropping">dropping</a></li><li><a href="#method.dropping_back">dropping_back</a></li><li><a href="#method.exactly_one">exactly_one</a></li><li><a href="#method.find_position">find_position</a></li><li><a href="#method.fold1">fold1</a></li><li><a href="#method.fold_options">fold_options</a></li><li><a href="#method.fold_results">fold_results</a></li><li><a href="#method.fold_while">fold_while</a></li><li><a href="#method.foreach">foreach</a></li><li><a href="#method.format">format</a></li><li><a href="#method.format_with">format_with</a></li><li><a href="#method.interleave">interleave</a></li><li><a href="#method.interleave_shortest">interleave_shortest</a></li><li><a href="#method.intersperse">intersperse</a></li><li><a href="#method.map_into">map_into</a></li><li><a href="#method.map_results">map_results</a></li><li><a href="#method.merge">merge</a></li><li><a href="#method.merge_by">merge_by</a></li><li><a href="#method.merge_join_by">merge_join_by</a></li><li><a href="#method.minmax">minmax</a></li><li><a href="#method.minmax_by">minmax_by</a></li><li><a href="#method.minmax_by_key">minmax_by_key</a></li><li><a href="#method.next_tuple">next_tuple</a></li><li><a href="#method.pad_using">pad_using</a></li><li><a href="#method.partition_map">partition_map</a></li><li><a href="#method.peeking_take_while">peeking_take_while</a></li><li><a href="#method.positions">positions</a></li><li><a href="#method.product1">product1</a></li><li><a href="#method.set_from">set_from</a></li><li><a href="#method.step">step</a></li><li><a href="#method.sum1">sum1</a></li><li><a href="#method.take_while_ref">take_while_ref</a></li><li><a href="#method.tree_fold1">tree_fold1</a></li><li><a href="#method.tuple_combinations">tuple_combinations</a></li><li><a href="#method.tuple_windows">tuple_windows</a></li><li><a href="#method.tuples">tuples</a></li><li><a href="#method.update">update</a></li><li><a href="#method.while_some">while_some</a></li><li><a href="#method.with_position">with_position</a></li><li><a href="#method.zip_eq">zip_eq</a></li><li><a href="#method.zip_longest">zip_longest</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><h2><a href="index.html">In itertools</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Trait <a href="index.html">itertools</a>::<wbr><a class="trait" href="#">Itertools</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/itertools/lib.rs.html#344-2256">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust trait"><code>pub trait Itertools: Iterator {
+<details class="rustdoc-toggle type-contents-toggle"><summary class="hideme"><span>Show 49 methods</span></summary>    fn <a href="#method.interleave" class="fnname">interleave</a>&lt;J&gt;(self, other: J) -&gt; <a class="struct" href="structs/struct.Interleave.html" title="struct itertools::structs::Interleave">Interleave</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Interleave.html" title="struct itertools::structs::Interleave">Interleave</a>&lt;I, J&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J&gt; Iterator for <a class="struct" href="structs/struct.Interleave.html" title="struct itertools::structs::Interleave">Interleave</a>&lt;I, J&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator&lt;Item = I::Item&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = Self::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.interleave_shortest" class="fnname">interleave_shortest</a>&lt;J&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other: J<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="struct" href="structs/struct.InterleaveShortest.html" title="struct itertools::structs::InterleaveShortest">InterleaveShortest</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.InterleaveShortest.html" title="struct itertools::structs::InterleaveShortest">InterleaveShortest</a>&lt;I, J&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J&gt; Iterator for <a class="struct" href="structs/struct.InterleaveShortest.html" title="struct itertools::structs::InterleaveShortest">InterleaveShortest</a>&lt;I, J&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator&lt;Item = I::Item&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = Self::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.intersperse" class="fnname">intersperse</a>(self, element: Self::Item) -&gt; <a class="struct" href="structs/struct.Intersperse.html" title="struct itertools::structs::Intersperse">Intersperse</a>&lt;Self&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Intersperse.html" title="struct itertools::structs::Intersperse">Intersperse</a>&lt;I&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I&gt; Iterator for <a class="struct" href="structs/struct.Intersperse.html" title="struct itertools::structs::Intersperse">Intersperse</a>&lt;I&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::Item: Clone,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Clone</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.zip_longest" class="fnname">zip_longest</a>&lt;J&gt;(self, other: J) -&gt; <a class="struct" href="structs/struct.ZipLongest.html" title="struct itertools::structs::ZipLongest">ZipLongest</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.ZipLongest.html" title="struct itertools::structs::ZipLongest">ZipLongest</a>&lt;T, U&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;T, U&gt; Iterator for <a class="struct" href="structs/struct.ZipLongest.html" title="struct itertools::structs::ZipLongest">ZipLongest</a>&lt;T, U&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;U: Iterator,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = <a class="enum" href="enum.EitherOrBoth.html" title="enum itertools::EitherOrBoth">EitherOrBoth</a>&lt;T::Item, U::Item&gt;;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.zip_eq" class="fnname">zip_eq</a>&lt;J&gt;(self, other: J) -&gt; <a class="struct" href="structs/struct.ZipEq.html" title="struct itertools::structs::ZipEq">ZipEq</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.ZipEq.html" title="struct itertools::structs::ZipEq">ZipEq</a>&lt;I, J&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J&gt; Iterator for <a class="struct" href="structs/struct.ZipEq.html" title="struct itertools::structs::ZipEq">ZipEq</a>&lt;I, J&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = (I::Item, J::Item);</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.batching" class="fnname">batching</a>&lt;B, F&gt;(self, f: F) -&gt; <a class="struct" href="structs/struct.Batching.html" title="struct itertools::structs::Batching">Batching</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Batching.html" title="struct itertools::structs::Batching">Batching</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;B, F, I&gt; Iterator for <a class="struct" href="structs/struct.Batching.html" title="struct itertools::structs::Batching">Batching</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut I) -&gt; Option&lt;B&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = B;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut Self) -&gt; Option&lt;B&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.tuple_windows" class="fnname">tuple_windows</a>&lt;T&gt;(self) -&gt; <a class="struct" href="structs/struct.TupleWindows.html" title="struct itertools::structs::TupleWindows">TupleWindows</a>&lt;Self, T&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.TupleWindows.html" title="struct itertools::structs::TupleWindows">TupleWindows</a>&lt;I, T&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, T&gt; Iterator for <a class="struct" href="structs/struct.TupleWindows.html" title="struct itertools::structs::TupleWindows">TupleWindows</a>&lt;I, T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect + Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;T::Item: Clone,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = T;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T::Item: Clone</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.tuples" class="fnname">tuples</a>&lt;T&gt;(self) -&gt; <a class="struct" href="structs/struct.Tuples.html" title="struct itertools::structs::Tuples">Tuples</a>&lt;Self, T&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Tuples.html" title="struct itertools::structs::Tuples">Tuples</a>&lt;I, T&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, T&gt; Iterator for <a class="struct" href="structs/struct.Tuples.html" title="struct itertools::structs::Tuples">Tuples</a>&lt;I, T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = T;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.step" class="fnname">step</a>(self, n: usize) -&gt; <a class="struct" href="structs/struct.Step.html" title="struct itertools::structs::Step">Step</a>&lt;Self&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Step.html" title="struct itertools::structs::Step">Step</a>&lt;I&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I&gt; Iterator for <a class="struct" href="structs/struct.Step.html" title="struct itertools::structs::Step">Step</a>&lt;I&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.map_into" class="fnname">map_into</a>&lt;R&gt;(self) -&gt; <a class="struct" href="structs/struct.MapInto.html" title="struct itertools::structs::MapInto">MapInto</a>&lt;Self, R&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.MapInto.html" title="struct itertools::structs::MapInto">MapInto</a>&lt;I, R&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, R&gt; Iterator for <a class="struct" href="structs/struct.MapInto.html" title="struct itertools::structs::MapInto">MapInto</a>&lt;I, R&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::Item: Into&lt;R&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = R;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Into&lt;R&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.map_results" class="fnname">map_results</a>&lt;F, T, U, E&gt;(self, f: F) -&gt; <a class="struct" href="structs/struct.MapResults.html" title="struct itertools::structs::MapResults">MapResults</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.MapResults.html" title="struct itertools::structs::MapResults">MapResults</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F, T, U, E&gt; Iterator for <a class="struct" href="structs/struct.MapResults.html" title="struct itertools::structs::MapResults">MapResults</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator&lt;Item = Result&lt;T, E&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(T) -&gt; U,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = Result&lt;U, E&gt;;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Iterator&lt;Item = Result&lt;T, E&gt;&gt; + Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(T) -&gt; U</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.merge" class="fnname">merge</a>&lt;J&gt;(self, other: J) -&gt; <a class="type" href="structs/type.Merge.html" title="type itertools::structs::Merge">Merge</a>&lt;Self, J::IntoIter&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: PartialOrd,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = Self::Item&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.merge_by" class="fnname">merge_by</a>&lt;J, F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other: J,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_first: F<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="struct" href="structs/struct.MergeBy.html" title="struct itertools::structs::MergeBy">MergeBy</a>&lt;Self, J::IntoIter, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.MergeBy.html" title="struct itertools::structs::MergeBy">MergeBy</a>&lt;I, J, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J, F&gt; Iterator for <a class="struct" href="structs/struct.MergeBy.html" title="struct itertools::structs::MergeBy">MergeBy</a>&lt;I, J, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator&lt;Item = I::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: MergePredicate&lt;I::Item&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = Self::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item, &amp;Self::Item) -&gt; bool</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.merge_join_by" class="fnname">merge_join_by</a>&lt;J, F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other: J,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmp_fn: F<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="struct" href="structs/struct.MergeJoinBy.html" title="struct itertools::structs::MergeJoinBy">MergeJoinBy</a>&lt;Self, J::IntoIter, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.MergeJoinBy.html" title="struct itertools::structs::MergeJoinBy">MergeJoinBy</a>&lt;I, J, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J, F&gt; Iterator for <a class="struct" href="structs/struct.MergeJoinBy.html" title="struct itertools::structs::MergeJoinBy">MergeJoinBy</a>&lt;I, J, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;I::Item, &amp;J::Item) -&gt; Ordering,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = <a class="enum" href="enum.EitherOrBoth.html" title="enum itertools::EitherOrBoth">EitherOrBoth</a>&lt;I::Item, J::Item&gt;;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item, &amp;J::Item) -&gt; Ordering,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.cartesian_product" class="fnname">cartesian_product</a>&lt;J&gt;(self, other: J) -&gt; <a class="struct" href="structs/struct.Product.html" title="struct itertools::structs::Product">Product</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Product.html" title="struct itertools::structs::Product">Product</a>&lt;I, J&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J&gt; Iterator for <a class="struct" href="structs/struct.Product.html" title="struct itertools::structs::Product">Product</a>&lt;I, J&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Clone + Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::Item: Clone,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = (I::Item, J::Item);</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J::IntoIter: Clone</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.coalesce" class="fnname">coalesce</a>&lt;F&gt;(self, f: F) -&gt; <a class="struct" href="structs/struct.Coalesce.html" title="struct itertools::structs::Coalesce">Coalesce</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Coalesce.html" title="struct itertools::structs::Coalesce">Coalesce</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F&gt; Iterator for <a class="struct" href="structs/struct.Coalesce.html" title="struct itertools::structs::Coalesce">Coalesce</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(I::Item, I::Item) -&gt; Result&lt;I::Item, (I::Item, I::Item)&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item, Self::Item) -&gt; Result&lt;Self::Item, (Self::Item, Self::Item)&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.dedup" class="fnname">dedup</a>(self) -&gt; <a class="type" href="structs/type.Dedup.html" title="type itertools::structs::Dedup">Dedup</a>&lt;Self&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: PartialEq</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.dedup_by" class="fnname">dedup_by</a>&lt;Cmp&gt;(self, cmp: Cmp) -&gt; <a class="struct" href="structs/struct.DedupBy.html" title="struct itertools::structs::DedupBy">DedupBy</a>&lt;Self, Cmp&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.DedupBy.html" title="struct itertools::structs::DedupBy">DedupBy</a>&lt;I, Pred&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, Pred&gt; Iterator for <a class="struct" href="structs/struct.DedupBy.html" title="struct itertools::structs::DedupBy">DedupBy</a>&lt;I, Pred&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::Item: PartialEq,<br>&nbsp;&nbsp;&nbsp;&nbsp;Pred: DedupPredicate&lt;I::Item&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cmp: FnMut(&amp;Self::Item, &amp;Self::Item) -&gt; bool</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.peeking_take_while" class="fnname">peeking_take_while</a>&lt;F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accept: F<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="struct" href="structs/struct.PeekingTakeWhile.html" title="struct itertools::structs::PeekingTakeWhile">PeekingTakeWhile</a>&lt;'_, Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.PeekingTakeWhile.html" title="struct itertools::structs::PeekingTakeWhile">PeekingTakeWhile</a>&lt;'a, I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;'a, I, F&gt; Iterator for <a class="struct" href="structs/struct.PeekingTakeWhile.html" title="struct itertools::structs::PeekingTakeWhile">PeekingTakeWhile</a>&lt;'a, I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="trait.PeekingNext.html" title="trait itertools::PeekingNext">PeekingNext</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;I::Item) -&gt; bool,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + <a class="trait" href="trait.PeekingNext.html" title="trait itertools::PeekingNext">PeekingNext</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item) -&gt; bool</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.take_while_ref" class="fnname">take_while_ref</a>&lt;F&gt;(&amp;mut self, accept: F) -&gt; <a class="struct" href="structs/struct.TakeWhileRef.html" title="struct itertools::structs::TakeWhileRef">TakeWhileRef</a>&lt;'_, Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.TakeWhileRef.html" title="struct itertools::structs::TakeWhileRef">TakeWhileRef</a>&lt;'a, I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;'a, I, F&gt; Iterator for <a class="struct" href="structs/struct.TakeWhileRef.html" title="struct itertools::structs::TakeWhileRef">TakeWhileRef</a>&lt;'a, I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator + Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;I::Item) -&gt; bool,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item) -&gt; bool</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.while_some" class="fnname">while_some</a>&lt;A&gt;(self) -&gt; <a class="struct" href="structs/struct.WhileSome.html" title="struct itertools::structs::WhileSome">WhileSome</a>&lt;Self&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.WhileSome.html" title="struct itertools::structs::WhileSome">WhileSome</a>&lt;I&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, A&gt; Iterator for <a class="struct" href="structs/struct.WhileSome.html" title="struct itertools::structs::WhileSome">WhileSome</a>&lt;I&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator&lt;Item = Option&lt;A&gt;&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = A;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = Option&lt;A&gt;&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.tuple_combinations" class="fnname">tuple_combinations</a>&lt;T&gt;(self) -&gt; <a class="struct" href="structs/struct.TupleCombinations.html" title="struct itertools::structs::TupleCombinations">TupleCombinations</a>&lt;Self, T&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.TupleCombinations.html" title="struct itertools::structs::TupleCombinations">TupleCombinations</a>&lt;I, T&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, T&gt; Iterator for <a class="struct" href="structs/struct.TupleCombinations.html" title="struct itertools::structs::TupleCombinations">TupleCombinations</a>&lt;I, T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: HasCombination&lt;I&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = T;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: HasCombination&lt;Self&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.pad_using" class="fnname">pad_using</a>&lt;F&gt;(self, min: usize, f: F) -&gt; <a class="struct" href="structs/struct.PadUsing.html" title="struct itertools::structs::PadUsing">PadUsing</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.PadUsing.html" title="struct itertools::structs::PadUsing">PadUsing</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F&gt; Iterator for <a class="struct" href="structs/struct.PadUsing.html" title="struct itertools::structs::PadUsing">PadUsing</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(usize) -&gt; I::Item,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(usize) -&gt; Self::Item</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.with_position" class="fnname">with_position</a>(self) -&gt; <a class="struct" href="structs/struct.WithPosition.html" title="struct itertools::structs::WithPosition">WithPosition</a>&lt;Self&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.WithPosition.html" title="struct itertools::structs::WithPosition">WithPosition</a>&lt;I&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I:&nbsp;Iterator&gt; Iterator for <a class="struct" href="structs/struct.WithPosition.html" title="struct itertools::structs::WithPosition">WithPosition</a>&lt;I&gt;</span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = <a class="enum" href="enum.Position.html" title="enum itertools::Position">Position</a>&lt;I::Item&gt;;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.positions" class="fnname">positions</a>&lt;P&gt;(self, predicate: P) -&gt; <a class="struct" href="structs/struct.Positions.html" title="struct itertools::structs::Positions">Positions</a>&lt;Self, P&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Positions.html" title="struct itertools::structs::Positions">Positions</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F&gt; Iterator for <a class="struct" href="structs/struct.Positions.html" title="struct itertools::structs::Positions">Positions</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(I::Item) -&gt; bool,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = usize;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P: FnMut(Self::Item) -&gt; bool</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.update" class="fnname">update</a>&lt;F&gt;(self, updater: F) -&gt; <a class="struct" href="structs/struct.Update.html" title="struct itertools::structs::Update">Update</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Update.html" title="struct itertools::structs::Update">Update</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F&gt; Iterator for <a class="struct" href="structs/struct.Update.html" title="struct itertools::structs::Update">Update</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut I::Item),</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut Self::Item)</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.next_tuple" class="fnname">next_tuple</a>&lt;T&gt;(&amp;mut self) -&gt; Option&lt;T&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.collect_tuple" class="fnname">collect_tuple</a>&lt;T&gt;(self) -&gt; Option&lt;T&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.find_position" class="fnname">find_position</a>&lt;P&gt;(&amp;mut self, pred: P) -&gt; Option&lt;(usize, Self::Item)&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P: FnMut(&amp;Self::Item) -&gt; bool</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.all_equal" class="fnname">all_equal</a>(&amp;mut self) -&gt; bool<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: PartialEq</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.dropping" class="fnname">dropping</a>(self, n: usize) -&gt; Self<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.dropping_back" class="fnname">dropping_back</a>(self, n: usize) -&gt; Self<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: DoubleEndedIterator</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.foreach" class="fnname">foreach</a>&lt;F&gt;(self, f: F)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.concat" class="fnname">concat</a>(self) -&gt; Self::Item<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Extend&lt;&lt;&lt;Self as Iterator&gt;::Item as IntoIterator&gt;::Item&gt; + IntoIterator + Default</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.set_from" class="fnname">set_from</a>&lt;'a, A:&nbsp;'a, J&gt;(&amp;mut self, from: J) -&gt; usize<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Iterator&lt;Item = &amp;'a mut A&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = A&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.format" class="fnname">format</a>(self, sep: &amp;str) -&gt; <a class="struct" href="structs/struct.Format.html" title="struct itertools::structs::Format">Format</a>&lt;'_, Self&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.format_with" class="fnname">format_with</a>&lt;F&gt;(self, sep: &amp;str, format: F) -&gt; <a class="struct" href="structs/struct.FormatWith.html" title="struct itertools::structs::FormatWith">FormatWith</a>&lt;'_, Self, F&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item, &amp;mut dyn FnMut(&amp;dyn Display) -&gt; Result) -&gt; Result</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_results" class="fnname">fold_results</a>&lt;A, E, B, F&gt;(&amp;mut self, start: B, f: F) -&gt; Result&lt;B, E&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Iterator&lt;Item = Result&lt;A, E&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(B, A) -&gt; B</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_options" class="fnname">fold_options</a>&lt;A, B, F&gt;(&amp;mut self, start: B, f: F) -&gt; Option&lt;B&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Iterator&lt;Item = Option&lt;A&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(B, A) -&gt; B</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold1" class="fnname">fold1</a>&lt;F&gt;(self, f: F) -&gt; Option&lt;Self::Item&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item, Self::Item) -&gt; Self::Item,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.tree_fold1" class="fnname">tree_fold1</a>&lt;F&gt;(self, f: F) -&gt; Option&lt;Self::Item&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item, Self::Item) -&gt; Self::Item,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_while" class="fnname">fold_while</a>&lt;B, F&gt;(&amp;mut self, init: B, f: F) -&gt; <a class="enum" href="enum.FoldWhile.html" title="enum itertools::FoldWhile">FoldWhile</a>&lt;B&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(B, Self::Item) -&gt; <a class="enum" href="enum.FoldWhile.html" title="enum itertools::FoldWhile">FoldWhile</a>&lt;B&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.sum1" class="fnname">sum1</a>&lt;S&gt;(self) -&gt; Option&lt;S&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S: Sum&lt;Self::Item&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.product1" class="fnname">product1</a>&lt;P&gt;(self) -&gt; Option&lt;P&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P: Product&lt;Self::Item&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.partition_map" class="fnname">partition_map</a>&lt;A, B, F, L, R&gt;(self, predicate: F) -&gt; (A, B)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item) -&gt; <a class="enum" href="enum.Either.html" title="enum itertools::Either">Either</a>&lt;L, R&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A: Default + Extend&lt;L&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B: Default + Extend&lt;R&gt;</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.minmax" class="fnname">minmax</a>(self) -&gt; <a class="enum" href="enum.MinMaxResult.html" title="enum itertools::MinMaxResult">MinMaxResult</a>&lt;Self::Item&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: PartialOrd</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.minmax_by_key" class="fnname">minmax_by_key</a>&lt;K, F&gt;(self, key: F) -&gt; <a class="enum" href="enum.MinMaxResult.html" title="enum itertools::MinMaxResult">MinMaxResult</a>&lt;Self::Item&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K: PartialOrd,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item) -&gt; K</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.minmax_by" class="fnname">minmax_by</a>&lt;F&gt;(self, compare: F) -&gt; <a class="enum" href="enum.MinMaxResult.html" title="enum itertools::MinMaxResult">MinMaxResult</a>&lt;Self::Item&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item, &amp;Self::Item) -&gt; Ordering</span>,
+    { ... }
+<span class="item-spacer"></span>    fn <a href="#method.exactly_one" class="fnname">exactly_one</a>(self) -&gt; Result&lt;Self::Item, <a class="struct" href="structs/struct.ExactlyOneError.html" title="struct itertools::structs::ExactlyOneError">ExactlyOneError</a>&lt;Self&gt;&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized</span>,
+    { ... }
+</details>}</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>An <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html"><code>Iterator</code></a> blanket implementation that provides extra adaptors and
+methods.</p>
+<p>This trait defines a number of methods. They are divided into two groups:</p>
+<ul>
+<li>
+<p><em>Adaptors</em> take an iterator and parameter as input, and return
+a new iterator value. These are listed first in the trait. An example
+of an adaptor is <a href="#method.interleave"><code>.interleave()</code></a></p>
+</li>
+<li>
+<p><em>Regular methods</em> are those that don’t return iterators and instead
+return a regular value of some other kind.
+<a href="#method.next_tuple"><code>.next_tuple()</code></a> is an example and the first regular
+method in the list.</p>
+</li>
+</ul>
+</div></details><h2 id="provided-methods" class="small-section-header">Provided Methods<a href="#provided-methods" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle method-toggle" open><summary><section id="method.interleave" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#359-364">source</a><h4 class="code-header">fn <a href="#method.interleave" class="fnname">interleave</a>&lt;J&gt;(self, other: J) -&gt; <a class="struct" href="structs/struct.Interleave.html" title="struct itertools::structs::Interleave">Interleave</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Interleave.html" title="struct itertools::structs::Interleave">Interleave</a>&lt;I, J&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J&gt; Iterator for <a class="struct" href="structs/struct.Interleave.html" title="struct itertools::structs::Interleave">Interleave</a>&lt;I, J&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator&lt;Item = I::Item&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = Self::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Alternate elements from two iterators until both have run out.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+<p>This iterator is <em>fused</em>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>it = (<span class="number">1</span>..<span class="number">7</span>).interleave(<span class="macro">vec!</span>[-<span class="number">1</span>, -<span class="number">2</span>]);
+itertools::assert_equal(it, <span class="macro">vec!</span>[<span class="number">1</span>, -<span class="number">1</span>, <span class="number">2</span>, -<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.interleave_shortest" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#377-382">source</a><h4 class="code-header">fn <a href="#method.interleave_shortest" class="fnname">interleave_shortest</a>&lt;J&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;other: J<br>) -&gt; <a class="struct" href="structs/struct.InterleaveShortest.html" title="struct itertools::structs::InterleaveShortest">InterleaveShortest</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.InterleaveShortest.html" title="struct itertools::structs::InterleaveShortest">InterleaveShortest</a>&lt;I, J&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J&gt; Iterator for <a class="struct" href="structs/struct.InterleaveShortest.html" title="struct itertools::structs::InterleaveShortest">InterleaveShortest</a>&lt;I, J&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator&lt;Item = I::Item&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = Self::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Alternate elements from two iterators until at least one of them has run
+out.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>it = (<span class="number">1</span>..<span class="number">7</span>).interleave_shortest(<span class="macro">vec!</span>[-<span class="number">1</span>, -<span class="number">2</span>]);
+itertools::assert_equal(it, <span class="macro">vec!</span>[<span class="number">1</span>, -<span class="number">1</span>, <span class="number">2</span>, -<span class="number">2</span>, <span class="number">3</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.intersperse" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#396-401">source</a><h4 class="code-header">fn <a href="#method.intersperse" class="fnname">intersperse</a>(self, element: Self::Item) -&gt; <a class="struct" href="structs/struct.Intersperse.html" title="struct itertools::structs::Intersperse">Intersperse</a>&lt;Self&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Intersperse.html" title="struct itertools::structs::Intersperse">Intersperse</a>&lt;I&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I&gt; Iterator for <a class="struct" href="structs/struct.Intersperse.html" title="struct itertools::structs::Intersperse">Intersperse</a>&lt;I&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::Item: Clone,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Clone,</span></h4></section></summary><div class="docblock"><p>An iterator adaptor to insert a particular value
+between each element of the adapted iterator.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+<p>This iterator is <em>fused</em>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+itertools::assert_equal((<span class="number">0</span>..<span class="number">3</span>).intersperse(<span class="number">8</span>), <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">2</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.zip_longest" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#430-435">source</a><h4 class="code-header">fn <a href="#method.zip_longest" class="fnname">zip_longest</a>&lt;J&gt;(self, other: J) -&gt; <a class="struct" href="structs/struct.ZipLongest.html" title="struct itertools::structs::ZipLongest">ZipLongest</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.ZipLongest.html" title="struct itertools::structs::ZipLongest">ZipLongest</a>&lt;T, U&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;T, U&gt; Iterator for <a class="struct" href="structs/struct.ZipLongest.html" title="struct itertools::structs::ZipLongest">ZipLongest</a>&lt;T, U&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;U: Iterator,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = <a class="enum" href="enum.EitherOrBoth.html" title="enum itertools::EitherOrBoth">EitherOrBoth</a>&lt;T::Item, U::Item&gt;;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Create an iterator which iterates over both this and the specified
+iterator simultaneously, yielding pairs of two optional elements.</p>
+<p>This iterator is <em>fused</em>.</p>
+<p>As long as neither input iterator is exhausted yet, it yields two values
+via <code>EitherOrBoth::Both</code>.</p>
+<p>When the parameter iterator is exhausted, it only yields a value from the
+<code>self</code> iterator via <code>EitherOrBoth::Left</code>.</p>
+<p>When the <code>self</code> iterator is exhausted, it only yields a value from the
+parameter iterator via <code>EitherOrBoth::Right</code>.</p>
+<p>When both iterators return <code>None</code>, all further invocations of <code>.next()</code>
+will return <code>None</code>.</p>
+<p>Iterator element type is
+<a href="enum.EitherOrBoth.html"><code>EitherOrBoth&lt;Self::Item, J::Item&gt;</code></a>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::EitherOrBoth::{Both, Right};
+<span class="kw">use </span>itertools::Itertools;
+<span class="kw">let </span>it = (<span class="number">0</span>..<span class="number">1</span>).zip_longest(<span class="number">1</span>..<span class="number">3</span>);
+itertools::assert_equal(it, <span class="macro">vec!</span>[Both(<span class="number">0</span>, <span class="number">1</span>), Right(<span class="number">2</span>)]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.zip_eq" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#443-448">source</a><h4 class="code-header">fn <a href="#method.zip_eq" class="fnname">zip_eq</a>&lt;J&gt;(self, other: J) -&gt; <a class="struct" href="structs/struct.ZipEq.html" title="struct itertools::structs::ZipEq">ZipEq</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.ZipEq.html" title="struct itertools::structs::ZipEq">ZipEq</a>&lt;I, J&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J&gt; Iterator for <a class="struct" href="structs/struct.ZipEq.html" title="struct itertools::structs::ZipEq">ZipEq</a>&lt;I, J&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = (I::Item, J::Item);</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Create an iterator which iterates over both this and the specified
+iterator simultaneously, yielding pairs of elements.</p>
+<p><strong>Panics</strong> if the iterators reach an end and they are not of equal
+lengths.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.batching" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#473-478">source</a><h4 class="code-header">fn <a href="#method.batching" class="fnname">batching</a>&lt;B, F&gt;(self, f: F) -&gt; <a class="struct" href="structs/struct.Batching.html" title="struct itertools::structs::Batching">Batching</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Batching.html" title="struct itertools::structs::Batching">Batching</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;B, F, I&gt; Iterator for <a class="struct" href="structs/struct.Batching.html" title="struct itertools::structs::Batching">Batching</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut I) -&gt; Option&lt;B&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = B;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut Self) -&gt; Option&lt;B&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>A “meta iterator adaptor”. Its closure receives a reference to the
+iterator and may pick off as many elements as it likes, to produce the
+next iterator element.</p>
+<p>Iterator element type is <code>B</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="comment">// An adaptor that gathers elements in pairs
+</span><span class="kw">let </span>pit = (<span class="number">0</span>..<span class="number">4</span>).batching(|it| {
+           <span class="kw">match </span>it.next() {
+               <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+               <span class="prelude-val">Some</span>(x) =&gt; <span class="kw">match </span>it.next() {
+                   <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+                   <span class="prelude-val">Some</span>(y) =&gt; <span class="prelude-val">Some</span>((x, y)),
+               }
+           }
+       });
+
+itertools::assert_equal(pit, <span class="macro">vec!</span>[(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">3</span>)]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.tuple_windows" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#588-594">source</a><h4 class="code-header">fn <a href="#method.tuple_windows" class="fnname">tuple_windows</a>&lt;T&gt;(self) -&gt; <a class="struct" href="structs/struct.TupleWindows.html" title="struct itertools::structs::TupleWindows">TupleWindows</a>&lt;Self, T&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.TupleWindows.html" title="struct itertools::structs::TupleWindows">TupleWindows</a>&lt;I, T&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, T&gt; Iterator for <a class="struct" href="structs/struct.TupleWindows.html" title="struct itertools::structs::TupleWindows">TupleWindows</a>&lt;I, T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect + Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;T::Item: Clone,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = T;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect,<br>&nbsp;&nbsp;&nbsp;&nbsp;T::Item: Clone,</span></h4></section></summary><div class="docblock"><p>Return an iterator over all contiguous windows producing tuples of
+a specific size (up to 4).</p>
+<p><code>tuple_windows</code> clones the iterator elements so that they can be
+part of successive windows, this makes it most suited for iterators
+of references and other values that are cheap to copy.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+<span class="kw">let </span><span class="kw-2">mut </span>v = Vec::new();
+<span class="kw">for </span>(a, b) <span class="kw">in </span>(<span class="number">1</span>..<span class="number">5</span>).tuple_windows() {
+    v.push((a, b));
+}
+<span class="macro">assert_eq!</span>(v, <span class="macro">vec!</span>[(<span class="number">1</span>, <span class="number">2</span>), (<span class="number">2</span>, <span class="number">3</span>), (<span class="number">3</span>, <span class="number">4</span>)]);
+
+<span class="kw">let </span><span class="kw-2">mut </span>it = (<span class="number">1</span>..<span class="number">5</span>).tuple_windows();
+<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)), it.next());
+<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>((<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)), it.next());
+<span class="macro">assert_eq!</span>(<span class="prelude-val">None</span>, it.next());
+
+<span class="comment">// this requires a type hint
+</span><span class="kw">let </span>it = (<span class="number">1</span>..<span class="number">5</span>).tuple_windows::&lt;(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>)&gt;();
+itertools::assert_equal(it, <span class="macro">vec!</span>[(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), (<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)]);
+
+<span class="comment">// you can also specify the complete type
+</span><span class="kw">use </span>itertools::TupleWindows;
+<span class="kw">use </span>std::ops::Range;
+
+<span class="kw">let </span>it: TupleWindows&lt;Range&lt;u32&gt;, (u32, u32, u32)&gt; = (<span class="number">1</span>..<span class="number">5</span>).tuple_windows();
+itertools::assert_equal(it, <span class="macro">vec!</span>[(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), (<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.tuples" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#627-632">source</a><h4 class="code-header">fn <a href="#method.tuples" class="fnname">tuples</a>&lt;T&gt;(self) -&gt; <a class="struct" href="structs/struct.Tuples.html" title="struct itertools::structs::Tuples">Tuples</a>&lt;Self, T&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Tuples.html" title="struct itertools::structs::Tuples">Tuples</a>&lt;I, T&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, T&gt; Iterator for <a class="struct" href="structs/struct.Tuples.html" title="struct itertools::structs::Tuples">Tuples</a>&lt;I, T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = T;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect,</span></h4></section></summary><div class="docblock"><p>Return an iterator that groups the items in tuples of a specific size
+(up to 4).</p>
+<p>See also the method <a href="#method.next_tuple"><code>.next_tuple()</code></a>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+<span class="kw">let </span><span class="kw-2">mut </span>v = Vec::new();
+<span class="kw">for </span>(a, b) <span class="kw">in </span>(<span class="number">1</span>..<span class="number">5</span>).tuples() {
+    v.push((a, b));
+}
+<span class="macro">assert_eq!</span>(v, <span class="macro">vec!</span>[(<span class="number">1</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">4</span>)]);
+
+<span class="kw">let </span><span class="kw-2">mut </span>it = (<span class="number">1</span>..<span class="number">7</span>).tuples();
+<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)), it.next());
+<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>((<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)), it.next());
+<span class="macro">assert_eq!</span>(<span class="prelude-val">None</span>, it.next());
+
+<span class="comment">// this requires a type hint
+</span><span class="kw">let </span>it = (<span class="number">1</span>..<span class="number">7</span>).tuples::&lt;(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>)&gt;();
+itertools::assert_equal(it, <span class="macro">vec!</span>[(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), (<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)]);
+
+<span class="comment">// you can also specify the complete type
+</span><span class="kw">use </span>itertools::Tuples;
+<span class="kw">use </span>std::ops::Range;
+
+<span class="kw">let </span>it: Tuples&lt;Range&lt;u32&gt;, (u32, u32, u32)&gt; = (<span class="number">1</span>..<span class="number">7</span>).tuples();
+itertools::assert_equal(it, <span class="macro">vec!</span>[(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), (<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)]);</code></pre></div>
+<p>See also <a href="structs/struct.Tuples.html#method.into_buffer"><code>Tuples::into_buffer</code></a>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.step" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#677-681">source</a><h4 class="code-header">fn <a href="#method.step" class="fnname">step</a>(self, n: usize) -&gt; <a class="struct" href="structs/struct.Step.html" title="struct itertools::structs::Step">Step</a>&lt;Self&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Step.html" title="struct itertools::structs::Step">Step</a>&lt;I&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I&gt; Iterator for <a class="struct" href="structs/struct.Step.html" title="struct itertools::structs::Step">Step</a>&lt;I&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 0.8: Use std .step_by() instead</span></div></span><div class="docblock"><p>Return an iterator adaptor that steps <code>n</code> elements in the base iterator
+for each iteration.</p>
+<p>The iterator steps by yielding the next element from the base iterator,
+then skipping forward <code>n - 1</code> elements.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+<p><strong>Panics</strong> if the step is 0.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>it = (<span class="number">0</span>..<span class="number">8</span>).step(<span class="number">3</span>);
+itertools::assert_equal(it, <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">3</span>, <span class="number">6</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.map_into" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#690-695">source</a><h4 class="code-header">fn <a href="#method.map_into" class="fnname">map_into</a>&lt;R&gt;(self) -&gt; <a class="struct" href="structs/struct.MapInto.html" title="struct itertools::structs::MapInto">MapInto</a>&lt;Self, R&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.MapInto.html" title="struct itertools::structs::MapInto">MapInto</a>&lt;I, R&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, R&gt; Iterator for <a class="struct" href="structs/struct.MapInto.html" title="struct itertools::structs::MapInto">MapInto</a>&lt;I, R&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::Item: Into&lt;R&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = R;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Into&lt;R&gt;,</span></h4></section></summary><div class="docblock"><p>Convert each item of the iterator using the <code>Into</code> trait.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+(<span class="number">1i32</span>..<span class="number">42i32</span>).map_into::&lt;f64&gt;().collect_vec();</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.map_results" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#708-713">source</a><h4 class="code-header">fn <a href="#method.map_results" class="fnname">map_results</a>&lt;F, T, U, E&gt;(self, f: F) -&gt; <a class="struct" href="structs/struct.MapResults.html" title="struct itertools::structs::MapResults">MapResults</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.MapResults.html" title="struct itertools::structs::MapResults">MapResults</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F, T, U, E&gt; Iterator for <a class="struct" href="structs/struct.MapResults.html" title="struct itertools::structs::MapResults">MapResults</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator&lt;Item = Result&lt;T, E&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(T) -&gt; U,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = Result&lt;U, E&gt;;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Iterator&lt;Item = Result&lt;T, E&gt;&gt; + Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(T) -&gt; U,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that applies the provided closure
+to every <code>Result::Ok</code> value. <code>Result::Err</code> values are
+unchanged.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>input = <span class="macro">vec!</span>[<span class="prelude-val">Ok</span>(<span class="number">41</span>), <span class="prelude-val">Err</span>(<span class="bool-val">false</span>), <span class="prelude-val">Ok</span>(<span class="number">11</span>)];
+<span class="kw">let </span>it = input.into_iter().map_results(|i| i + <span class="number">1</span>);
+itertools::assert_equal(it, <span class="macro">vec!</span>[<span class="prelude-val">Ok</span>(<span class="number">42</span>), <span class="prelude-val">Err</span>(<span class="bool-val">false</span>), <span class="prelude-val">Ok</span>(<span class="number">12</span>)]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.merge" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#729-735">source</a><h4 class="code-header">fn <a href="#method.merge" class="fnname">merge</a>&lt;J&gt;(self, other: J) -&gt; <a class="type" href="structs/type.Merge.html" title="type itertools::structs::Merge">Merge</a>&lt;Self, J::IntoIter&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: PartialOrd,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = Self::Item&gt;,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that merges the two base iterators in
+ascending order.  If both base iterators are sorted (ascending), the
+result is sorted.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>a = (<span class="number">0</span>..<span class="number">11</span>).step(<span class="number">3</span>);
+<span class="kw">let </span>b = (<span class="number">0</span>..<span class="number">11</span>).step(<span class="number">5</span>);
+<span class="kw">let </span>it = a.merge(b);
+itertools::assert_equal(it, <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">10</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.merge_by" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#753-759">source</a><h4 class="code-header">fn <a href="#method.merge_by" class="fnname">merge_by</a>&lt;J, F&gt;(self, other: J, is_first: F) -&gt; <a class="struct" href="structs/struct.MergeBy.html" title="struct itertools::structs::MergeBy">MergeBy</a>&lt;Self, J::IntoIter, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.MergeBy.html" title="struct itertools::structs::MergeBy">MergeBy</a>&lt;I, J, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J, F&gt; Iterator for <a class="struct" href="structs/struct.MergeBy.html" title="struct itertools::structs::MergeBy">MergeBy</a>&lt;I, J, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator&lt;Item = I::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: MergePredicate&lt;I::Item&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = Self::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item, &amp;Self::Item) -&gt; bool,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that merges the two base iterators in order.
+This is much like <code>.merge()</code> but allows for a custom ordering.</p>
+<p>This can be especially useful for sequences of tuples.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>a = (<span class="number">0</span>..).zip(<span class="string">&quot;bc&quot;</span>.chars());
+<span class="kw">let </span>b = (<span class="number">0</span>..).zip(<span class="string">&quot;ad&quot;</span>.chars());
+<span class="kw">let </span>it = a.merge_by(b, |x, y| x.<span class="number">1 </span>&lt;= y.<span class="number">1</span>);
+itertools::assert_equal(it, <span class="macro">vec!</span>[(<span class="number">0</span>, <span class="string">&#39;a&#39;</span>), (<span class="number">0</span>, <span class="string">&#39;b&#39;</span>), (<span class="number">1</span>, <span class="string">&#39;c&#39;</span>), (<span class="number">1</span>, <span class="string">&#39;d&#39;</span>)]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.merge_join_by" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#793-799">source</a><h4 class="code-header">fn <a href="#method.merge_join_by" class="fnname">merge_join_by</a>&lt;J, F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;other: J,<br>&nbsp;&nbsp;&nbsp;&nbsp;cmp_fn: F<br>) -&gt; <a class="struct" href="structs/struct.MergeJoinBy.html" title="struct itertools::structs::MergeJoinBy">MergeJoinBy</a>&lt;Self, J::IntoIter, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.MergeJoinBy.html" title="struct itertools::structs::MergeJoinBy">MergeJoinBy</a>&lt;I, J, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J, F&gt; Iterator for <a class="struct" href="structs/struct.MergeJoinBy.html" title="struct itertools::structs::MergeJoinBy">MergeJoinBy</a>&lt;I, J, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;I::Item, &amp;J::Item) -&gt; Ordering,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = <a class="enum" href="enum.EitherOrBoth.html" title="enum itertools::EitherOrBoth">EitherOrBoth</a>&lt;I::Item, J::Item&gt;;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item, &amp;J::Item) -&gt; Ordering,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Create an iterator that merges items from both this and the specified
+iterator in ascending order.</p>
+<p>It chooses whether to pair elements based on the <code>Ordering</code> returned by the
+specified compare function. At any point, inspecting the tip of the
+iterators <code>I</code> and <code>J</code> as items <code>i</code> of type <code>I::Item</code> and <code>j</code> of type
+<code>J::Item</code> respectively, the resulting iterator will:</p>
+<ul>
+<li>Emit <code>EitherOrBoth::Left(i)</code> when <code>i &lt; j</code>,
+and remove <code>i</code> from its source iterator</li>
+<li>Emit <code>EitherOrBoth::Right(j)</code> when <code>i &gt; j</code>,
+and remove <code>j</code> from its source iterator</li>
+<li>Emit <code>EitherOrBoth::Both(i, j)</code> when  <code>i == j</code>,
+and remove both <code>i</code> and <code>j</code> from their respective source iterators</li>
+</ul>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+<span class="kw">use </span>itertools::EitherOrBoth::{Left, Right, Both};
+
+<span class="kw">let </span>ki = (<span class="number">0</span>..<span class="number">10</span>).step(<span class="number">3</span>);
+<span class="kw">let </span>ku = (<span class="number">0</span>..<span class="number">10</span>).step(<span class="number">5</span>);
+<span class="kw">let </span>ki_ku = ki.merge_join_by(ku, |i, j| i.cmp(j)).map(|either| {
+    <span class="kw">match </span>either {
+        Left(<span class="kw">_</span>) =&gt; <span class="string">&quot;Ki&quot;</span>,
+        Right(<span class="kw">_</span>) =&gt; <span class="string">&quot;Ku&quot;</span>,
+        Both(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="string">&quot;KiKu&quot;
+    </span>}
+});
+
+itertools::assert_equal(ki_ku, <span class="macro">vec!</span>[<span class="string">&quot;KiKu&quot;</span>, <span class="string">&quot;Ki&quot;</span>, <span class="string">&quot;Ku&quot;</span>, <span class="string">&quot;Ki&quot;</span>, <span class="string">&quot;Ki&quot;</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.cartesian_product" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#869-876">source</a><h4 class="code-header">fn <a href="#method.cartesian_product" class="fnname">cartesian_product</a>&lt;J&gt;(self, other: J) -&gt; <a class="struct" href="structs/struct.Product.html" title="struct itertools::structs::Product">Product</a>&lt;Self, J::IntoIter&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Product.html" title="struct itertools::structs::Product">Product</a>&lt;I, J&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, J&gt; Iterator for <a class="struct" href="structs/struct.Product.html" title="struct itertools::structs::Product">Product</a>&lt;I, J&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: Clone + Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::Item: Clone,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = (I::Item, J::Item);</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;J::IntoIter: Clone,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that iterates over the cartesian product of
+the element sets of two iterators <code>self</code> and <code>J</code>.</p>
+<p>Iterator element type is <code>(Self::Item, J::Item)</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>it = (<span class="number">0</span>..<span class="number">2</span>).cartesian_product(<span class="string">&quot;αβ&quot;</span>.chars());
+itertools::assert_equal(it, <span class="macro">vec!</span>[(<span class="number">0</span>, <span class="string">&#39;α&#39;</span>), (<span class="number">0</span>, <span class="string">&#39;β&#39;</span>), (<span class="number">1</span>, <span class="string">&#39;α&#39;</span>), (<span class="number">1</span>, <span class="string">&#39;β&#39;</span>)]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.coalesce" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#941-947">source</a><h4 class="code-header">fn <a href="#method.coalesce" class="fnname">coalesce</a>&lt;F&gt;(self, f: F) -&gt; <a class="struct" href="structs/struct.Coalesce.html" title="struct itertools::structs::Coalesce">Coalesce</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Coalesce.html" title="struct itertools::structs::Coalesce">Coalesce</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F&gt; Iterator for <a class="struct" href="structs/struct.Coalesce.html" title="struct itertools::structs::Coalesce">Coalesce</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(I::Item, I::Item) -&gt; Result&lt;I::Item, (I::Item, I::Item)&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item, Self::Item) -&gt; Result&lt;Self::Item, (Self::Item, Self::Item)&gt;,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that uses the passed-in closure to
+optionally merge together consecutive elements.</p>
+<p>The closure <code>f</code> is passed two elements, <code>previous</code> and <code>current</code> and may
+return either (1) <code>Ok(combined)</code> to merge the two values or
+(2) <code>Err((previous', current'))</code> to indicate they can’t be merged.
+In (2), the value <code>previous'</code> is emitted by the iterator.
+Either (1) <code>combined</code> or (2) <code>current'</code> becomes the previous value
+when coalesce continues with the next pair of elements to merge. The
+value that remains at the end is also emitted by the iterator.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+<p>This iterator is <em>fused</em>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="comment">// sum same-sign runs together
+</span><span class="kw">let </span>data = <span class="macro">vec!</span>[-<span class="number">1.</span>, -<span class="number">2.</span>, -<span class="number">3.</span>, <span class="number">3.</span>, <span class="number">1.</span>, <span class="number">0.</span>, -<span class="number">1.</span>];
+itertools::assert_equal(data.into_iter().coalesce(|x, y|
+        <span class="kw">if </span>(x &gt;= <span class="number">0.</span>) == (y &gt;= <span class="number">0.</span>) {
+            <span class="prelude-val">Ok</span>(x + y)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">Err</span>((x, y))
+        }),
+        <span class="macro">vec!</span>[-<span class="number">6.</span>, <span class="number">4.</span>, -<span class="number">1.</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.dedup" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#963-968">source</a><h4 class="code-header">fn <a href="#method.dedup" class="fnname">dedup</a>(self) -&gt; <a class="type" href="structs/type.Dedup.html" title="type itertools::structs::Dedup">Dedup</a>&lt;Self&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: PartialEq,</span></h4></section></summary><div class="docblock"><p>Remove duplicates from sections of consecutive identical elements.
+If the iterator is sorted, all elements will be unique.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+<p>This iterator is <em>fused</em>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>data = <span class="macro">vec!</span>[<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">3.</span>, <span class="number">2.</span>, <span class="number">2.</span>];
+itertools::assert_equal(data.into_iter().dedup(),
+                        <span class="macro">vec!</span>[<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">2.</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.dedup_by" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#985-990">source</a><h4 class="code-header">fn <a href="#method.dedup_by" class="fnname">dedup_by</a>&lt;Cmp&gt;(self, cmp: Cmp) -&gt; <a class="struct" href="structs/struct.DedupBy.html" title="struct itertools::structs::DedupBy">DedupBy</a>&lt;Self, Cmp&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.DedupBy.html" title="struct itertools::structs::DedupBy">DedupBy</a>&lt;I, Pred&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, Pred&gt; Iterator for <a class="struct" href="structs/struct.DedupBy.html" title="struct itertools::structs::DedupBy">DedupBy</a>&lt;I, Pred&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::Item: PartialEq,<br>&nbsp;&nbsp;&nbsp;&nbsp;Pred: DedupPredicate&lt;I::Item&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Cmp: FnMut(&amp;Self::Item, &amp;Self::Item) -&gt; bool,</span></h4></section></summary><div class="docblock"><p>Remove duplicates from sections of consecutive identical elements,
+determining equality using a comparison function.
+If the iterator is sorted, all elements will be unique.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+<p>This iterator is <em>fused</em>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>data = <span class="macro">vec!</span>[(<span class="number">0</span>, <span class="number">1.</span>), (<span class="number">1</span>, <span class="number">1.</span>), (<span class="number">0</span>, <span class="number">2.</span>), (<span class="number">0</span>, <span class="number">3.</span>), (<span class="number">1</span>, <span class="number">3.</span>), (<span class="number">1</span>, <span class="number">2.</span>), (<span class="number">2</span>, <span class="number">2.</span>)];
+itertools::assert_equal(data.into_iter().dedup_by(|x, y| x.<span class="number">1</span>==y.<span class="number">1</span>),
+                        <span class="macro">vec!</span>[(<span class="number">0</span>, <span class="number">1.</span>), (<span class="number">0</span>, <span class="number">2.</span>), (<span class="number">0</span>, <span class="number">3.</span>), (<span class="number">1</span>, <span class="number">2.</span>)]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.peeking_take_while" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1049-1054">source</a><h4 class="code-header">fn <a href="#method.peeking_take_while" class="fnname">peeking_take_while</a>&lt;F&gt;(&amp;mut self, accept: F) -&gt; <a class="struct" href="structs/struct.PeekingTakeWhile.html" title="struct itertools::structs::PeekingTakeWhile">PeekingTakeWhile</a>&lt;'_, Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.PeekingTakeWhile.html" title="struct itertools::structs::PeekingTakeWhile">PeekingTakeWhile</a>&lt;'a, I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;'a, I, F&gt; Iterator for <a class="struct" href="structs/struct.PeekingTakeWhile.html" title="struct itertools::structs::PeekingTakeWhile">PeekingTakeWhile</a>&lt;'a, I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="trait.PeekingNext.html" title="trait itertools::PeekingNext">PeekingNext</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;I::Item) -&gt; bool,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + <a class="trait" href="trait.PeekingNext.html" title="trait itertools::PeekingNext">PeekingNext</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item) -&gt; bool,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that borrows from this iterator and
+takes items while the closure <code>accept</code> returns <code>true</code>.</p>
+<p>This adaptor can only be used on iterators that implement <code>PeekingNext</code>
+like <code>.peekable()</code>, <code>put_back</code> and a few other collection iterators.</p>
+<p>The last and rejected element (first <code>false</code>) is still available when
+<code>peeking_take_while</code> is done.</p>
+<p>See also <a href="#method.take_while_ref"><code>.take_while_ref()</code></a>
+which is a similar adaptor.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.take_while_ref" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1074-1079">source</a><h4 class="code-header">fn <a href="#method.take_while_ref" class="fnname">take_while_ref</a>&lt;F&gt;(&amp;mut self, accept: F) -&gt; <a class="struct" href="structs/struct.TakeWhileRef.html" title="struct itertools::structs::TakeWhileRef">TakeWhileRef</a>&lt;'_, Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.TakeWhileRef.html" title="struct itertools::structs::TakeWhileRef">TakeWhileRef</a>&lt;'a, I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;'a, I, F&gt; Iterator for <a class="struct" href="structs/struct.TakeWhileRef.html" title="struct itertools::structs::TakeWhileRef">TakeWhileRef</a>&lt;'a, I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator + Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;I::Item) -&gt; bool,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item) -&gt; bool,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that borrows from a <code>Clone</code>-able iterator
+to only pick off elements while the predicate <code>accept</code> returns <code>true</code>.</p>
+<p>It uses the <code>Clone</code> trait to restore the original iterator so that the
+last and rejected element (first <code>false</code>) is still available when
+<code>take_while_ref</code> is done.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span><span class="kw-2">mut </span>hexadecimals = <span class="string">&quot;0123456789abcdef&quot;</span>.chars();
+
+<span class="kw">let </span>decimals = hexadecimals.take_while_ref(|c| c.is_numeric())
+                           .collect::&lt;String&gt;();
+<span class="macro">assert_eq!</span>(decimals, <span class="string">&quot;0123456789&quot;</span>);
+<span class="macro">assert_eq!</span>(hexadecimals.next(), <span class="prelude-val">Some</span>(<span class="string">&#39;a&#39;</span>));
+</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.while_some" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1095-1099">source</a><h4 class="code-header">fn <a href="#method.while_some" class="fnname">while_some</a>&lt;A&gt;(self) -&gt; <a class="struct" href="structs/struct.WhileSome.html" title="struct itertools::structs::WhileSome">WhileSome</a>&lt;Self&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.WhileSome.html" title="struct itertools::structs::WhileSome">WhileSome</a>&lt;I&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, A&gt; Iterator for <a class="struct" href="structs/struct.WhileSome.html" title="struct itertools::structs::WhileSome">WhileSome</a>&lt;I&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator&lt;Item = Option&lt;A&gt;&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = A;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = Option&lt;A&gt;&gt;,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that filters <code>Option&lt;A&gt;</code> iterator elements
+and produces <code>A</code>. Stops on the first <code>None</code> encountered.</p>
+<p>Iterator element type is <code>A</code>, the unwrapped element.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="comment">// List all hexadecimal digits
+</span>itertools::assert_equal(
+    (<span class="number">0</span>..).map(|i| std::char::from_digit(i, <span class="number">16</span>)).while_some(),
+    <span class="string">&quot;0123456789abcdef&quot;</span>.chars());
+</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.tuple_combinations" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1134-1140">source</a><h4 class="code-header">fn <a href="#method.tuple_combinations" class="fnname">tuple_combinations</a>&lt;T&gt;(self) -&gt; <a class="struct" href="structs/struct.TupleCombinations.html" title="struct itertools::structs::TupleCombinations">TupleCombinations</a>&lt;Self, T&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.TupleCombinations.html" title="struct itertools::structs::TupleCombinations">TupleCombinations</a>&lt;I, T&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, T&gt; Iterator for <a class="struct" href="structs/struct.TupleCombinations.html" title="struct itertools::structs::TupleCombinations">TupleCombinations</a>&lt;I, T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: HasCombination&lt;I&gt;,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = T;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Clone,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: HasCombination&lt;Self&gt;,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that iterates over the combinations of the
+elements from an iterator.</p>
+<p>Iterator element can be any homogeneous tuple of type <code>Self::Item</code> with
+size up to 4.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span><span class="kw-2">mut </span>v = Vec::new();
+<span class="kw">for </span>(a, b) <span class="kw">in </span>(<span class="number">1</span>..<span class="number">5</span>).tuple_combinations() {
+    v.push((a, b));
+}
+<span class="macro">assert_eq!</span>(v, <span class="macro">vec!</span>[(<span class="number">1</span>, <span class="number">2</span>), (<span class="number">1</span>, <span class="number">3</span>), (<span class="number">1</span>, <span class="number">4</span>), (<span class="number">2</span>, <span class="number">3</span>), (<span class="number">2</span>, <span class="number">4</span>), (<span class="number">3</span>, <span class="number">4</span>)]);
+
+<span class="kw">let </span><span class="kw-2">mut </span>it = (<span class="number">1</span>..<span class="number">5</span>).tuple_combinations();
+<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)), it.next());
+<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>)), it.next());
+<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>)), it.next());
+<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>((<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)), it.next());
+<span class="macro">assert_eq!</span>(<span class="prelude-val">None</span>, it.next());
+
+<span class="comment">// this requires a type hint
+</span><span class="kw">let </span>it = (<span class="number">1</span>..<span class="number">5</span>).tuple_combinations::&lt;(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>)&gt;();
+itertools::assert_equal(it, <span class="macro">vec!</span>[(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), (<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>), (<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>), (<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)]);
+
+<span class="comment">// you can also specify the complete type
+</span><span class="kw">use </span>itertools::TupleCombinations;
+<span class="kw">use </span>std::ops::Range;
+
+<span class="kw">let </span>it: TupleCombinations&lt;Range&lt;u32&gt;, (u32, u32, u32)&gt; = (<span class="number">1</span>..<span class="number">5</span>).tuple_combinations();
+itertools::assert_equal(it, <span class="macro">vec!</span>[(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), (<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>), (<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>), (<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.pad_using" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1269-1274">source</a><h4 class="code-header">fn <a href="#method.pad_using" class="fnname">pad_using</a>&lt;F&gt;(self, min: usize, f: F) -&gt; <a class="struct" href="structs/struct.PadUsing.html" title="struct itertools::structs::PadUsing">PadUsing</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.PadUsing.html" title="struct itertools::structs::PadUsing">PadUsing</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F&gt; Iterator for <a class="struct" href="structs/struct.PadUsing.html" title="struct itertools::structs::PadUsing">PadUsing</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(usize) -&gt; I::Item,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(usize) -&gt; Self::Item,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that pads the sequence to a minimum length of
+<code>min</code> by filling missing elements using a closure <code>f</code>.</p>
+<p>Iterator element type is <code>Self::Item</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>it = (<span class="number">0</span>..<span class="number">5</span>).pad_using(<span class="number">10</span>, |i| <span class="number">2</span><span class="kw-2">*</span>i);
+itertools::assert_equal(it, <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">10</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>, <span class="number">18</span>]);
+
+<span class="kw">let </span>it = (<span class="number">0</span>..<span class="number">10</span>).pad_using(<span class="number">5</span>, |i| <span class="number">2</span><span class="kw-2">*</span>i);
+itertools::assert_equal(it, <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]);
+
+<span class="kw">let </span>it = (<span class="number">0</span>..<span class="number">5</span>).pad_using(<span class="number">10</span>, |i| <span class="number">2</span><span class="kw-2">*</span>i).rev();
+itertools::assert_equal(it, <span class="macro">vec!</span>[<span class="number">18</span>, <span class="number">16</span>, <span class="number">14</span>, <span class="number">12</span>, <span class="number">10</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.with_position" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1295-1299">source</a><h4 class="code-header">fn <a href="#method.with_position" class="fnname">with_position</a>(self) -&gt; <a class="struct" href="structs/struct.WithPosition.html" title="struct itertools::structs::WithPosition">WithPosition</a>&lt;Self&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.WithPosition.html" title="struct itertools::structs::WithPosition">WithPosition</a>&lt;I&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I:&nbsp;Iterator&gt; Iterator for <a class="struct" href="structs/struct.WithPosition.html" title="struct itertools::structs::WithPosition">WithPosition</a>&lt;I&gt;</span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = <a class="enum" href="enum.Position.html" title="enum itertools::Position">Position</a>&lt;I::Item&gt;;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that wraps each element in a <code>Position</code> to
+ease special-case handling of the first or last elements.</p>
+<p>Iterator element type is
+<a href="enum.Position.html"><code>Position&lt;Self::Item&gt;</code></a></p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::{Itertools, Position};
+
+<span class="kw">let </span>it = (<span class="number">0</span>..<span class="number">4</span>).with_position();
+itertools::assert_equal(it,
+                        <span class="macro">vec!</span>[Position::First(<span class="number">0</span>),
+                             Position::Middle(<span class="number">1</span>),
+                             Position::Middle(<span class="number">2</span>),
+                             Position::Last(<span class="number">3</span>)]);
+
+<span class="kw">let </span>it = (<span class="number">0</span>..<span class="number">1</span>).with_position();
+itertools::assert_equal(it, <span class="macro">vec!</span>[Position::Only(<span class="number">0</span>)]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.positions" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1314-1319">source</a><h4 class="code-header">fn <a href="#method.positions" class="fnname">positions</a>&lt;P&gt;(self, predicate: P) -&gt; <a class="struct" href="structs/struct.Positions.html" title="struct itertools::structs::Positions">Positions</a>&lt;Self, P&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Positions.html" title="struct itertools::structs::Positions">Positions</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F&gt; Iterator for <a class="struct" href="structs/struct.Positions.html" title="struct itertools::structs::Positions">Positions</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(I::Item) -&gt; bool,</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = usize;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;P: FnMut(Self::Item) -&gt; bool,</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that yields the indices of all elements
+satisfying a predicate, counted from the start of the iterator.</p>
+<p>Equivalent to <code>iter.enumerate().filter(|(_, v)| predicate(v)).map(|(i, _)| i)</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>data = <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">9</span>];
+itertools::assert_equal(data.iter().positions(|v| v % <span class="number">2 </span>== <span class="number">0</span>), <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>]);
+
+itertools::assert_equal(data.iter().positions(|v| v % <span class="number">2 </span>== <span class="number">1</span>).rev(), <span class="macro">vec!</span>[<span class="number">7</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">0</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.update" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1331-1336">source</a><h4 class="code-header">fn <a href="#method.update" class="fnname">update</a>&lt;F&gt;(self, updater: F) -&gt; <a class="struct" href="structs/struct.Update.html" title="struct itertools::structs::Update">Update</a>&lt;Self, F&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for <a class="struct" href="structs/struct.Update.html" title="struct itertools::structs::Update">Update</a>&lt;I, F&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;I, F&gt; Iterator for <a class="struct" href="structs/struct.Update.html" title="struct itertools::structs::Update">Update</a>&lt;I, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: Iterator,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut I::Item),</span></span><span class="where fmt-newline">    type <a class="associatedtype">Item</a> = I::Item;</span></code></span></span></span></span><span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;mut Self::Item),</span></h4></section></summary><div class="docblock"><p>Return an iterator adaptor that applies a mutating function
+to each element before yielding it.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>input = <span class="macro">vec!</span>[<span class="macro">vec!</span>[<span class="number">1</span>], <span class="macro">vec!</span>[<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]];
+<span class="kw">let </span>it = input.into_iter().update(|<span class="kw-2">mut </span>v| v.push(<span class="number">0</span>));
+itertools::assert_equal(it, <span class="macro">vec!</span>[<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">0</span>], <span class="macro">vec!</span>[<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>]]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.next_tuple" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1352-1357">source</a><h4 class="code-header">fn <a href="#method.next_tuple" class="fnname">next_tuple</a>&lt;T&gt;(&amp;mut self) -&gt; Option&lt;T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect,</span></h4></section></summary><div class="docblock"><p>Advances the iterator and returns the next items grouped in a tuple of
+a specific size (up to 4).</p>
+<p>If there are enough elements to be grouped in a tuple, then the tuple is
+returned inside <code>Some</code>, otherwise <code>None</code> is returned.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span><span class="kw-2">mut </span>iter = <span class="number">1</span>..<span class="number">5</span>;
+
+<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="number">2</span>)), iter.next_tuple());</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.collect_tuple" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1377-1388">source</a><h4 class="code-header">fn <a href="#method.collect_tuple" class="fnname">collect_tuple</a>&lt;T&gt;(self) -&gt; Option&lt;T&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized + Iterator&lt;Item = T::Item&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: TupleCollect,</span></h4></section></summary><div class="docblock"><p>Collects all items from the iterator into a tuple of a specific size
+(up to 4).</p>
+<p>If the number of elements inside the iterator is <strong>exactly</strong> equal to
+the tuple size, then the tuple is returned inside <code>Some</code>, otherwise
+<code>None</code> is returned.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>iter = <span class="number">1</span>..<span class="number">3</span>;
+
+<span class="kw">if let </span><span class="prelude-val">Some</span>((x, y)) = iter.collect_tuple() {
+    <span class="macro">assert_eq!</span>((x, y), (<span class="number">1</span>, <span class="number">2</span>))
+} <span class="kw">else </span>{
+    <span class="macro">panic!</span>(<span class="string">&quot;Expected two elements&quot;</span>)
+}</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.find_position" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1401-1412">source</a><h4 class="code-header">fn <a href="#method.find_position" class="fnname">find_position</a>&lt;P&gt;(&amp;mut self, pred: P) -&gt; Option&lt;(usize, Self::Item)&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;P: FnMut(&amp;Self::Item) -&gt; bool,</span></h4></section></summary><div class="docblock"><p>Find the position and value of the first element satisfying a predicate.</p>
+<p>The iterator is not advanced past the first element found.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>text = <span class="string">&quot;Hα&quot;</span>;
+<span class="macro">assert_eq!</span>(text.chars().find_position(|ch| ch.is_lowercase()), <span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="string">&#39;α&#39;</span>)));</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.all_equal" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1430-1438">source</a><h4 class="code-header">fn <a href="#method.all_equal" class="fnname">all_equal</a>(&amp;mut self) -&gt; bool<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: PartialEq,</span></h4></section></summary><div class="docblock"><p>Check whether all elements compare equal.</p>
+<p>Empty iterators are considered to have equal elements:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>data = <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>];
+<span class="macro">assert!</span>(!data.iter().all_equal());
+<span class="macro">assert!</span>(data[<span class="number">0</span>..<span class="number">3</span>].iter().all_equal());
+<span class="macro">assert!</span>(data[<span class="number">3</span>..<span class="number">5</span>].iter().all_equal());
+<span class="macro">assert!</span>(data[<span class="number">5</span>..<span class="number">8</span>].iter().all_equal());
+
+<span class="kw">let </span>data : <span class="prelude-ty">Option</span>&lt;usize&gt; = <span class="prelude-val">None</span>;
+<span class="macro">assert!</span>(data.into_iter().all_equal());</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.dropping" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1455-1462">source</a><h4 class="code-header">fn <a href="#method.dropping" class="fnname">dropping</a>(self, n: usize) -&gt; Self<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Consume the first <code>n</code> elements from the iterator eagerly,
+and return the same iterator again.</p>
+<p>It works similarly to <em>.skip(</em> <code>n</code> <em>)</em> except it is eager and
+preserves the iterator type.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span><span class="kw-2">mut </span>iter = <span class="string">&quot;αβγ&quot;</span>.chars().dropping(<span class="number">2</span>);
+itertools::assert_equal(iter, <span class="string">&quot;γ&quot;</span>.chars());</code></pre></div>
+<p><em>Fusing notes: if the iterator is exhausted by dropping,
+the result of calling <code>.next()</code> again depends on the iterator implementation.</em></p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.dropping_back" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1479-1487">source</a><h4 class="code-header">fn <a href="#method.dropping_back" class="fnname">dropping_back</a>(self, n: usize) -&gt; Self<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: DoubleEndedIterator,</span></h4></section></summary><div class="docblock"><p>Consume the last <code>n</code> elements from the iterator eagerly,
+and return the same iterator again.</p>
+<p>This is only possible on double ended iterators. <code>n</code> may be
+larger than the number of elements.</p>
+<p>Note: This method is eager, dropping the back elements immediately and
+preserves the iterator type.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>init = <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>].into_iter().dropping_back(<span class="number">1</span>);
+itertools::assert_equal(init, <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">3</span>, <span class="number">6</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.foreach" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1507-1512">source</a><h4 class="code-header">fn <a href="#method.foreach" class="fnname">foreach</a>&lt;F&gt;(self, f: F)<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item),<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 0.8: Use .for_each() instead</span></div></span><div class="docblock"><p>Run the closure <code>f</code> eagerly on each element of the iterator.</p>
+<p>Consumes the iterator until its end.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::sync::mpsc::channel;
+<span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>(tx, rx) = channel();
+
+<span class="comment">// use .foreach() to apply a function to each value -- sending it
+</span>(<span class="number">0</span>..<span class="number">5</span>).map(|x| x * <span class="number">2 </span>+ <span class="number">1</span>).foreach(|x| { tx.send(x).unwrap(); } );
+
+drop(tx);
+
+itertools::assert_equal(rx.iter(), <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.concat" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1527-1532">source</a><h4 class="code-header">fn <a href="#method.concat" class="fnname">concat</a>(self) -&gt; Self::Item<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: Extend&lt;&lt;&lt;Self as Iterator&gt;::Item as IntoIterator&gt;::Item&gt; + IntoIterator + Default,</span></h4></section></summary><div class="docblock"><p>Combine all an iterator’s elements into one element by using <code>Extend</code>.</p>
+<p>This combinator will extend the first item with each of the rest of the
+items of the iterator. If the iterator is empty, the default value of
+<code>I::Item</code> is returned.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>input = <span class="macro">vec!</span>[<span class="macro">vec!</span>[<span class="number">1</span>], <span class="macro">vec!</span>[<span class="number">2</span>, <span class="number">3</span>], <span class="macro">vec!</span>[<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]];
+<span class="macro">assert_eq!</span>(input.into_iter().concat(),
+           <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.set_from" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1559-1572">source</a><h4 class="code-header">fn <a href="#method.set_from" class="fnname">set_from</a>&lt;'a, A:&nbsp;'a, J&gt;(&amp;mut self, from: J) -&gt; usize<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Iterator&lt;Item = &amp;'a mut A&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: IntoIterator&lt;Item = A&gt;,</span></h4></section></summary><div class="docblock"><p>Assign to each reference in <code>self</code> from the <code>from</code> iterator,
+stopping at the shortest of the two iterators.</p>
+<p>The <code>from</code> iterator is queried for its next element before the <code>self</code>
+iterator, and if either is exhausted the method is done.</p>
+<p>Return the number of elements written.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span><span class="kw-2">mut </span>xs = [<span class="number">0</span>; <span class="number">4</span>];
+xs.iter_mut().set_from(<span class="number">1</span>..);
+<span class="macro">assert_eq!</span>(xs, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.format" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1619-1623">source</a><h4 class="code-header">fn <a href="#method.format" class="fnname">format</a>(self, sep: &amp;str) -&gt; <a class="struct" href="structs/struct.Format.html" title="struct itertools::structs::Format">Format</a>&lt;'_, Self&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Format all iterator elements, separated by <code>sep</code>.</p>
+<p>All elements are formatted (any formatting trait)
+with <code>sep</code> inserted between each element.</p>
+<p><strong>Panics</strong> if the formatter helper is formatted more than once.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>data = [<span class="number">1.1</span>, <span class="number">2.71828</span>, -<span class="number">3.</span>];
+<span class="macro">assert_eq!</span>(
+    <span class="macro">format!</span>(<span class="string">&quot;{:.2}&quot;</span>, data.iter().format(<span class="string">&quot;, &quot;</span>)),
+           <span class="string">&quot;1.10, 2.72, -3.00&quot;</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.format_with" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1657-1662">source</a><h4 class="code-header">fn <a href="#method.format_with" class="fnname">format_with</a>&lt;F&gt;(self, sep: &amp;str, format: F) -&gt; <a class="struct" href="structs/struct.FormatWith.html" title="struct itertools::structs::FormatWith">FormatWith</a>&lt;'_, Self, F&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item, &amp;mut dyn FnMut(&amp;dyn Display) -&gt; Result) -&gt; Result,</span></h4></section></summary><div class="docblock"><p>Format all iterator elements, separated by <code>sep</code>.</p>
+<p>This is a customizable version of <code>.format()</code>.</p>
+<p>The supplied closure <code>format</code> is called once per iterator element,
+with two arguments: the element and a callback that takes a
+<code>&amp;Display</code> value, i.e. any reference to type that implements <code>Display</code>.</p>
+<p>Using <code>&amp;format_args!(...)</code> is the most versatile way to apply custom
+element formatting. The callback can be called multiple times if needed.</p>
+<p><strong>Panics</strong> if the formatter helper is formatted more than once.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>data = [<span class="number">1.1</span>, <span class="number">2.71828</span>, -<span class="number">3.</span>];
+<span class="kw">let </span>data_formatter = data.iter().format_with(<span class="string">&quot;, &quot;</span>, |elt, f| f(<span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">&quot;{:.2}&quot;</span>, elt)));
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, data_formatter),
+           <span class="string">&quot;1.10, 2.72, -3.00&quot;</span>);
+
+<span class="comment">// .format_with() is recursively composable
+</span><span class="kw">let </span>matrix = [[<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>],
+              [<span class="number">4.</span>, <span class="number">5.</span>, <span class="number">6.</span>]];
+<span class="kw">let </span>matrix_formatter = matrix.iter().format_with(<span class="string">&quot;\n&quot;</span>, |row, f| {
+                                f(<span class="kw-2">&amp;</span>row.iter().format_with(<span class="string">&quot;, &quot;</span>, |elt, g| g(<span class="kw-2">&amp;</span>elt)))
+                             });
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, matrix_formatter),
+           <span class="string">&quot;1, 2, 3\n4, 5, 6&quot;</span>);
+
+</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fold_results" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1706-1717">source</a><h4 class="code-header">fn <a href="#method.fold_results" class="fnname">fold_results</a>&lt;A, E, B, F&gt;(&amp;mut self, start: B, f: F) -&gt; Result&lt;B, E&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Iterator&lt;Item = Result&lt;A, E&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(B, A) -&gt; B,</span></h4></section></summary><div class="docblock"><p>Fold <code>Result</code> values from an iterator.</p>
+<p>Only <code>Ok</code> values are folded. If no error is encountered, the folded
+value is returned inside <code>Ok</code>. Otherwise, the operation terminates
+and returns the first <code>Err</code> value it encounters. No iterator elements are
+consumed after the first error.</p>
+<p>The first accumulator value is the <code>start</code> parameter.
+Each iteration passes the accumulator value and the next value inside <code>Ok</code>
+to the fold function <code>f</code> and its return value becomes the new accumulator value.</p>
+<p>For example the sequence <em>Ok(1), Ok(2), Ok(3)</em> will result in a
+computation like this:</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="kw">let </span><span class="kw-2">mut </span>accum = start;
+accum = f(accum, <span class="number">1</span>);
+accum = f(accum, <span class="number">2</span>);
+accum = f(accum, <span class="number">3</span>);</code></pre></div>
+<p>With a <code>start</code> value of 0 and an addition as folding function,
+this effectively results in <em>((0 + 1) + 2) + 3</em></p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::ops::Add;
+<span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>values = [<span class="number">1</span>, <span class="number">2</span>, -<span class="number">2</span>, -<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>];
+<span class="macro">assert_eq!</span>(
+    values.iter()
+          .map(<span class="prelude-val">Ok</span>::&lt;<span class="kw">_</span>, ()&gt;)
+          .fold_results(<span class="number">0</span>, Add::add),
+    <span class="prelude-val">Ok</span>(<span class="number">3</span>)
+);
+<span class="macro">assert!</span>(
+    values.iter()
+          .map(|<span class="kw-2">&amp;</span>x| <span class="kw">if </span>x &gt;= <span class="number">0 </span>{ <span class="prelude-val">Ok</span>(x) } <span class="kw">else </span>{ <span class="prelude-val">Err</span>(<span class="string">&quot;Negative number&quot;</span>) })
+          .fold_results(<span class="number">0</span>, Add::add)
+          .is_err()
+);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fold_options" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1738-1749">source</a><h4 class="code-header">fn <a href="#method.fold_options" class="fnname">fold_options</a>&lt;A, B, F&gt;(&amp;mut self, start: B, f: F) -&gt; Option&lt;B&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Iterator&lt;Item = Option&lt;A&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(B, A) -&gt; B,</span></h4></section></summary><div class="docblock"><p>Fold <code>Option</code> values from an iterator.</p>
+<p>Only <code>Some</code> values are folded. If no <code>None</code> is encountered, the folded
+value is returned inside <code>Some</code>. Otherwise, the operation terminates
+and returns <code>None</code>. No iterator elements are consumed after the <code>None</code>.</p>
+<p>This is the <code>Option</code> equivalent to <code>fold_results</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::ops::Add;
+<span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span><span class="kw-2">mut </span>values = <span class="macro">vec!</span>[<span class="prelude-val">Some</span>(<span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(-<span class="number">2</span>)].into_iter();
+<span class="macro">assert_eq!</span>(values.fold_options(<span class="number">5</span>, Add::add), <span class="prelude-val">Some</span>(<span class="number">5 </span>+ <span class="number">1 </span>+ <span class="number">2 </span>- <span class="number">2</span>));
+
+<span class="kw">let </span><span class="kw-2">mut </span>more_values = <span class="macro">vec!</span>[<span class="prelude-val">Some</span>(<span class="number">2</span>), <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="number">0</span>)].into_iter();
+<span class="macro">assert!</span>(more_values.fold_options(<span class="number">0</span>, Add::add).is_none());
+<span class="macro">assert_eq!</span>(more_values.next().unwrap(), <span class="prelude-val">Some</span>(<span class="number">0</span>));</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fold1" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1763-1768">source</a><h4 class="code-header">fn <a href="#method.fold1" class="fnname">fold1</a>&lt;F&gt;(self, f: F) -&gt; Option&lt;Self::Item&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item, Self::Item) -&gt; Self::Item,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Accumulator of the elements in the iterator.</p>
+<p>Like <code>.fold()</code>, without a base case. If the iterator is
+empty, return <code>None</code>. With just one element, return it.
+Otherwise elements are accumulated in sequence using the closure <code>f</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="macro">assert_eq!</span>((<span class="number">0</span>..<span class="number">10</span>).fold1(|x, y| x + y).unwrap_or(<span class="number">0</span>), <span class="number">45</span>);
+<span class="macro">assert_eq!</span>((<span class="number">0</span>..<span class="number">0</span>).fold1(|x, y| x * y), <span class="prelude-val">None</span>);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.tree_fold1" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1818-1875">source</a><h4 class="code-header">fn <a href="#method.tree_fold1" class="fnname">tree_fold1</a>&lt;F&gt;(self, f: F) -&gt; Option&lt;Self::Item&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item, Self::Item) -&gt; Self::Item,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>Accumulate the elements in the iterator in a tree-like manner.</p>
+<p>You can think of it as, while there’s more than one item, repeatedly
+combining adjacent items.  It does so in bottom-up-merge-sort order,
+however, so that it needs only logarithmic stack space.</p>
+<p>This produces a call tree like the following (where the calls under
+an item are done after reading that item):</p>
+<div class="example-wrap"><pre class="language-text"><code>1 2 3 4 5 6 7
+│ │ │ │ │ │ │
+└─f └─f └─f │
+  │   │   │ │
+  └───f   └─f
+      │     │
+      └─────f</code></pre></div>
+<p>Which, for non-associative functions, will typically produce a different
+result than the linear call tree used by <code>fold1</code>:</p>
+<div class="example-wrap"><pre class="language-text"><code>1 2 3 4 5 6 7
+│ │ │ │ │ │ │
+└─f─f─f─f─f─f</code></pre></div>
+<p>If <code>f</code> is associative, prefer the normal <code>fold1</code> instead.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="comment">// The same tree as above
+</span><span class="kw">let </span>num_strings = (<span class="number">1</span>..<span class="number">8</span>).map(|x| x.to_string());
+<span class="macro">assert_eq!</span>(num_strings.tree_fold1(|x, y| <span class="macro">format!</span>(<span class="string">&quot;f({}, {})&quot;</span>, x, y)),
+    <span class="prelude-val">Some</span>(String::from(<span class="string">&quot;f(f(f(1, 2), f(3, 4)), f(f(5, 6), 7))&quot;</span>)));
+
+<span class="comment">// Like fold1, an empty iterator produces None
+</span><span class="macro">assert_eq!</span>((<span class="number">0</span>..<span class="number">0</span>).tree_fold1(|x, y| x * y), <span class="prelude-val">None</span>);
+
+<span class="comment">// tree_fold1 matches fold1 for associative operations...
+</span><span class="macro">assert_eq!</span>((<span class="number">0</span>..<span class="number">10</span>).tree_fold1(|x, y| x + y),
+    (<span class="number">0</span>..<span class="number">10</span>).fold1(|x, y| x + y));
+<span class="comment">// ...but not for non-associative ones
+</span><span class="macro">assert_ne!</span>((<span class="number">0</span>..<span class="number">10</span>).tree_fold1(|x, y| x - y),
+    (<span class="number">0</span>..<span class="number">10</span>).fold1(|x, y| x - y));</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.fold_while" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1917-1929">source</a><h4 class="code-header">fn <a href="#method.fold_while" class="fnname">fold_while</a>&lt;B, F&gt;(&amp;mut self, init: B, f: F) -&gt; <a class="enum" href="enum.FoldWhile.html" title="enum itertools::FoldWhile">FoldWhile</a>&lt;B&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(B, Self::Item) -&gt; <a class="enum" href="enum.FoldWhile.html" title="enum itertools::FoldWhile">FoldWhile</a>&lt;B&gt;,</span></h4></section></summary><span class="item-info"><div class="stab deprecated"><span class="emoji">👎</span><span>Deprecated since 0.8: Use .try_fold() instead</span></div></span><div class="docblock"><p>An iterator method that applies a function, producing a single, final value.</p>
+<p><code>fold_while()</code> is basically equivalent to <code>fold()</code> but with additional support for
+early exit via short-circuiting.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+<span class="kw">use </span>itertools::FoldWhile::{Continue, Done};
+
+<span class="kw">let </span>numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>];
+
+<span class="kw">let </span><span class="kw-2">mut </span>result = <span class="number">0</span>;
+
+<span class="comment">// for loop:
+</span><span class="kw">for </span>i <span class="kw">in </span><span class="kw-2">&amp;</span>numbers {
+    <span class="kw">if </span><span class="kw-2">*</span>i &gt; <span class="number">5 </span>{
+        <span class="kw">break</span>;
+    }
+    result = result + i;
+}
+
+<span class="comment">// fold:
+</span><span class="kw">let </span>result2 = numbers.iter().fold(<span class="number">0</span>, |acc, x| {
+    <span class="kw">if </span><span class="kw-2">*</span>x &gt; <span class="number">5 </span>{ acc } <span class="kw">else </span>{ acc + x }
+});
+
+<span class="comment">// fold_while:
+</span><span class="kw">let </span>result3 = numbers.iter().fold_while(<span class="number">0</span>, |acc, x| {
+    <span class="kw">if </span><span class="kw-2">*</span>x &gt; <span class="number">5 </span>{ Done(acc) } <span class="kw">else </span>{ Continue(acc + x) }
+}).into_inner();
+
+<span class="comment">// they&#39;re the same
+</span><span class="macro">assert_eq!</span>(result, result2);
+<span class="macro">assert_eq!</span>(result2, result3);</code></pre></div>
+<p>The big difference between the computations of <code>result2</code> and <code>result3</code> is that while
+<code>fold()</code> called the provided closure for every item of the callee iterator,
+<code>fold_while()</code> actually stopped iterating as soon as it encountered <code>Fold::Done(_)</code>.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.sum1" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1952-1958">source</a><h4 class="code-header">fn <a href="#method.sum1" class="fnname">sum1</a>&lt;S&gt;(self) -&gt; Option&lt;S&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: Sum&lt;Self::Item&gt;,</span></h4></section></summary><div class="docblock"><p>Iterate over the entire iterator and add all the elements.</p>
+<p>An empty iterator returns <code>None</code>, otherwise <code>Some(sum)</code>.</p>
+<h5 id="panics"><a href="#panics">Panics</a></h5>
+<p>When calling <code>sum1()</code> and a primitive integer type is being returned, this
+method will panic if the computation overflows and debug assertions are
+enabled.</p>
+<h5 id="examples"><a href="#examples">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>empty_sum = (<span class="number">1</span>..<span class="number">1</span>).sum1::&lt;i32&gt;();
+<span class="macro">assert_eq!</span>(empty_sum, <span class="prelude-val">None</span>);
+
+<span class="kw">let </span>nonempty_sum = (<span class="number">1</span>..<span class="number">11</span>).sum1::&lt;i32&gt;();
+<span class="macro">assert_eq!</span>(nonempty_sum, <span class="prelude-val">Some</span>(<span class="number">55</span>));</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.product1" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#1980-1986">source</a><h4 class="code-header">fn <a href="#method.product1" class="fnname">product1</a>&lt;P&gt;(self) -&gt; Option&lt;P&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;P: Product&lt;Self::Item&gt;,</span></h4></section></summary><div class="docblock"><p>Iterate over the entire iterator and multiply all the elements.</p>
+<p>An empty iterator returns <code>None</code>, otherwise <code>Some(product)</code>.</p>
+<h5 id="panics-1"><a href="#panics-1">Panics</a></h5>
+<p>When calling <code>product1()</code> and a primitive integer type is being returned,
+method will panic if the computation overflows and debug assertions are
+enabled.</p>
+<h5 id="examples-1"><a href="#examples-1">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="kw">let </span>empty_product = (<span class="number">1</span>..<span class="number">1</span>).product1::&lt;i32&gt;();
+<span class="macro">assert_eq!</span>(empty_product, <span class="prelude-val">None</span>);
+
+<span class="kw">let </span>nonempty_product = (<span class="number">1</span>..<span class="number">11</span>).product1::&lt;i32&gt;();
+<span class="macro">assert_eq!</span>(nonempty_product, <span class="prelude-val">Some</span>(<span class="number">3628800</span>));</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.partition_map" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#2106-2121">source</a><h4 class="code-header">fn <a href="#method.partition_map" class="fnname">partition_map</a>&lt;A, B, F, L, R&gt;(self, predicate: F) -&gt; (A, B)<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(Self::Item) -&gt; <a class="enum" href="enum.Either.html" title="enum itertools::Either">Either</a>&lt;L, R&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;A: Default + Extend&lt;L&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;B: Default + Extend&lt;R&gt;,</span></h4></section></summary><div class="docblock"><p>Collect all iterator elements into one of two
+partitions. Unlike <code>Iterator::partition</code>, each partition may
+have a distinct type.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::{Itertools, Either};
+
+<span class="kw">let </span>successes_and_failures = <span class="macro">vec!</span>[<span class="prelude-val">Ok</span>(<span class="number">1</span>), <span class="prelude-val">Err</span>(<span class="bool-val">false</span>), <span class="prelude-val">Err</span>(<span class="bool-val">true</span>), <span class="prelude-val">Ok</span>(<span class="number">2</span>)];
+
+<span class="kw">let </span>(successes, failures): (Vec&lt;<span class="kw">_</span>&gt;, Vec&lt;<span class="kw">_</span>&gt;) = successes_and_failures
+    .into_iter()
+    .partition_map(|r| {
+        <span class="kw">match </span>r {
+            <span class="prelude-val">Ok</span>(v) =&gt; Either::Left(v),
+            <span class="prelude-val">Err</span>(v) =&gt; Either::Right(v),
+        }
+    });
+
+<span class="macro">assert_eq!</span>(successes, [<span class="number">1</span>, <span class="number">2</span>]);
+<span class="macro">assert_eq!</span>(failures, [<span class="bool-val">false</span>, <span class="bool-val">true</span>]);</code></pre></div>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.minmax" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#2180-2184">source</a><h4 class="code-header">fn <a href="#method.minmax" class="fnname">minmax</a>(self) -&gt; <a class="enum" href="enum.MinMaxResult.html" title="enum itertools::MinMaxResult">MinMaxResult</a>&lt;Self::Item&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self::Item: PartialOrd,</span></h4></section></summary><div class="docblock"><p>Return the minimum and maximum elements in the iterator.</p>
+<p>The return type <code>MinMaxResult</code> is an enum of three variants:</p>
+<ul>
+<li><code>NoElements</code> if the iterator is empty.</li>
+<li><code>OneElement(x)</code> if the iterator has exactly one element.</li>
+<li><code>MinMax(x, y)</code> is returned otherwise, where <code>x &lt;= y</code>. Two
+values are equal if and only if there is more than one
+element in the iterator and all elements are equal.</li>
+</ul>
+<p>On an iterator of length <code>n</code>, <code>minmax</code> does <code>1.5 * n</code> comparisons,
+and so is faster than calling <code>min</code> and <code>max</code> separately which does
+<code>2 * n</code> comparisons.</p>
+<h5 id="examples-2"><a href="#examples-2">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+<span class="kw">use </span>itertools::MinMaxResult::{NoElements, OneElement, MinMax};
+
+<span class="kw">let </span>a: [i32; <span class="number">0</span>] = [];
+<span class="macro">assert_eq!</span>(a.iter().minmax(), NoElements);
+
+<span class="kw">let </span>a = [<span class="number">1</span>];
+<span class="macro">assert_eq!</span>(a.iter().minmax(), OneElement(<span class="kw-2">&amp;</span><span class="number">1</span>));
+
+<span class="kw">let </span>a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];
+<span class="macro">assert_eq!</span>(a.iter().minmax(), MinMax(<span class="kw-2">&amp;</span><span class="number">1</span>, <span class="kw-2">&amp;</span><span class="number">5</span>));
+
+<span class="kw">let </span>a = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>];
+<span class="macro">assert_eq!</span>(a.iter().minmax(), MinMax(<span class="kw-2">&amp;</span><span class="number">1</span>, <span class="kw-2">&amp;</span><span class="number">1</span>));</code></pre></div>
+<p>The elements can be floats but no particular result is guaranteed
+if an element is NaN.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.minmax_by_key" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#2197-2201">source</a><h4 class="code-header">fn <a href="#method.minmax_by_key" class="fnname">minmax_by_key</a>&lt;K, F&gt;(self, key: F) -&gt; <a class="enum" href="enum.MinMaxResult.html" title="enum itertools::MinMaxResult">MinMaxResult</a>&lt;Self::Item&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;K: PartialOrd,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item) -&gt; K,</span></h4></section></summary><div class="docblock"><p>Return the minimum and maximum element of an iterator, as determined by
+the specified function.</p>
+<p>The return value is a variant of <code>MinMaxResult</code> like for <code>minmax()</code>.</p>
+<p>For the minimum, the first minimal element is returned.  For the maximum,
+the last maximal element wins.  This matches the behavior of the standard
+<code>Iterator::min()</code> and <code>Iterator::max()</code> methods.</p>
+<p>The keys can be floats but no particular result is guaranteed
+if a key is NaN.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.minmax_by" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#2211-2219">source</a><h4 class="code-header">fn <a href="#method.minmax_by" class="fnname">minmax_by</a>&lt;F&gt;(self, compare: F) -&gt; <a class="enum" href="enum.MinMaxResult.html" title="enum itertools::MinMaxResult">MinMaxResult</a>&lt;Self::Item&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: FnMut(&amp;Self::Item, &amp;Self::Item) -&gt; Ordering,</span></h4></section></summary><div class="docblock"><p>Return the minimum and maximum element of an iterator, as determined by
+the specified comparison function.</p>
+<p>The return value is a variant of <code>MinMaxResult</code> like for <code>minmax()</code>.</p>
+<p>For the minimum, the first minimal element is returned.  For the maximum,
+the last maximal element wins.  This matches the behavior of the standard
+<code>Iterator::min()</code> and <code>Iterator::max()</code> methods.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.exactly_one" class="method has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#2238-2255">source</a><h4 class="code-header">fn <a href="#method.exactly_one" class="fnname">exactly_one</a>(self) -&gt; Result&lt;Self::Item, <a class="struct" href="structs/struct.ExactlyOneError.html" title="struct itertools::structs::ExactlyOneError">ExactlyOneError</a>&lt;Self&gt;&gt;<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: Sized,</span></h4></section></summary><div class="docblock"><p>If the iterator yields exactly one element, that element will be returned, otherwise
+an error will be returned containing an iterator that has the same output as the input
+iterator.</p>
+<p>This provides an additional layer of validation over just calling <code>Iterator::next()</code>.
+If your assumption that there should only be one element yielded is false this provides
+the opportunity to detect and handle that, preventing errors at a distance.</p>
+<h5 id="examples-3"><a href="#examples-3">Examples</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>itertools::Itertools;
+
+<span class="macro">assert_eq!</span>((<span class="number">0</span>..<span class="number">10</span>).filter(|<span class="kw-2">&amp;</span>x| x == <span class="number">2</span>).exactly_one().unwrap(), <span class="number">2</span>);
+<span class="macro">assert!</span>((<span class="number">0</span>..<span class="number">10</span>).filter(|<span class="kw-2">&amp;</span>x| x &gt; <span class="number">1 </span>&amp;&amp; x &lt; <span class="number">4</span>).exactly_one().unwrap_err().eq(<span class="number">2</span>..<span class="number">4</span>));
+<span class="macro">assert!</span>((<span class="number">0</span>..<span class="number">10</span>).filter(|<span class="kw-2">&amp;</span>x| x &gt; <span class="number">1 </span>&amp;&amp; x &lt; <span class="number">5</span>).exactly_one().unwrap_err().eq(<span class="number">2</span>..<span class="number">5</span>));
+<span class="macro">assert!</span>((<span class="number">0</span>..<span class="number">10</span>).filter(|<span class="kw-2">&amp;</span><span class="kw">_</span>| <span class="bool-val">false</span>).exactly_one().unwrap_err().eq(<span class="number">0</span>..<span class="number">0</span>));</code></pre></div>
+</div></details></div><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor"></a></h2><div id="implementors-list"><section id="impl-Itertools-for-T" class="impl has-srclink"><a class="srclink rightside" href="../src/itertools/lib.rs.html#2258">source</a><a href="#impl-Itertools-for-T" class="anchor"></a><h3 class="code-header">impl&lt;T:&nbsp;?Sized&gt; <a class="trait" href="trait.Itertools.html" title="trait itertools::Itertools">Itertools</a> for T<span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Iterator,</span></h3></section></div><script src="../implementors/itertools/trait.Itertools.js" async></script></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="itertools" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Decrypted","Result of decryption."],["RecordLayer","Record layer that tracks decryption and encryption keys."]]};

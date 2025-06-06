@@ -1,0 +1,1070 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/git/checkouts/incubator-teaclave-crates-c8106113f74feefc/9ca099c/rustls-0.21.2/rustls/src/error.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>error.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../rustls/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../rustls/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::enums::{AlertDescription, ContentType, HandshakeType};
+<span class="kw">use </span><span class="kw">crate</span>::msgs::handshake::KeyExchangeAlgorithm;
+<span class="kw">use </span><span class="kw">crate</span>::rand;
+
+<span class="kw">use </span>std::error::Error <span class="kw">as </span>StdError;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::sync::Arc;
+<span class="kw">use </span>std::time::SystemTimeError;
+
+<span class="doccomment">/// rustls reports protocol errors using this type.
+</span><span class="attribute">#[non_exhaustive]
+#[derive(Debug, PartialEq, Clone)]
+</span><span class="kw">pub enum </span>Error {
+    <span class="doccomment">/// We received a TLS message that isn&#39;t valid right now.
+    /// `expect_types` lists the message types we can expect right now.
+    /// `got_type` is the type we found.  This error is typically
+    /// caused by a buggy TLS stack (the peer or this one), a broken
+    /// network, or an attack.
+    </span>InappropriateMessage {
+        <span class="doccomment">/// Which types we expected
+        </span>expect_types: Vec&lt;ContentType&gt;,
+        <span class="doccomment">/// What type we received
+        </span>got_type: ContentType,
+    },
+
+    <span class="doccomment">/// We received a TLS handshake message that isn&#39;t valid right now.
+    /// `expect_types` lists the handshake message types we can expect
+    /// right now.  `got_type` is the type we found.
+    </span>InappropriateHandshakeMessage {
+        <span class="doccomment">/// Which handshake type we expected
+        </span>expect_types: Vec&lt;HandshakeType&gt;,
+        <span class="doccomment">/// What handshake type we received
+        </span>got_type: HandshakeType,
+    },
+
+    <span class="doccomment">/// The peer sent us a TLS message with invalid contents.
+    </span>InvalidMessage(InvalidMessage),
+
+    <span class="doccomment">/// The peer didn&#39;t give us any certificates.
+    </span>NoCertificatesPresented,
+
+    <span class="doccomment">/// The certificate verifier doesn&#39;t support the given type of name.
+    </span>UnsupportedNameType,
+
+    <span class="doccomment">/// We couldn&#39;t decrypt a message.  This is invariably fatal.
+    </span>DecryptError,
+
+    <span class="doccomment">/// We couldn&#39;t encrypt a message because it was larger than the allowed message size.
+    /// This should never happen if the application is using valid record sizes.
+    </span>EncryptError,
+
+    <span class="doccomment">/// The peer doesn&#39;t support a protocol version/feature we require.
+    /// The parameter gives a hint as to what version/feature it is.
+    </span>PeerIncompatible(PeerIncompatible),
+
+    <span class="doccomment">/// The peer deviated from the standard TLS protocol.
+    /// The parameter gives a hint where.
+    </span>PeerMisbehaved(PeerMisbehaved),
+
+    <span class="doccomment">/// We received a fatal alert.  This means the peer is unhappy.
+    </span>AlertReceived(AlertDescription),
+
+    <span class="doccomment">/// We saw an invalid certificate.
+    ///
+    /// The contained error is from the certificate validation trait
+    /// implementation.
+    </span>InvalidCertificate(CertificateError),
+
+    <span class="doccomment">/// The presented SCT(s) were invalid.
+    </span>InvalidSct(sct::Error),
+
+    <span class="doccomment">/// A catch-all error for unlikely errors.
+    </span>General(String),
+
+    <span class="doccomment">/// We failed to figure out what time it currently is.
+    </span>FailedToGetCurrentTime,
+
+    <span class="doccomment">/// We failed to acquire random bytes from the system.
+    </span>FailedToGetRandomBytes,
+
+    <span class="doccomment">/// This function doesn&#39;t work until the TLS handshake
+    /// is complete.
+    </span>HandshakeNotComplete,
+
+    <span class="doccomment">/// The peer sent an oversized record/fragment.
+    </span>PeerSentOversizedRecord,
+
+    <span class="doccomment">/// An incoming connection did not support any known application protocol.
+    </span>NoApplicationProtocol,
+
+    <span class="doccomment">/// The `max_fragment_size` value supplied in configuration was too small,
+    /// or too large.
+    </span>BadMaxFragmentSize,
+}
+
+<span class="doccomment">/// A corrupt TLS message payload that resulted in an error.
+</span><span class="attribute">#[non_exhaustive]
+#[derive(Debug, Clone, Copy, PartialEq)]
+
+</span><span class="kw">pub enum </span>InvalidMessage {
+    <span class="doccomment">/// An advertised message was larger then expected.
+    </span>HandshakePayloadTooLarge,
+    <span class="doccomment">/// The peer sent us a syntactically incorrect ChangeCipherSpec payload.
+    </span>InvalidCcs,
+    <span class="doccomment">/// An unknown content type was encountered during message decoding.
+    </span>InvalidContentType,
+    <span class="doccomment">/// A peer sent an invalid certificate status type
+    </span>InvalidCertificateStatusType,
+    <span class="doccomment">/// Context was incorrectly attached to a certificate request during a handshake.
+    </span>InvalidCertRequest,
+    <span class="doccomment">/// A peer&#39;s DH params could not be decoded
+    </span>InvalidDhParams,
+    <span class="doccomment">/// A message was zero-length when its record kind forbids it.
+    </span>InvalidEmptyPayload,
+    <span class="doccomment">/// A peer sent an unexpected key update request.
+    </span>InvalidKeyUpdate,
+    <span class="doccomment">/// A peer&#39;s server name could not be decoded
+    </span>InvalidServerName,
+    <span class="doccomment">/// A TLS message payload was larger then allowed by the specification.
+    </span>MessageTooLarge,
+    <span class="doccomment">/// Message is shorter than the expected length
+    </span>MessageTooShort,
+    <span class="doccomment">/// Missing data for the named handshake payload value
+    </span>MissingData(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str),
+    <span class="doccomment">/// A peer did not advertise its supported key exchange groups.
+    </span>MissingKeyExchange,
+    <span class="doccomment">/// A peer sent an empty list of signature schemes
+    </span>NoSignatureSchemes,
+    <span class="doccomment">/// Trailing data found for the named handshake payload value
+    </span>TrailingData(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str),
+    <span class="doccomment">/// A peer sent an unexpected message type.
+    </span>UnexpectedMessage(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str),
+    <span class="doccomment">/// An unknown TLS protocol was encountered during message decoding.
+    </span>UnknownProtocolVersion,
+    <span class="doccomment">/// A peer sent a non-null compression method.
+    </span>UnsupportedCompression,
+    <span class="doccomment">/// A peer sent an unknown elliptic curve type.
+    </span>UnsupportedCurveType,
+    <span class="doccomment">/// A peer sent an unsupported key exchange algorithm.
+    </span>UnsupportedKeyExchangeAlgorithm(KeyExchangeAlgorithm),
+}
+
+<span class="kw">impl </span>From&lt;InvalidMessage&gt; <span class="kw">for </span>Error {
+    <span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(e: InvalidMessage) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::InvalidMessage(e)
+    }
+}
+
+<span class="attribute">#[non_exhaustive]
+#[allow(missing_docs)]
+#[derive(Debug, PartialEq, Clone)]
+</span><span class="doccomment">/// The set of cases where we failed to make a connection because we thought
+/// the peer was misbehaving.
+///
+/// This is `non_exhaustive`: we might add or stop using items here in minor
+/// versions.  We also don&#39;t document what they mean.  Generally a user of
+/// rustls shouldn&#39;t vary its behaviour on these error codes, and there is
+/// nothing it can do to improve matters.
+///
+/// Please file a bug against rustls if you see `Error::PeerMisbehaved` in
+/// the wild.
+</span><span class="kw">pub enum </span>PeerMisbehaved {
+    AttemptedDowngradeToTls12WhenTls13IsSupported,
+    BadCertChainExtensions,
+    DisallowedEncryptedExtension,
+    DuplicateClientHelloExtensions,
+    DuplicateEncryptedExtensions,
+    DuplicateHelloRetryRequestExtensions,
+    DuplicateNewSessionTicketExtensions,
+    DuplicateServerHelloExtensions,
+    DuplicateServerNameTypes,
+    EarlyDataAttemptedInSecondClientHello,
+    EarlyDataExtensionWithoutResumption,
+    EarlyDataOfferedWithVariedCipherSuite,
+    HandshakeHashVariedAfterRetry,
+    IllegalHelloRetryRequestWithEmptyCookie,
+    IllegalHelloRetryRequestWithNoChanges,
+    IllegalHelloRetryRequestWithOfferedGroup,
+    IllegalHelloRetryRequestWithUnofferedCipherSuite,
+    IllegalHelloRetryRequestWithUnofferedNamedGroup,
+    IllegalHelloRetryRequestWithUnsupportedVersion,
+    IllegalMiddleboxChangeCipherSpec,
+    IllegalTlsInnerPlaintext,
+    IncorrectBinder,
+    InvalidMaxEarlyDataSize,
+    InvalidKeyShare,
+    InvalidSctList,
+    KeyEpochWithPendingFragment,
+    KeyUpdateReceivedInQuicConnection,
+    MessageInterleavedWithHandshakeMessage,
+    MissingBinderInPskExtension,
+    MissingKeyShare,
+    MissingPskModesExtension,
+    MissingQuicTransportParameters,
+    OfferedDuplicateKeyShares,
+    OfferedEarlyDataWithOldProtocolVersion,
+    OfferedEmptyApplicationProtocol,
+    OfferedIncorrectCompressions,
+    PskExtensionMustBeLast,
+    PskExtensionWithMismatchedIdsAndBinders,
+    RefusedToFollowHelloRetryRequest,
+    RejectedEarlyDataInterleavedWithHandshakeMessage,
+    ResumptionAttemptedWithVariedEms,
+    ResumptionOfferedWithVariedCipherSuite,
+    ResumptionOfferedWithVariedEms,
+    ResumptionOfferedWithIncompatibleCipherSuite,
+    SelectedDifferentCipherSuiteAfterRetry,
+    SelectedInvalidPsk,
+    SelectedTls12UsingTls13VersionExtension,
+    SelectedUnofferedApplicationProtocol,
+    SelectedUnofferedCipherSuite,
+    SelectedUnofferedCompression,
+    SelectedUnofferedKxGroup,
+    SelectedUnofferedPsk,
+    SelectedUnusableCipherSuiteForVersion,
+    ServerHelloMustOfferUncompressedEcPoints,
+    ServerNameDifferedOnRetry,
+    ServerNameMustContainOneHostName,
+    SignedKxWithWrongAlgorithm,
+    SignedHandshakeWithUnadvertisedSigScheme,
+    TooMuchEarlyDataReceived,
+    UnexpectedCleartextExtension,
+    UnsolicitedCertExtension,
+    UnsolicitedEncryptedExtension,
+    UnsolicitedSctList,
+    UnsolicitedServerHelloExtension,
+    WrongGroupForKeyShare,
+}
+
+<span class="kw">impl </span>From&lt;PeerMisbehaved&gt; <span class="kw">for </span>Error {
+    <span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(e: PeerMisbehaved) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::PeerMisbehaved(e)
+    }
+}
+
+<span class="attribute">#[non_exhaustive]
+#[allow(missing_docs)]
+#[derive(Debug, PartialEq, Clone)]
+</span><span class="doccomment">/// The set of cases where we failed to make a connection because a peer
+/// doesn&#39;t support a TLS version/feature we require.
+///
+/// This is `non_exhaustive`: we might add or stop using items here in minor
+/// versions.
+</span><span class="kw">pub enum </span>PeerIncompatible {
+    EcPointsExtensionRequired,
+    KeyShareExtensionRequired,
+    NamedGroupsExtensionRequired,
+    NoCertificateRequestSignatureSchemesInCommon,
+    NoCipherSuitesInCommon,
+    NoEcPointFormatsInCommon,
+    NoKxGroupsInCommon,
+    NoSignatureSchemesInCommon,
+    NullCompressionRequired,
+    ServerDoesNotSupportTls12Or13,
+    ServerSentHelloRetryRequestWithUnknownExtension,
+    ServerTlsVersionIsDisabledByOurConfig,
+    SignatureAlgorithmsExtensionRequired,
+    SupportedVersionsExtensionRequired,
+    Tls12NotOffered,
+    Tls12NotOfferedOrEnabled,
+    Tls13RequiredForQuic,
+    UncompressedEcPointsRequired,
+}
+
+<span class="kw">impl </span>From&lt;PeerIncompatible&gt; <span class="kw">for </span>Error {
+    <span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(e: PeerIncompatible) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::PeerIncompatible(e)
+    }
+}
+
+<span class="attribute">#[non_exhaustive]
+#[derive(Debug, Clone)]
+</span><span class="doccomment">/// The ways in which certificate validators can express errors.
+///
+/// Note that the rustls TLS protocol code interprets specifically these
+/// error codes to send specific TLS alerts.  Therefore, if a
+/// custom certificate validator uses incorrect errors the library as
+/// a whole will send alerts that do not match the standard (this is usually
+/// a minor issue, but could be misleading).
+</span><span class="kw">pub enum </span>CertificateError {
+    <span class="doccomment">/// The certificate is not correctly encoded.
+    </span>BadEncoding,
+
+    <span class="doccomment">/// The current time is after the `notAfter` time in the certificate.
+    </span>Expired,
+
+    <span class="doccomment">/// The current time is before the `notBefore` time in the certificate.
+    </span>NotValidYet,
+
+    <span class="doccomment">/// The certificate has been revoked.
+    </span>Revoked,
+
+    <span class="doccomment">/// The certificate contains an extension marked critical, but it was
+    /// not processed by the certificate validator.
+    </span>UnhandledCriticalExtension,
+
+    <span class="doccomment">/// The certificate chain is not issued by a known root certificate.
+    </span>UnknownIssuer,
+
+    <span class="doccomment">/// A certificate is not correctly signed by the key of its alleged
+    /// issuer.
+    </span>BadSignature,
+
+    <span class="doccomment">/// The subject names in an end-entity certificate do not include
+    /// the expected name.
+    </span>NotValidForName,
+
+    <span class="doccomment">/// The certificate is being used for a different purpose than allowed.
+    </span>InvalidPurpose,
+
+    <span class="doccomment">/// The certificate is valid, but the handshake is rejected for other
+    /// reasons.
+    </span>ApplicationVerificationFailure,
+
+    <span class="doccomment">/// Any other error.
+    ///
+    /// This can be used by custom verifiers to expose the underlying error
+    /// (where they are not better described by the more specific errors
+    /// above).
+    ///
+    /// It is also used by the default verifier in case its error is
+    /// not covered by the above common cases.
+    ///
+    /// Enums holding this variant will never compare equal to each other.
+    </span>Other(Arc&lt;<span class="kw">dyn </span>StdError + Send + Sync&gt;),
+}
+
+<span class="kw">impl </span>PartialEq&lt;<span class="self">Self</span>&gt; <span class="kw">for </span>CertificateError {
+    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; bool {
+        <span class="kw">use </span>CertificateError::<span class="kw-2">*</span>;
+        <span class="attribute">#[allow(clippy::match_like_matches_macro)]
+        </span><span class="kw">match </span>(<span class="self">self</span>, other) {
+            (BadEncoding, BadEncoding) =&gt; <span class="bool-val">true</span>,
+            (Expired, Expired) =&gt; <span class="bool-val">true</span>,
+            (NotValidYet, NotValidYet) =&gt; <span class="bool-val">true</span>,
+            (Revoked, Revoked) =&gt; <span class="bool-val">true</span>,
+            (UnhandledCriticalExtension, UnhandledCriticalExtension) =&gt; <span class="bool-val">true</span>,
+            (UnknownIssuer, UnknownIssuer) =&gt; <span class="bool-val">true</span>,
+            (BadSignature, BadSignature) =&gt; <span class="bool-val">true</span>,
+            (NotValidForName, NotValidForName) =&gt; <span class="bool-val">true</span>,
+            (InvalidPurpose, InvalidPurpose) =&gt; <span class="bool-val">true</span>,
+            (ApplicationVerificationFailure, ApplicationVerificationFailure) =&gt; <span class="bool-val">true</span>,
+            <span class="kw">_ </span>=&gt; <span class="bool-val">false</span>,
+        }
+    }
+}
+
+<span class="comment">// The following mapping are heavily referenced in:
+// * [OpenSSL Implementation](https://github.com/openssl/openssl/blob/45bb98bfa223efd3258f445ad443f878011450f0/ssl/statem/statem_lib.c#L1434)
+// * [BoringSSL Implementation](https://github.com/google/boringssl/blob/583c60bd4bf76d61b2634a58bcda99a92de106cb/ssl/ssl_x509.cc#L1323)
+</span><span class="kw">impl </span>From&lt;CertificateError&gt; <span class="kw">for </span>AlertDescription {
+    <span class="kw">fn </span>from(e: CertificateError) -&gt; <span class="self">Self </span>{
+        <span class="kw">use </span>CertificateError::<span class="kw-2">*</span>;
+        <span class="kw">match </span>e {
+            BadEncoding | UnhandledCriticalExtension | NotValidForName =&gt; <span class="self">Self</span>::BadCertificate,
+            <span class="comment">// RFC 5246/RFC 8446
+            // certificate_expired
+            //  A certificate has expired or **is not currently valid**.
+            </span>Expired | NotValidYet =&gt; <span class="self">Self</span>::CertificateExpired,
+            Revoked =&gt; <span class="self">Self</span>::CertificateRevoked,
+            UnknownIssuer =&gt; <span class="self">Self</span>::UnknownCA,
+            BadSignature =&gt; <span class="self">Self</span>::DecryptError,
+            InvalidPurpose =&gt; <span class="self">Self</span>::UnsupportedCertificate,
+            ApplicationVerificationFailure =&gt; <span class="self">Self</span>::AccessDenied,
+            <span class="comment">// RFC 5246/RFC 8446
+            // certificate_unknown
+            //  Some other (unspecified) issue arose in processing the
+            //  certificate, rendering it unacceptable.
+            </span>Other(<span class="kw">_</span>) =&gt; <span class="self">Self</span>::CertificateUnknown,
+        }
+    }
+}
+
+<span class="kw">impl </span>From&lt;CertificateError&gt; <span class="kw">for </span>Error {
+    <span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(e: CertificateError) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::InvalidCertificate(e)
+    }
+}
+
+<span class="kw">fn </span>join&lt;T: fmt::Debug&gt;(items: <span class="kw-2">&amp;</span>[T]) -&gt; String {
+    items
+        .iter()
+        .map(|x| <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, x))
+        .collect::&lt;Vec&lt;String&gt;&gt;()
+        .join(<span class="string">&quot; or &quot;</span>)
+}
+
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Error {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::InappropriateMessage {
+                <span class="kw-2">ref </span>expect_types,
+                <span class="kw-2">ref </span>got_type,
+            } =&gt; <span class="macro">write!</span>(
+                f,
+                <span class="string">&quot;received unexpected message: got {:?} when expecting {}&quot;</span>,
+                got_type,
+                join::&lt;ContentType&gt;(expect_types)
+            ),
+            <span class="self">Self</span>::InappropriateHandshakeMessage {
+                <span class="kw-2">ref </span>expect_types,
+                <span class="kw-2">ref </span>got_type,
+            } =&gt; <span class="macro">write!</span>(
+                f,
+                <span class="string">&quot;received unexpected handshake message: got {:?} when expecting {}&quot;</span>,
+                got_type,
+                join::&lt;HandshakeType&gt;(expect_types)
+            ),
+            <span class="self">Self</span>::InvalidMessage(<span class="kw-2">ref </span>typ) =&gt; {
+                <span class="macro">write!</span>(f, <span class="string">&quot;received corrupt message of type {:?}&quot;</span>, typ)
+            }
+            <span class="self">Self</span>::PeerIncompatible(<span class="kw-2">ref </span>why) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;peer is incompatible: {:?}&quot;</span>, why),
+            <span class="self">Self</span>::PeerMisbehaved(<span class="kw-2">ref </span>why) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;peer misbehaved: {:?}&quot;</span>, why),
+            <span class="self">Self</span>::AlertReceived(<span class="kw-2">ref </span>alert) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;received fatal alert: {:?}&quot;</span>, alert),
+            <span class="self">Self</span>::InvalidCertificate(<span class="kw-2">ref </span>err) =&gt; {
+                <span class="macro">write!</span>(f, <span class="string">&quot;invalid peer certificate: {:?}&quot;</span>, err)
+            }
+            <span class="self">Self</span>::NoCertificatesPresented =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;peer sent no certificates&quot;</span>),
+            <span class="self">Self</span>::UnsupportedNameType =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;presented server name type wasn&#39;t supported&quot;</span>),
+            <span class="self">Self</span>::DecryptError =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;cannot decrypt peer&#39;s message&quot;</span>),
+            <span class="self">Self</span>::EncryptError =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;cannot encrypt message&quot;</span>),
+            <span class="self">Self</span>::PeerSentOversizedRecord =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;peer sent excess record size&quot;</span>),
+            <span class="self">Self</span>::HandshakeNotComplete =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;handshake not complete&quot;</span>),
+            <span class="self">Self</span>::NoApplicationProtocol =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;peer doesn&#39;t support any known protocol&quot;</span>),
+            <span class="self">Self</span>::InvalidSct(<span class="kw-2">ref </span>err) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;invalid certificate timestamp: {:?}&quot;</span>, err),
+            <span class="self">Self</span>::FailedToGetCurrentTime =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;failed to get current time&quot;</span>),
+            <span class="self">Self</span>::FailedToGetRandomBytes =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;failed to get random bytes&quot;</span>),
+            <span class="self">Self</span>::BadMaxFragmentSize =&gt; {
+                <span class="macro">write!</span>(f, <span class="string">&quot;the supplied max_fragment_size was too small or large&quot;</span>)
+            }
+            <span class="self">Self</span>::General(<span class="kw-2">ref </span>err) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;unexpected error: {}&quot;</span>, err),
+        }
+    }
+}
+
+<span class="kw">impl </span>From&lt;SystemTimeError&gt; <span class="kw">for </span>Error {
+    <span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(<span class="kw">_</span>: SystemTimeError) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::FailedToGetCurrentTime
+    }
+}
+
+<span class="kw">impl </span>StdError <span class="kw">for </span>Error {}
+
+<span class="kw">impl </span>From&lt;rand::GetRandomFailed&gt; <span class="kw">for </span>Error {
+    <span class="kw">fn </span>from(<span class="kw">_</span>: rand::GetRandomFailed) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::FailedToGetRandomBytes
+    }
+}
+
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use super</span>::{Error, InvalidMessage};
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>certificate_error_equality() {
+        <span class="kw">use </span><span class="kw">super</span>::CertificateError::<span class="kw-2">*</span>;
+        <span class="macro">assert_eq!</span>(BadEncoding, BadEncoding);
+        <span class="macro">assert_eq!</span>(Expired, Expired);
+        <span class="macro">assert_eq!</span>(NotValidYet, NotValidYet);
+        <span class="macro">assert_eq!</span>(Revoked, Revoked);
+        <span class="macro">assert_eq!</span>(UnhandledCriticalExtension, UnhandledCriticalExtension);
+        <span class="macro">assert_eq!</span>(UnknownIssuer, UnknownIssuer);
+        <span class="macro">assert_eq!</span>(BadSignature, BadSignature);
+        <span class="macro">assert_eq!</span>(NotValidForName, NotValidForName);
+        <span class="macro">assert_eq!</span>(InvalidPurpose, InvalidPurpose);
+        <span class="macro">assert_eq!</span>(
+            ApplicationVerificationFailure,
+            ApplicationVerificationFailure
+        );
+        <span class="kw">let </span>other = Other(std::sync::Arc::from(Box::from(<span class="string">&quot;&quot;</span>)));
+        <span class="macro">assert_ne!</span>(other, other);
+        <span class="macro">assert_ne!</span>(BadEncoding, Expired);
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>smoke() {
+        <span class="kw">use </span><span class="kw">crate</span>::enums::{AlertDescription, ContentType, HandshakeType};
+        <span class="kw">use </span>sct;
+
+        <span class="kw">let </span>all = <span class="macro">vec!</span>[
+            Error::InappropriateMessage {
+                expect_types: <span class="macro">vec!</span>[ContentType::Alert],
+                got_type: ContentType::Handshake,
+            },
+            Error::InappropriateHandshakeMessage {
+                expect_types: <span class="macro">vec!</span>[HandshakeType::ClientHello, HandshakeType::Finished],
+                got_type: HandshakeType::ServerHello,
+            },
+            Error::InvalidMessage(InvalidMessage::InvalidCcs),
+            Error::NoCertificatesPresented,
+            Error::DecryptError,
+            <span class="kw">super</span>::PeerIncompatible::Tls12NotOffered.into(),
+            <span class="kw">super</span>::PeerMisbehaved::UnsolicitedCertExtension.into(),
+            Error::AlertReceived(AlertDescription::ExportRestriction),
+            <span class="kw">super</span>::CertificateError::Expired.into(),
+            Error::InvalidSct(sct::Error::MalformedSct),
+            Error::General(<span class="string">&quot;undocumented error&quot;</span>.to_string()),
+            Error::FailedToGetCurrentTime,
+            Error::FailedToGetRandomBytes,
+            Error::HandshakeNotComplete,
+            Error::PeerSentOversizedRecord,
+            Error::NoApplicationProtocol,
+            Error::BadMaxFragmentSize,
+        ];
+
+        <span class="kw">for </span>err <span class="kw">in </span>all {
+            <span class="macro">println!</span>(<span class="string">&quot;{:?}:&quot;</span>, err);
+            <span class="macro">println!</span>(<span class="string">&quot;  fmt &#39;{}&#39;&quot;</span>, err);
+        }
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>rand_error_mapping() {
+        <span class="kw">use </span><span class="kw">super</span>::rand;
+        <span class="kw">let </span>err: Error = rand::GetRandomFailed.into();
+        <span class="macro">assert_eq!</span>(err, Error::FailedToGetRandomBytes);
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>time_error_mapping() {
+        <span class="kw">use </span>std::time::SystemTime;
+
+        <span class="kw">let </span>time_error = SystemTime::UNIX_EPOCH
+            .duration_since(SystemTime::now())
+            .unwrap_err();
+        <span class="kw">let </span>err: Error = time_error.into();
+        <span class="macro">assert_eq!</span>(err, Error::FailedToGetCurrentTime);
+    }
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rustls" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

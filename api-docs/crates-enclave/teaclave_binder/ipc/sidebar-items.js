@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["ECallReceiver",""]],"trait":[["IpcReceiver",""],["IpcSender",""],["IpcService",""]]};

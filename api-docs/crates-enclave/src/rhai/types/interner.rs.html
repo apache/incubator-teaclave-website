@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/git/checkouts/incubator-teaclave-crates-c8106113f74feefc/9ca099c/rhai/src/types/interner.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>interner.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../../rhai/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../rhai/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+</pre><pre class="rust"><code><span class="doccomment">//! A strings interner type.
+
+</span><span class="kw">use </span><span class="kw">super</span>::BloomFilterU64;
+<span class="kw">use </span><span class="kw">crate</span>::func::{hashing::get_hasher, StraightHashMap};
+<span class="kw">use </span><span class="kw">crate</span>::ImmutableString;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;no_std&quot;</span>)]
+</span><span class="kw">use </span>hashbrown::hash_map::Entry;
+<span class="attribute">#[cfg(not(feature = <span class="string">&quot;no_std&quot;</span>))]
+</span><span class="kw">use </span>std::collections::hash_map::Entry;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;no_std&quot;</span>)]
+</span><span class="kw">use </span>std::prelude::v1::<span class="kw-2">*</span>;
+<span class="kw">use </span>std::{
+    fmt,
+    hash::{Hash, Hasher},
+    ops::AddAssign,
+};
+
+<span class="doccomment">/// Maximum number of strings interned.
+</span><span class="kw">pub const </span>MAX_INTERNED_STRINGS: usize = <span class="number">1024</span>;
+
+<span class="doccomment">/// Maximum length of strings interned.
+</span><span class="kw">pub const </span>MAX_STRING_LEN: usize = <span class="number">24</span>;
+
+<span class="doccomment">/// _(internals)_ A cache for interned strings.
+/// Exported under the `internals` feature only.
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">pub struct </span>StringsInterner {
+    <span class="doccomment">/// Cached strings.
+    </span>cache: StraightHashMap&lt;ImmutableString&gt;,
+    <span class="doccomment">/// Bloom filter to avoid caching &quot;one-hit wonders&quot;.
+    </span>bloom_filter: BloomFilterU64,
+}
+
+<span class="kw">impl </span>Default <span class="kw">for </span>StringsInterner {
+    <span class="attribute">#[inline(always)]
+    #[must_use]
+    </span><span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new()
+    }
+}
+
+<span class="kw">impl </span>fmt::Debug <span class="kw">for </span>StringsInterner {
+    <span class="attribute">#[cold]
+    #[inline(never)]
+    </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        f.debug_list().entries(<span class="self">self</span>.cache.values()).finish()
+    }
+}
+
+<span class="kw">impl </span>StringsInterner {
+    <span class="doccomment">/// Create a new [`StringsInterner`].
+    </span><span class="attribute">#[inline(always)]
+    #[must_use]
+    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            cache: StraightHashMap::default(),
+            bloom_filter: BloomFilterU64::new(),
+        }
+    }
+
+    <span class="doccomment">/// Get an identifier from a text string, adding it to the interner if necessary.
+    </span><span class="attribute">#[inline(always)]
+    #[must_use]
+    </span><span class="kw">pub fn </span>get&lt;S: AsRef&lt;str&gt; + Into&lt;ImmutableString&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, text: S) -&gt; ImmutableString {
+        <span class="self">self</span>.get_with_mapper(<span class="number">0</span>, Into::into, text)
+    }
+
+    <span class="doccomment">/// Get an identifier from a text string, adding it to the interner if necessary.
+    </span><span class="attribute">#[inline]
+    #[must_use]
+    </span><span class="kw">pub fn </span>get_with_mapper&lt;S: AsRef&lt;str&gt;&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        category: u8,
+        mapper: <span class="kw">impl </span>FnOnce(S) -&gt; ImmutableString,
+        text: S,
+    ) -&gt; ImmutableString {
+        <span class="kw">let </span>key = text.as_ref();
+
+        <span class="kw">let </span>hasher = <span class="kw-2">&amp;mut </span>get_hasher();
+        hasher.write_u8(category);
+        key.hash(hasher);
+        <span class="kw">let </span>hash = hasher.finish();
+
+        <span class="comment">// Do not cache long strings and avoid caching &quot;one-hit wonders&quot;.
+        </span><span class="kw">if </span>key.len() &gt; MAX_STRING_LEN || <span class="self">self</span>.bloom_filter.is_absent_and_set(hash) {
+            <span class="kw">return </span>mapper(text);
+        }
+
+        <span class="kw">if </span><span class="self">self</span>.cache.is_empty() {
+            <span class="self">self</span>.cache.reserve(MAX_INTERNED_STRINGS);
+        }
+
+        <span class="kw">let </span>result = <span class="kw">match </span><span class="self">self</span>.cache.entry(hash) {
+            Entry::Occupied(e) =&gt; <span class="kw">return </span>e.get().clone(),
+            Entry::Vacant(e) =&gt; e.insert(mapper(text)).clone(),
+        };
+
+        <span class="comment">// Throttle the cache upon exit
+        </span><span class="self">self</span>.throttle_cache(hash);
+
+        result
+    }
+
+    <span class="doccomment">/// If the interner is over capacity, remove the longest entry that has the lowest count
+    </span><span class="attribute">#[inline]
+    </span><span class="kw">fn </span>throttle_cache(<span class="kw-2">&amp;mut </span><span class="self">self</span>, skip_hash: u64) {
+        <span class="kw">if </span><span class="self">self</span>.cache.len() &lt;= MAX_INTERNED_STRINGS {
+            <span class="kw">return</span>;
+        }
+
+        <span class="comment">// Leave some buffer to grow when shrinking the cache.
+        // We leave at least two entries, one for the empty string, and one for the string
+        // that has just been inserted.
+        </span><span class="kw">while </span><span class="self">self</span>.cache.len() &gt; MAX_INTERNED_STRINGS - <span class="number">3 </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>max_len = <span class="number">0</span>;
+            <span class="kw">let </span><span class="kw-2">mut </span>min_count = usize::MAX;
+            <span class="kw">let </span><span class="kw-2">mut </span>index = <span class="number">0</span>;
+
+            <span class="kw">for </span>(<span class="kw-2">&amp;</span>k, v) <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.cache {
+                <span class="kw">if </span>k != skip_hash
+                    &amp;&amp; (v.strong_count() &lt; min_count
+                        || (v.strong_count() == min_count &amp;&amp; v.len() &gt; max_len))
+                {
+                    max_len = v.len();
+                    min_count = v.strong_count();
+                    index = k;
+                }
+            }
+
+            <span class="self">self</span>.cache.remove(<span class="kw-2">&amp;</span>index);
+        }
+    }
+
+    <span class="doccomment">/// Number of strings interned.
+    </span><span class="attribute">#[inline(always)]
+    #[must_use]
+    #[allow(dead_code)]
+    </span><span class="kw">pub fn </span>len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.cache.len()
+    }
+
+    <span class="doccomment">/// Returns `true` if there are no interned strings.
+    </span><span class="attribute">#[inline(always)]
+    #[must_use]
+    #[allow(dead_code)]
+    </span><span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.cache.is_empty()
+    }
+
+    <span class="doccomment">/// Clear all interned strings.
+    </span><span class="attribute">#[inline(always)]
+    #[allow(dead_code)]
+    </span><span class="kw">pub fn </span>clear(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="self">self</span>.cache.clear();
+    }
+}
+
+<span class="kw">impl </span>AddAssign&lt;<span class="self">Self</span>&gt; <span class="kw">for </span>StringsInterner {
+    <span class="attribute">#[inline(always)]
+    </span><span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="self">Self</span>) {
+        <span class="self">self</span>.cache.extend(rhs.cache.into_iter());
+    }
+}
+
+<span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt; <span class="kw">for </span>StringsInterner {
+    <span class="attribute">#[inline(always)]
+    </span><span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
+        <span class="self">self</span>.cache
+            .extend(rhs.cache.iter().map(|(<span class="kw-2">&amp;</span>k, v)| (k, v.clone())));
+    }
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="rhai" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

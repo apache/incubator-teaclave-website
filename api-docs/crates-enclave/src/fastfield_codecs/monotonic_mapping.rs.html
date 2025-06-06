@@ -1,0 +1,608 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/git/checkouts/incubator-teaclave-crates-c8106113f74feefc/9ca099c/tantivy/fastfield_codecs/src/monotonic_mapping.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>monotonic_mapping.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../fastfield_codecs/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../fastfield_codecs/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+</pre><pre class="rust"><code><span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::marker::PhantomData;
+<span class="kw">use </span>std::ops::RangeInclusive;
+
+<span class="kw">use </span>fastdivide::DividerU64;
+
+<span class="kw">use </span><span class="kw">crate</span>::MonotonicallyMappableToU128;
+
+<span class="doccomment">/// Monotonic maps a value to u64 value space.
+/// Monotonic mapping enables `PartialOrd` on u64 space without conversion to original space.
+</span><span class="kw">pub trait </span>MonotonicallyMappableToU64:
+    <span class="lifetime">&#39;static </span>+ PartialOrd + Copy + Send + Sync + fmt::Debug
+{
+    <span class="doccomment">/// Converts a value to u64.
+    ///
+    /// Internally all fast field values are encoded as u64.
+    </span><span class="kw">fn </span>to_u64(<span class="self">self</span>) -&gt; u64;
+
+    <span class="doccomment">/// Converts a value from u64
+    ///
+    /// Internally all fast field values are encoded as u64.
+    /// **Note: To be used for converting encoded Term, Posting values.**
+    </span><span class="kw">fn </span>from_u64(val: u64) -&gt; <span class="self">Self</span>;
+}
+
+<span class="doccomment">/// Values need to be strictly monotonic mapped to a `Internal` value (u64 or u128) that can be
+/// used in fast field codecs.
+///
+/// The monotonic mapping is required so that `PartialOrd` can be used on `Internal` without
+/// converting to `External`.
+///
+/// All strictly monotonic functions are invertible because they are guaranteed to have a one-to-one
+/// mapping from their range to their domain. The `inverse` method is required when opening a codec,
+/// so a value can be converted back to its original domain (e.g. ip address or f64) from its
+/// internal representation.
+</span><span class="kw">pub trait </span>StrictlyMonotonicFn&lt;External: Copy, Internal: Copy&gt; {
+    <span class="doccomment">/// Strictly monotonically maps the value from External to Internal.
+    </span><span class="kw">fn </span>mapping(<span class="kw-2">&amp;</span><span class="self">self</span>, inp: External) -&gt; Internal;
+    <span class="doccomment">/// Inverse of `mapping`. Maps the value from Internal to External.
+    </span><span class="kw">fn </span>inverse(<span class="kw-2">&amp;</span><span class="self">self</span>, out: Internal) -&gt; External;
+
+    <span class="doccomment">/// Maps a user provded value from External to Internal.
+    /// It may be necessary to coerce the value if it is outside the value space.
+    /// In that case it tries to find the next greater value in the value space.
+    ///
+    /// Returns a bool to mark if a value was outside the value space and had to be coerced _up_.
+    /// With that information we can detect if two values in a range both map outside the same value
+    /// space.
+    ///
+    /// coerce_up means the next valid upper value in the value space will be chosen if the value
+    /// has to be coerced.
+    </span><span class="kw">fn </span>mapping_coerce(<span class="kw-2">&amp;</span><span class="self">self</span>, inp: RangeInclusive&lt;External&gt;) -&gt; RangeInclusive&lt;Internal&gt; {
+        <span class="self">self</span>.mapping(<span class="kw-2">*</span>inp.start())..=<span class="self">self</span>.mapping(<span class="kw-2">*</span>inp.end())
+    }
+    <span class="doccomment">/// Inverse of `mapping_coerce`.
+    </span><span class="kw">fn </span>inverse_coerce(<span class="kw-2">&amp;</span><span class="self">self</span>, out: RangeInclusive&lt;Internal&gt;) -&gt; RangeInclusive&lt;External&gt; {
+        <span class="self">self</span>.inverse(<span class="kw-2">*</span>out.start())..=<span class="self">self</span>.inverse(<span class="kw-2">*</span>out.end())
+    }
+}
+
+<span class="doccomment">/// Inverts a strictly monotonic mapping from `StrictlyMonotonicFn&lt;A, B&gt;` to
+/// `StrictlyMonotonicFn&lt;B, A&gt;`.
+///
+/// # Warning
+///
+/// This type comes with a footgun. A type being strictly monotonic does not impose that the inverse
+/// mapping is strictly monotonic over the entire space External. e.g. a -&gt; a * 2. Use at your own
+/// risks.
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>StrictlyMonotonicMappingInverter&lt;T&gt; {
+    orig_mapping: T,
+}
+<span class="kw">impl</span>&lt;T&gt; From&lt;T&gt; <span class="kw">for </span>StrictlyMonotonicMappingInverter&lt;T&gt; {
+    <span class="kw">fn </span>from(orig_mapping: T) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ orig_mapping }
+    }
+}
+
+<span class="kw">impl</span>&lt;From, To, T&gt; StrictlyMonotonicFn&lt;To, From&gt; <span class="kw">for </span>StrictlyMonotonicMappingInverter&lt;T&gt;
+<span class="kw">where
+    </span>T: StrictlyMonotonicFn&lt;From, To&gt;,
+    From: Copy,
+    To: Copy,
+{
+    <span class="kw">fn </span>mapping(<span class="kw-2">&amp;</span><span class="self">self</span>, val: To) -&gt; From {
+        <span class="self">self</span>.orig_mapping.inverse(val)
+    }
+
+    <span class="kw">fn </span>inverse(<span class="kw-2">&amp;</span><span class="self">self</span>, val: From) -&gt; To {
+        <span class="self">self</span>.orig_mapping.mapping(val)
+    }
+
+    <span class="attribute">#[inline]
+    </span><span class="kw">fn </span>mapping_coerce(<span class="kw-2">&amp;</span><span class="self">self</span>, inp: RangeInclusive&lt;To&gt;) -&gt; RangeInclusive&lt;From&gt; {
+        <span class="self">self</span>.orig_mapping.inverse_coerce(inp)
+    }
+    <span class="attribute">#[inline]
+    </span><span class="kw">fn </span>inverse_coerce(<span class="kw-2">&amp;</span><span class="self">self</span>, out: RangeInclusive&lt;From&gt;) -&gt; RangeInclusive&lt;To&gt; {
+        <span class="self">self</span>.orig_mapping.mapping_coerce(out)
+    }
+}
+
+<span class="doccomment">/// Applies the strictly monotonic mapping from `T` without any additional changes.
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>StrictlyMonotonicMappingToInternal&lt;T&gt; {
+    _phantom: PhantomData&lt;T&gt;,
+}
+
+<span class="kw">impl</span>&lt;T&gt; StrictlyMonotonicMappingToInternal&lt;T&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new() -&gt; StrictlyMonotonicMappingToInternal&lt;T&gt; {
+        <span class="self">Self </span>{
+            _phantom: PhantomData,
+        }
+    }
+}
+
+<span class="kw">impl</span>&lt;External: MonotonicallyMappableToU128, T: MonotonicallyMappableToU128&gt;
+    StrictlyMonotonicFn&lt;External, u128&gt; <span class="kw">for </span>StrictlyMonotonicMappingToInternal&lt;T&gt;
+<span class="kw">where </span>T: MonotonicallyMappableToU128
+{
+    <span class="kw">fn </span>mapping(<span class="kw-2">&amp;</span><span class="self">self</span>, inp: External) -&gt; u128 {
+        External::to_u128(inp)
+    }
+
+    <span class="kw">fn </span>inverse(<span class="kw-2">&amp;</span><span class="self">self</span>, out: u128) -&gt; External {
+        External::from_u128(out)
+    }
+}
+
+<span class="kw">impl</span>&lt;External: MonotonicallyMappableToU64, T: MonotonicallyMappableToU64&gt;
+    StrictlyMonotonicFn&lt;External, u64&gt; <span class="kw">for </span>StrictlyMonotonicMappingToInternal&lt;T&gt;
+<span class="kw">where </span>T: MonotonicallyMappableToU64
+{
+    <span class="kw">fn </span>mapping(<span class="kw-2">&amp;</span><span class="self">self</span>, inp: External) -&gt; u64 {
+        External::to_u64(inp)
+    }
+
+    <span class="kw">fn </span>inverse(<span class="kw-2">&amp;</span><span class="self">self</span>, out: u64) -&gt; External {
+        External::from_u64(out)
+    }
+}
+
+<span class="doccomment">/// Mapping dividing by  gcd and a base value.
+///
+/// The function is assumed to be only called on values divided by passed
+/// gcd value. (It is necessary for the function to be monotonic.)
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>StrictlyMonotonicMappingToInternalGCDBaseval {
+    gcd_divider: DividerU64,
+    gcd: u64,
+    min_value: u64,
+}
+<span class="kw">impl </span>StrictlyMonotonicMappingToInternalGCDBaseval {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new(gcd: u64, min_value: u64) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>gcd_divider = DividerU64::divide_by(gcd);
+        <span class="self">Self </span>{
+            gcd_divider,
+            gcd,
+            min_value,
+        }
+    }
+}
+<span class="kw">impl</span>&lt;External: MonotonicallyMappableToU64&gt; StrictlyMonotonicFn&lt;External, u64&gt;
+    <span class="kw">for </span>StrictlyMonotonicMappingToInternalGCDBaseval
+{
+    <span class="kw">fn </span>mapping(<span class="kw-2">&amp;</span><span class="self">self</span>, inp: External) -&gt; u64 {
+        <span class="self">self</span>.gcd_divider
+            .divide(External::to_u64(inp) - <span class="self">self</span>.min_value)
+    }
+
+    <span class="kw">fn </span>inverse(<span class="kw-2">&amp;</span><span class="self">self</span>, out: u64) -&gt; External {
+        External::from_u64(<span class="self">self</span>.min_value + out * <span class="self">self</span>.gcd)
+    }
+
+    <span class="attribute">#[inline]
+    #[allow(clippy::reversed_empty_ranges)]
+    </span><span class="kw">fn </span>mapping_coerce(<span class="kw-2">&amp;</span><span class="self">self</span>, inp: RangeInclusive&lt;External&gt;) -&gt; RangeInclusive&lt;u64&gt; {
+        <span class="kw">let </span>end = External::to_u64(<span class="kw-2">*</span>inp.end());
+        <span class="kw">if </span>end &lt; <span class="self">self</span>.min_value || inp.end() &lt; inp.start() {
+            <span class="kw">return </span><span class="number">1</span>..=<span class="number">0</span>;
+        }
+        <span class="kw">let </span>map_coerce = |<span class="kw-2">mut </span>inp, coerce_up| {
+            <span class="kw">let </span>inp_lower_bound = <span class="self">self</span>.inverse(<span class="number">0</span>);
+            <span class="kw">if </span>inp &lt; inp_lower_bound {
+                inp = inp_lower_bound;
+            }
+            <span class="kw">let </span>val = External::to_u64(inp);
+            <span class="kw">let </span>need_coercion = coerce_up &amp;&amp; (val - <span class="self">self</span>.min_value) % <span class="self">self</span>.gcd != <span class="number">0</span>;
+            <span class="kw">let </span><span class="kw-2">mut </span>mapped_val = <span class="self">self</span>.mapping(inp);
+            <span class="kw">if </span>need_coercion {
+                mapped_val += <span class="number">1</span>;
+            }
+            mapped_val
+        };
+        <span class="kw">let </span>start = map_coerce(<span class="kw-2">*</span>inp.start(), <span class="bool-val">true</span>);
+        <span class="kw">let </span>end = map_coerce(<span class="kw-2">*</span>inp.end(), <span class="bool-val">false</span>);
+        start..=end
+    }
+}
+
+<span class="doccomment">/// Strictly monotonic mapping with a base value.
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>StrictlyMonotonicMappingToInternalBaseval {
+    min_value: u64,
+}
+<span class="kw">impl </span>StrictlyMonotonicMappingToInternalBaseval {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new(min_value: u64) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ min_value }
+    }
+}
+
+<span class="kw">impl</span>&lt;External: MonotonicallyMappableToU64&gt; StrictlyMonotonicFn&lt;External, u64&gt;
+    <span class="kw">for </span>StrictlyMonotonicMappingToInternalBaseval
+{
+    <span class="attribute">#[inline]
+    #[allow(clippy::reversed_empty_ranges)]
+    </span><span class="kw">fn </span>mapping_coerce(<span class="kw-2">&amp;</span><span class="self">self</span>, inp: RangeInclusive&lt;External&gt;) -&gt; RangeInclusive&lt;u64&gt; {
+        <span class="kw">if </span>External::to_u64(<span class="kw-2">*</span>inp.end()) &lt; <span class="self">self</span>.min_value {
+            <span class="kw">return </span><span class="number">1</span>..=<span class="number">0</span>;
+        }
+        <span class="kw">let </span>start = <span class="self">self</span>.mapping(External::to_u64(<span class="kw-2">*</span>inp.start()).max(<span class="self">self</span>.min_value));
+        <span class="kw">let </span>end = <span class="self">self</span>.mapping(External::to_u64(<span class="kw-2">*</span>inp.end()));
+        start..=end
+    }
+
+    <span class="kw">fn </span>mapping(<span class="kw-2">&amp;</span><span class="self">self</span>, val: External) -&gt; u64 {
+        External::to_u64(val) - <span class="self">self</span>.min_value
+    }
+
+    <span class="kw">fn </span>inverse(<span class="kw-2">&amp;</span><span class="self">self</span>, val: u64) -&gt; External {
+        External::from_u64(<span class="self">self</span>.min_value + val)
+    }
+}
+
+<span class="kw">impl </span>MonotonicallyMappableToU64 <span class="kw">for </span>u64 {
+    <span class="kw">fn </span>to_u64(<span class="self">self</span>) -&gt; u64 {
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>from_u64(val: u64) -&gt; <span class="self">Self </span>{
+        val
+    }
+}
+
+<span class="kw">impl </span>MonotonicallyMappableToU64 <span class="kw">for </span>i64 {
+    <span class="attribute">#[inline(always)]
+    </span><span class="kw">fn </span>to_u64(<span class="self">self</span>) -&gt; u64 {
+        common::i64_to_u64(<span class="self">self</span>)
+    }
+
+    <span class="attribute">#[inline(always)]
+    </span><span class="kw">fn </span>from_u64(val: u64) -&gt; <span class="self">Self </span>{
+        common::u64_to_i64(val)
+    }
+}
+
+<span class="kw">impl </span>MonotonicallyMappableToU64 <span class="kw">for </span>bool {
+    <span class="attribute">#[inline(always)]
+    </span><span class="kw">fn </span>to_u64(<span class="self">self</span>) -&gt; u64 {
+        u64::from(<span class="self">self</span>)
+    }
+
+    <span class="attribute">#[inline(always)]
+    </span><span class="kw">fn </span>from_u64(val: u64) -&gt; <span class="self">Self </span>{
+        val &gt; <span class="number">0
+    </span>}
+}
+
+<span class="kw">impl </span>MonotonicallyMappableToU64 <span class="kw">for </span>f64 {
+    <span class="kw">fn </span>to_u64(<span class="self">self</span>) -&gt; u64 {
+        common::f64_to_u64(<span class="self">self</span>)
+    }
+
+    <span class="kw">fn </span>from_u64(val: u64) -&gt; <span class="self">Self </span>{
+        common::u64_to_f64(val)
+    }
+}
+
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>strictly_monotonic_test() {
+        <span class="comment">// identity mapping
+        </span>test_round_trip(<span class="kw-2">&amp;</span>StrictlyMonotonicMappingToInternal::&lt;u64&gt;::new(), <span class="number">100u64</span>);
+        <span class="comment">// round trip to i64
+        </span>test_round_trip(<span class="kw-2">&amp;</span>StrictlyMonotonicMappingToInternal::&lt;i64&gt;::new(), <span class="number">100u64</span>);
+        <span class="comment">// identity mapping
+        </span>test_round_trip(<span class="kw-2">&amp;</span>StrictlyMonotonicMappingToInternal::&lt;u128&gt;::new(), <span class="number">100u128</span>);
+
+        <span class="comment">// base value to i64 round trip
+        </span><span class="kw">let </span>mapping = StrictlyMonotonicMappingToInternalBaseval::new(<span class="number">100</span>);
+        test_round_trip::&lt;<span class="kw">_</span>, <span class="kw">_</span>, u64&gt;(<span class="kw-2">&amp;</span>mapping, <span class="number">100i64</span>);
+        <span class="comment">// base value and gcd to u64 round trip
+        </span><span class="kw">let </span>mapping = StrictlyMonotonicMappingToInternalGCDBaseval::new(<span class="number">10</span>, <span class="number">100</span>);
+        test_round_trip::&lt;<span class="kw">_</span>, <span class="kw">_</span>, u64&gt;(<span class="kw-2">&amp;</span>mapping, <span class="number">100u64</span>);
+    }
+
+    <span class="kw">fn </span>test_round_trip&lt;T: StrictlyMonotonicFn&lt;K, L&gt;, K: std::fmt::Debug + Eq + Copy, L: Copy&gt;(
+        mapping: <span class="kw-2">&amp;</span>T,
+        test_val: K,
+    ) {
+        <span class="macro">assert_eq!</span>(mapping.inverse(mapping.mapping(test_val)), test_val);
+    }
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="fastfield_codecs" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

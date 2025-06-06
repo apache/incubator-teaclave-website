@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/git/checkouts/incubator-teaclave-crates-c8106113f74feefc/9ca099c/tantivy/src/indexer/index_writer_status.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>index_writer_status.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../../tantivy/index.html"><div class="logo-container">
+                    <img src="http://fulmicoton.com/tantivy-logo/tantivy-logo.png" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../tantivy/index.html">
+                        <img src="http://fulmicoton.com/tantivy-logo/tantivy-logo.png" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+</pre><pre class="rust"><code><span class="kw">use </span>std::sync::atomic::{AtomicBool, Ordering};
+<span class="kw">use </span>std::sync::{Arc, RwLock};
+
+<span class="kw">use </span><span class="kw">super</span>::AddBatchReceiver;
+
+<span class="attribute">#[derive(Clone)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>IndexWriterStatus {
+    inner: Arc&lt;Inner&gt;,
+}
+
+<span class="kw">impl </span>IndexWriterStatus {
+    <span class="doccomment">/// Returns true iff the index writer is alive.
+    </span><span class="kw">pub fn </span>is_alive(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.inner.as_ref().is_alive()
+    }
+
+    <span class="doccomment">/// Returns a copy of the operation receiver.
+    /// If the index writer was killed, returns `None`.
+    </span><span class="kw">pub fn </span>operation_receiver(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;AddBatchReceiver&gt; {
+        <span class="kw">let </span>rlock = <span class="self">self
+            </span>.inner
+            .receive_channel
+            .read()
+            .expect(<span class="string">&quot;This lock should never be poisoned&quot;</span>);
+        rlock.as_ref().cloned()
+    }
+
+    <span class="doccomment">/// Create an index writer bomb.
+    /// If dropped, the index writer status will be killed.
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>create_bomb(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; IndexWriterBomb {
+        IndexWriterBomb {
+            inner: <span class="prelude-val">Some</span>(<span class="self">self</span>.inner.clone()),
+        }
+    }
+}
+
+<span class="kw">struct </span>Inner {
+    is_alive: AtomicBool,
+    receive_channel: RwLock&lt;<span class="prelude-ty">Option</span>&lt;AddBatchReceiver&gt;&gt;,
+}
+
+<span class="kw">impl </span>Inner {
+    <span class="kw">fn </span>is_alive(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.is_alive.load(Ordering::Relaxed)
+    }
+
+    <span class="kw">fn </span>kill(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="self">self</span>.is_alive.store(<span class="bool-val">false</span>, Ordering::Relaxed);
+        <span class="self">self</span>.receive_channel
+            .write()
+            .expect(<span class="string">&quot;This lock should never be poisoned&quot;</span>)
+            .take();
+    }
+}
+
+<span class="kw">impl </span>From&lt;AddBatchReceiver&gt; <span class="kw">for </span>IndexWriterStatus {
+    <span class="kw">fn </span>from(receiver: AddBatchReceiver) -&gt; <span class="self">Self </span>{
+        IndexWriterStatus {
+            inner: Arc::new(Inner {
+                is_alive: AtomicBool::new(<span class="bool-val">true</span>),
+                receive_channel: RwLock::new(<span class="prelude-val">Some</span>(receiver)),
+            }),
+        }
+    }
+}
+
+<span class="doccomment">/// If dropped, the index writer will be killed.
+/// To prevent this, clients can call `.defuse()`.
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>IndexWriterBomb {
+    inner: <span class="prelude-ty">Option</span>&lt;Arc&lt;Inner&gt;&gt;,
+}
+
+<span class="kw">impl </span>IndexWriterBomb {
+    <span class="doccomment">/// Defuses the bomb.
+    ///
+    /// This is the only way to drop the bomb without killing
+    /// the index writer.
+    </span><span class="kw">pub fn </span>defuse(<span class="kw-2">mut </span><span class="self">self</span>) {
+        <span class="self">self</span>.inner = <span class="prelude-val">None</span>;
+    }
+}
+
+<span class="kw">impl </span>Drop <span class="kw">for </span>IndexWriterBomb {
+    <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(inner) = <span class="self">self</span>.inner.take() {
+            inner.kill();
+        }
+    }
+}
+
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>std::mem;
+
+    <span class="kw">use </span>crossbeam_channel <span class="kw">as </span>channel;
+
+    <span class="kw">use </span><span class="kw">super</span>::IndexWriterStatus;
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_bomb_goes_boom() {
+        <span class="kw">let </span>(_tx, rx) = channel::bounded(<span class="number">10</span>);
+        <span class="kw">let </span>index_writer_status: IndexWriterStatus = IndexWriterStatus::from(rx);
+        <span class="macro">assert!</span>(index_writer_status.operation_receiver().is_some());
+        <span class="kw">let </span>bomb = index_writer_status.create_bomb();
+        <span class="macro">assert!</span>(index_writer_status.operation_receiver().is_some());
+        mem::drop(bomb);
+        <span class="comment">// boom!
+        </span><span class="macro">assert!</span>(index_writer_status.operation_receiver().is_none());
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_bomb_defused() {
+        <span class="kw">let </span>(_tx, rx) = channel::bounded(<span class="number">10</span>);
+        <span class="kw">let </span>index_writer_status: IndexWriterStatus = IndexWriterStatus::from(rx);
+        <span class="macro">assert!</span>(index_writer_status.operation_receiver().is_some());
+        <span class="kw">let </span>bomb = index_writer_status.create_bomb();
+        bomb.defuse();
+        <span class="macro">assert!</span>(index_writer_status.operation_receiver().is_some());
+    }
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="tantivy" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

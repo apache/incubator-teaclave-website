@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Create a middleware from an async function that transforms a request."><meta name="keywords" content="rust, rustlang, rust-lang, map_request"><title>map_request in axum::middleware - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../axum/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../axum/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><div class="sidebar-elems"><h2><a href="index.html">In axum::middleware</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Function <a href="../index.html">axum</a>::<wbr><a href="index.html">middleware</a>::<wbr><a class="fn" href="#">map_request</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/axum/middleware/map_request.rs.html#115-117">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust fn"><code>pub fn map_request&lt;F, T&gt;(f: F) -&gt; <a class="struct" href="struct.MapRequestLayer.html" title="struct axum::middleware::MapRequestLayer">MapRequestLayer</a>&lt;F, (), T&gt;</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Create a middleware from an async function that transforms a request.</p>
+<p>This differs from <a href="../../tower/util/map_request/struct.MapRequest.html" title="tower::util::MapRequest"><code>tower::util::MapRequest</code></a> in that it allows you to easily run axum-specific
+extractors.</p>
+<h2 id="example"><a href="#example">Example</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{
+    Router,
+    routing::get,
+    middleware::map_request,
+    http::Request,
+};
+
+<span class="kw">async fn </span>set_header&lt;B&gt;(<span class="kw-2">mut </span>request: Request&lt;B&gt;) -&gt; Request&lt;B&gt; {
+    request.headers_mut().insert(<span class="string">&quot;x-foo&quot;</span>, <span class="string">&quot;foo&quot;</span>.parse().unwrap());
+    request
+}
+
+<span class="kw">async fn </span>handler&lt;B&gt;(request: Request&lt;B&gt;) {
+    <span class="comment">// `request` will have an `x-foo` header
+</span>}
+
+<span class="kw">let </span>app = Router::new()
+    .route(<span class="string">&quot;/&quot;</span>, get(handler))
+    .layer(map_request(set_header));</code></pre></div>
+<h2 id="rejecting-the-request"><a href="#rejecting-the-request">Rejecting the request</a></h2>
+<p>The function given to <code>map_request</code> is allowed to also return a <code>Result</code> which can be used to
+reject the request and return a response immediately, without calling the remaining
+middleware.</p>
+<p>Specifically the valid return types are:</p>
+<ul>
+<li><code>Request&lt;B&gt;</code></li>
+<li><code>Result&lt;Request&lt;B&gt;, E&gt; where E:  IntoResponse</code></li>
+</ul>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{
+    Router,
+    http::{Request, StatusCode},
+    routing::get,
+    middleware::map_request,
+};
+
+<span class="kw">async fn </span>auth&lt;B&gt;(request: Request&lt;B&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;B&gt;, StatusCode&gt; {
+    <span class="kw">let </span>auth_header = request.headers()
+        .get(http::header::AUTHORIZATION)
+        .and_then(|header| header.to_str().ok());
+
+    <span class="kw">match </span>auth_header {
+        <span class="prelude-val">Some</span>(auth_header) <span class="kw">if </span>token_is_valid(auth_header) =&gt; <span class="prelude-val">Ok</span>(request),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(StatusCode::UNAUTHORIZED),
+    }
+}
+
+<span class="kw">fn </span>token_is_valid(token: <span class="kw-2">&amp;</span>str) -&gt; bool {
+    <span class="comment">// ...
+</span>}
+
+<span class="kw">let </span>app = Router::new()
+    .route(<span class="string">&quot;/&quot;</span>, get(|| <span class="kw">async </span>{ <span class="comment">/* ... */ </span>}))
+    .route_layer(map_request(auth));</code></pre></div>
+<h2 id="running-extractors"><a href="#running-extractors">Running extractors</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>axum::{
+    Router,
+    routing::get,
+    middleware::map_request,
+    extract::Path,
+    http::Request,
+};
+<span class="kw">use </span>std::collections::HashMap;
+
+<span class="kw">async fn </span>log_path_params&lt;B&gt;(
+    Path(path_params): Path&lt;HashMap&lt;String, String&gt;&gt;,
+    request: Request&lt;B&gt;,
+) -&gt; Request&lt;B&gt; {
+    <span class="macro">tracing::debug!</span>(<span class="question-mark">?</span>path_params);
+    request
+}
+
+<span class="kw">let </span>app = Router::new()
+    .route(<span class="string">&quot;/&quot;</span>, get(|| <span class="kw">async </span>{ <span class="comment">/* ... */ </span>}))
+    .layer(map_request(log_path_params));</code></pre></div>
+<p>Note that to access state you must use either <a href="fn.map_request_with_state.html" title="map_request_with_state"><code>map_request_with_state</code></a>.</p>
+</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="axum" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>
