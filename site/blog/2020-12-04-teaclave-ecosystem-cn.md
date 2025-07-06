@@ -23,7 +23,7 @@ Apache Teaclave (incubating) ([https://teaclave.apache.org/](https://teaclave.ap
 
 Teaclave 提供了一个开放的开源生态，其中既有 Teaclave 项目的开发者，也包括安全计算平台的用户、服务提供商，以及在安全计算相关项目中使用了 Teaclave 中的核心库和第三方常用库的使用者。另一方面，Teaclave 生态服务于商业产品、学术研究项目、可信计算教学平台，同时社区也支持由 Teaclave 驱动的第三方开源项目。
 
-<center><img src="./img/teaclave-ecosystem-cn.png" width="75%"></center>
+<center><img src="./img/teaclave-ecosystem-cn.png" width="75%" /></center>
 
 在可信执行环境中，第三方库的移植、维护、审计尤为重要。我们为 Teaclave 生态提供了上百个 Rust 的第三方开发库，比如密码学库，科学计算库，机器学习库等等，大大的丰富了 Teaclave 生态，并且驱动了其他基于 Teaclave 的开源项目发展。除了维护第三方库，我们也孵化出了一些重要的 TEE 组件，比如，针对 SGX 环境的 Python 解释器 - MesaPy ([https://github.com/mesalock-linux/mesapy/tree/sgx](https://github.com/mesalock-linux/mesapy/tree/sgx))，以及对 TrustZone 后端 TEE 实现的 SDK - Rust OP-TEE TrustZone SDK ([https://github.com/sccommunity/rust-optee-trustzone-sdk](https://github.com/sccommunity/rust-optee-trustzone-sdk))。
 

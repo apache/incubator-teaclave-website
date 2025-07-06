@@ -13,8 +13,8 @@ FROM teaclave/teaclave-build-ubuntu-2004-sgx-2.17.1:0.2.0 AS teaclave-docs
 WORKDIR /app
 
 # Prepare Teaclave Repo
-RUN git clone https://github.com/apache/incubator-teaclave.git teaclave
-RUN cd teaclave && git submodule update --init 
+RUN git clone https://github.com/apache/incubator-teaclave.git teaclave --depth 1 
+RUN cd teaclave && git submodule update --init --depth 1 
 
 # Build Python SDK docs
 RUN pip3 install grpcio-tools grpclib pdoc
@@ -46,13 +46,13 @@ RUN mkdir -p /prebuilt_docs/teaclave-docs && \
 RUN rm -rf teaclave/build
 
 # Dependencies stage
-FROM node:16.20.2-bullseye AS deps
+FROM node:22-slim AS deps
 WORKDIR /app
 COPY site/package*.json site/
 RUN cd site && npm install
 
 # Final stage
-FROM node:16.20.2-bullseye as teaclave-docs-site
+FROM node:22-slim as teaclave-docs-site
 
 COPY --from=deps /app/site/node_modules /app/site/node_modules
 COPY --from=sgx-docs /prebuilt_docs/sgx-sdk-docs /prebuilt_docs/sgx-sdk-docs
@@ -62,7 +62,6 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 ENV PYTHONPATH="/usr/local/lib/python3.9/dist-packages:${PYTHONPATH}"
 
 WORKDIR /app
-RUN npm install -g vuepress@1.7.1
 
 RUN apt-get update && apt-get install -y \
     python3 \

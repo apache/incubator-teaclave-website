@@ -64,8 +64,7 @@ and projects using and contributing to Teaclave.
     framework for defining and deploying collaborative, privacy-preserving
     computations amongst a group of mutually mistrusting individuals.
 
-::: tip Want to appear on this page?
-Submit a [pull request](https://github.com/apache/incubator-teaclave-website/edit/master/site/powered-by.md)
-or send a quick description of your organization and usage
-to the [mailing list](/community/#mailing-lists) and we'll add you.
-:::
+> Want to appear on this page?
+> Submit a [pull request](https://github.com/apache/incubator-teaclave-website/edit/master/site/powered-by.md)
+> or send a quick description of your organization and usage
+> to the [mailing list](/community/#mailing-lists) and we'll add you.

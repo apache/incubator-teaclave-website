@@ -1,7 +1,8 @@
-dist
+build
 teaclave
 teaclave-sgx-sdk
 teaclave-trustzone-sdk
 node_modules
 target
 sgx-sdk-docs/Cargo.lock
+.docusaurus
