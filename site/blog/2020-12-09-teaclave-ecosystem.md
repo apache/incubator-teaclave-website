@@ -46,7 +46,7 @@ users. In a border view, the Teaclave community aims to support commercial
 products, academic research projects, teaching platform, and other open source
 projects powered by Teaclave.
 
-<center><img src="./img/teaclave-ecosystem.png" width="85%"></center>
+<center><img src="./img/teaclave-ecosystem.png" width="85%" /></center>
 
 Due to the importance of porting, maintaining, auditing of third-party libraries
 in the trusted computing environments, we maintains hundreds of Rust's libraries
