@@ -1,11 +1,9 @@
 # Apache Teaclave (incubating) Website
 
-The website is generated with the VuePress static site generator. Documentation
+The website is generated with the Docusaurus static site generator. Documentation
 are fetched from the original repository.
 
-You need to install
-[VuePress](https://vuepress.vuejs.org/guide/getting-started.html#global-installation)
-and `yarn` first. Then, install dependencies with `yarn install`. To
+You need to install the dependencies with `npm i` in `site` directory first. To
 deploy the generated site, `gph-import` is also needed.
 
 To preview the website, you can invoke:
