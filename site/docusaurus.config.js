@@ -46,6 +46,13 @@ const config = {
       autolinks?.forEach((link) => {
         file.fileContent = file.fileContent.replaceAll(link, `[${link.slice(1, -1)}](${link.slice(1, -1)})`);
       });
+      const notices = file.fileContent.match(/^:::([\s\S]+?)^:::$/gm);
+      notices?.forEach((n) => {
+        const lines = n.split('\n');
+        lines[0] = '**' + lines[0].split(' ').slice(2).join(' ') + '** <br/>';
+        lines.pop(); // Remove the last line which is `:::`
+        file.fileContent = file.fileContent.replaceAll(n, lines.map(i=>'> '+i).join('\n'));
+      });
       return file.fileContent;
     },
 
@@ -68,8 +75,7 @@ const config = {
           sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/apache/incubator-teaclave-website/tree/master/sgx-sdk-api-docs',
+          editUrl: undefined,
           routeBasePath: '/',
           include: [
             '*.md',
@@ -95,8 +101,7 @@ const config = {
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/apache/incubator-teaclave-website/tree/master/site/blog',
+          editUrl: undefined,
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'ignore',
