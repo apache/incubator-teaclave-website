@@ -48,23 +48,25 @@ RUN rm -rf teaclave/build
 # Dependencies stage
 FROM node:22-slim AS deps
 WORKDIR /app
-COPY site/package*.json site/
-RUN cd site && npm install
+COPY site/package*.json ./
+RUN npm install
 
 # Final stage
 FROM node:22-slim as teaclave-docs-site
 
-COPY --from=deps /app/site/node_modules /app/site/node_modules
+COPY --from=deps /app/node_modules /app/node_modules
 COPY --from=sgx-docs /prebuilt_docs/sgx-sdk-docs /prebuilt_docs/sgx-sdk-docs
 COPY --from=teaclave-docs /prebuilt_docs/teaclave-docs /prebuilt_docs/teaclave-docs
 
 ENV PATH="/root/.cargo/bin:${PATH}"
 ENV PYTHONPATH="/usr/local/lib/python3.9/dist-packages:${PYTHONPATH}"
+ENV NPM_CONFIG_PREFIX="/app/node_modules"
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
+    git \
     curl
-RUN pip3 install ghp-import
+RUN pip3 install --break-system-packages ghp-import

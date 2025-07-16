@@ -47,6 +47,7 @@ teaclave-docs: teaclave-crates-docs client-sdk-python-docs client-sdk-rust-docs
 
 site-build: update-repo
 	npm run build
+	mkdir -p build/api-docs
 
 dev:
 	npm run start
