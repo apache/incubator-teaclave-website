@@ -21,12 +21,12 @@ check-repo:
 update-repo: check-repo
 	cd docs/teaclave && git pull --depth 1
 	cd docs/teaclave-sgx-sdk && git pull --depth 1
-	cd docs/teaclave-trustzone-sdk && git pull --depth 1
+	cd docs/teaclave-trustzone-sdk && git pull --depth 1 --rebase
 
 sgx-sdk-api-docs: site-build
-	mkdir -p build/api-docs/sgx-sdk-docs
-	cp -r /prebuilt_docs/sgx-sdk-docs/* build/api-docs/sgx-sdk-docs/
-	@echo "<meta http-equiv=refresh content=0;url=`echo sgx_tstd | cut -d '/' -f 2`/index.html>" > build/api-docs/sgx-sdk-docs/index.html
+	mkdir -p build/api-docs/sgx-sdk/
+	cp -r /prebuilt_docs/sgx-sdk-docs/* build/api-docs/sgx-sdk/
+	@echo "<meta http-equiv=refresh content=0;url=`echo sgx_tstd | cut -d '/' -f 2`/index.html>" > build/api-docs/sgx-sdk/index.html
 
 trustzone-sdk-api-docs: site-build
 	@echo "Trustzone SDK API docs not supported yet"
