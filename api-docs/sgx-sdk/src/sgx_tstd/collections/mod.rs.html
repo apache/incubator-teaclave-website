@@ -1,0 +1,884 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/git/checkouts/incubator-teaclave-sgx-sdk-c63c8825343e87f0/5fd7766/sgx_tstd/src/collections/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../../sgx_tstd/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../sgx_tstd/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+</pre><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// &quot;License&quot;); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License..
+
+</span><span class="doccomment">//! Collection types.
+//!
+//! Rust&#39;s standard collection library provides efficient implementations of the
+//! most common general purpose programming data structures. By using the
+//! standard implementations, it should be possible for two libraries to
+//! communicate without significant data conversion.
+//!
+//! To get this out of the way: you should probably just use [`Vec`] or [`HashMap`].
+//! These two collections cover most use cases for generic data storage and
+//! processing. They are exceptionally good at doing what they do. All the other
+//! collections in the standard library have specific use cases where they are
+//! the optimal choice, but these cases are borderline *niche* in comparison.
+//! Even when `Vec` and `HashMap` are technically suboptimal, they&#39;re probably a
+//! good enough choice to get started.
+//!
+//! Rust&#39;s collections can be grouped into four major categories:
+//!
+//! * Sequences: [`Vec`], [`VecDeque`], [`LinkedList`]
+//! * Maps: [`HashMap`], [`BTreeMap`]
+//! * Sets: [`HashSet`], [`BTreeSet`]
+//! * Misc: [`BinaryHeap`]
+//!
+//! # When Should You Use Which Collection?
+//!
+//! These are fairly high-level and quick break-downs of when each collection
+//! should be considered. Detailed discussions of strengths and weaknesses of
+//! individual collections can be found on their own documentation pages.
+//!
+//! ### Use a `Vec` when:
+//! * You want to collect items up to be processed or sent elsewhere later, and
+//!   don&#39;t care about any properties of the actual values being stored.
+//! * You want a sequence of elements in a particular order, and will only be
+//!   appending to (or near) the end.
+//! * You want a stack.
+//! * You want a resizable array.
+//! * You want a heap-allocated array.
+//!
+//! ### Use a `VecDeque` when:
+//! * You want a [`Vec`] that supports efficient insertion at both ends of the
+//!   sequence.
+//! * You want a queue.
+//! * You want a double-ended queue (deque).
+//!
+//! ### Use a `LinkedList` when:
+//! * You want a [`Vec`] or [`VecDeque`] of unknown size, and can&#39;t tolerate
+//!   amortization.
+//! * You want to efficiently split and append lists.
+//! * You are *absolutely* certain you *really*, *truly*, want a doubly linked
+//!   list.
+//!
+//! ### Use a `HashMap` when:
+//! * You want to associate arbitrary keys with an arbitrary value.
+//! * You want a cache.
+//! * You want a map, with no extra functionality.
+//!
+//! ### Use a `BTreeMap` when:
+//! * You want a map sorted by its keys.
+//! * You want to be able to get a range of entries on-demand.
+//! * You&#39;re interested in what the smallest or largest key-value pair is.
+//! * You want to find the largest or smallest key that is smaller or larger
+//!   than something.
+//!
+//! ### Use the `Set` variant of any of these `Map`s when:
+//! * You just want to remember which keys you&#39;ve seen.
+//! * There is no meaningful value to associate with your keys.
+//! * You just want a set.
+//!
+//! ### Use a `BinaryHeap` when:
+//!
+//! * You want to store a bunch of elements, but only ever want to process the
+//!   &quot;biggest&quot; or &quot;most important&quot; one at any given time.
+//! * You want a priority queue.
+//!
+//! # Performance
+//!
+//! Choosing the right collection for the job requires an understanding of what
+//! each collection is good at. Here we briefly summarize the performance of
+//! different collections for certain important operations. For further details,
+//! see each type&#39;s documentation, and note that the names of actual methods may
+//! differ from the tables below on certain collections.
+//!
+//! Throughout the documentation, we will follow a few conventions. For all
+//! operations, the collection&#39;s size is denoted by n. If another collection is
+//! involved in the operation, it contains m elements. Operations which have an
+//! *amortized* cost are suffixed with a `*`. Operations with an *expected*
+//! cost are suffixed with a `~`.
+//!
+//! All amortized costs are for the potential need to resize when capacity is
+//! exhausted. If a resize occurs it will take *O*(*n*) time. Our collections never
+//! automatically shrink, so removal operations aren&#39;t amortized. Over a
+//! sufficiently large series of operations, the average cost per operation will
+//! deterministically equal the given cost.
+//!
+//! Only [`HashMap`] has expected costs, due to the probabilistic nature of hashing.
+//! It is theoretically possible, though very unlikely, for [`HashMap`] to
+//! experience worse performance.
+//!
+//! ## Sequences
+//!
+//! |                | get(i)                 | insert(i)               | remove(i)              | append    | split_off(i)           |
+//! |----------------|------------------------|-------------------------|------------------------|-----------|------------------------|
+//! | [`Vec`]        | *O*(1)                 | *O*(*n*-*i*)*           | *O*(*n*-*i*)           | *O*(*m*)* | *O*(*n*-*i*)           |
+//! | [`VecDeque`]   | *O*(1)                 | *O*(min(*i*, *n*-*i*))* | *O*(min(*i*, *n*-*i*)) | *O*(*m*)* | *O*(min(*i*, *n*-*i*)) |
+//! | [`LinkedList`] | *O*(min(*i*, *n*-*i*)) | *O*(min(*i*, *n*-*i*))  | *O*(min(*i*, *n*-*i*)) | *O*(1)    | *O*(min(*i*, *n*-*i*)) |
+//!
+//! Note that where ties occur, [`Vec`] is generally going to be faster than [`VecDeque`], and
+//! [`VecDeque`] is generally going to be faster than [`LinkedList`].
+//!
+//! ## Maps
+//!
+//! For Sets, all operations have the cost of the equivalent Map operation.
+//!
+//! |              | get           | insert        | remove        | range         | append       |
+//! |--------------|---------------|---------------|---------------|---------------|--------------|
+//! | [`HashMap`]  | *O*(1)~       | *O*(1)~*      | *O*(1)~       | N/A           | N/A          |
+//! | [`BTreeMap`] | *O*(log(*n*)) | *O*(log(*n*)) | *O*(log(*n*)) | *O*(log(*n*)) | *O*(*n*+*m*) |
+//!
+//! # Correct and Efficient Usage of Collections
+//!
+//! Of course, knowing which collection is the right one for the job doesn&#39;t
+//! instantly permit you to use it correctly. Here are some quick tips for
+//! efficient and correct usage of the standard collections in general. If
+//! you&#39;re interested in how to use a specific collection in particular, consult
+//! its documentation for detailed discussion and code examples.
+//!
+//! ## Capacity Management
+//!
+//! Many collections provide several constructors and methods that refer to
+//! &quot;capacity&quot;. These collections are generally built on top of an array.
+//! Optimally, this array would be exactly the right size to fit only the
+//! elements stored in the collection, but for the collection to do this would
+//! be very inefficient. If the backing array was exactly the right size at all
+//! times, then every time an element is inserted, the collection would have to
+//! grow the array to fit it. Due to the way memory is allocated and managed on
+//! most computers, this would almost surely require allocating an entirely new
+//! array and copying every single element from the old one into the new one.
+//! Hopefully you can see that this wouldn&#39;t be very efficient to do on every
+//! operation.
+//!
+//! Most collections therefore use an *amortized* allocation strategy. They
+//! generally let themselves have a fair amount of unoccupied space so that they
+//! only have to grow on occasion. When they do grow, they allocate a
+//! substantially larger array to move the elements into so that it will take a
+//! while for another grow to be required. While this strategy is great in
+//! general, it would be even better if the collection *never* had to resize its
+//! backing array. Unfortunately, the collection itself doesn&#39;t have enough
+//! information to do this itself. Therefore, it is up to us programmers to give
+//! it hints.
+//!
+//! Any `with_capacity` constructor will instruct the collection to allocate
+//! enough space for the specified number of elements. Ideally this will be for
+//! exactly that many elements, but some implementation details may prevent
+//! this. See collection-specific documentation for details. In general, use
+//! `with_capacity` when you know exactly how many elements will be inserted, or
+//! at least have a reasonable upper-bound on that number.
+//!
+//! When anticipating a large influx of elements, the `reserve` family of
+//! methods can be used to hint to the collection how much room it should make
+//! for the coming items. As with `with_capacity`, the precise behavior of
+//! these methods will be specific to the collection of interest.
+//!
+//! For optimal performance, collections will generally avoid shrinking
+//! themselves. If you believe that a collection will not soon contain any more
+//! elements, or just really need the memory, the `shrink_to_fit` method prompts
+//! the collection to shrink the backing array to the minimum size capable of
+//! holding its elements.
+//!
+//! Finally, if ever you&#39;re interested in what the actual capacity of the
+//! collection is, most collections provide a `capacity` method to query this
+//! information on demand. This can be useful for debugging purposes, or for
+//! use with the `reserve` methods.
+//!
+//! ## Iterators
+//!
+//! Iterators are a powerful and robust mechanism used throughout Rust&#39;s
+//! standard libraries. Iterators provide a sequence of values in a generic,
+//! safe, efficient and convenient way. The contents of an iterator are usually
+//! *lazily* evaluated, so that only the values that are actually needed are
+//! ever actually produced, and no allocation need be done to temporarily store
+//! them. Iterators are primarily consumed using a `for` loop, although many
+//! functions also take iterators where a collection or sequence of values is
+//! desired.
+//!
+//! All of the standard collections provide several iterators for performing
+//! bulk manipulation of their contents. The three primary iterators almost
+//! every collection should provide are `iter`, `iter_mut`, and `into_iter`.
+//! Some of these are not provided on collections where it would be unsound or
+//! unreasonable to provide them.
+//!
+//! `iter` provides an iterator of immutable references to all the contents of a
+//! collection in the most &quot;natural&quot; order. For sequence collections like [`Vec`],
+//! this means the items will be yielded in increasing order of index starting
+//! at 0. For ordered collections like [`BTreeMap`], this means that the items
+//! will be yielded in sorted order. For unordered collections like [`HashMap`],
+//! the items will be yielded in whatever order the internal representation made
+//! most convenient. This is great for reading through all the contents of the
+//! collection.
+//!
+//! ```
+//! let vec = vec![1, 2, 3, 4];
+//! for x in vec.iter() {
+//!    println!(&quot;vec contained {x:?}&quot;);
+//! }
+//! ```
+//!
+//! `iter_mut` provides an iterator of *mutable* references in the same order as
+//! `iter`. This is great for mutating all the contents of the collection.
+//!
+//! ```
+//! let mut vec = vec![1, 2, 3, 4];
+//! for x in vec.iter_mut() {
+//!    *x += 1;
+//! }
+//! ```
+//!
+//! `into_iter` transforms the actual collection into an iterator over its
+//! contents by-value. This is great when the collection itself is no longer
+//! needed, and the values are needed elsewhere. Using `extend` with `into_iter`
+//! is the main way that contents of one collection are moved into another.
+//! `extend` automatically calls `into_iter`, and takes any &lt;code&gt;T: [IntoIterator]&lt;/code&gt;.
+//! Calling `collect` on an iterator itself is also a great way to convert one
+//! collection into another. Both of these methods should internally use the
+//! capacity management tools discussed in the previous section to do this as
+//! efficiently as possible.
+//!
+//! ```
+//! let mut vec1 = vec![1, 2, 3, 4];
+//! let vec2 = vec![10, 20, 30, 40];
+//! vec1.extend(vec2);
+//! ```
+//!
+//! ```
+//! use std::collections::VecDeque;
+//!
+//! let vec = [1, 2, 3, 4];
+//! let buf: VecDeque&lt;_&gt; = vec.into_iter().collect();
+//! ```
+//!
+//! Iterators also provide a series of *adapter* methods for performing common
+//! threads to sequences. Among the adapters are functional favorites like `map`,
+//! `fold`, `skip` and `take`. Of particular interest to collections is the
+//! `rev` adapter, which reverses any iterator that supports this operation. Most
+//! collections provide reversible iterators as the way to iterate over them in
+//! reverse order.
+//!
+//! ```
+//! let vec = vec![1, 2, 3, 4];
+//! for x in vec.iter().rev() {
+//!    println!(&quot;vec contained {x:?}&quot;);
+//! }
+//! ```
+//!
+//! Several other collection methods also return iterators to yield a sequence
+//! of results but avoid allocating an entire collection to store the result in.
+//! This provides maximum flexibility as `collect` or `extend` can be called to
+//! &quot;pipe&quot; the sequence into any collection if desired. Otherwise, the sequence
+//! can be looped over with a `for` loop. The iterator can also be discarded
+//! after partial use, preventing the computation of the unused items.
+//!
+//! ## Entries
+//!
+//! The `entry` API is intended to provide an efficient mechanism for
+//! manipulating the contents of a map conditionally on the presence of a key or
+//! not. The primary motivating use case for this is to provide efficient
+//! accumulator maps. For instance, if one wishes to maintain a count of the
+//! number of times each key has been seen, they will have to perform some
+//! conditional logic on whether this is the first time the key has been seen or
+//! not. Normally, this would require a `find` followed by an `insert`,
+//! effectively duplicating the search effort on each insertion.
+//!
+//! When a user calls `map.entry(key)`, the map will search for the key and
+//! then yield a variant of the `Entry` enum.
+//!
+//! If a `Vacant(entry)` is yielded, then the key *was not* found. In this case
+//! the only valid operation is to `insert` a value into the entry. When this is
+//! done, the vacant entry is consumed and converted into a mutable reference to
+//! the value that was inserted. This allows for further manipulation of the
+//! value beyond the lifetime of the search itself. This is useful if complex
+//! logic needs to be performed on the value regardless of whether the value was
+//! just inserted.
+//!
+//! If an `Occupied(entry)` is yielded, then the key *was* found. In this case,
+//! the user has several options: they can `get`, `insert` or `remove` the
+//! value of the occupied entry. Additionally, they can convert the occupied
+//! entry into a mutable reference to its value, providing symmetry to the
+//! vacant `insert` case.
+//!
+//! ### Examples
+//!
+//! Here are the two primary ways in which `entry` is used. First, a simple
+//! example where the logic performed on the values is trivial.
+//!
+//! #### Counting the number of times each character in a string occurs
+//!
+//! ```
+//! use std::collections::btree_map::BTreeMap;
+//!
+//! let mut count = BTreeMap::new();
+//! let message = &quot;she sells sea shells by the sea shore&quot;;
+//!
+//! for c in message.chars() {
+//!     *count.entry(c).or_insert(0) += 1;
+//! }
+//!
+//! assert_eq!(count.get(&amp;&#39;s&#39;), Some(&amp;8));
+//!
+//! println!(&quot;Number of occurrences of each character&quot;);
+//! for (char, count) in &amp;count {
+//!     println!(&quot;{char}: {count}&quot;);
+//! }
+//! ```
+//!
+//! When the logic to be performed on the value is more complex, we may simply
+//! use the `entry` API to ensure that the value is initialized and perform the
+//! logic afterwards.
+//!
+//! #### Tracking the inebriation of customers at a bar
+//!
+//! ```
+//! use std::collections::btree_map::BTreeMap;
+//!
+//! // A client of the bar. They have a blood alcohol level.
+//! struct Person { blood_alcohol: f32 }
+//!
+//! // All the orders made to the bar, by client ID.
+//! let orders = vec![1, 2, 1, 2, 3, 4, 1, 2, 2, 3, 4, 1, 1, 1];
+//!
+//! // Our clients.
+//! let mut blood_alcohol = BTreeMap::new();
+//!
+//! for id in orders {
+//!     // If this is the first time we&#39;ve seen this customer, initialize them
+//!     // with no blood alcohol. Otherwise, just retrieve them.
+//!     let person = blood_alcohol.entry(id).or_insert(Person { blood_alcohol: 0.0 });
+//!
+//!     // Reduce their blood alcohol level. It takes time to order and drink a beer!
+//!     person.blood_alcohol *= 0.9;
+//!
+//!     // Check if they&#39;re sober enough to have another beer.
+//!     if person.blood_alcohol &gt; 0.3 {
+//!         // Too drunk... for now.
+//!         println!(&quot;Sorry {id}, I have to cut you off&quot;);
+//!     } else {
+//!         // Have another!
+//!         person.blood_alcohol += 0.1;
+//!     }
+//! }
+//! ```
+//!
+//! # Insert and complex keys
+//!
+//! If we have a more complex key, calls to `insert` will
+//! not update the value of the key. For example:
+//!
+//! ```
+//! use std::cmp::Ordering;
+//! use std::collections::BTreeMap;
+//! use std::hash::{Hash, Hasher};
+//!
+//! #[derive(Debug)]
+//! struct Foo {
+//!     a: u32,
+//!     b: &amp;&#39;static str,
+//! }
+//!
+//! // we will compare `Foo`s by their `a` value only.
+//! impl PartialEq for Foo {
+//!     fn eq(&amp;self, other: &amp;Self) -&gt; bool { self.a == other.a }
+//! }
+//!
+//! impl Eq for Foo {}
+//!
+//! // we will hash `Foo`s by their `a` value only.
+//! impl Hash for Foo {
+//!     fn hash&lt;H: Hasher&gt;(&amp;self, h: &amp;mut H) { self.a.hash(h); }
+//! }
+//!
+//! impl PartialOrd for Foo {
+//!     fn partial_cmp(&amp;self, other: &amp;Self) -&gt; Option&lt;Ordering&gt; { self.a.partial_cmp(&amp;other.a) }
+//! }
+//!
+//! impl Ord for Foo {
+//!     fn cmp(&amp;self, other: &amp;Self) -&gt; Ordering { self.a.cmp(&amp;other.a) }
+//! }
+//!
+//! let mut map = BTreeMap::new();
+//! map.insert(Foo { a: 1, b: &quot;baz&quot; }, 99);
+//!
+//! // We already have a Foo with an a of 1, so this will be updating the value.
+//! map.insert(Foo { a: 1, b: &quot;xyz&quot; }, 100);
+//!
+//! // The value has been updated...
+//! assert_eq!(map.values().next().unwrap(), &amp;100);
+//!
+//! // ...but the key hasn&#39;t changed. b is still &quot;baz&quot;, not &quot;xyz&quot;.
+//! assert_eq!(map.keys().next().unwrap().b, &quot;baz&quot;);
+//! ```
+//!
+//! [IntoIterator]: crate::iter::IntoIterator &quot;iter::IntoIterator&quot;
+
+</span><span class="attribute">#[doc(hidden)]
+</span><span class="kw">pub use </span><span class="kw">crate</span>::ops::Bound;
+<span class="kw">pub use </span>alloc_crate::collections::{binary_heap, btree_map, btree_set};
+<span class="kw">pub use </span>alloc_crate::collections::{linked_list, vec_deque};
+<span class="kw">pub use </span>alloc_crate::collections::{BTreeMap, BTreeSet, BinaryHeap};
+<span class="kw">pub use </span>alloc_crate::collections::{LinkedList, VecDeque};
+
+<span class="kw">pub use </span><span class="self">self</span>::hash_map::HashMap;
+<span class="kw">pub use </span><span class="self">self</span>::hash_set::HashSet;
+
+<span class="kw">pub use </span>alloc_crate::collections::TryReserveError;
+<span class="kw">pub use </span>alloc_crate::collections::TryReserveErrorKind;
+
+<span class="kw">mod </span>hash;
+
+<span class="kw">pub mod </span>hash_map {
+    <span class="doccomment">//! A hash map implemented with quadratic probing and SIMD lookup.
+    </span><span class="kw">pub use </span><span class="kw">super</span>::hash::map::<span class="kw-2">*</span>;
+}
+
+<span class="kw">pub mod </span>hash_set {
+    <span class="doccomment">//! A hash set implemented as a `HashMap` where the value is `()`.
+    </span><span class="kw">pub use </span><span class="kw">super</span>::hash::set::<span class="kw-2">*</span>;
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="sgx_tstd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>

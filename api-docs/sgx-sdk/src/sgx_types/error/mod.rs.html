@@ -1,0 +1,1560 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/root/.cargo/git/checkouts/incubator-teaclave-sgx-sdk-c63c8825343e87f0/5fd7766/sgx_types/src/error/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../../sgx_types/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../sgx_types/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
+<span id="675">675</span>
+<span id="676">676</span>
+<span id="677">677</span>
+<span id="678">678</span>
+<span id="679">679</span>
+<span id="680">680</span>
+<span id="681">681</span>
+<span id="682">682</span>
+<span id="683">683</span>
+<span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
+<span id="704">704</span>
+<span id="705">705</span>
+<span id="706">706</span>
+<span id="707">707</span>
+<span id="708">708</span>
+<span id="709">709</span>
+<span id="710">710</span>
+<span id="711">711</span>
+<span id="712">712</span>
+<span id="713">713</span>
+<span id="714">714</span>
+<span id="715">715</span>
+<span id="716">716</span>
+<span id="717">717</span>
+<span id="718">718</span>
+<span id="719">719</span>
+<span id="720">720</span>
+<span id="721">721</span>
+<span id="722">722</span>
+<span id="723">723</span>
+<span id="724">724</span>
+<span id="725">725</span>
+<span id="726">726</span>
+<span id="727">727</span>
+<span id="728">728</span>
+<span id="729">729</span>
+<span id="730">730</span>
+<span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
+<span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+</pre><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// &quot;License&quot;); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License..
+
+</span><span class="kw">use </span>core::error::Error;
+<span class="kw">use </span>core::fmt;
+<span class="kw">use </span>core::result;
+
+<span class="kw">pub mod </span>errno;
+
+<span class="macro">impl_enum! </span>{
+    <span class="attribute">#[repr(u32)]
+    #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd)]
+    </span><span class="kw">pub enum </span>SgxStatus {
+        Success                 = <span class="number">0x0000_0000</span>,
+
+        Unexpected              = <span class="number">0x0000_0001</span>,      <span class="comment">/* Unexpected error. */
+        </span>InvalidParameter        = <span class="number">0x0000_0002</span>,      <span class="comment">/* The parameter is incorrect. */
+        </span>OutOfMemory             = <span class="number">0x0000_0003</span>,      <span class="comment">/* Not enough memory is available to complete this operation. */
+        </span>EnclaveLost             = <span class="number">0x0000_0004</span>,      <span class="comment">/* Enclave lost after power transition or used in child process created by linux:fork(). */
+        </span>InvalidState            = <span class="number">0x0000_0005</span>,      <span class="comment">/* SGX API is invoked in incorrect order or state. */
+        </span>UnsupportedFeature      = <span class="number">0x0000_0008</span>,      <span class="comment">/* Feature is not supported on this platform. */
+        </span>ThreadExit              = <span class="number">0x0000_0009</span>,      <span class="comment">/* Enclave is exited with pthread_exit(). */
+        </span>MemoryMapFailure        = <span class="number">0x0000_000A</span>,      <span class="comment">/* Failed to reserve memory for the enclave. */
+
+        </span>InvalidFunction         = <span class="number">0x0000_1001</span>,      <span class="comment">/* The ecall/ocall index is invalid. */
+        </span>OutOfTcs                = <span class="number">0x0000_1003</span>,      <span class="comment">/* The enclave is out of TCS. */
+        </span>EnclaveCrashed          = <span class="number">0x0000_1006</span>,      <span class="comment">/* The enclave is crashed. */
+        </span>ECallNotAllowed         = <span class="number">0x0000_1007</span>,      <span class="comment">/* The ECALL is not allowed at this time, e.g. ecall is blocked by the dynamic entry table, or nested ecall is not allowed during initialization. */
+        </span>OCallNotAllowed         = <span class="number">0x0000_1008</span>,      <span class="comment">/* The OCALL is not allowed at this time, e.g. ocall is not allowed during exception handling. */
+        </span>StackOverRun            = <span class="number">0x0000_1009</span>,      <span class="comment">/* The enclave is running out of stack. */
+
+        </span>UndefinedSymbol         = <span class="number">0x0000_2000</span>,      <span class="comment">/* The enclave image has undefined symbol. */
+        </span>InvalidEnclave          = <span class="number">0x0000_2001</span>,      <span class="comment">/* The enclave image is not correct. */
+        </span>InvalidEcnalveId        = <span class="number">0x0000_2002</span>,      <span class="comment">/* The enclave id is invalid. */
+        </span>InvalidSignature        = <span class="number">0x0000_2003</span>,      <span class="comment">/* The signature is invalid. */
+        </span>NotDebugEnclave         = <span class="number">0x0000_2004</span>,      <span class="comment">/* The enclave is signed as product enclave, and can not be created as debuggable enclave. */
+        </span>OutOfEPC                = <span class="number">0x0000_2005</span>,      <span class="comment">/* Not enough EPC is available to load the enclave. */
+        </span>NoDevice                = <span class="number">0x0000_2006</span>,      <span class="comment">/* Can&#39;t open SGX device. */
+        </span>MemoryMapConflict       = <span class="number">0x0000_2007</span>,      <span class="comment">/* Page mapping failed in driver. */
+        </span>InvalidMetadata         = <span class="number">0x0000_2009</span>,      <span class="comment">/* The metadata is incorrect. */
+        </span>DeviceBusy              = <span class="number">0x0000_200C</span>,      <span class="comment">/* Device is busy, mostly EINIT failed. */
+        </span>InvalidVersion          = <span class="number">0x0000_200D</span>,      <span class="comment">/* Metadata version is inconsistent between uRTS and sgx_sign or uRTS is incompatible with current platform. */
+        </span>ModeIncompatible        = <span class="number">0x0000_200E</span>,      <span class="comment">/* The target enclave 32/64 bit mode or sim/hw mode is incompatible with the mode of current uRTS. */
+        </span>EnclaveFileAccess       = <span class="number">0x0000_200F</span>,      <span class="comment">/* Can&#39;t open enclave file. */
+        </span>InvalidMisc             = <span class="number">0x0000_2010</span>,      <span class="comment">/* The MiscSelct/MiscMask settings are not correct. */
+        </span>InvalidLaunchToken      = <span class="number">0x0000_2011</span>,      <span class="comment">/* The launch token is not correct. */
+
+        </span>MacMismatch             = <span class="number">0x0000_3001</span>,      <span class="comment">/* Indicates verification error for reports, sealed datas, etc. */
+        </span>InvalidAttribute        = <span class="number">0x0000_3002</span>,      <span class="comment">/* The enclave is not authorized, e.g., requesting invalid attribute or launch key access on legacy SGX platform without FLC. */
+        </span>InvalidCpusvn           = <span class="number">0x0000_3003</span>,      <span class="comment">/* The cpu svn is beyond platform&#39;s cpu svn value. */
+        </span>InvalidIsvsvn           = <span class="number">0x0000_3004</span>,      <span class="comment">/* The isv svn is greater than the enclave&#39;s isv svn. */
+        </span>InvalidKeyname          = <span class="number">0x0000_3005</span>,      <span class="comment">/* The key name is an unsupported value. */
+
+        </span>ServiceUnavailable      = <span class="number">0x0000_4001</span>,      <span class="comment">/* Indicates aesm didn&#39;t respond or the requested service is not supported. */
+        </span>ServiceTimeout          = <span class="number">0x0000_4002</span>,      <span class="comment">/* The request to aesm timed out. */
+        </span>InvalidEpidBlob         = <span class="number">0x0000_4003</span>,      <span class="comment">/* Indicates epid blob verification error. */
+        </span>ServiceInvalidPrivilege = <span class="number">0x0000_4004</span>,      <span class="comment">/* Enclave not authorized to run, .e.g. provisioning enclave hosted in an app without access rights to /dev/sgx_provision. */
+        </span>EpidMemoryRevoked       = <span class="number">0x0000_4005</span>,      <span class="comment">/* The EPID group membership is revoked. */
+        </span>UpdateNeeded            = <span class="number">0x0000_4006</span>,      <span class="comment">/* SGX needs to be updated. */
+        </span>NetworkFailure          = <span class="number">0x0000_4007</span>,      <span class="comment">/* Network connecting or proxy setting issue is encountered. */
+        </span>InvalidAeSession        = <span class="number">0x0000_4008</span>,      <span class="comment">/* Session is invalid or ended by server. */
+        </span>ServiceBusy             = <span class="number">0x0000_400A</span>,      <span class="comment">/* The requested service is temporarily not availabe. */
+        </span>McNotFound              = <span class="number">0x0000_400C</span>,      <span class="comment">/* The Monotonic Counter doesn&#39;t exist or has been invalided. */
+        </span>McNoAccess              = <span class="number">0x0000_400D</span>,      <span class="comment">/* Caller doesn&#39;t have the access right to specified VMC. */
+        </span>McUsedUp                = <span class="number">0x0000_400E</span>,      <span class="comment">/* Monotonic counters are used out. */
+        </span>McOverQuota             = <span class="number">0x0000_400F</span>,      <span class="comment">/* Monotonic counters exceeds quota limitation. */
+        </span>KdfMismatch             = <span class="number">0x0000_4011</span>,      <span class="comment">/* Key derivation function doesn&#39;t match during key exchange. */
+        </span>UnrecognizedPlatform    = <span class="number">0x0000_4012</span>,      <span class="comment">/* EPID Provisioning failed due to platform not recognized by backend server. */
+        </span>UnsupportedConfig       = <span class="number">0x0000_4013</span>,      <span class="comment">/* The config for trigging EPID Provisiong or PSE Provisiong&amp;LTP is invalid. */
+
+        </span>NoPrivilege             = <span class="number">0x0000_5002</span>,      <span class="comment">/* Not enough privilege to perform the operation. */
+
+        /* SGX Protected Code Loader Error codes*/
+        </span>PclEncrypted            = <span class="number">0x0000_6001</span>,      <span class="comment">/* trying to encrypt an already encrypted enclave. */
+        </span>PclNotEncrypted         = <span class="number">0x0000_6002</span>,      <span class="comment">/* trying to load a plain enclave using sgx_create_encrypted_enclave. */
+        </span>PclMacMismatch          = <span class="number">0x0000_6003</span>,      <span class="comment">/* section mac result does not match build time mac. */
+        </span>PclShaMismatch          = <span class="number">0x0000_6004</span>,      <span class="comment">/* Unsealed key MAC does not match MAC of key hardcoded in enclave binary. */
+        </span>PclGuidMismatch         = <span class="number">0x0000_6005</span>,      <span class="comment">/* GUID in sealed blob does not match GUID hardcoded in enclave binary. */
+
+        /* SGX errors are only used in the file API when there is no appropriate EXXX (EINVAL, EIO etc.) error code. */
+        </span>BadStatus               = <span class="number">0x0000_7001</span>,	    <span class="comment">/* The file is in bad status, run sgx_clearerr to try and fix it. */
+        </span>NoKeyId                 = <span class="number">0x0000_7002</span>,	    <span class="comment">/* The Key ID field is all zeros, can&#39;t re-generate the encryption key. */
+        </span>NameMismatch            = <span class="number">0x0000_7003</span>,	    <span class="comment">/* The current file name is different then the original file name (not allowed, substitution attack). */
+        </span>NotSgxFile              = <span class="number">0x0000_7004</span>,      <span class="comment">/* The file is not an SGX file. */
+        </span>CantOpenRecoveryFile    = <span class="number">0x0000_7005</span>,	    <span class="comment">/* A recovery file can&#39;t be opened, so flush operation can&#39;t continue (only used when no EXXX is returned). */
+        </span>CantWriteRecoveryFile   = <span class="number">0x0000_7006</span>,      <span class="comment">/* A recovery file can&#39;t be written, so flush operation can&#39;t continue (only used when no EXXX is returned). */
+        </span>RecoveryNeeded          = <span class="number">0x0000_7007</span>,	    <span class="comment">/* When openeing the file, recovery is needed, but the recovery process failed. */
+        </span>FluchFailed             = <span class="number">0x0000_7008</span>,	    <span class="comment">/* fflush operation (to disk) failed (only used when no EXXX is returned). */
+        </span>CloseFailed             = <span class="number">0x0000_7009</span>,	    <span class="comment">/* fclose operation (to disk) failed (only used when no EXXX is returned). */
+
+        </span>UnsupportedAttKeyid     = <span class="number">0x0000_8001</span>,      <span class="comment">/* platform quoting infrastructure does not support the key. */
+        </span>AttKeyCertFailed        = <span class="number">0x0000_8002</span>,      <span class="comment">/* Failed to generate and certify the attestation key. */
+        </span>AttKeyUninitialized     = <span class="number">0x0000_8003</span>,      <span class="comment">/* The platform quoting infrastructure does not have the attestation key available to generate quote. */
+        </span>InvaliedAttKeyCertData  = <span class="number">0x0000_8004</span>,      <span class="comment">/* TThe data returned by the platform library&#39;s sgx_get_quote_config() is invalid. */
+        </span>INvaliedPlatfromCert    = <span class="number">0x0000_8005</span>,      <span class="comment">/* The PCK Cert for the platform is not available. */
+
+        </span>EnclaveCreateInterrupted = <span class="number">0x0000_F001</span>,     <span class="comment">/* The ioctl for enclave_create unexpectedly failed with EINTR. */
+    </span>}
+}
+
+<span class="kw">impl </span>SgxStatus {
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>is_success(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw-2">*</span><span class="self">self </span>== SgxStatus::Success
+    }
+}
+
+<span class="kw">impl </span>SgxStatus {
+    <span class="kw">pub fn </span>__description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            SgxStatus::Success =&gt; <span class="string">&quot;Success.&quot;</span>,
+            SgxStatus::Unexpected =&gt; <span class="string">&quot;Unexpected error occurred.&quot;</span>,
+            SgxStatus::InvalidParameter =&gt; <span class="string">&quot;The parameter is incorrect.&quot;</span>,
+            SgxStatus::OutOfMemory =&gt; <span class="string">&quot;Not enough memory is available to complete this operation.&quot;</span>,
+            SgxStatus::EnclaveLost =&gt; <span class="string">&quot;Enclave lost after power transition or used in child process created.&quot;</span>,
+            SgxStatus::InvalidState =&gt; <span class="string">&quot;SGX API is invoked in incorrect order or state.&quot;</span>,
+            SgxStatus::UnsupportedFeature =&gt; <span class="string">&quot;Feature is not supported on this platform.&quot;</span>,
+            SgxStatus::ThreadExit =&gt; <span class="string">&quot;Enclave is exited with pthread_exit.&quot;</span>,
+            SgxStatus::MemoryMapFailure =&gt; <span class="string">&quot;Failed to reserve memory for the enclave.&quot;</span>,
+
+            SgxStatus::InvalidFunction =&gt; <span class="string">&quot;The ecall/ocall index is invalid.&quot;</span>,
+            SgxStatus::OutOfTcs =&gt; <span class="string">&quot;The enclave is out of TCS.&quot;</span>,
+            SgxStatus::EnclaveCrashed =&gt; <span class="string">&quot;The enclave is crashed.&quot;</span>,
+            SgxStatus::ECallNotAllowed =&gt; <span class="string">&quot;The ECALL is not allowed at this time.&quot;</span>,
+            SgxStatus::OCallNotAllowed =&gt; <span class="string">&quot;The OCALL is not allowed at this time.&quot;</span>,
+            SgxStatus::StackOverRun =&gt; <span class="string">&quot;The enclave is running out of stack.&quot;</span>,
+
+            SgxStatus::UndefinedSymbol =&gt; <span class="string">&quot;The enclave image has undefined symbol.&quot;</span>,
+            SgxStatus::InvalidEnclave =&gt; <span class="string">&quot;The enclave image is not correct.&quot;</span>,
+            SgxStatus::InvalidEcnalveId =&gt; <span class="string">&quot;The enclave id is invalid.&quot;</span>,
+            SgxStatus::InvalidSignature =&gt; <span class="string">&quot;The signature is invalid.&quot;</span>,
+            SgxStatus::NotDebugEnclave =&gt; <span class="string">&quot;The enclave can not be created as debuggable enclave.&quot;</span>,
+            SgxStatus::OutOfEPC =&gt; <span class="string">&quot;Not enough EPC is available to load the enclave.&quot;</span>,
+            SgxStatus::NoDevice =&gt; <span class="string">&quot;Can&#39;t open SGX device.&quot;</span>,
+            SgxStatus::MemoryMapConflict =&gt; <span class="string">&quot;Page mapping failed in driver.&quot;</span>,
+            SgxStatus::InvalidMetadata =&gt; <span class="string">&quot;The metadata is incorrect.&quot;</span>,
+            SgxStatus::DeviceBusy =&gt; <span class="string">&quot;Device is busy, mostly EINIT failed.&quot;</span>,
+            SgxStatus::InvalidVersion =&gt; <span class="string">&quot;Enclave version was invalid.&quot;</span>,
+            SgxStatus::ModeIncompatible =&gt; <span class="string">&quot;The target enclave mode is incompatible with the mode of current uRTS.&quot;</span>,
+            SgxStatus::EnclaveFileAccess =&gt; <span class="string">&quot;Can&#39;t open enclave file.&quot;</span>,
+            SgxStatus::InvalidMisc =&gt; <span class="string">&quot;The MiscSelct/MiscMask settings are not correct.&quot;</span>,
+            SgxStatus::InvalidLaunchToken =&gt; <span class="string">&quot;The launch token is not correct.&quot;</span>,
+
+            SgxStatus::MacMismatch =&gt; <span class="string">&quot;Indicates verification error.&quot;</span>,
+            SgxStatus::InvalidAttribute =&gt; <span class="string">&quot;The enclave is not authorized.&quot;</span>,
+            SgxStatus::InvalidCpusvn =&gt; <span class="string">&quot;The cpu svn is beyond platform&#39;s cpu svn value.&quot;</span>,
+            SgxStatus::InvalidIsvsvn =&gt; <span class="string">&quot;The isv svn is greater than the enclave&#39;s isv svn.&quot;</span>,
+            SgxStatus::InvalidKeyname =&gt; <span class="string">&quot;The key name is an unsupported value.&quot;</span>,
+
+            SgxStatus::ServiceUnavailable =&gt; <span class="string">&quot;Indicates aesm didn&#39;t response or the requested service is not supported.&quot;</span>,
+            SgxStatus::ServiceTimeout =&gt; <span class="string">&quot;The request to aesm time out.&quot;</span>,
+            SgxStatus::InvalidEpidBlob =&gt; <span class="string">&quot;Indicates epid blob verification error.&quot;</span>,
+            SgxStatus::ServiceInvalidPrivilege =&gt; <span class="string">&quot;Enclave has no privilege to get launch token.&quot;</span>,
+            SgxStatus::EpidMemoryRevoked =&gt; <span class="string">&quot;The EPID group membership is revoked.&quot;</span>,
+            SgxStatus::UpdateNeeded =&gt; <span class="string">&quot;SGX needs to be updated.&quot;</span>,
+            SgxStatus::NetworkFailure =&gt; <span class="string">&quot;Network connecting or proxy setting issue is encountered.&quot;</span>,
+            SgxStatus::InvalidAeSession =&gt; <span class="string">&quot;Session is invalid or ended by server.&quot;</span>,
+            SgxStatus::ServiceBusy =&gt; <span class="string">&quot;The requested service is temporarily not availabe.&quot;</span>,
+            SgxStatus::McNotFound =&gt; <span class="string">&quot;The Monotonic Counter doesn&#39;t exist or has been invalided.&quot;</span>,
+            SgxStatus::McNoAccess =&gt; <span class="string">&quot;Caller doesn&#39;t have the access right to specified VMC.&quot;</span>,
+            SgxStatus::McUsedUp =&gt; <span class="string">&quot;Monotonic counters are used out.&quot;</span>,
+            SgxStatus::McOverQuota =&gt; <span class="string">&quot;Monotonic counters exceeds quota limitation.&quot;</span>,
+            SgxStatus::KdfMismatch =&gt; <span class="string">&quot;Key derivation function doesn&#39;t match during key exchange.&quot;</span>,
+            SgxStatus::UnrecognizedPlatform =&gt; <span class="string">&quot;EPID Provisioning failed due to platform not recognized by backend server.&quot;</span>,
+            SgxStatus::UnsupportedConfig =&gt; <span class="string">&quot;The config for trigging EPID Provisiong or PSE Provisiong&amp;LTP is invalid.&quot;</span>,
+            SgxStatus::NoPrivilege =&gt; <span class="string">&quot;Not enough privilege to perform the operation.&quot;</span>,
+
+            SgxStatus::PclEncrypted =&gt; <span class="string">&quot;Trying to encrypt an already encrypted enclave.&quot;</span>,
+            SgxStatus::PclNotEncrypted =&gt; <span class="string">&quot;Trying to load a plain enclave using sgx_create_encrypted_enclave.&quot;</span>,
+            SgxStatus::PclMacMismatch =&gt; <span class="string">&quot;Section mac result does not match build time mac.&quot;</span>,
+            SgxStatus::PclShaMismatch =&gt; <span class="string">&quot;Unsealed key MAC does not match MAC of key hardcoded in enclave binary.&quot;</span>,
+            SgxStatus::PclGuidMismatch =&gt; <span class="string">&quot;GUID in sealed blob does not match GUID hardcoded in enclave binary.&quot;</span>,
+
+            SgxStatus::BadStatus =&gt; <span class="string">&quot;The file is in bad status.&quot;</span>,
+            SgxStatus::NoKeyId =&gt; <span class="string">&quot;The Key ID field is all zeros, can&#39;t regenerate the encryption key.&quot;</span>,
+            SgxStatus::NameMismatch =&gt; <span class="string">&quot;The current file name is different then the original file name.&quot;</span>,
+            SgxStatus::NotSgxFile =&gt; <span class="string">&quot;The file is not an SGX file.&quot;</span>,
+            SgxStatus::CantOpenRecoveryFile =&gt; <span class="string">&quot;A recovery file can&#39;t be opened, so flush operation can&#39;t continue.&quot;</span>,
+            SgxStatus::CantWriteRecoveryFile =&gt; <span class="string">&quot;A recovery file can&#39;t be written, so flush operation can&#39;t continue.&quot;</span>,
+            SgxStatus::RecoveryNeeded =&gt; <span class="string">&quot;When openeing the file, recovery is needed, but the recovery process failed.&quot;</span>,
+            SgxStatus::FluchFailed =&gt; <span class="string">&quot;fflush operation failed.&quot;</span>,
+            SgxStatus::CloseFailed =&gt; <span class="string">&quot;fclose operation failed.&quot;</span>,
+
+            SgxStatus::UnsupportedAttKeyid =&gt; <span class="string">&quot;platform quoting infrastructure does not support the key.&quot;</span>,
+            SgxStatus::AttKeyCertFailed =&gt; <span class="string">&quot;Failed to generate and certify the attestation key.&quot;</span>,
+            SgxStatus::AttKeyUninitialized =&gt; <span class="string">&quot;The platform quoting infrastructure does not have the attestation key available to generate quote.&quot;</span>,
+            SgxStatus::InvaliedAttKeyCertData =&gt; <span class="string">&quot;The data returned by the platform library is invalid.&quot;</span>,
+            SgxStatus::INvaliedPlatfromCert =&gt; <span class="string">&quot;The PCK Cert for the platform is not available.&quot;</span>,
+
+            SgxStatus::EnclaveCreateInterrupted =&gt; <span class="string">&quot;The ioctl for enclave_create unexpectedly failed with EINTR.&quot;</span>,
+        }
+    }
+
+    <span class="kw">pub fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            SgxStatus::Success =&gt; <span class="string">&quot;Success.&quot;</span>,
+            SgxStatus::Unexpected =&gt; <span class="string">&quot;Unexpected&quot;</span>,
+            SgxStatus::InvalidParameter =&gt; <span class="string">&quot;InvalidParameter&quot;</span>,
+            SgxStatus::OutOfMemory =&gt; <span class="string">&quot;OutOfMemory&quot;</span>,
+            SgxStatus::EnclaveLost =&gt; <span class="string">&quot;EnclaveLost&quot;</span>,
+            SgxStatus::InvalidState =&gt; <span class="string">&quot;InvalidState&quot;</span>,
+            SgxStatus::UnsupportedFeature =&gt; <span class="string">&quot;UnsupportedFeature&quot;</span>,
+            SgxStatus::ThreadExit =&gt; <span class="string">&quot;ThreadExit&quot;</span>,
+            SgxStatus::MemoryMapFailure =&gt; <span class="string">&quot;MemoryMapFailure&quot;</span>,
+
+            SgxStatus::InvalidFunction =&gt; <span class="string">&quot;InvalidFunction&quot;</span>,
+            SgxStatus::OutOfTcs =&gt; <span class="string">&quot;OutOfTcs&quot;</span>,
+            SgxStatus::EnclaveCrashed =&gt; <span class="string">&quot;EnclaveCrashed&quot;</span>,
+            SgxStatus::ECallNotAllowed =&gt; <span class="string">&quot;ECallNotAllowed&quot;</span>,
+            SgxStatus::OCallNotAllowed =&gt; <span class="string">&quot;OCallNotAllowed&quot;</span>,
+            SgxStatus::StackOverRun =&gt; <span class="string">&quot;StackOverRun&quot;</span>,
+
+            SgxStatus::UndefinedSymbol =&gt; <span class="string">&quot;UndefinedSymbol&quot;</span>,
+            SgxStatus::InvalidEnclave =&gt; <span class="string">&quot;InvalidEnclave&quot;</span>,
+            SgxStatus::InvalidEcnalveId =&gt; <span class="string">&quot;InvalidEcnalveId&quot;</span>,
+            SgxStatus::InvalidSignature =&gt; <span class="string">&quot;InvalidSignature&quot;</span>,
+            SgxStatus::NotDebugEnclave =&gt; <span class="string">&quot;NotDebugEnclave&quot;</span>,
+            SgxStatus::OutOfEPC =&gt; <span class="string">&quot;OutOfEPC&quot;</span>,
+            SgxStatus::NoDevice =&gt; <span class="string">&quot;NoDevice&quot;</span>,
+            SgxStatus::MemoryMapConflict =&gt; <span class="string">&quot;MemoryMapConflict&quot;</span>,
+            SgxStatus::InvalidMetadata =&gt; <span class="string">&quot;InvalidMetadata&quot;</span>,
+            SgxStatus::DeviceBusy =&gt; <span class="string">&quot;DeviceBusy&quot;</span>,
+            SgxStatus::InvalidVersion =&gt; <span class="string">&quot;InvalidVersion&quot;</span>,
+            SgxStatus::ModeIncompatible =&gt; <span class="string">&quot;ModeIncompatible&quot;</span>,
+            SgxStatus::EnclaveFileAccess =&gt; <span class="string">&quot;EnclaveFileAccess&quot;</span>,
+            SgxStatus::InvalidMisc =&gt; <span class="string">&quot;InvalidMisc&quot;</span>,
+            SgxStatus::InvalidLaunchToken =&gt; <span class="string">&quot;InvalidLaunchToken&quot;</span>,
+
+            SgxStatus::MacMismatch =&gt; <span class="string">&quot;MacMismatch&quot;</span>,
+            SgxStatus::InvalidAttribute =&gt; <span class="string">&quot;InvalidAttribute&quot;</span>,
+            SgxStatus::InvalidCpusvn =&gt; <span class="string">&quot;InvalidCpusvn&quot;</span>,
+            SgxStatus::InvalidIsvsvn =&gt; <span class="string">&quot;InvalidIsvsvn&quot;</span>,
+            SgxStatus::InvalidKeyname =&gt; <span class="string">&quot;InvalidKeyname&quot;</span>,
+
+            SgxStatus::ServiceUnavailable =&gt; <span class="string">&quot;ServiceUnavailable&quot;</span>,
+            SgxStatus::ServiceTimeout =&gt; <span class="string">&quot;ServiceTimeout&quot;</span>,
+            SgxStatus::InvalidEpidBlob =&gt; <span class="string">&quot;InvalidEpidBlob&quot;</span>,
+            SgxStatus::ServiceInvalidPrivilege =&gt; <span class="string">&quot;ServiceInvalidPrivilege&quot;</span>,
+            SgxStatus::EpidMemoryRevoked =&gt; <span class="string">&quot;EpidMemoryRevoked&quot;</span>,
+            SgxStatus::UpdateNeeded =&gt; <span class="string">&quot;UpdateNeeded&quot;</span>,
+            SgxStatus::NetworkFailure =&gt; <span class="string">&quot;NetworkFailure&quot;</span>,
+            SgxStatus::InvalidAeSession =&gt; <span class="string">&quot;InvalidAeSession&quot;</span>,
+            SgxStatus::ServiceBusy =&gt; <span class="string">&quot;ServiceBusy&quot;</span>,
+            SgxStatus::McNotFound =&gt; <span class="string">&quot;McNotFound&quot;</span>,
+            SgxStatus::McNoAccess =&gt; <span class="string">&quot;McNoAccess&quot;</span>,
+            SgxStatus::McUsedUp =&gt; <span class="string">&quot;McUsedUp&quot;</span>,
+            SgxStatus::McOverQuota =&gt; <span class="string">&quot;McOverQuota&quot;</span>,
+            SgxStatus::KdfMismatch =&gt; <span class="string">&quot;KdfMismatch&quot;</span>,
+            SgxStatus::UnrecognizedPlatform =&gt; <span class="string">&quot;UnrecognizedPlatform&quot;</span>,
+            SgxStatus::UnsupportedConfig =&gt; <span class="string">&quot;UnsupportedConfig&quot;</span>,
+            SgxStatus::NoPrivilege =&gt; <span class="string">&quot;NoPrivilege&quot;</span>,
+
+            SgxStatus::PclEncrypted =&gt; <span class="string">&quot;PclEncrypted&quot;</span>,
+            SgxStatus::PclNotEncrypted =&gt; <span class="string">&quot;PclNotEncrypted&quot;</span>,
+            SgxStatus::PclMacMismatch =&gt; <span class="string">&quot;PclMacMismatch&quot;</span>,
+            SgxStatus::PclShaMismatch =&gt; <span class="string">&quot;PclShaMismatch&quot;</span>,
+            SgxStatus::PclGuidMismatch =&gt; <span class="string">&quot;PclGuidMismatch&quot;</span>,
+
+            SgxStatus::BadStatus =&gt; <span class="string">&quot;BadStatus&quot;</span>,
+            SgxStatus::NoKeyId =&gt; <span class="string">&quot;NoKeyId&quot;</span>,
+            SgxStatus::NameMismatch =&gt; <span class="string">&quot;NameMismatch&quot;</span>,
+            SgxStatus::NotSgxFile =&gt; <span class="string">&quot;NotSgxFile&quot;</span>,
+            SgxStatus::CantOpenRecoveryFile =&gt; <span class="string">&quot;CantOpenRecoveryFile&quot;</span>,
+            SgxStatus::CantWriteRecoveryFile =&gt; <span class="string">&quot;CantWriteRecoveryFile&quot;</span>,
+            SgxStatus::RecoveryNeeded =&gt; <span class="string">&quot;RecoveryNeeded&quot;</span>,
+            SgxStatus::FluchFailed =&gt; <span class="string">&quot;FluchFailed&quot;</span>,
+            SgxStatus::CloseFailed =&gt; <span class="string">&quot;CloseFailed&quot;</span>,
+
+            SgxStatus::UnsupportedAttKeyid =&gt; <span class="string">&quot;UnsupportedAttKeyid&quot;</span>,
+            SgxStatus::AttKeyCertFailed =&gt; <span class="string">&quot;AttKeyCertFailed&quot;</span>,
+            SgxStatus::AttKeyUninitialized =&gt; <span class="string">&quot;AttKeyUninitialized&quot;</span>,
+            SgxStatus::InvaliedAttKeyCertData =&gt; <span class="string">&quot;InvaliedAttKeyCertData&quot;</span>,
+            SgxStatus::INvaliedPlatfromCert =&gt; <span class="string">&quot;INvaliedPlatfromCert&quot;</span>,
+
+            SgxStatus::EnclaveCreateInterrupted =&gt; <span class="string">&quot;EnclaveCreateInterrupted&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>SgxStatus {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.as_str())
+    }
+}
+
+<span class="kw">impl </span>Error <span class="kw">for </span>SgxStatus {
+    <span class="attribute">#[allow(deprecated)]
+    </span><span class="kw">fn </span>description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.__description()
+    }
+}
+
+<span class="macro">impl_enum! </span>{
+    <span class="attribute">#[repr(u32)]
+    #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd)]
+    </span><span class="kw">pub enum </span>PceError {
+        Success                 = <span class="number">0x0000_F000</span>,
+        Unexpected              = <span class="number">0x0000_F001</span>,
+        InvalidParameter        = <span class="number">0x0000_F002</span>,
+        OutOfEPC                = <span class="number">0x0000_F003</span>,
+        InterfaceUnavailable    = <span class="number">0x0000_F004</span>,
+        InvalidReport           = <span class="number">0x0000_F005</span>,
+        CryptoError             = <span class="number">0x0000_F006</span>,
+        InvalidPrivilege        = <span class="number">0x0000_F007</span>,
+        InvalidTCB              = <span class="number">0x0000_F008</span>,
+    }
+}
+
+<span class="kw">impl </span>PceError {
+    <span class="kw">pub fn </span>__description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            PceError::Success =&gt; <span class="string">&quot;Success.&quot;</span>,
+            PceError::Unexpected =&gt; <span class="string">&quot;Unexpected error.&quot;</span>,
+            PceError::InvalidParameter =&gt; <span class="string">&quot;The parameter is incorrect.&quot;</span>,
+            PceError::OutOfEPC =&gt; <span class="string">&quot;Not enough memory is available to complete this operation.&quot;</span>,
+            PceError::InterfaceUnavailable =&gt; <span class="string">&quot;SGX API is unavailable.&quot;</span>,
+            PceError::InvalidReport =&gt; <span class="string">&quot;The report cannot be verified.&quot;</span>,
+            PceError::CryptoError =&gt; <span class="string">&quot;Cannot decrypt or verify ciphertext.&quot;</span>,
+            PceError::InvalidPrivilege =&gt; <span class="string">&quot;Not enough privilege to perform the operation.&quot;</span>,
+            PceError::InvalidTCB =&gt; <span class="string">&quot;PCE could not sign at the requested TCB.&quot;</span>,
+        }
+    }
+
+    <span class="kw">pub fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            PceError::Success =&gt; <span class="string">&quot;Success.&quot;</span>,
+            PceError::Unexpected =&gt; <span class="string">&quot;Unexpected&quot;</span>,
+            PceError::InvalidParameter =&gt; <span class="string">&quot;InvalidParameter&quot;</span>,
+            PceError::OutOfEPC =&gt; <span class="string">&quot;OutOfEPC&quot;</span>,
+            PceError::InterfaceUnavailable =&gt; <span class="string">&quot;InterfaceUnavailable&quot;</span>,
+            PceError::InvalidReport =&gt; <span class="string">&quot;InvalidReport&quot;</span>,
+            PceError::CryptoError =&gt; <span class="string">&quot;CryptoError&quot;</span>,
+            PceError::InvalidPrivilege =&gt; <span class="string">&quot;InvalidPrivilege&quot;</span>,
+            PceError::InvalidTCB =&gt; <span class="string">&quot;InvalidTCB&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>PceError {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.as_str())
+    }
+}
+
+<span class="macro">impl_enum! </span>{
+    <span class="attribute">#[repr(u32)]
+    #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd)]
+    </span><span class="kw">pub enum </span>Quote3Error {
+        Success                                 = <span class="number">0x0000_0000</span>,
+        Unexpected                              = <span class="number">0x0000_E001</span>,
+        InvalidParameter                        = <span class="number">0x0000_E002</span>,
+        OutOfMemory                             = <span class="number">0x0000_E003</span>,
+        EcdsaIdMisMatch                         = <span class="number">0x0000_E004</span>,
+        PathNameBufferOverflow                  = <span class="number">0x0000_E005</span>,
+        FileAccessError                         = <span class="number">0x0000_E006</span>,
+        StoredKey                               = <span class="number">0x0000_E007</span>,
+        PubkeyIdMismatch                        = <span class="number">0x0000_E008</span>,
+        InvalidPceSigScheme                     = <span class="number">0x0000_E009</span>,
+        AttKeyBlobError                         = <span class="number">0x0000_E00A</span>,
+        UnsupportedAttKeyId                     = <span class="number">0x0000_E00B</span>,
+        UnsupportedLoadingPolicy                = <span class="number">0x0000_E00C</span>,
+        InterfaceUnavailable                    = <span class="number">0x0000_E00D</span>,
+        PlatformLibUnavailable                  = <span class="number">0x0000_E00E</span>,
+        AttKeyNotInitialized                    = <span class="number">0x0000_E00F</span>,
+        AttKeyCertDataInvalid                   = <span class="number">0x0000_E010</span>,
+        NoPlatformCertData                      = <span class="number">0x0000_E011</span>,
+        OutOfEpc                                = <span class="number">0x0000_E012</span>,
+        ErrorReport                             = <span class="number">0x0000_E013</span>,
+        EnclaveLost                             = <span class="number">0x0000_E014</span>,
+        InvalidReport                           = <span class="number">0x0000_E015</span>,
+        EnclaveLoadError                        = <span class="number">0x0000_E016</span>,
+        UnableToGenerateQeReport                = <span class="number">0x0000_E017</span>,
+        KeyCertifcationError                    = <span class="number">0x0000_E018</span>,
+        NetworkError                            = <span class="number">0x0000_E019</span>,
+        MessageError                            = <span class="number">0x0000_E01A</span>,
+        NoQuoteCollateralData                   = <span class="number">0x0000_E01B</span>,
+        QuoteCertificationDataUnsupported       = <span class="number">0x0000_E01C</span>,
+        QuoteFormatUnsupported                  = <span class="number">0x0000_E01D</span>,
+        UnableToGenerateReport                  = <span class="number">0x0000_E01E</span>,
+        QeReportInvalidSignature                = <span class="number">0x0000_E01F</span>,
+        QeReportUnsupportedFormat               = <span class="number">0x0000_E020</span>,
+        PckCertUnsupportedFormat                = <span class="number">0x0000_E021</span>,
+        PckCertChainError                       = <span class="number">0x0000_E022</span>,
+        TcbInfoUnsupportedFormat                = <span class="number">0x0000_E023</span>,
+        TcbInfoMismatch                         = <span class="number">0x0000_E024</span>,
+        QeIdentityUnsupportedFormat             = <span class="number">0x0000_E025</span>,
+        QeIdentityMismatch                      = <span class="number">0x0000_E026</span>,
+        TcbOutOfDate                            = <span class="number">0x0000_E027</span>,
+        TcbOutOfDateConfigurationNeeded         = <span class="number">0x0000_E028</span>,
+        EnclaveIdentityOutOfDate                = <span class="number">0x0000_E029</span>,
+        EnclaveReportIsvsvnOutOfDate            = <span class="number">0x0000_E02A</span>,
+        QeIdentityOutOfDate                     = <span class="number">0x0000_E02B</span>,
+        TcbInfoExpired                          = <span class="number">0x0000_E02C</span>,
+        PckCertChainExpired                     = <span class="number">0x0000_E02D</span>,
+        CrlExpired                              = <span class="number">0x0000_E02E</span>,
+        SigningCertChainExpired                 = <span class="number">0x0000_E02F</span>,
+        EnclaveIdentityExpired                  = <span class="number">0x0000_E030</span>,
+        PckRevoked                              = <span class="number">0x0000_E031</span>,
+        TcbRevoked                              = <span class="number">0x0000_E032</span>,
+        TcbConfigurationNeeded                  = <span class="number">0x0000_E033</span>,
+        UnableToGetCollateral                   = <span class="number">0x0000_E034</span>,
+        InvalidPrivilege                        = <span class="number">0x0000_E035</span>,
+        NoQveIdentityData                       = <span class="number">0x0000_E037</span>,
+        CrlUnsupportedFormat                    = <span class="number">0x0000_E038</span>,
+        QeIdentityChainError                    = <span class="number">0x0000_E039</span>,
+        TcbInfoChainError                       = <span class="number">0x0000_E03A</span>,
+        QvlQveMismatch                          = <span class="number">0x0000_E03B</span>,
+        TcbSwHardeningNeeded                    = <span class="number">0x0000_E03C</span>,
+        TcbConfigurationAndSwHardeningNeeded    = <span class="number">0x0000_E03D</span>,
+        UnsupportedMode                         = <span class="number">0x0000_E03E</span>,
+        NoDevice                                = <span class="number">0x0000_E03F</span>,
+        ServiceUnavailable                      = <span class="number">0x0000_E040</span>,
+        NetworkFailure                          = <span class="number">0x0000_E041</span>,
+        ServiceTimeout                          = <span class="number">0x0000_E042</span>,
+        ServiceBusy                             = <span class="number">0x0000_E043</span>,
+        UnknownMessageResponse                  = <span class="number">0x0000_E044</span>,
+        PersistentStorageError                  = <span class="number">0x0000_E045</span>,
+        MessageParsingError                     = <span class="number">0x0000_E046</span>,
+        PlatformUnknown                         = <span class="number">0x0000_E047</span>,
+        UnknownApiVersion                       = <span class="number">0x0000_E048</span>,
+        CertsUnavailable                        = <span class="number">0x0000_E049</span>,
+        QveIdentityMismatch                     = <span class="number">0x0000_E050</span>,
+        QveOutOfDate                            = <span class="number">0x0000_E051</span>,
+        PswNotAvailable                         = <span class="number">0x0000_E052</span>,
+        CollateralVersionNotSupported           = <span class="number">0x0000_E053</span>,
+        TdxModuleMismatch                       = <span class="number">0x0000_E060</span>,
+        ErrorMax                                = <span class="number">0x0000_E0FF</span>,
+    }
+}
+
+<span class="kw">impl </span>Quote3Error {
+    <span class="kw">pub fn </span>__description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            Quote3Error::Success =&gt; <span class="string">&quot;Success.&quot;</span>,
+            Quote3Error::Unexpected =&gt; <span class="string">&quot;Unexpected error.&quot;</span>,
+            Quote3Error::InvalidParameter =&gt; <span class="string">&quot;The parameter is incorrect.&quot;</span>,
+            Quote3Error::OutOfMemory =&gt; {
+                <span class="string">&quot;Not enough memory is available to complete this operation.&quot;
+            </span>}
+            Quote3Error::EcdsaIdMisMatch =&gt; {
+                <span class="string">&quot;Expected ECDSA_ID does not match the value stored in the ECDSA Blob.&quot;
+            </span>}
+            Quote3Error::PathNameBufferOverflow =&gt; <span class="string">&quot;The ECDSA blob pathname is too large.&quot;</span>,
+            Quote3Error::FileAccessError =&gt; <span class="string">&quot;Error accessing ECDSA blob.&quot;</span>,
+            Quote3Error::StoredKey =&gt; <span class="string">&quot;Cached ECDSA key is invalid.&quot;</span>,
+            Quote3Error::PubkeyIdMismatch =&gt; <span class="string">&quot;Cached ECDSA key does not match requested key.&quot;</span>,
+            Quote3Error::InvalidPceSigScheme =&gt; <span class="string">&quot;PCE use the incorrect signature scheme.&quot;</span>,
+            Quote3Error::AttKeyBlobError =&gt; <span class="string">&quot;There is a problem with the attestation key blob.&quot;</span>,
+            Quote3Error::UnsupportedAttKeyId =&gt; <span class="string">&quot;Unsupported attestation key ID.&quot;</span>,
+            Quote3Error::UnsupportedLoadingPolicy =&gt; <span class="string">&quot;Unsupported enclave loading policy&quot;</span>,
+            Quote3Error::InterfaceUnavailable =&gt; <span class="string">&quot;Unable to load the QE enclave.&quot;</span>,
+            Quote3Error::PlatformLibUnavailable =&gt; {
+                <span class="string">&quot;Unable to find the platform library with the dependent APIs&quot;
+            </span>}
+            Quote3Error::AttKeyNotInitialized =&gt; {
+                <span class="string">&quot;he attestation key doesn&#39;t exist or has not been certified.&quot;
+            </span>}
+            Quote3Error::AttKeyCertDataInvalid =&gt; {
+                <span class="string">&quot;The certification data retrieved from the platform library is invalid.&quot;
+            </span>}
+            Quote3Error::NoPlatformCertData =&gt; {
+                <span class="string">&quot;The platform library doesn&#39;t have any platfrom cert data.&quot;
+            </span>}
+            Quote3Error::OutOfEpc =&gt; <span class="string">&quot;Not enough memory in the EPC to load the enclave.&quot;</span>,
+            Quote3Error::ErrorReport =&gt; <span class="string">&quot;There was a problem verifying an SGX REPORT.&quot;</span>,
+            Quote3Error::EnclaveLost =&gt; {
+                <span class="string">&quot;Interfacing to the enclave failed due to a power transition.&quot;
+            </span>}
+            Quote3Error::InvalidReport =&gt; <span class="string">&quot;Error verifying the application enclave&#39;s report.&quot;</span>,
+            Quote3Error::EnclaveLoadError =&gt; <span class="string">&quot;Unable to load the enclaves.&quot;</span>,
+            Quote3Error::UnableToGenerateQeReport =&gt; {
+                <span class="string">&quot;The QE was unable to generate its own report targeting the application enclave.&quot;
+            </span>}
+            Quote3Error::KeyCertifcationError =&gt; {
+                <span class="string">&quot;Caused when the provider library returns an invalid TCB.&quot;
+            </span>}
+            Quote3Error::NetworkError =&gt; <span class="string">&quot;Network error when retrieving PCK certs.&quot;</span>,
+            Quote3Error::MessageError =&gt; <span class="string">&quot;Message error when retrieving PCK certs.&quot;</span>,
+            Quote3Error::NoQuoteCollateralData =&gt; {
+                <span class="string">&quot;The platform does not have the quote verification collateral data available.&quot;
+            </span>}
+            Quote3Error::QuoteCertificationDataUnsupported =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::QuoteFormatUnsupported =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::UnableToGenerateReport =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::QeReportInvalidSignature =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::QeReportUnsupportedFormat =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::PckCertUnsupportedFormat =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::PckCertChainError =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::TcbInfoUnsupportedFormat =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::TcbInfoMismatch =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::QeIdentityUnsupportedFormat =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::QeIdentityMismatch =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::TcbOutOfDate =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::TcbOutOfDateConfigurationNeeded =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::EnclaveIdentityOutOfDate =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::EnclaveReportIsvsvnOutOfDate =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::QeIdentityOutOfDate =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::TcbInfoExpired =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::PckCertChainExpired =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::CrlExpired =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::SigningCertChainExpired =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::EnclaveIdentityExpired =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::PckRevoked =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::TcbRevoked =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::TcbConfigurationNeeded =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::UnableToGetCollateral =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::InvalidPrivilege =&gt; <span class="string">&quot;No enough privilege to perform the operation.&quot;</span>,
+            Quote3Error::NoQveIdentityData =&gt; {
+                <span class="string">&quot;The platform does not have the QVE identity data available.&quot;
+            </span>}
+            Quote3Error::CrlUnsupportedFormat =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::QeIdentityChainError =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::TcbInfoChainError =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::QvlQveMismatch =&gt; {
+                <span class="string">&quot;QvE returned supplemental data version mismatched between QVL and QvE.&quot;
+            </span>}
+            Quote3Error::TcbSwHardeningNeeded =&gt; <span class="string">&quot;TCB up to date but SW Hardening needed.&quot;</span>,
+            Quote3Error::TcbConfigurationAndSwHardeningNeeded =&gt; {
+                <span class="string">&quot;TCB up to date but Configuration and SW Hardening needed.&quot;
+            </span>}
+            Quote3Error::UnsupportedMode =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::NoDevice =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::ServiceUnavailable =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::NetworkFailure =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::ServiceTimeout =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::ServiceBusy =&gt; <span class="string">&quot;&quot;</span>,
+            Quote3Error::UnknownMessageResponse =&gt; <span class="string">&quot;Unexpected error from the cache service.&quot;</span>,
+            Quote3Error::PersistentStorageError =&gt; {
+                <span class="string">&quot;Error storing the retrieved cached data in persistent memory.&quot;
+            </span>}
+            Quote3Error::MessageParsingError =&gt; <span class="string">&quot;Message parsing error.&quot;</span>,
+            Quote3Error::PlatformUnknown =&gt; <span class="string">&quot;Platform was not found in the cache&quot;</span>,
+            Quote3Error::UnknownApiVersion =&gt; <span class="string">&quot;The current PCS API version configured is unknown.&quot;</span>,
+            Quote3Error::CertsUnavailable =&gt; <span class="string">&quot;Certificates are not available for this platform&quot;</span>,
+            Quote3Error::QveIdentityMismatch =&gt; {
+                <span class="string">&quot;QvE Identity is NOT match to Intel signed QvE identity.&quot;
+            </span>}
+            Quote3Error::QveOutOfDate =&gt; <span class="string">&quot;QvE ISVSVN is smaller then the ISVSVN threshold.&quot;</span>,
+            Quote3Error::PswNotAvailable =&gt; {
+                <span class="string">&quot;SGX PSW library cannot be loaded, could be due to file I/O error.&quot;
+            </span>}
+            Quote3Error::CollateralVersionNotSupported =&gt; {
+                <span class="string">&quot;SGX quote verification collateral version not supported by QVL/QvE.&quot;
+            </span>}
+            Quote3Error::TdxModuleMismatch =&gt; {
+                <span class="string">&quot;TDX SEAM module identity is NOT match to Intel signed TDX SEAM module&quot;
+            </span>}
+            Quote3Error::ErrorMax =&gt; <span class="string">&quot;Indicate max error to allow better translation.&quot;</span>,
+        }
+    }
+
+    <span class="kw">pub fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            Quote3Error::Success =&gt; <span class="string">&quot;Success.&quot;</span>,
+            Quote3Error::Unexpected =&gt; <span class="string">&quot;Unexpected&quot;</span>,
+            Quote3Error::InvalidParameter =&gt; <span class="string">&quot;InvalidParameter&quot;</span>,
+            Quote3Error::OutOfMemory =&gt; <span class="string">&quot;OutOfMemory&quot;</span>,
+            Quote3Error::EcdsaIdMisMatch =&gt; <span class="string">&quot;EcdsaIdMisMatch&quot;</span>,
+            Quote3Error::PathNameBufferOverflow =&gt; <span class="string">&quot;PathNameBufferOverflow&quot;</span>,
+            Quote3Error::FileAccessError =&gt; <span class="string">&quot;FileAccessError&quot;</span>,
+            Quote3Error::StoredKey =&gt; <span class="string">&quot;StoredKey&quot;</span>,
+            Quote3Error::PubkeyIdMismatch =&gt; <span class="string">&quot;PubkeyIdMismatch&quot;</span>,
+            Quote3Error::InvalidPceSigScheme =&gt; <span class="string">&quot;InvalidPceSigScheme&quot;</span>,
+            Quote3Error::AttKeyBlobError =&gt; <span class="string">&quot;AttKeyBlobError&quot;</span>,
+            Quote3Error::UnsupportedAttKeyId =&gt; <span class="string">&quot;UnsupportedAttKeyId&quot;</span>,
+            Quote3Error::UnsupportedLoadingPolicy =&gt; <span class="string">&quot;UnsupportedLoadingPolicy&quot;</span>,
+            Quote3Error::InterfaceUnavailable =&gt; <span class="string">&quot;InterfaceUnavailable&quot;</span>,
+            Quote3Error::PlatformLibUnavailable =&gt; <span class="string">&quot;PlatformLibUnavailable&quot;</span>,
+            Quote3Error::AttKeyNotInitialized =&gt; <span class="string">&quot;AttKeyNotInitialized&quot;</span>,
+            Quote3Error::AttKeyCertDataInvalid =&gt; <span class="string">&quot;AttKeyCertDataInvalid&quot;</span>,
+            Quote3Error::NoPlatformCertData =&gt; <span class="string">&quot;NoPlatformCertData&quot;</span>,
+            Quote3Error::OutOfEpc =&gt; <span class="string">&quot;OutOfEpc&quot;</span>,
+            Quote3Error::ErrorReport =&gt; <span class="string">&quot;ErrorReport&quot;</span>,
+            Quote3Error::EnclaveLost =&gt; <span class="string">&quot;EnclaveLost&quot;</span>,
+            Quote3Error::InvalidReport =&gt; <span class="string">&quot;InvalidReport&quot;</span>,
+            Quote3Error::EnclaveLoadError =&gt; <span class="string">&quot;EnclaveLoadError&quot;</span>,
+            Quote3Error::UnableToGenerateQeReport =&gt; <span class="string">&quot;UnableToGenerateQeReport&quot;</span>,
+            Quote3Error::KeyCertifcationError =&gt; <span class="string">&quot;KeyCertifcationError&quot;</span>,
+            Quote3Error::NetworkError =&gt; <span class="string">&quot;NetworkError&quot;</span>,
+            Quote3Error::MessageError =&gt; <span class="string">&quot;MessageError&quot;</span>,
+            Quote3Error::NoQuoteCollateralData =&gt; <span class="string">&quot;NoQuoteCollateralData&quot;</span>,
+            Quote3Error::QuoteCertificationDataUnsupported =&gt; <span class="string">&quot;QuoteCertificationDataUnsupported&quot;</span>,
+            Quote3Error::QuoteFormatUnsupported =&gt; <span class="string">&quot;QuoteFormatUnsupported&quot;</span>,
+            Quote3Error::UnableToGenerateReport =&gt; <span class="string">&quot;UnableToGenerateReport&quot;</span>,
+            Quote3Error::QeReportInvalidSignature =&gt; <span class="string">&quot;QeReportInvalidSignature&quot;</span>,
+            Quote3Error::QeReportUnsupportedFormat =&gt; <span class="string">&quot;QeReportUnsupportedFormat&quot;</span>,
+            Quote3Error::PckCertUnsupportedFormat =&gt; <span class="string">&quot;PckCertUnsupportedFormat&quot;</span>,
+            Quote3Error::PckCertChainError =&gt; <span class="string">&quot;PckCertChainError&quot;</span>,
+            Quote3Error::TcbInfoUnsupportedFormat =&gt; <span class="string">&quot;TcbInfoUnsupportedFormat&quot;</span>,
+            Quote3Error::TcbInfoMismatch =&gt; <span class="string">&quot;TcbInfoMismatch&quot;</span>,
+            Quote3Error::QeIdentityUnsupportedFormat =&gt; <span class="string">&quot;QeIdentityUnsupportedFormat&quot;</span>,
+            Quote3Error::QeIdentityMismatch =&gt; <span class="string">&quot;QeIdentityMismatch&quot;</span>,
+            Quote3Error::TcbOutOfDate =&gt; <span class="string">&quot;TcbOutOfDate&quot;</span>,
+            Quote3Error::TcbOutOfDateConfigurationNeeded =&gt; <span class="string">&quot;TcbOutOfDateConfigurationNeeded&quot;</span>,
+            Quote3Error::EnclaveIdentityOutOfDate =&gt; <span class="string">&quot;EnclaveIdentityOutOfDate&quot;</span>,
+            Quote3Error::EnclaveReportIsvsvnOutOfDate =&gt; <span class="string">&quot;EnclaveReportIsvsvnOutOfDate&quot;</span>,
+            Quote3Error::QeIdentityOutOfDate =&gt; <span class="string">&quot;QeIdentityOutOfDate&quot;</span>,
+            Quote3Error::TcbInfoExpired =&gt; <span class="string">&quot;TcbInfoExpired&quot;</span>,
+            Quote3Error::PckCertChainExpired =&gt; <span class="string">&quot;PckCertChainExpired&quot;</span>,
+            Quote3Error::CrlExpired =&gt; <span class="string">&quot;CrlExpired&quot;</span>,
+            Quote3Error::SigningCertChainExpired =&gt; <span class="string">&quot;SigningCertChainExpired&quot;</span>,
+            Quote3Error::EnclaveIdentityExpired =&gt; <span class="string">&quot;EnclaveIdentityExpired&quot;</span>,
+            Quote3Error::PckRevoked =&gt; <span class="string">&quot;PckRevoked&quot;</span>,
+            Quote3Error::TcbRevoked =&gt; <span class="string">&quot;TcbRevoked&quot;</span>,
+            Quote3Error::TcbConfigurationNeeded =&gt; <span class="string">&quot;TcbConfigurationNeeded&quot;</span>,
+            Quote3Error::UnableToGetCollateral =&gt; <span class="string">&quot;UnableToGetCollateral&quot;</span>,
+            Quote3Error::InvalidPrivilege =&gt; <span class="string">&quot;InvalidPrivilege&quot;</span>,
+            Quote3Error::NoQveIdentityData =&gt; <span class="string">&quot;NoQveIdentityData&quot;</span>,
+            Quote3Error::CrlUnsupportedFormat =&gt; <span class="string">&quot;CrlUnsupportedFormat&quot;</span>,
+            Quote3Error::QeIdentityChainError =&gt; <span class="string">&quot;QeIdentityChainError&quot;</span>,
+            Quote3Error::TcbInfoChainError =&gt; <span class="string">&quot;TcbInfoChainError&quot;</span>,
+            Quote3Error::QvlQveMismatch =&gt; <span class="string">&quot;QvlQveMismatch&quot;</span>,
+            Quote3Error::TcbSwHardeningNeeded =&gt; <span class="string">&quot;TcbSwHardeningNeeded&quot;</span>,
+            Quote3Error::TcbConfigurationAndSwHardeningNeeded =&gt; {
+                <span class="string">&quot;TcbConfigurationAndSwHardeningNeeded&quot;
+            </span>}
+            Quote3Error::UnsupportedMode =&gt; <span class="string">&quot;UnsupportedMode&quot;</span>,
+            Quote3Error::NoDevice =&gt; <span class="string">&quot;NoDevice&quot;</span>,
+            Quote3Error::ServiceUnavailable =&gt; <span class="string">&quot;ServiceUnavailable&quot;</span>,
+            Quote3Error::NetworkFailure =&gt; <span class="string">&quot;NetworkFailure&quot;</span>,
+            Quote3Error::ServiceTimeout =&gt; <span class="string">&quot;ServiceTimeout&quot;</span>,
+            Quote3Error::ServiceBusy =&gt; <span class="string">&quot;ServiceBusy&quot;</span>,
+            Quote3Error::UnknownMessageResponse =&gt; <span class="string">&quot;UnknownMessageResponse&quot;</span>,
+            Quote3Error::PersistentStorageError =&gt; <span class="string">&quot;PersistentStorageError&quot;</span>,
+            Quote3Error::MessageParsingError =&gt; <span class="string">&quot;MessageParsingError&quot;</span>,
+            Quote3Error::PlatformUnknown =&gt; <span class="string">&quot;PlatformUnknown&quot;</span>,
+            Quote3Error::UnknownApiVersion =&gt; <span class="string">&quot;UnknownApiVersion&quot;</span>,
+            Quote3Error::CertsUnavailable =&gt; <span class="string">&quot;CertsUnavailable&quot;</span>,
+            Quote3Error::QveIdentityMismatch =&gt; <span class="string">&quot;QveIdentityMismatch&quot;</span>,
+            Quote3Error::QveOutOfDate =&gt; <span class="string">&quot;QveOutOfDate&quot;</span>,
+            Quote3Error::PswNotAvailable =&gt; <span class="string">&quot;PswNotAvailable&quot;</span>,
+            Quote3Error::CollateralVersionNotSupported =&gt; <span class="string">&quot;CollateralVersionNotSupported&quot;</span>,
+            Quote3Error::TdxModuleMismatch =&gt; <span class="string">&quot;TdxModuleMismatch&quot;</span>,
+            Quote3Error::ErrorMax =&gt; <span class="string">&quot;ErrorMax&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Quote3Error {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.as_str())
+    }
+}
+
+<span class="macro">impl_enum! </span>{
+    <span class="attribute">#[repr(u32)]
+    #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd)]
+    </span><span class="kw">pub enum </span>QcnlError {
+        Success                     = <span class="number">0x0000_0000</span>,
+        Unexpected                  = <span class="number">0x0000_B001</span>,
+        InvalidParameter            = <span class="number">0x0000_B002</span>,
+        NetworkError                = <span class="number">0x0000_B003</span>,
+        NetworkProxyFail            = <span class="number">0x0000_B004</span>,
+        NetworkHostFail             = <span class="number">0x0000_B005</span>,
+        NetworkNotConnected         = <span class="number">0x0000_B006</span>,
+        NetworkHttp2Error           = <span class="number">0x0000_B007</span>,
+        NetworkWriteError           = <span class="number">0x0000_B008</span>,
+        NetworkTimeout              = <span class="number">0x0000_B009</span>,
+        NetworkHttpsError           = <span class="number">0x0000_B00A</span>,
+        NetworkUnknownOption        = <span class="number">0x0000_B00B</span>,
+        NetworkInitError            = <span class="number">0x0000_B00C</span>,
+        MsgError                    = <span class="number">0x0000_B00D</span>,
+        OutOfMemory                 = <span class="number">0x0000_B00E</span>,
+        StatusNoCacheData           = <span class="number">0x0000_B00F</span>,
+        StatusPlatformUnknown       = <span class="number">0x0000_B010</span>,
+        StatusUnexpected            = <span class="number">0x0000_B011</span>,
+        StatusCertsUnavaliable      = <span class="number">0x0000_B012</span>,
+        StatusServiceUnavaliable    = <span class="number">0x0000_B013</span>,
+        InvalidConfig               = <span class="number">0x0000_B030</span>,
+    }
+}
+
+<span class="kw">impl </span>QcnlError {
+    <span class="kw">pub fn </span>__description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            QcnlError::Success =&gt; <span class="string">&quot;Success.&quot;</span>,
+            QcnlError::Unexpected =&gt; <span class="string">&quot;Unexpected error.&quot;</span>,
+            QcnlError::InvalidParameter =&gt; <span class="string">&quot;The parameter is incorrect.&quot;</span>,
+            QcnlError::NetworkError =&gt; <span class="string">&quot;Network error.&quot;</span>,
+            QcnlError::NetworkProxyFail =&gt; <span class="string">&quot;Network error : Couldn&#39;t resolve proxy.&quot;</span>,
+            QcnlError::NetworkHostFail =&gt; <span class="string">&quot;Network error : Couldn&#39;t resolve host.&quot;</span>,
+            QcnlError::NetworkNotConnected =&gt; {
+                <span class="string">&quot;Network error : Failed to connect() to host or proxy.&quot;
+            </span>}
+            QcnlError::NetworkHttp2Error =&gt; {
+                <span class="string">&quot;Network error : A problem was detected in the HTTP2 framing layer.&quot;
+            </span>}
+            QcnlError::NetworkWriteError =&gt; {
+                <span class="string">&quot;Network error : an error was returned to libcurl from a write callback.&quot;
+            </span>}
+            QcnlError::NetworkTimeout =&gt; <span class="string">&quot;Network error : Operation timeout.&quot;</span>,
+            QcnlError::NetworkHttpsError =&gt; {
+                <span class="string">&quot;Network error : A problem occurred somewhere in the SSL/TLS handshake.&quot;
+            </span>}
+            QcnlError::NetworkUnknownOption =&gt; {
+                <span class="string">&quot;Network error : An option passed to libcurl is not recognized/known.&quot;
+            </span>}
+            QcnlError::NetworkInitError =&gt; <span class="string">&quot;Failed to initialize CURL library.&quot;</span>,
+            QcnlError::MsgError =&gt; <span class="string">&quot;HTTP message error.&quot;</span>,
+            QcnlError::OutOfMemory =&gt; <span class="string">&quot;Out of memory error.&quot;</span>,
+            QcnlError::StatusNoCacheData =&gt; <span class="string">&quot;No cache data.&quot;</span>,
+            QcnlError::StatusPlatformUnknown =&gt; <span class="string">&quot;Platform unknown.&quot;</span>,
+            QcnlError::StatusUnexpected =&gt; <span class="string">&quot;Unexpected cache error.&quot;</span>,
+            QcnlError::StatusCertsUnavaliable =&gt; <span class="string">&quot;Certs not available.&quot;</span>,
+            QcnlError::StatusServiceUnavaliable =&gt; <span class="string">&quot;Service is currently not available.&quot;</span>,
+            QcnlError::InvalidConfig =&gt; <span class="string">&quot;Error in configuration file.&quot;</span>,
+        }
+    }
+
+    <span class="kw">pub fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            QcnlError::Success =&gt; <span class="string">&quot;Success.&quot;</span>,
+            QcnlError::Unexpected =&gt; <span class="string">&quot;Unexpected&quot;</span>,
+            QcnlError::InvalidParameter =&gt; <span class="string">&quot;InvalidParameter&quot;</span>,
+            QcnlError::NetworkError =&gt; <span class="string">&quot;NetworkError&quot;</span>,
+            QcnlError::NetworkProxyFail =&gt; <span class="string">&quot;NetworkProxyFail&quot;</span>,
+            QcnlError::NetworkHostFail =&gt; <span class="string">&quot;NetworkHostFail&quot;</span>,
+            QcnlError::NetworkNotConnected =&gt; <span class="string">&quot;NetworkNotConnected&quot;</span>,
+            QcnlError::NetworkHttp2Error =&gt; <span class="string">&quot;NetworkHttp2Error&quot;</span>,
+            QcnlError::NetworkWriteError =&gt; <span class="string">&quot;NetworkWriteError&quot;</span>,
+            QcnlError::NetworkTimeout =&gt; <span class="string">&quot;NetworkTimeout&quot;</span>,
+            QcnlError::NetworkHttpsError =&gt; <span class="string">&quot;NetworkHttpsError&quot;</span>,
+            QcnlError::NetworkUnknownOption =&gt; <span class="string">&quot;NetworkUnknownOption&quot;</span>,
+            QcnlError::NetworkInitError =&gt; <span class="string">&quot;NetworkInitError&quot;</span>,
+            QcnlError::MsgError =&gt; <span class="string">&quot;MsgError&quot;</span>,
+            QcnlError::OutOfMemory =&gt; <span class="string">&quot;OutOfMemory&quot;</span>,
+            QcnlError::StatusNoCacheData =&gt; <span class="string">&quot;StatusNoCacheData&quot;</span>,
+            QcnlError::StatusPlatformUnknown =&gt; <span class="string">&quot;StatusPlatformUnknown&quot;</span>,
+            QcnlError::StatusUnexpected =&gt; <span class="string">&quot;StatusUnexpected&quot;</span>,
+            QcnlError::StatusCertsUnavaliable =&gt; <span class="string">&quot;StatusCertsUnavaliable&quot;</span>,
+            QcnlError::StatusServiceUnavaliable =&gt; <span class="string">&quot;StatusServiceUnavaliable&quot;</span>,
+            QcnlError::InvalidConfig =&gt; <span class="string">&quot;InvalidConfig&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>QcnlError {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.as_str())
+    }
+}
+
+<span class="kw">pub type </span>SgxResult&lt;T = ()&gt; = result::Result&lt;T, SgxStatus&gt;;
+<span class="kw">pub type </span>SgxPceResult&lt;T = ()&gt; = result::Result&lt;T, PceError&gt;;
+<span class="kw">pub type </span>SgxQcnlResult&lt;T = ()&gt; = result::Result&lt;T, QcnlError&gt;;
+<span class="kw">pub type </span>SgxQuote3Result&lt;T = ()&gt; = result::Result&lt;T, Quote3Error&gt;;
+
+<span class="kw">pub type </span>OsError = i32;
+<span class="kw">pub type </span>OsResult&lt;T = ()&gt; = result::Result&lt;T, OsError&gt;;
+
+<span class="attribute">#[macro_export]
+</span><span class="macro">macro_rules! </span>bail {
+    (<span class="macro-nonterminal">$e</span>:expr) =&gt; {
+        <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro-nonterminal">$e</span>);
+    };
+}
+
+<span class="attribute">#[macro_export]
+</span><span class="macro">macro_rules! </span>ensure {
+    (<span class="macro-nonterminal">$cond</span>:expr, <span class="macro-nonterminal">$e</span>:expr) =&gt; {
+        <span class="kw">if </span>!(<span class="macro-nonterminal">$cond</span>) {
+            <span class="macro">bail!</span>(<span class="macro-nonterminal">$e</span>);
+        }
+    };
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="sgx_types" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (5c8bff74b 2022-10-21)" ></div></body></html>
