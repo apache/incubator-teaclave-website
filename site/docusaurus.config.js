@@ -132,7 +132,6 @@ const config = {
           }
         },
         items: [
-          { to: '/', label: 'About', position: 'right' },
           { to: '/powered-by', label: 'Powered By', position: 'right' },
           {
             to: '/community',
