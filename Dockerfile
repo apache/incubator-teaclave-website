@@ -6,44 +6,20 @@ RUN . "$HOME/.cargo/env" && cd sgx-sdk-api-docs && cargo doc
 RUN mkdir -p /prebuilt_docs && \
     cp -r sgx-sdk-api-docs/target/doc /prebuilt_docs/sgx-sdk-docs
 
-# TODO: Add Trustzone Docs stage
+# Trustzone Docs stage
+FROM teaclave/teaclave-trustzone-emulator-std-optee-4.5.0-expand-memory:latest AS tz-docs
+WORKDIR /app
+COPY tz-sdk-api-docs /app/tz-sdk-api-docs
+RUN . /opt/teaclave/setup/bootstrap_env && \
+    . /opt/teaclave/environment && \
+    . $HOME/.cargo/env && \
+    cd tz-sdk-api-docs && cargo doc
+RUN mkdir -p /prebuilt_docs && \
+    cp -r tz-sdk-api-docs/target/doc /prebuilt_docs/tz-sdk-docs
 
 # Teaclave Docs stage
-FROM teaclave/teaclave-build-ubuntu-2004-sgx-2.17.1:0.2.0 AS teaclave-docs
-WORKDIR /app
-
-# Prepare Teaclave Repo
-RUN git clone https://github.com/apache/incubator-teaclave.git teaclave --depth 1 
-RUN cd teaclave && git submodule update --init --depth 1 
-
-# Build Python SDK docs
-RUN pip3 install grpcio-tools grpclib pdoc
-RUN python3 -m grpc_tools.protoc \
-    --proto_path=teaclave/services/proto/src/proto \
-    --python_out=teaclave/sdk/python \
-    --grpclib_python_out=teaclave/sdk/python \
-    teaclave/services/proto/src/proto/*.proto
-RUN PYTHONPATH=teaclave/sdk/python pdoc teaclave/sdk/python/teaclave.py -o /tmp/client-sdk-python-docs
-
-# Build Teaclave docs
-RUN . /opt/sgxsdk/environment && \
-    . /root/.cargo/env && \
-    cd teaclave && \
-    mkdir build && \
-    cd build && \
-    cmake .. && \
-    make doc -j$(nproc)
-
-# Copy all docs to prebuilt directory
-RUN mkdir -p /prebuilt_docs/teaclave-docs && \
-    cp -r /tmp/client-sdk-python-docs /prebuilt_docs/teaclave-docs/client-sdk-python && \
-    cd teaclave/release/ && \
-    cp -r ./docs/enclave /prebuilt_docs/teaclave-docs/enclave && \
-    cp -r ./docs/app /prebuilt_docs/teaclave-docs/app && \
-    cp -r ./docs/unix /prebuilt_docs/teaclave-docs/client-sdk-rust 
-
-# clean up
-RUN rm -rf teaclave/build
+#FROM teaclave/teaclave-build-ubuntu-2004-sgx-2.17.1:0.2.0 AS teaclave-docs
+#WORKDIR /app
 
 # Dependencies stage
 FROM node:22-slim AS deps
@@ -56,7 +32,7 @@ FROM node:22-slim as teaclave-docs-site
 
 COPY --from=deps /app/node_modules /app/node_modules
 COPY --from=sgx-docs /prebuilt_docs/sgx-sdk-docs /prebuilt_docs/sgx-sdk-docs
-COPY --from=teaclave-docs /prebuilt_docs/teaclave-docs /prebuilt_docs/teaclave-docs
+COPY --from=tz-docs /prebuilt_docs/tz-sdk-docs /prebuilt_docs/tz-sdk-docs
 
 ENV PATH="/root/.cargo/bin:${PATH}"
 ENV PYTHONPATH="/usr/local/lib/python3.9/dist-packages:${PYTHONPATH}"

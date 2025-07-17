@@ -1,0 +1,12 @@
+[package]
+name = "teaclave-tz-sdk-docs"
+version = "0.1.0"
+authors = ["Teaclave Contributors <dev@teaclave.apache.org>"]
+edition = "2021"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+optee-teec = { git = "https://github.com/apache/incubator-teaclave-trustzone-sdk.git", branch = "main" }
+optee-utee = { git = "https://github.com/apache/incubator-teaclave-trustzone-sdk.git", branch = "main" }

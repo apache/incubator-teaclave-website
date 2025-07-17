@@ -29,21 +29,9 @@ sgx-sdk-api-docs: site-build
 	@echo "<meta http-equiv=refresh content=0;url=`echo sgx_tstd | cut -d '/' -f 2`/index.html>" > build/api-docs/sgx-sdk/index.html
 
 trustzone-sdk-api-docs: site-build
-	@echo "Trustzone SDK API docs not supported yet"
-
-client-sdk-python-docs: site-build
-	cp -r /prebuilt_docs/teaclave-docs/client-sdk-python build/api-docs/client-sdk-python
-	@echo "<meta http-equiv=refresh content=0;url=python/teaclave.html>" > build/api-docs/client-sdk-python/index.html
-
-client-sdk-rust-docs: site-build
-	cp -r /prebuilt_docs/teaclave-docs/client-sdk-rust build/api-docs/client-sdk-rust
-	@echo "<meta http-equiv=refresh content=0;url=`echo teaclave_client_sdk | cut -d '/' -f 2`/index.html>" > build/api-docs/client-sdk-rust/index.html
-
-teaclave-crates-docs: site-build
-	cp -r /prebuilt_docs/teaclave-docs/enclave build/api-docs/crates-enclave 
-	cp -r /prebuilt_docs/teaclave-docs/app build/api-docs/crates-app
-
-teaclave-docs: teaclave-crates-docs client-sdk-python-docs client-sdk-rust-docs
+	mkdir -p build/api-docs/trustzone-sdk/
+	cp -r /prebuilt_docs/tz-sdk-docs/* build/api-docs/trustzone-sdk/
+	@echo "<meta http-equiv=refresh content=0;url=`echo optee_teec | cut -d '/' -f 2`/index.html>" > build/api-docs/trustzone-sdk/index.html
 
 site-build: update-repo
 	npm run build
@@ -55,8 +43,9 @@ dev:
 preview:
 	cd build && python3 -m http.server
 
-build: teaclave-docs sgx-sdk-api-docs trustzone-sdk-api-docs 
+build: sgx-sdk-api-docs trustzone-sdk-api-docs 
 	cp ../.asf.yaml build
+	find build -name '*.lock' -exec chmod 655 {} \;
 
 clean-repo:
 	rm -rf docs/teaclave
