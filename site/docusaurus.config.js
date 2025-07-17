@@ -11,7 +11,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Apache Teaclave (incubating)',
-  tagline: 'Apache Teaclave (incubating) is an open source universal secure computing platform, making computation on privacy-sensitive data safe and simple.',
+  tagline: 'Open-source SDKs to build memory-safe Trusted Applications on Intel SGX, Arm TrustZone, and beyond.',
   favicon: undefined,
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future

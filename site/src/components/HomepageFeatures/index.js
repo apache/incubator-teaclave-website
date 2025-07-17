@@ -4,44 +4,43 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Secure and Attestable',
+    title: 'Enabling Memory-Safe Secure Computing',
     description: (
       <>
-        Teaclave adopts multiple security technologies to enable secure computing, in particular, 
-        Teaclave uses Intel SGX to serve the most security-sensitive tasks with hardware-based isolation, memory encryption and attestation. 
-        Also, Teaclave is written in Rust to prevent memory-safety issues.
+        Teaclave enables secure computing using memory-safe languages like Rust across multiple TEE platforms. 
+        Developers can build secure applications without worrying about memory-safety issues.
       </>
     ),
   },
   {
-    title: 'Function-as-a-Service',
+    title: 'Open-Source SDKs for Multiple TEE Platforms',
     description: (
       <>
-        Teaclave is a function-as-a-service platform supporting tasks like privacy-preserving machine learning, private set intersection, and crypto computation. 
-        In addition, developers can also write and execute Python function. 
-        Teaclave supports both general secure computing tasks and flexible multi-party secure computation.
+        Teaclave provides open-source SDKs targeting Intel SGX, Arm TrustZone. 
+        Developers can build secure computing use cases across cloud, edge, and embedded systems.
       </>
     ),
   },
   {
-    title: 'Ease of Use',
+    title: 'Modular Components for Confidential Computing',
     description: (
       <>
-        Teaclave builds its components in containers, therefore, it supports deployment both locally and within cloud infrastructures. 
-        Teaclave also provides convenient endpoint APIs, client SDKs and command line tools.
+        Teaclave offers reusable Rust crates designed for composable secure systems. 
+        Developers can easily integrate features like secure storage, remote attestation, and key management into their own confidential computing use cases.
       </>
     ),
   },
   {
-    title: 'Flexible',
+    title: 'Developer-Friendly Emulation Support',
     description: (
       <>
-        Components in Teaclave are designed in modular, and features like remote attestation can be easily embedded in other projects. 
-        In addition, Teaclave SGX SDK, Teaclave Java TEE SDK, and Teaclave TrustZone SDK can also be used separately to write TEE apps for other purposes.
+        Teaclave provides prebuilt Docker images and tools to simplify local development and testing of TEE applications. 
+        Developers can prototype and validate Trusted Applications quickly, even without TEE hardware.
       </>
     ),
   },
 ];
+
 
 const featureStyle = {
   features: {
