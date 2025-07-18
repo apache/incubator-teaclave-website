@@ -1,6 +1,5 @@
 ---
 permalink: /maturity
-sidebar_position: 4
 ---
 
 # Maturity Assessment For The Teaclave Ecosystem
