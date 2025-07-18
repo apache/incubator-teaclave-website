@@ -1,6 +1,6 @@
 ---
 permalink: /contributing
-sidebar: false
+sidebar_position: 1
 ---
 
 # Contributing

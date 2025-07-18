@@ -1,6 +1,6 @@
 ---
 permalink: /community
-sidebar: false
+sidebar_position: 0
 ---
 
 # Community

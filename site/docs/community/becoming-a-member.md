@@ -1,6 +1,6 @@
 ---
 permalink: /becoming-a-member
-sidebar: false
+sidebar_position: 3
 ---
 
 # Becoming a Committer or PPMC Member of Apache Teaclave
