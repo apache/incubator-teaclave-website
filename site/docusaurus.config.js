@@ -164,7 +164,7 @@ const config = {
           },
           { to: '/download', label: 'Download', position: 'right' },
           {
-            to: '/docs',
+            to: '/teaclave-docs',
             label: 'Docs',
             items: [
               { label: 'Teaclave', to: '/teaclave-docs/' },
