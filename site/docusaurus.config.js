@@ -143,6 +143,7 @@ const config = {
               { label: 'Contributors', to: '/contributors' },
               { label: 'Becoming a Member', to: '/becoming-a-member' },
               { label: 'Maturity Assessment', to: '/maturity' },
+              { label: 'Release Guide', to: '/release-guide' },
             ],
             position: 'right',
           },
