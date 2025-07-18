@@ -7,4 +7,5 @@ target
 sgx-sdk-docs/Cargo.lock
 .docusaurus
 Cargo.lock
-docs
+docs/*
+!docs/community/*

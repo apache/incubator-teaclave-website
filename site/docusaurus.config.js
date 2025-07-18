@@ -96,6 +96,7 @@ const config = {
             '*.md',
             'api-docs/*.md',
             'blog/*.md',
+            'community/*.md',
             'teaclave-docs/**/*.md',
             'teaclave-faas-legacy/**/*.md',
             'teaclave-sgx-sdk/documents/*.md',
