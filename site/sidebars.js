@@ -17,6 +17,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import config from './docusaurus.config';
 
 /** @returns {{title: string, items: { name: string, link: string }[]}[]} */
 function parseTOC(content = '') {
@@ -54,7 +55,7 @@ function sidebarItemFromTOCItem(item, relpath) {
       href: item.link,
       label: item.name,
     };
-  } else if(item.link.endsWith('.md')) {
+  } else if (item.link.endsWith('.md')) {
     try {
       fs.statSync('./docs/' + path.join(relpath, item.link));
     } catch (stat) {
@@ -71,7 +72,30 @@ function sidebarItemFromTOCItem(item, relpath) {
     // If the link is not a markdown file or a URL, we ignore it.
     return undefined;
   }
-    
+
+}
+
+function sidebarItemFromNavbarItem(item) {
+  if (item.file)
+    return ({
+      type: 'doc',
+      id: item.file.replace(/.md$/, ''),
+      label: item.label,
+    });
+  else if (item.href)
+    return ({
+      type: 'link',
+      href: item.href,
+      label: item.label,
+    });
+  else if (item.to)
+    return ({
+      type: 'link',
+      href: item.to,
+      label: item.label,
+    });
+  else
+    throw new Error(`Unknown navbar item format: ${JSON.stringify(item)}`);
 }
 
 const repos = {
@@ -93,15 +117,26 @@ const repos = {
   ]),
 };
 
-const sidebars = Object.fromEntries(
-  Object.entries(repos).map(([name, repo]) => [
-    `${name}_sidebar`,
-    repo.map(([title, items]) => ({
-      type: 'category',
-      label: title,
-      items: items
-    }))
-  ])
-);
+// Get rid of type annotation error
+const navbar = Object.assign(Object.create({}), config.themeConfig?.navbar);
+const communityNav = navbar.items?.find(item => item.label == 'Community');
+
+const sidebars = {
+  ...Object.fromEntries(
+    Object.entries(repos).map(([name, repo]) => [
+      `${name}_sidebar`,
+      repo.map(([title, items]) => ({
+        type: 'category',
+        label: title,
+        items: items
+      }))
+    ])
+  ),
+  'community_sidebar': [
+    sidebarItemFromNavbarItem(communityNav)
+  ].concat(communityNav.items
+    .map(item => sidebarItemFromNavbarItem(item))
+  ),
+};
 
 export default sidebars;

@@ -1,6 +1,5 @@
 ---
 permalink: /release-guide
-sidebar: false
 ---
 
 # Release Guide

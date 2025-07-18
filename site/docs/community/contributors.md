@@ -1,6 +1,5 @@
 ---
 permalink: /contributors
-sidebar: false
 ---
 
 # Contributors
