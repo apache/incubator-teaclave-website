@@ -48,7 +48,6 @@ const config = {
       };
       Object.keys(indexDocs).forEach((key) => {
         if (path.resolve(params.filePath) == path.resolve(key)) {
-          console.log(`Setting sidebar for ${key} to ${indexDocs[key]}_sidebar`);
           result.frontMatter.displayed_sidebar = `${indexDocs[key]}_sidebar`;
         }
       }); 
