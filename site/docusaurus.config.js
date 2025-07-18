@@ -4,6 +4,7 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
+import path from 'path';
 import { themes as prismThemes } from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -38,6 +39,20 @@ const config = {
     parseFrontMatter: async (params) => {
       const result = await params.defaultParseFrontMatter(params);
       result.frontMatter.slug = result.frontMatter.permalink;
+      // Add sidebar for index docs
+      const indexDocs = {
+        './docs/teaclave-docs/README.md': 'teaclave',
+        './docs/teaclave-sgx-sdk/documents/README.md': 'teaclave-sgx-sdk',
+        './docs/teaclave-trustzone-sdk/docs/README.md': 'teaclave-trustzone-sdk',
+        './docs/teaclave-faas-legacy/docs/README.md': 'teaclave-faas-legacy',
+      };
+      Object.keys(indexDocs).forEach((key) => {
+        if (path.resolve(params.filePath) == path.resolve(key)) {
+          console.log(`Setting sidebar for ${key} to ${indexDocs[key]}_sidebar`);
+          result.frontMatter.displayed_sidebar = `${indexDocs[key]}_sidebar`;
+        }
+      }); 
+
       return result;
     },
     // Replace autolinks to avoid mdx rendering issues.
