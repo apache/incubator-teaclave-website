@@ -5,22 +5,27 @@ sidebar: false
 
 # Powered By
 
-Apache Teaclave (including the FaaS platform, SGX SDK, and TrustZone SDK) is
-being used and actively contributed by developers from many organizations and
-other open source projects. This is a community maintained list of organizations
-and projects using and contributing to Teaclave.
+The Apache Teaclave Ecosystem, including SGX SDK, and TrustZone SDK,
+is actively used and contributed to by developers from many 
+organizations and open source projects. This page highlights notable usage 
+and endorsements from industry and community.
 
-## Organizations
+- **Teaclave TrustZone SDK** is the [official Rust SDK recommended by 
+the OP-TEE open-source community](https://optee.readthedocs.io/en/latest/building/optee_with_rust.html) 
+for building Trusted Applications on Arm TrustZone.
 
-  - [Alibaba](https://www.alibabagroup.com/)
-  - [Ant Group](https://www.antgroup.com/en)
-  - [Baidu](https://www.baidu.com/)
-  - [ByteDance](https://www.bytedance.com/)
-  - [Enigma](https://www.enigma.co/)
-  - [Intel](https://www.intel.com/content/www/us/en/developer/tools/software-guard-extensions/overview.html)
-  - [LayerX](https://layerx.co.jp/)
+- **Teaclave SGX SDK** is the Rust SDK for Enclave developement [recommended by 
+the Intel® Software Guard Extensions community](https://www.intel.com/content/www/us/en/developer/tools/software-guard-extensions/get-started.html)
 
 ## Projects
+
+Here is a list of selected projects that use Teaclave.
+
+::: tip Want to appear on this page?
+Submit a [pull request](https://github.com/apache/incubator-teaclave-website/edit/master/site/powered-by.md)
+or send a quick description of your organization and usage
+to the [mailing list](/community/#mailing-lists) and we'll add you.
+:::
 
   - [Advanca](https://github.com/advanca/advanca): A privacy-preserving
     general-purpose compute/storage infrastructure for Dapps.
@@ -63,9 +68,3 @@ and projects using and contributing to Teaclave.
   - [Veracruz](https://github.com/veracruz-project/veracruz): Veracruz is a
     framework for defining and deploying collaborative, privacy-preserving
     computations amongst a group of mutually mistrusting individuals.
-
-::: tip Want to appear on this page?
-Submit a [pull request](https://github.com/apache/incubator-teaclave-website/edit/master/site/powered-by.md)
-or send a quick description of your organization and usage
-to the [mailing list](/community/#mailing-lists) and we'll add you.
-:::
