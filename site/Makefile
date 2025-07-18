@@ -7,19 +7,22 @@ site: build
 	ghp-import --no-history --force build -b asf-site
 
 init-repo:
-	git clone https://github.com/apache/incubator-teaclave.git docs/teaclave --depth 1
+	git clone -b main https://github.com/apache/incubator-teaclave.git docs/teaclave-docs --depth 1
+	git clone -b legacy https://github.com/apache/incubator-teaclave.git docs/teaclave-faas-legacy --depth 1
+
 	# v2.0.0-preview branch does not have documents folder, we use master branch instead
 	git clone -b master https://github.com/apache/incubator-teaclave-sgx-sdk.git docs/teaclave-sgx-sdk --depth 1
 	git clone https://github.com/apache/incubator-teaclave-trustzone-sdk.git docs/teaclave-trustzone-sdk --depth 1
 
 check-repo:
-	@if [ ! -d "docs/teaclave" ] || [ ! -d "docs/teaclave-sgx-sdk" ] || [ ! -d "docs/teaclave-trustzone-sdk" ]; then \
+	@if [ ! -d "docs/teaclave-docs" ] || [ ! -d "docs/teaclave-faas-legacy" ] || [ ! -d "docs/teaclave-sgx-sdk" ] || [ ! -d "docs/teaclave-trustzone-sdk" ]; then \
 		echo "Repositories not found. Running init-repo..."; \
 		$(MAKE) init-repo; \
 	fi
 
 update-repo: check-repo
-	cd docs/teaclave && git pull --depth 1
+	cd docs/teaclave-docs && git pull --depth 1
+	cd docs/teaclave-faas-legacy && git pull --depth 1
 	cd docs/teaclave-sgx-sdk && git pull --depth 1
 	cd docs/teaclave-trustzone-sdk && git pull --depth 1 --rebase
 
@@ -48,7 +51,8 @@ build: sgx-sdk-api-docs trustzone-sdk-api-docs
 	find build -name '*.lock' -exec chmod 655 {} \;
 
 clean-repo:
-	rm -rf docs/teaclave
+	rm -rf docs/teaclave-docs
+	rm -rf docs/teaclave-faas-legacy
 	rm -rf docs/teaclave-sgx-sdk
 	rm -rf docs/teaclave-trustzone-sdk
 

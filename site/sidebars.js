@@ -75,9 +75,9 @@ function sidebarItemFromTOCItem(item, relpath) {
 }
 
 const repos = {
-  'teaclave': parseTOC(fs.readFileSync('./docs/teaclave/docs/README.md', 'utf-8')).map(i => [
+  'teaclave': parseTOC(fs.readFileSync('./docs/teaclave-docs/website-toc.md', 'utf-8')).map(i => [
     i.title,
-    i.items.map(item => sidebarItemFromTOCItem(item, 'teaclave/docs')).filter(Boolean)
+    i.items.map(item => sidebarItemFromTOCItem(item, 'teaclave-docs')).filter(Boolean)
   ]),
   'teaclave-sgx-sdk': parseTOC(fs.readFileSync('./docs/teaclave-sgx-sdk/documents/README.md', 'utf-8')).map(i => [
     i.title,
@@ -86,6 +86,10 @@ const repos = {
   'teaclave-trustzone-sdk': parseTOC(fs.readFileSync('./docs/teaclave-trustzone-sdk/docs/README.md', 'utf-8')).map(i => [
     i.title,
     i.items.map(item => sidebarItemFromTOCItem(item, 'teaclave-trustzone-sdk/docs')).filter(Boolean)
+  ]),
+  'teaclave-faas-legacy': parseTOC(fs.readFileSync('./docs/teaclave-faas-legacy/docs/README.md', 'utf-8')).map(i => [
+    i.title,
+    i.items.map(item => sidebarItemFromTOCItem(item, 'teaclave-faas-legacy/docs')).filter(Boolean)
   ]),
 };
 

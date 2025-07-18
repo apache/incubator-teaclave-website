@@ -26,6 +26,7 @@ following mentors.
 | Gordon King   | garyw       | [bigdata-memory](https://github.com/bigdata-memory) |
 | Matt Sicker   | mattsicker  | jvz                                                 |
 | Zhijie Shen   | zjshen      | zjshen14                                            |
+| Xuanwo        | xuanwo      | xuanwo                                              |
 
 ## Podling Project Management Committee
 
@@ -47,7 +48,7 @@ oversight of Teaclave.
 | Yu Ding         | dingelish       | [dingelish](https://github.com/dingelish)           | `sgx-sdk`           |
 | Yuan Zhuang     | yuanz           | [DemesneGH](https://github.com/DemesneGH)           | `trustzone-sdk`     |
 | Yulong Zhang    | yulongzhang     | [yulongzhang](https://github.com/yulongzhang)       | -                   |
-| Zhaofeng Chen   | zfc             | [m4sterchain](https://github.com/m4sterchain)       | -                   |
+| Zhaofeng Chen   | zfc             | [m4sterchain](https://github.com/m4sterchain)       | `all`               |
 
 
 ## Committers
