@@ -9,3 +9,4 @@ sgx-sdk-docs/Cargo.lock
 Cargo.lock
 site/docs/*
 !site/docs/community
+!site/docs/*.md

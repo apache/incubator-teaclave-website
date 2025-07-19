@@ -120,6 +120,7 @@ const repos = {
 // Get rid of type annotation error
 const navbar = Object.assign(Object.create({}), config.themeConfig?.navbar);
 const communityNav = navbar.items?.find(item => item.label == 'Community');
+const docsNav = navbar.items?.find(item => item.label == 'Docs');
 
 const sidebars = {
   ...Object.fromEntries(
@@ -128,7 +129,8 @@ const sidebars = {
       repo.map(([title, items]) => ({
         type: 'category',
         label: title,
-        items: items
+        items: items,
+        collapsed: false,
       }))
     ])
   ),
@@ -137,6 +139,21 @@ const sidebars = {
   ].concat(communityNav.items
     .map(item => sidebarItemFromNavbarItem(item))
   ),
+  'overview_sidebar': [
+    Object.assign(
+      sidebarItemFromNavbarItem(docsNav), {
+      label: 'Overview',
+    })
+  ].concat(
+    docsNav.items
+      .map(item => sidebarItemFromNavbarItem(item))
+      .map(item => {
+        console.log(item);
+        if (item.type == 'doc')
+          item.type = 'ref';
+        return item;
+      })
+  )
 };
 
 export default sidebars;
