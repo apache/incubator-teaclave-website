@@ -50,23 +50,36 @@ const config = {
         if (path.resolve(params.filePath) == path.resolve(key)) {
           result.frontMatter.displayed_sidebar = `${indexDocs[key]}_sidebar`;
         }
-      }); 
+      });
 
       return result;
     },
-    // Replace autolinks to avoid mdx rendering issues.
+
     preprocessor: (file) => {
+      // Replace autolinks to avoid mdx rendering issues.
       const autolinks = file.fileContent.match(/<((https?:)|(mailto:))[\S]+>/gi);
       autolinks?.forEach((link) => {
         file.fileContent = file.fileContent.replaceAll(link, `[${link.slice(1, -1)}](${link.slice(1, -1)})`);
       });
+
+      // Implement notice blocks.
       const notices = file.fileContent.match(/^:::([\s\S]+?)^:::$/gm);
       notices?.forEach((n) => {
         const lines = n.split('\n');
         lines[0] = '**' + lines[0].split(' ').slice(2).join(' ') + '** <br/>';
         lines.pop(); // Remove the last line which is `:::`
-        file.fileContent = file.fileContent.replaceAll(n, lines.map(i=>'> '+i).join('\n'));
+        file.fileContent = file.fileContent.replaceAll(n, lines.map(i => '> ' + i).join('\n'));
       });
+
+      // Replace blog links date string to slash format.
+      if (path.relative(path.resolve(), file.filePath).startsWith('blog' + path.sep)) {
+        const blogLinks = file.fileContent.matchAll(/\[[^\]]+\]\(\/blog\/(\d{4}-\d{2}-\d{2}-)\S+\)/g);
+        for (const link of blogLinks) {
+          const result = link[0].replace(link[1], link[1].replace(/-/g, '/'));
+          file.fileContent = file.fileContent.replaceAll(link[0], result);
+        }
+      }
+
       return file.fileContent;
     },
 
