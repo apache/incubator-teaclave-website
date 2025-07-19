@@ -148,7 +148,6 @@ const sidebars = {
     docsNav.items
       .map(item => sidebarItemFromNavbarItem(item))
       .map(item => {
-        console.log(item);
         if (item.type == 'doc')
           item.type = 'ref';
         return item;
