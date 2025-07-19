@@ -165,15 +165,15 @@ const config = {
           },
           { to: '/download', label: 'Download', position: 'right' },
           {
-            to: '/teaclave-docs',
+            to: '/overview',
             label: 'Docs',
             items: [
-              { label: 'Teaclave', to: '/teaclave-docs/' },
               { label: 'Teaclave TrustZone SDK', to: '/trustzone-sdk-docs/' },
               { label: 'API Docs: Teaclave TrustZone SDK (Host)', href: 'https://teaclave.apache.org/api-docs/trustzone-sdk/optee_teec', target: '_self', rel: '' },
               { label: 'API Docs: Teaclave TrustZone SDK (TA)', href: 'https://teaclave.apache.org/api-docs/trustzone-sdk/optee_utee', target: '_self', rel: '' },
               { label: 'Teaclave SGX SDK', to: '/sgx-sdk-docs/' },
               { label: 'API Docs: Teaclave SGX SDK', href: 'https://teaclave.apache.org/api-docs/sgx-sdk/', target: '_self', rel: '' },
+              { label: 'Teaclave', to: '/teaclave-docs/' },
               { label: 'Teaclave FaaS (legacy)', to: '/docs/' },
             ],
             position: 'right',
