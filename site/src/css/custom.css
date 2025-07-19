@@ -28,3 +28,13 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Hide year headings in blog sidebar - targeting the specific class */
+.yearGroupHeading_ndGK {
+  display: none !important;
+}
+
+/* Alternative: Hide year headings in blog sidebar using general selector */
+.blog-sidebar h3 {
+  display: none !important;
+}
