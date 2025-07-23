@@ -23,8 +23,8 @@ welcomes any updates if necessary.
 | ID | Description | Status |
 |----|-------------|--------|
 | CD10 | The project produces Open Source software for distribution to the public, at no charge. | **YES** The project's source code is licensed under the `Apache License 2.0`. |
-| CD20 | Anyone can easily discover and access the project's code. | **YES** The [official website](https://teaclave.incubator.apache.org/) includes GitHub link which can access the project's repository on GitHub directly. |
-| CD30 | Anyone using standard, widely-available tools, can build the code in a reproducible way. | **YES** We have `How to Build` files in `/docs` to guide users on how to setup the build environment and build the source code. |
+| CD20 | Anyone can easily discover and access the project's code. | **YES** The [official website](https://teaclave.apache.org/) includes GitHub link which can access the project's repository on GitHub directly. |
+| CD30 | Anyone using standard, widely-available tools, can build the code in a reproducible way. | **YES** Comprehensive documentation is available in the [Quick Navigation Links](https://teaclave.apache.org/overview), guiding users through reproducible builds of the code.|
 | CD40 | The full history of the project's code is available via a source code control system, in a way that allows anyone to recreate any released version. | **YES** The project uses `git`, and anyone can view the full history of the project via commit logs. |
 | CD50 | The source code control system establishes the provenance of each line of code in a reliable way, based on strong authentication of the committer. When third parties contribute code, commit messages provide reliable information about the code provenance. | **YES** The project uses GitHub and is managed by Apache Infra, ensuring provenance of each line of code to a committer. Third-party contributions follow the contributing guidelines. |
 
@@ -43,16 +43,16 @@ welcomes any updates if necessary.
 | ID | Description | Status |
 |----|-------------|--------|
 | RE10 | Releases consist of source code, distributed using standard and open archive formats that are expected to stay readable in the long term. | **YES** Source releases are distributed via dist.apache.org and linked from the download page. |
-| RE20 | The project's PMC (Project Management Committee, see CS10) approves each software release in order to make the release an act of the Foundation. | **YES** All releases have been voted at `dev@teaclave.apache.org` and `general@incubator.apache.org`, and have at least 3 PPMC member's votes. |
+| RE20 | The project's PMC (Project Management Committee, see CS10) approves each software release in order to make the release an act of the Foundation. | **YES** All releases have been voted at `dev@teaclave.apache.org` and `general@incubator.apache.org`, and have at least 3 PMC member's votes. |
 | RE30 | Releases are signed and/or distributed along with digests that anyone can reliably use to validate the downloaded archives. | **YES** All releases are signed, and the [KEYS](https://downloads.apache.org/incubator/teaclave/KEYS) are available. |
-| RE40 | The project can distribute convenience binaries alongside source code, but they are not Apache Releases, they are provided with no guarantee. | **YES** Convenience binaries are distributed via dist.apache.org. |
+| RE40 | The project can distribute convenience binaries alongside source code, but they are not Apache Releases, they are provided with no guarantee. | **YES** Our releases contain source code only and do not include any convenience binaries. We are aware of the ASF policy regarding non-source distributions and follow it accordingly. |
 | RE50 | The project documents a repeatable release process so that someone new to the project can independently generate the complete set of artifacts required for a release. | **YES** We document the Release Guide that the community can follow to make a new Apache Teaclave release. |
 
 ### Quality (QU)
 
 | ID | Description | Status |
 |----|-------------|--------|
-| QU10 | The project is open and honest about the quality of its code. Various levels of quality and maturity for various modules are natural and acceptable as long as they are clearly communicated. | **YES** We encourage users to [report issues](https://teaclave.incubator.apache.org/contributing/#bug-reports). |
+| QU10 | The project is open and honest about the quality of its code. Various levels of quality and maturity for various modules are natural and acceptable as long as they are clearly communicated. | **YES** We encourage users to [report issues](https://teaclave.apache.org/contributing/#bug-reports). |
 | QU20 | The project puts a very high priority on producing secure software. | **YES** All security-related issues are handled with high priority. |
 | QU30 | The project provides a well-documented, secure and private channel to report security issues, along with a documented way of responding to them. | **YES** The GitHub project page provides a security page. |
 | QU40 | The project puts a high priority on backwards compatibility and aims to document any incompatible changes and provide tools and documentation to help users transition to new features. | **YES** We try our best to follow backwards compatibility. If there is an incompatible API change, we provide a migration guide. |
