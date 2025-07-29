@@ -2,7 +2,7 @@
 permalink: /maturity
 ---
 
-# Maturity Assessment For The Teaclave Ecosystem
+# Maturity Assessment For The Apache Teaclave™ Ecosystem
 
 This is a maturity assessment of Apache Teaclave™ based on the ASF project 
 [maturity model](https://community.apache.org/apache-way/apache-project-maturity-model.html).
@@ -84,7 +84,7 @@ welcomes any updates if necessary.
 
 | ID | Description | Status |
 |----|-------------|--------|
-| IN10 | The project is independent from any corporate or organizational influence. | **YES** The Teaclave project maintains complete independence from corporate or organizational influence, with individual contributors shaping the community solely through transparent contributions. |
+| IN10 | The project is independent from any corporate or organizational influence. | **YES** Apache Teaclave™ maintains complete independence from corporate or organizational influence, with individual contributors shaping the community solely through transparent contributions. |
 | IN20 | Contributors act as themselves, not as representatives of a corporation or organization. | **YES** The committers and contributors act independently on their own initiative. |
 
 ### Trademark and Branding (TB)

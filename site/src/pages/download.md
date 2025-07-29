@@ -11,9 +11,9 @@ by following these
 [procedures](https://www.apache.org/info/verification.html) and using these
 [KEYS](https://downloads.apache.org/incubator/teaclave/KEYS).
 
-## Teaclave Ecosystem Releases
+## Apache Teaclave™ Ecosystem Releases
 
-The Teaclave ecosystem consists of several independently released SDKs and components, 
+The Apache Teaclave™ ecosystem consists of several independently released SDKs and components, 
 with each sub-project targeting a specific trusted execution environment (TEE).
 Each SDK evolves independently to best support its respective platform and use cases.
 

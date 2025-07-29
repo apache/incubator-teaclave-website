@@ -2,7 +2,7 @@
 permalink: /overview
 ---
 
-# Teaclave: Empowering Memory-Safe Development for TEEs
+# Apache Teaclave™: Empowering Memory-Safe Development for TEEs
 
 Welcome to the official website of Teaclave, an open-source initiative under the [Apache Incubator](https://incubator.apache.org/). Teaclave empowers developers to build memory-safe Trusted Applications across diverse confidential computing platforms, including Intel SGX and Arm TrustZone.
 
@@ -12,9 +12,9 @@ This page serves as an overview and entry point to the entire Teaclave ecosystem
 
 ---
 
-## 🔧 The Teaclave Ecosystem
+## 🔧 The Apache Teaclave™ Ecosystem
 
-The Teaclave ecosystem consists of several independently maintained repositories, each targeting a specific Trusted Execution Environment (TEE). These SDKs and supporting libraries provide essential tooling for building secure applications in constrained environments using modern memory-safe languages like Rust.
+The Apache Teaclave™ ecosystem consists of several independently maintained repositories, each targeting a specific Trusted Execution Environment (TEE). These SDKs and supporting libraries provide essential tooling for building secure applications in constrained environments using modern memory-safe languages like Rust.
 
 ---
 

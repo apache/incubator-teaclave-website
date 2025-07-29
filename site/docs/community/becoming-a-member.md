@@ -14,11 +14,11 @@ responsibility, and a deeper commitment to the project's long-term success.
 
 ## Become a Committer of Apache Teaclave™
 
-Anyone actively supporting the Teaclave community across any CoPDoC area, 
+Anyone actively supporting the Apache Teaclave™ community across any CoPDoC area, 
 **Community, Project, Documentation, and Code**, can become a committer. The 
 CoPDoC model recognizes diverse contributions beyond just code.
 
-Teaclave operates as a meritocracy. Consistent, high-quality contributions and 
+Apache Teaclave™ operates as a meritocracy. Consistent, high-quality contributions and 
 positive community engagement make you a strong candidate for committership. 
 Becoming a committer means you are trusted with the project's direction and 
 growth, not just commit access.
