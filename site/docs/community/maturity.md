@@ -22,8 +22,8 @@ welcomes any updates if necessary.
 
 | ID | Description | Status |
 |----|-------------|--------|
-| CD10 | The project produces Open Source software for distribution to the public, at no charge. | **YES** The project's source code is licensed under the `Apache License 2.0`. |
-| CD20 | Anyone can easily discover and access the project's code. | **YES** The [official website](https://teaclave.apache.org/) includes GitHub link which can access the project's repository on GitHub directly. |
+| CD10 | The project produces Open Source software for distribution to the public, at no charge. | **YES** The project's source code is licensed under Apache License 2.0. |
+| CD20 | Anyone can easily discover and access the project's code. | **YES** The [official website](https://teaclave.apache.org/) includes a GitHub link that can access the project's repository on GitHub directly. |
 | CD30 | Anyone using standard, widely-available tools, can build the code in a reproducible way. | **YES** Comprehensive documentation is available in the [Quick Navigation Links](https://teaclave.apache.org/overview), guiding users through reproducible builds of the code.|
 | CD40 | The full history of the project's code is available via a source code control system, in a way that allows anyone to recreate any released version. | **YES** The project uses `git`, and anyone can view the full history of the project via commit logs. |
 | CD50 | The source code control system establishes the provenance of each line of code in a reliable way, based on strong authentication of the committer. When third parties contribute code, commit messages provide reliable information about the code provenance. | **YES** The project uses GitHub and is managed by Apache Infra, ensuring provenance of each line of code to a committer. Third-party contributions follow the contributing guidelines. |
@@ -32,18 +32,18 @@ welcomes any updates if necessary.
 
 | ID | Description | Status |
 |----|-------------|--------|
-| LC10 | The Apache License, version 2.0, covers the released code. | **YES** The LICENSE is in GitHub repository. All source files are checked with CI to ensure no missing LICENSE. |
+| LC10 | The Apache License, version 2.0, covers the released code. | **YES** The LICENSE is in the GitHub repository. All source files are checked with CI to ensure that no LICENSE files are missing. |
 | LC20 | Libraries that are mandatory dependencies of the project's code do not create more restrictions than the Apache License does. | **YES** All dependencies are listed. |
-| LC30 | The libraries mentioned in LC20 are available as Open Source software. | **YES** All dependencies listed are available as Open Source software. |
+| LC30 | The libraries mentioned in LC20 are available as Open Source software. | **YES** All dependencies listed are available as open-source software. |
 | LC40 | Committers are bound by an Individual Contributor Agreement (the "Apache iCLA") that defines which code they may commit and how they need to identify code that is not their own. | **YES** All committers have iCLAs. |
-| LC50 | The project clearly defines and documents the copyright ownership of everything that the project produces. | **YES** All source files include an APLv2 header. |
+| LC50 | The project clearly defines and documents the copyright ownership of everything that the project produces. | **YES** All source files include an Apache License 2.0 header. |
 
 ### Releases (RE)
 
 | ID | Description | Status |
 |----|-------------|--------|
 | RE10 | Releases consist of source code, distributed using standard and open archive formats that are expected to stay readable in the long term. | **YES** Source releases are distributed via dist.apache.org and linked from the download page. |
-| RE20 | The project's PMC (Project Management Committee, see CS10) approves each software release in order to make the release an act of the Foundation. | **YES** All releases have been voted at `dev@teaclave.apache.org` and `general@incubator.apache.org`, and have at least 3 PMC member's votes. |
+| RE20 | The project's PMC (Project Management Committee, see CS10) approves each software release in order to make the release an act of the Foundation. | **YES** All releases have been voted on at `dev@teaclave.apache.org` and `general@incubator.apache.org`, and have at least 3 PMC members' votes. |
 | RE30 | Releases are signed and/or distributed along with digests that anyone can reliably use to validate the downloaded archives. | **YES** All releases are signed, and the [KEYS](https://downloads.apache.org/incubator/teaclave/KEYS) are available. |
 | RE40 | The project can distribute convenience binaries alongside source code, but they are not Apache Releases, they are provided with no guarantee. | **YES** Our releases contain source code only and do not include any convenience binaries. We are aware of the ASF policy regarding non-source distributions and follow it accordingly. |
 | RE50 | The project documents a repeatable release process so that someone new to the project can independently generate the complete set of artifacts required for a release. | **YES** We document the Release Guide that the community can follow to make a new Apache Teaclave release. |
