@@ -26,6 +26,8 @@ following mentors.
 | Matt Sicker   | mattsicker  | jvz                                                 |
 | Zhijie Shen   | zjshen      | zjshen14                                            |
 | Xuanwo        | xuanwo      | xuanwo                                              |
+| Zili Chen     | tison       | tisonkun                                            |
+| Willem Jiang  | ningjiang   | willemjiang                                         |
 
 ## Podling Project Management Committee
 
@@ -41,6 +43,7 @@ oversight of Teaclave.
 | Pei Wang        | uraj            | [uraj](https://github.com/uraj)                     | -                   |
 | Ran Duan        | rduan           | [volcano0dr](https://github.com/volcano0dr)         | `sgx-sdk`           |
 | Rundong Zhou    | rdzhou          | [rdzhou](https://github.com/rdzhou)                 | -                   |
+| Shaojun Wang    | shaojunwang     | [superajun-wsj](https://github.com/superajun-wsj)   | `java-tee-sdk`      |
 | Tao Wei         | lenxwei         | -                                                   | -                   |
 | Tongxin Li      | litongxin1991   | [litongxin1991](https://github.com/litongxin1991)   | -                   |
 | Yiming Jing     | yjing           | -                                                   | -                   |
@@ -62,7 +65,6 @@ being active.
 | Qinkun Bao    | qinkun      | [qinkunbao](https://github.com/qinkunbao)         | `teaclave-faas`             |
 | Rong Fan      | fanrong     | [fanrong1992](https://github.com/fanrong1992)     | `trustzone-sdk`             |
 | Sanhong Li    | sanhongli   | -                                                 | `java-tee-sdk`              |
-| Shaojun Wang  | shaojunwang | [superajun-wsj](https://github.com/superajun-wsj) | `java-tee-sdk`              |
 | Zehui Chen    | ivila       | [ivila](https://github.com/ivila)                 | `trustzone-sdk`             |
 | Ziyi Lin      | ziyilin     | [ziyilin](https://github.com/ziyilin)             | `java-tee-sdk`              |
 
@@ -71,7 +73,7 @@ being active.
 Teaclave is a community project and is very thankful for the many community
 contributions it receives.
 
-List of external contributors of Teaclave, Teaclave SGX SDK, Teaclave Java TEE
+Selected list of external contributors of Teaclave, Teaclave SGX SDK, Teaclave Java TEE
 SDK and Teaclave TrustZone SDK (in alphabetical order):
 
   - [Akhil Velagapudi](https://github.com/akhilles)

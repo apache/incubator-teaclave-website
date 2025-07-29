@@ -4,7 +4,7 @@ permalink: /overview
 
 # Teaclave: Empowering Memory-Safe Development for TEEs
 
-Welcome to the official website of Teaclave, an open-source initiative under the [Apache Incubator](https://incubator.apache.org/). Teaclave empowers developers to build memory-safe Trusted Applications across diverse confidential computing platforms**, including **Intel SGX** and **Arm TrustZone**.
+Welcome to the official website of Teaclave, an open-source initiative under the [Apache Incubator](https://incubator.apache.org/). Teaclave empowers developers to build memory-safe Trusted Applications across diverse confidential computing platforms, including Intel SGX and Arm TrustZone.
 
 Originally designed as a general-purpose secure computing framework, Teaclave has naturally evolved into a growing ecosystem of developer-friendly SDKs, enabling direct development of custom Trusted Applications. This evolution is driven by strong community adoption and contributions.
 
@@ -44,6 +44,20 @@ The SDK offers a complete SGX-compatible runtime and tooling suite, bridging the
 - [📘 Teaclave SGX Docs](/sgx-sdk-docs/)
 - [📚 SGX Enclave API Doc](https://teaclave.apache.org/api-docs/sgx-sdk/)
 - [🚀 Setting up your SGX Development Environment](/sgx-sdk-docs/environment-setup)
+
+---
+
+### 🔐 [Teaclave](https://github.com/apache/incubator-teaclave/)
+
+The main Teaclave repository serves as the central landing page and coordination hub for the entire Teaclave ecosystem. Originally hosting the Teaclave FaaS framework, this repository has evolved to focus on SDK showcases, project coordination, and ecosystem guidance as the community shifted toward direct SDK usage.
+
+This repository now provides project overview for the entire Teaclave ecosystem and showcases demonstrating real-world applications built with Teaclave SDKs in different scenarios.
+
+The repository maintains separate directories for TrustZone, SGX, and Crates ecosystems, each containing showcases and examples that demonstrate the capabilities of the respective SDKs. This structure makes it easy for developers to explore practical implementations across different TEE platforms.
+
+**📄 Quick Navigation Links**
+- [🚀 Teaclave TrustZone Ecosystem Showcase](/teaclave-docs/trustzone/)
+- [🚀 Teaclave SGX Ecosystem Showcase](/teaclave-docs/sgx/)
 
 ---
 
