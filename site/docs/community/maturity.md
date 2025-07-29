@@ -87,3 +87,11 @@ welcomes any updates if necessary.
 | IN10 | The project is independent from any corporate or organizational influence. | **YES** The Teaclave project maintains complete independence from corporate or organizational influence, with individual contributors shaping the community solely through transparent contributions. |
 | IN20 | Contributors act as themselves, not as representatives of a corporation or organization. | **YES** The committers and contributors act independently on their own initiative. |
 
+### Trademark and Branding (TB)
+
+| ID  | Description | Status |
+|-----|-------------|--------|
+| TB10 | The project uses "Apache Foo™" as the project and software product name consistently, with appropriate trademark attributions. | **YES** We consistently use the name "Apache Teaclave™" across all official materials, including the logo, with proper trademark attribution. |
+| TB20 | The project's primary homepage is at projectname.apache.org. When exceptions exist to use alternate domains for any purpose, any non-apache.org domain names are owned by the ASF. | **YES** The official homepage is located at [https://teaclave.apache.org](https://teaclave.apache.org), fully complying with ASF domain usage policies. |
+| TB30 | The ASF has trademark rights, including any registrations, to the project name, logo, and any other major branding elements. | **YES** The Apache Software Foundation owns the rights to the "Apache Teaclave" name and branding under the standard ASF trademark policies. We defer to ASF Brand Management for any formal registrations. |
+| TB40 | The project monitors for any major misuses of their project's brand by others, and reports any potential misuses to Brand Management. | **YES** We periodically monitor for potential brand misuse (e.g., through online searches) and report any identified cases to ASF Brand Management. |
