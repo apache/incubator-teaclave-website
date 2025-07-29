@@ -1,5 +1,5 @@
 ---
-title: Announcing Apache Teaclave (incubating) 0.3.0
+title: Announcing Apache Teaclave™ (incubating) 0.3.0
 date: 2021-10-01
 author: Mingshen Sun
 ---
@@ -7,7 +7,7 @@ author: Mingshen Sun
 On behalf of the Teaclave community, I am happy to announce the *third* Apache
 Incubator release of Teaclave, 0.3.0. Teaclave is a universal secure computing
 platform, making computation on privacy-sensitive data safe and simple.
-Apache Teaclave (including the
+Apache Teaclave™ (including the
 [FaaS platform](https://github.com/apache/incubator-teaclave),
 [SGX SDK](https://github.com/apache/incubator-teaclave-sgx-sdk),
 and [TrustZone SDK](https://github.com/apache/incubator-teaclave-trustzone-sdk)) is

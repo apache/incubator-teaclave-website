@@ -11,36 +11,11 @@ repositories. The artifacts must be **signed by the release manager** and
 **approved through two stages of community votes**. This documentation outlines
 the complete workflow and necessary operations to achieve that goal.
 
-## Outline
-
-### [For New Release Managers](#for-new-release-managers)
-
-- [0. Become a member of the Apache Teaclave community](#0-become-a-member-of-the-apache-teaclave-community)
-- [1. Prepare the GPG Signing Key](#1-prepare-the-gpg-signing-key)
-- [2. Optional: Request Other Permissions](#2-optional-request-other-permissions)
-
-### [Release Stages](#release-stages)
-
-- [Timeline of release stages](#timeline-of-release-stages)
-
-### [Stage-by-Stage Operations Guide](#stage-by-stage-operations-guide)
-
-- [1. Prepare the release](#1-prepare-the-release)
-- [2. Pre-release on GitHub](#2-pre-release-on-github)
-- [3. Voting](#3-voting)
-- [4. Post-release](#4-post-release)
-
-### [Other considerations](#5-other-considerations)
-
-- [About branch cut and feature freeze](#51-about-branch-cut-and-feature-freeze)
-
----
-
 ## For New Release Managers
 
-### 0. Become a member of the Apache Teaclave community
+### 0. Become a member of the Apache Teaclave™ community
 
-The release manager must be a member of the Apache Teaclave project. This
+The release manager must be a member of the Apache Teaclave™ project. This
 ensures they have the necessary permissions, including access to the Apache
 email system, SVN, GitHub write access, and other required infrastructure.
 
@@ -209,7 +184,7 @@ GPG_KEY_UID=????
 
 Two votes are required:
 
-- First, vote on the Apache Teaclave developers mailing list
+- First, vote on the Apache Teaclave™ developers mailing list
   (`dev@teaclave.apache.org`).
 - After it passes, call the second vote on the Apache Incubator general mailing
   list (`general@incubator.apache.org`).

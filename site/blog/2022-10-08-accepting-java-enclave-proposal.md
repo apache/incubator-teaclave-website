@@ -1,5 +1,5 @@
 ---
-title: Accepting JavaEnclave to Apache Teaclave (incubating) Proposal
+title: Accepting JavaEnclave to Apache Teaclave™ (incubating) Proposal
 date: 2022-10-18
 author: The Teaclave PPMC
 ---
@@ -76,7 +76,7 @@ community. He's familiar with The Apache Way for the open-source community.
 
 #### Length of Incubation:
 
-The project will be in incubation with Apache Teaclave (incubating) project.
+The project will be in incubation with Apache Teaclave™ (incubating) project.
 
 ### Documentation
 

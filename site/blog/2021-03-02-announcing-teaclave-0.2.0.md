@@ -1,5 +1,5 @@
 ---
-title: Announcing Apache Teaclave (incubating) 0.2.0
+title: Announcing Apache Teaclave™ (incubating) 0.2.0
 date: 2021-03-02
 author: Mingshen Sun
 ---

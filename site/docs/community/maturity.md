@@ -4,7 +4,7 @@ permalink: /maturity
 
 # Maturity Assessment For The Teaclave Ecosystem
 
-This is a maturity assessment of Apache Teaclave based on the ASF project 
+This is a maturity assessment of Apache Teaclave™ based on the ASF project 
 [maturity model](https://community.apache.org/apache-way/apache-project-maturity-model.html).
 
 It is used to evaluate the overall maturity for the project and the codebase 
@@ -13,7 +13,7 @@ community, Incubator PMC, and ASF Board of Directors on Teaclave's graduation
 to a top-level Apache project.
 
 ## Status of this Document
-The project has been filled out by the PPMC members of Apache Teaclave and 
+The project has been filled out by the PPMC members of Apache Teaclave™ and 
 welcomes any updates if necessary.
 
 ## Maturity Model Assessment
@@ -46,7 +46,7 @@ welcomes any updates if necessary.
 | RE20 | The project's PMC (Project Management Committee, see CS10) approves each software release in order to make the release an act of the Foundation. | **YES** All releases have been voted on at `dev@teaclave.apache.org` and `general@incubator.apache.org`, and have at least 3 PMC members' votes. |
 | RE30 | Releases are signed and/or distributed along with digests that anyone can reliably use to validate the downloaded archives. | **YES** All releases are signed, and the [KEYS](https://downloads.apache.org/incubator/teaclave/KEYS) are available. |
 | RE40 | The project can distribute convenience binaries alongside source code, but they are not Apache Releases, they are provided with no guarantee. | **YES** Our releases contain source code only and do not include any convenience binaries. We are aware of the ASF policy regarding non-source distributions and follow it accordingly. |
-| RE50 | The project documents a repeatable release process so that someone new to the project can independently generate the complete set of artifacts required for a release. | **YES** We document the Release Guide that the community can follow to make a new Apache Teaclave release. |
+| RE50 | The project documents a repeatable release process so that someone new to the project can independently generate the complete set of artifacts required for a release. | **YES** We document the Release Guide that the community can follow to make a new Apache Teaclave™ release. |
 
 ### Quality (QU)
 
@@ -93,5 +93,5 @@ welcomes any updates if necessary.
 |-----|-------------|--------|
 | TB10 | The project uses "Apache Foo™" as the project and software product name consistently, with appropriate trademark attributions. | **YES** We consistently use the name "Apache Teaclave™" across all official materials, including the logo, with proper trademark attribution. |
 | TB20 | The project's primary homepage is at projectname.apache.org. When exceptions exist to use alternate domains for any purpose, any non-apache.org domain names are owned by the ASF. | **YES** The official homepage is located at [https://teaclave.apache.org](https://teaclave.apache.org), fully complying with ASF domain usage policies. |
-| TB30 | The ASF has trademark rights, including any registrations, to the project name, logo, and any other major branding elements. | **YES** The Apache Software Foundation owns the rights to the "Apache Teaclave" name and branding under the standard ASF trademark policies. We defer to ASF Brand Management for any formal registrations. |
+| TB30 | The ASF has trademark rights, including any registrations, to the project name, logo, and any other major branding elements. | **YES** The Apache Software Foundation owns the rights to the "Apache Teaclave™" name and branding under the standard ASF trademark policies. We defer to ASF Brand Management for any formal registrations. |
 | TB40 | The project monitors for any major misuses of their project's brand by others, and reports any potential misuses to Brand Management. | **YES** We periodically monitor for potential brand misuse (e.g., through online searches) and report any identified cases to ASF Brand Management. |

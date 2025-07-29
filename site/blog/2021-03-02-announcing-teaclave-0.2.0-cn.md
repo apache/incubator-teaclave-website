@@ -1,12 +1,12 @@
 ---
-title: Apache Teaclave (incubating) 0.2.0 发布
+title: Apache Teaclave™ (incubating) 0.2.0 发布
 date: 2021-03-02
 author: Mingshen Sun
 ---
 
 [English](/blog/2021-03-01-announcing-teaclave-0-2-0/) | [中文](/blog/2021-03-01-announcing-teaclave-0-2-0-cn/)
 
-Apache Teaclave (incubating) 是一个隐私安全计算平台，为隐私数据计算赋能。基于硬
+Apache Teaclave™ (incubating) 是一个隐私安全计算平台，为隐私数据计算赋能。基于硬
 件安全能力，Teaclave 确保敏感数据在可信域外和离岸场景下安全可控的流通和处理，无
 需担心隐私数据泄露和滥用。 Teaclave 同时支持多方参与的联合计算，打破企业和组织中
 的数据孤岛。Teaclave 于 2019 年由百度捐赠进入 Apache 基金会孵化器。在 2020 年 10

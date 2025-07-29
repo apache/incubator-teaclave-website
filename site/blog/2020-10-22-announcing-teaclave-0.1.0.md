@@ -1,5 +1,5 @@
 ---
-title: Announcing Apache Teaclave (incubating) 0.1.0
+title: Announcing Apache Teaclave™ (incubating) 0.1.0
 date: 2020-10-22
 author: Mingshen Sun
 ---
@@ -19,7 +19,7 @@ first official release since we entered Apache Incubator on August 19, 2019.
 Since this is our first public release, I still want to emphasize the highlights
 of the Teaclave project.
 
-Apache Teaclave (incubating) has following highlights:
+Apache Teaclave™ (incubating) has following highlights:
 
 - **Security**: Teaclave adopts multiple security technologies to enable secure
   computing. In particular, Teaclave uses Intel SGX to serve the most

@@ -1,6 +1,6 @@
-# Apache Teaclave (incubating) Website
+# Apache Teaclave™ (incubating) Website
 
-The official website for Apache Teaclave, generated with the Docusaurus static site generator. This repository contains the source code and configuration for the Teaclave project website, including documentation for Teaclave TrustZone SDK, Teaclave SGX SDK, and related components.
+The official website for Apache Teaclave™, generated with the Docusaurus static site generator. This repository contains the source code and configuration for the Teaclave project website, including documentation for Teaclave TrustZone SDK, Teaclave SGX SDK, and related components.
 
 ## Quick Start
 

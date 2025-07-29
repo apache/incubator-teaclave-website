@@ -1,5 +1,5 @@
 ---
-title: Accepting Rust OP-TEE TrustZone SDK to Apache Teaclave (incubating) Proposal
+title: Accepting Rust OP-TEE TrustZone SDK to Apache Teaclave™ (incubating) Proposal
 date: 2021-06-04
 author: The Teaclave PPMC
 ---
@@ -80,7 +80,7 @@ community.
 
 #### Length of Incubation:
 
-The project will be in incubation with Apache Teaclave (incubating) project.
+The project will be in incubation with Apache Teaclave™ (incubating) project.
 
 ### Documentation
 

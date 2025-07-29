@@ -52,7 +52,7 @@ author: Mingshen Sun
     
 - Blog
     - [Podling Teaclave Report - October 2021](https://teaclave.apache.org/blog/2021-10-06-podling-teaclave-report-october-2021/) · Oct 05 2021
-    - [Announcing Apache Teaclave (incubating) 0.3.0](https://teaclave.apache.org/blog/2021-10-01-announcing-teaclave-0-3-0/) · Sep 30 2021
+    - [Announcing Apache Teaclave™ (incubating) 0.3.0](https://teaclave.apache.org/blog/2021-10-01-announcing-teaclave-0-3-0/) · Sep 30 2021
 
 **Community**
 

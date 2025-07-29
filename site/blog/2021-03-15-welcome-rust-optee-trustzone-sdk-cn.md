@@ -68,7 +68,7 @@ Memory-Safe ARM TrustZone Applications 中找到，此论文也收录于 ACSAC 2
 - 随着隐私安全计算的发展，多个开源项目开始使用，例如由 ARM Research 主导的 Veracruz 开源项目使用 SDK 构建其隐私计算试验项目，Veracurz 也将加入隐私计算联盟（Confidential Computing Consortium）。
 - 2021 年 2 月升级 TrustZone SDK 支持 OP-TEE 3.11 和 3.12。
 - 2021 年 2 月启动项目捐赠流程，通过社区投票并提交 Software Grant Agreement。
-- 2021 年 3 月项目 repository 正式移交到 Apache 组织下，隶属于 Apache Teaclave (incubating) 项目。
+- 2021 年 3 月项目 repository 正式移交到 Apache 组织下，隶属于 Apache Teaclave™ (incubating) 项目。
 
 ![Teacalve TrustZone SDK Timeline](./img/teaclave-trustzone-sdk-timeline.png)
 

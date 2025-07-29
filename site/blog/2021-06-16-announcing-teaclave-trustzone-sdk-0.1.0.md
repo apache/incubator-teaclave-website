@@ -1,5 +1,5 @@
 ---
-title: Announcing Apache Teaclave TrustZone SDK (incubating) 0.1.0
+title: Announcing Apache Teaclave™ TrustZone SDK (incubating) 0.1.0
 date: 2021-06-16
 author: Mingshen Sun
 ---
@@ -13,7 +13,7 @@ in Rust. The SDK is based on the OP-TEE project which follows GlobalPlatform TEE
 specifications and provides ergonomic APIs. In addition, it enables capability
 to write TrustZone applications with Rust's standard library and many
 third-party libraries (i.e., crates). Teaclave TrustZone SDK is a sub-project of
-Apache Teaclave (incubating). To learn more about the design and history of
+Apache Teaclave™ (incubating). To learn more about the design and history of
 TrustZone SDK,
 please read the blog [Welcome Rust OP-TEE TrustZone SDK To Teaclave](https://teaclave.apache.org/blog/2021-03-14-welcome-rust-optee-trustzone-sdk/).
 

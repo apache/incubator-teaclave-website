@@ -12,7 +12,7 @@ Specifically, we published the first Apache incubator release - [version 0.1.0](
 better engineering. New features and enhancements was implemented and well
 tested. Also we wrote plenty of documents for the design, implementation, as
 well as the code base. Furthermore, the [homepage](https://teaclave.apache.org/)
-of Apache Teaclave (incubating) was built and online, which contains many
+of Apache Teaclave™ (incubating) was built and online, which contains many
 useful information on the project and community. We also organized several
 offline meetups to build up and grow the Teaclave family. In addition, for
 better explaining the project, we introduced the blog in the Teaclave homepage

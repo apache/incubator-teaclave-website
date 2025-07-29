@@ -6,7 +6,7 @@ author: Mingshen Sun
 
 [English](/blog/2020-12-09-teaclave-ecosystem/) | [中文](/blog/2020-12-04-teaclave-ecosystem-cn/)
 
-Apache Teaclave (incubating) is an open source universal secure computing
+Apache Teaclave™ (incubating) is an open source universal secure computing
 platform, making computation on privacy-sensitive data safe and simple. With
 hardware-based security capabilities (e.g., Intel SGX), Teaclave enables
 sensitive data to be circulated and processed under security control, even in

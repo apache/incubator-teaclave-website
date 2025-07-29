@@ -24,7 +24,7 @@ For people who were not available at this time, here is a short summary.
 Mingshen shared some recent updates on Teaclave with following outlines:
 
 - Teaclave TrustZone SDK donation
-- Releasing Apache Teaclave (incubating) 0.2.0
+- Releasing Apache Teaclave™ (incubating) 0.2.0
 - Teaclave Client SDK in Swift (iOS framework)
 - Talks in OC3 - Open Confidential Computing Conference 2021, Mar 11
 
