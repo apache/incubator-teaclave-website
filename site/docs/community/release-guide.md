@@ -13,7 +13,7 @@ the complete workflow and necessary operations to achieve that goal.
 
 ## For New Release Managers
 
-### 0. Become a member of the Apache Teaclave™ community
+### 0. Become a member of the Apache Teaclave™ (incubating) community
 
 The release manager must be a member of the Apache Teaclave™ project. This
 ensures they have the necessary permissions, including access to the Apache

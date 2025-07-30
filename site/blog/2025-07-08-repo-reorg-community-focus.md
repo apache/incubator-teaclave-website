@@ -6,7 +6,7 @@ author: zfc@apache.org
 
 ---
 
-Teaclave was originally created with a broad vision to explore the possibilities of confidential computing. It consisted of multiple components, including SDKs supporting Intel SGX and Arm TrustZone, a general-purpose application framework (FaaS), and experimental verification efforts, spanning several repositories under the Apache Incubator.
+Apache Teaclave™ (incubating) was originally created with a broad vision to explore the possibilities of confidential computing. It consisted of multiple components, including SDKs supporting Intel SGX and Arm TrustZone, a general-purpose application framework (FaaS), and experimental verification efforts, spanning several repositories under the Apache Incubator.
 
 Over the years, as the field of confidential computing evolved, we observed a clear trend: developers increasingly preferred building their own Trusted Applications using SDKs directly, rather than relying on a general-purpose FaaS framework. This organic shift in usage has also been reflected in our contributor activities. Most community engagement and active development now center around the SDKs, especially the Rust-based TrustZone and SGX SDKs.
 

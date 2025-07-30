@@ -2,7 +2,7 @@
 permalink: /overview
 ---
 
-# Apache Teaclave™: Empowering Memory-Safe Development for TEEs
+# Apache Teaclave™ (incubating): Empowering Memory-Safe Development for TEEs
 
 Welcome to the official website of Teaclave, an open-source initiative under the [Apache Incubator](https://incubator.apache.org/). Teaclave empowers developers to build memory-safe Trusted Applications across diverse confidential computing platforms, including Intel SGX and Arm TrustZone.
 
@@ -14,7 +14,7 @@ This page serves as an overview and entry point to the entire Teaclave ecosystem
 
 ## 🔧 The Apache Teaclave™ Ecosystem
 
-The Apache Teaclave™ ecosystem consists of several independently maintained repositories, each targeting a specific Trusted Execution Environment (TEE). These SDKs and supporting libraries provide essential tooling for building secure applications in constrained environments using modern memory-safe languages like Rust.
+The Teaclave ecosystem consists of several independently maintained repositories, each targeting a specific Trusted Execution Environment (TEE). These SDKs and supporting libraries provide essential tooling for building secure applications in constrained environments using modern memory-safe languages like Rust.
 
 ---
 
@@ -26,8 +26,8 @@ This SDK adheres to the GlobalPlatform TEE specifications, ensuring broad compat
 
 **📄 Quick Navigation Links**
 - [📘 Teaclave TrustZone Docs](/trustzone-sdk-docs)
-- [📚 API Doc For (Normal World) Host Application](https://teaclave.apache.org/api-docs/trustzone-sdk/optee_teec/)
-- [📚 API Doc For (Secure World) Trust Application](https://teaclave.apache.org/api-docs/trustzone-sdk/optee_utee/)
+- [📚 API Doc For (Normal World) Host Application](/api-docs/trustzone-sdk/optee_teec/)
+- [📚 API Doc For (Secure World) Trust Application](/api-docs/trustzone-sdk/optee_utee/)
 - [🚀 Quick Start: TA Development on QEMU](/trustzone-sdk-docs/emulate-and-dev-in-docker.md)
 - [🚀 Overview of OP-TEE Rust Examples](/trustzone-sdk-docs/overview-of-optee-rust-examples)
 - [🔗 OP-TEE with Rust (using Teaclave TrustZone SDK)](https://optee.readthedocs.io/en/latest/building/optee_with_rust.html)
@@ -41,8 +41,9 @@ The Teaclave SGX SDK brings memory-safe Rust programming to Intel SGX, enabling 
 The SDK offers a complete SGX-compatible runtime and tooling suite, bridging the gap between native SGX support and idiomatic Rust development. It allows developers to adopt Rust’s ownership model, type system, and concurrency safety even within the limitations of SGX.
 
 **📄 Quick Navigation Links**
+
 - [📘 Teaclave SGX Docs](/sgx-sdk-docs/)
-- [📚 SGX Enclave API Doc](https://teaclave.apache.org/api-docs/sgx-sdk/)
+- [📚 SGX Enclave API Doc](/api-docs/sgx-sdk/)
 - [🚀 Setting up your SGX Development Environment](/sgx-sdk-docs/environment-setup)
 
 ---
@@ -56,6 +57,7 @@ This repository now provides project overview for the entire Teaclave ecosystem 
 The repository maintains separate directories for TrustZone, SGX, and Crates ecosystems, each containing showcases and examples that demonstrate the capabilities of the respective SDKs. This structure makes it easy for developers to explore practical implementations across different TEE platforms.
 
 **📄 Quick Navigation Links**
+
 - [🚀 Teaclave TrustZone Ecosystem Showcase](/teaclave-docs/trustzone/)
 - [🚀 Teaclave SGX Ecosystem Showcase](/teaclave-docs/sgx/)
 
@@ -70,6 +72,7 @@ As the field of confidential computing evolved, the Teaclave community naturally
 Although now considered **legacy**, the FaaS platform remains a valuable milestone in Teaclave’s evolution into an SDK-focused ecosystem. Its architecture demonstrates how to build a high-level, privacy-preserving compute service on top of hardware-enforced TEEs.  We preserve its documentation and codebase history so that developers can continue to learn from its design and implementation.
 
 **📄 Quick Navigation Links**
+
 - [📘 Teaclave FaaS (legacy) Docs](/docs/)
 - [📘 Papers, Talks, and Related Articles](/docs/papers-talks)
 
@@ -84,6 +87,7 @@ By supporting a modular structure with clear separation between host-side and en
 > ⚠️ Note: This SDK is still in an experimental stage.
 
 **📄 Quick Navigation Links**
+
 - [📘 Java TEE SDK Proposal](/blog/2022/10/08/accepting-java-enclave-proposal)
 
 ---
@@ -98,11 +102,12 @@ This repository serves as a security-reviewed foundation for TEE application dev
 
 ## 👥 Community Management
 
-We welcome all contributors to help grow the Teaclave project and ecosystem. Whether you're new to trusted computing or an experienced contributor, your involvement is highly valued.
+We welcome all contributors to help grow the Apache Teaclave™ project and ecosystem. Whether you're new to trusted computing or an experienced contributor, your involvement is highly valued.
 
 Please visit the [**Community**](/community) page for more details on how to participate and contribute.
 
 **📄 Quick Navigation Links**
-- [🚀 How to Contribute to Teaclave](/contributing)
-- [🚀 How to Become a Member of Teaclave](/becoming-a-member)
+
+- [🚀 How to Contribute to Apache Teaclave™](/contributing)
+- [🚀 How to Become a Member of Apache Teaclave™](/becoming-a-member)
 - [🚀 How to Make a Release](/release-guide)

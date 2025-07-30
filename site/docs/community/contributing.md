@@ -4,7 +4,8 @@ permalink: /contributing
 
 # Contributing
 
-Teaclave is open source and follows [The Apache Way](https://www.apache.org/theapacheway/).
+Apache Teaclave™ (incubating) is open source and follows
+[The Apache Way](https://www.apache.org/theapacheway/).
 We aim to create a project that is maintained and owned by the 
 community. All kinds of contributions are welcome.
 
@@ -31,7 +32,8 @@ in the repo.
 For bug reports, please use the GitHub "Issues" tab in the relevant repository. Timely responses and triage will be performed by the maintainers.
 
 We recommend using the following format when reporting:
-```
+
+```markdown
 ## Environment:
 - OS and version
 - Hardware and platform
@@ -85,4 +87,4 @@ coordinate effectively.
 Teaclave follows the [Apache Code of Conduct](https://www.apache.org/foundation/policies/conduct).
 We expect all contributors to adhere to it.
 
-Thank you for your interest in contributing to Teaclave! 
+Thank you for your interest in contributing to Apache Teaclave™! 
