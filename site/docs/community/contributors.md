@@ -4,7 +4,7 @@ permalink: /contributors
 
 # Contributors
 
-Teaclave adopts [The Apache Way](https://www.apache.org/theapacheway/).
+Apache Teaclave™ (incubating) adopts [The Apache Way](https://www.apache.org/theapacheway/).
 Everyone is more than welcome to contribute and make the project better.
 We add tag along with committer name to show areas that they are familiar with.
 We do encourage everyone to work anything they are interested in.
@@ -17,40 +17,39 @@ committers or PPMC of Teaclave.
 Teaclave is now part of the Apache Incubator. We are fortunate to have the
 following mentors.
 
-| Name          | Apache ID   | GitHub ID                                           |
-|:--------------|:------------|:----------------------------------------------------|
-| Daniel Dai    | daijy       | -                                                   |
-| Felix Cheung  | felixcheung | felixcheung                                         |
-| Furkan Kamaci | kamaci      | kamaci                                              |
-| Gordon King   | garyw       | [bigdata-memory](https://github.com/bigdata-memory) |
-| Matt Sicker   | mattsicker  | jvz                                                 |
-| Zhijie Shen   | zjshen      | zjshen14                                            |
-| Xuanwo        | xuanwo      | xuanwo                                              |
-| Zili Chen     | tison       | tisonkun                                            |
-| Willem Jiang  | ningjiang   | willemjiang                                         |
+| Name          | Apache ID   | GitHub ID      |
+| :------------ | :---------- | :------------- |
+| Daniel Dai    | daijy       | -              |
+| Felix Cheung  | felixcheung | felixcheung    |
+| Furkan Kamaci | kamaci      | kamaci         |
+| Gordon King   | garyw       | bigdata-memory |
+| Matt Sicker   | mattsicker  | jvz            |
+| Zhijie Shen   | zjshen      | zjshen14       |
+| Xuanwo        | xuanwo      | xuanwo         |
+| Zili Chen     | tison       | tisonkun       |
+| Willem Jiang  | ningjiang   | willemjiang    |
 
 ## Podling Project Management Committee
 
-The role of
-[Podling Project Management Committee](https://incubator.apache.org/guides/ppmc.html)
+The role of [Podling Project Management Committee](https://incubator.apache.org/guides/ppmc.html)
 (PPMC) is to help to govern the project and is directly responsible for the
 oversight of Teaclave.
 
-| Name            | Apache ID       | GitHub ID                                           | Tag                 |
-| :-------------- | :-------------- | :-------------------------------------------------- | :------------------ |
-| He Sun          | hsun            | [henrysun007](https://github.com/henrysun007)       | `teaclave-faas`     |
-| Mingshen Sun    | mssun           | [mssun](https://github.com/mssun)                   | `all`               |
-| Pei Wang        | uraj            | [uraj](https://github.com/uraj)                     | -                   |
-| Ran Duan        | rduan           | [volcano0dr](https://github.com/volcano0dr)         | `sgx-sdk`           |
-| Rundong Zhou    | rdzhou          | [rdzhou](https://github.com/rdzhou)                 | -                   |
-| Shaojun Wang    | shaojunwang     | [superajun-wsj](https://github.com/superajun-wsj)   | `java-tee-sdk`      |
-| Tao Wei         | lenxwei         | -                                                   | -                   |
-| Tongxin Li      | litongxin1991   | [litongxin1991](https://github.com/litongxin1991)   | -                   |
-| Yiming Jing     | yjing           | -                                                   | -                   |
-| Yu Ding         | dingelish       | [dingelish](https://github.com/dingelish)           | `sgx-sdk`           |
-| Yuan Zhuang     | yuanz           | [DemesneGH](https://github.com/DemesneGH)           | `trustzone-sdk`     |
-| Yulong Zhang    | yulongzhang     | [yulongzhang](https://github.com/yulongzhang)       | -                   |
-| Zhaofeng Chen   | zfc             | [m4sterchain](https://github.com/m4sterchain)       | `all`               |
+| Name          | Apache ID     | GitHub ID                                         | Tag             |
+| :------------ | :------------ | :------------------------------------------------ | :-------------- |
+| He Sun        | hsun          | [henrysun007](https://github.com/henrysun007)     | `teaclave-faas` |
+| Mingshen Sun  | mssun         | [mssun](https://github.com/mssun)                 | `all`           |
+| Pei Wang      | uraj          | [uraj](https://github.com/uraj)                   | -               |
+| Ran Duan      | rduan         | [volcano0dr](https://github.com/volcano0dr)       | `sgx-sdk`       |
+| Rundong Zhou  | rdzhou        | [rdzhou](https://github.com/rdzhou)               | -               |
+| Shaojun Wang  | shaojunwang   | [superajun-wsj](https://github.com/superajun-wsj) | `java-tee-sdk`  |
+| Tao Wei       | lenxwei       | -                                                 | -               |
+| Tongxin Li    | litongxin1991 | [litongxin1991](https://github.com/litongxin1991) | -               |
+| Yiming Jing   | yjing         | -                                                 | -               |
+| Yu Ding       | dingelish     | [dingelish](https://github.com/dingelish)         | `sgx-sdk`       |
+| Yuan Zhuang   | yuanz         | [DemesneGH](https://github.com/DemesneGH)         | `trustzone-sdk` |
+| Yulong Zhang  | yulongzhang   | [yulongzhang](https://github.com/yulongzhang)     | -               |
+| Zhaofeng Chen | zfc           | [m4sterchain](https://github.com/m4sterchain)     | `all`           |
 
 
 ## Committers
@@ -58,15 +57,15 @@ oversight of Teaclave.
 Committers are people who have made substantial contribution to the project and
 being active.
 
-| Name          | Apache ID   | GitHub ID                                         | Tag                         |
-| :------------ | :---------- | :------------------------------------------------ | :-------------------------- |
-| Hongbo Chen   | ya0guang    | [ya0guang](https://github.com/ya0guang)           | `webassembly`, `executor`   |
-| Lei Yu        | yulei       | [yuleil](https://github.com/yuleil)               | `java-tee-sdk`              |
-| Qinkun Bao    | qinkun      | [qinkunbao](https://github.com/qinkunbao)         | `teaclave-faas`             |
-| Rong Fan      | fanrong     | [fanrong1992](https://github.com/fanrong1992)     | `trustzone-sdk`             |
-| Sanhong Li    | sanhongli   | -                                                 | `java-tee-sdk`              |
-| Zehui Chen    | ivila       | [ivila](https://github.com/ivila)                 | `trustzone-sdk`             |
-| Ziyi Lin      | ziyilin     | [ziyilin](https://github.com/ziyilin)             | `java-tee-sdk`              |
+| Name        | Apache ID | GitHub ID                                     | Tag                       |
+| :---------- | :-------- | :-------------------------------------------- | :------------------------ |
+| Hongbo Chen | ya0guang  | [ya0guang](https://github.com/ya0guang)       | `webassembly`, `executor` |
+| Lei Yu      | yulei     | [yuleil](https://github.com/yuleil)           | `java-tee-sdk`            |
+| Qinkun Bao  | qinkun    | [qinkunbao](https://github.com/qinkunbao)     | `teaclave-faas`           |
+| Rong Fan    | fanrong   | [fanrong1992](https://github.com/fanrong1992) | `trustzone-sdk`           |
+| Sanhong Li  | sanhongli | -                                             | `java-tee-sdk`            |
+| Zehui Chen  | ivila     | [ivila](https://github.com/ivila)             | `trustzone-sdk`           |
+| Ziyi Lin    | ziyilin   | [ziyilin](https://github.com/ziyilin)         | `java-tee-sdk`            |
 
 ## Contributors
 
@@ -127,6 +126,7 @@ SDK and Teaclave TrustZone SDK (in alphabetical order):
   - [zEqueue](https://github.com/z1queue)
 
 More people tracked in GitHub:
+
   - [Teaclave](https://github.com/apache/incubator-teaclave/graphs/contributors)
   - [Teaclave SGX SDK](https://github.com/apache/incubator-teaclave-sgx-sdk/graphs/contributors)
   - [Teaclave TrustZone SDK](https://github.com/apache/incubator-teaclave-trustzone-sdk/graphs/contributors)

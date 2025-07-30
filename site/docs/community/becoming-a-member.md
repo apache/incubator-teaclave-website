@@ -4,7 +4,7 @@ permalink: /becoming-a-member
 
 # Becoming a Committer or PPMC Member of Apache Teaclave™
 
-Apache Teaclave™ is an open and inclusive community that welcomes all forms of 
+Apache Teaclave™ (incubating) is an open and inclusive community that welcomes all forms of 
 contributions—from code and documentation to design discussions and community 
 support. We follow the Apache Way and recognize sustained and meaningful 
 contributions with committership or PPMC membership. These roles reflect trust, 
@@ -39,7 +39,7 @@ growth, not just commit access.
 
 ## Become a PPMC Member of Apache Teaclave™
 
-Project Management Committee (PMC) members help guide the project's vision and 
+Podling Project Management Committee (PPMC) members help guide the project's vision and 
 governance. PPMC members are usually experienced committers who've shown 
 leadership, deep engagement, and a long-term commitment to Teaclave. We value 
 contributions across CoPDoC areas, with an emphasis on community maturity and 
