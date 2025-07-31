@@ -26,8 +26,8 @@ This SDK adheres to the GlobalPlatform TEE specifications, ensuring broad compat
 
 **📄 Quick Navigation Links**
 - [📘 Teaclave TrustZone Docs](/trustzone-sdk-docs)
-- [📚 API Doc For (Normal World) Host Application](/api-docs/trustzone-sdk/optee_teec/)
-- [📚 API Doc For (Secure World) Trust Application](/api-docs/trustzone-sdk/optee_utee/)
+- [📚 API Doc For (Normal World) Host Application](https://teaclave.apache.org/api-docs/trustzone-sdk/optee_teec/)
+- [📚 API Doc For (Secure World) Trust Application](https://teaclave.apache.org/api-docs/trustzone-sdk/optee_utee/)
 - [🚀 Quick Start: TA Development on QEMU](/trustzone-sdk-docs/emulate-and-dev-in-docker.md)
 - [🚀 Overview of OP-TEE Rust Examples](/trustzone-sdk-docs/overview-of-optee-rust-examples)
 - [🔗 OP-TEE with Rust (using Teaclave TrustZone SDK)](https://optee.readthedocs.io/en/latest/building/optee_with_rust.html)
@@ -43,7 +43,7 @@ The SDK offers a complete SGX-compatible runtime and tooling suite, bridging the
 **📄 Quick Navigation Links**
 
 - [📘 Teaclave SGX Docs](/sgx-sdk-docs/)
-- [📚 SGX Enclave API Doc](/api-docs/sgx-sdk/)
+- [📚 SGX Enclave API Doc](https://teaclave.apache.org/api-docs/sgx-sdk/)
 - [🚀 Setting up your SGX Development Environment](/sgx-sdk-docs/environment-setup)
 
 ---

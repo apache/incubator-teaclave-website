@@ -106,7 +106,6 @@ const config = {
           routeBasePath: '/',
           include: [
             '*.md',
-            'api-docs/*.md',
             'blog/*.md',
             'community/*.md',
             'teaclave-docs/**/*.md',
