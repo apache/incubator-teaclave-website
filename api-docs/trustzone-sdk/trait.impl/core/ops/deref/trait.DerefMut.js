@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"toml_edit":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/ops/deref/trait.DerefMut.html\" title=\"trait core::ops::deref::DerefMut\">DerefMut</a> for <a class=\"struct\" href=\"toml_edit/struct.DocumentMut.html\" title=\"struct toml_edit::DocumentMut\">DocumentMut</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
